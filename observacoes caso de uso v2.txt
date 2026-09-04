@@ -1,0 +1,20 @@
+Observacoes v2
+- no processo de pre-inscricao, se o usuario acessa aquela mesma pre-inscricao (reconhecer via slug), e resgata a pre-inscricao, ele ja deve ser direcionado para a inscricao.
+- utilizar local_storage do dispositivo para registrar que ele fez pre-inscricao em um programa/edicao
+- especificar cookies e local storage nos aceites de armazenamento de dados no device do usuario
+- adicionar ao fluxo Pré-inscrição → Inscrição → Seleção → Aprovação e Aplicação do Programa as etapas de cancelamento e conclusao com bbeneficiamento, certificacao, premiacao e mentoria
+- usar termos em portugues, como por exemplo Programas → Create, Programas e Criar.
+- no UC14 – Configurar Critérios de Premiação por Edição, os criterios de premiação por edição sao textuais apenas, nao realizaremos um controle automatico, sendo essa uma tarefa que devera ser feita pelo gestor do programa ou da turma no Aplicativo Gestor.
+- na UC27 – Cadastrar e Atualizar Dados da Empreendedora, descrever melhor, que o gestor so pode alterar dados de acesso como email e ddd+telefone. O unico dado que o empreendedor nao pode alterar eh o numero do CPF uma vez que ele foi validado, podendo alterar e corrigir todos os outros dados.
+- os dados financeiros sao registrados todo mes durante o programa para acompanhar a evoluçao dos empreendedores apoiados pelos programas
+- a interface web para o usuario empreendedor se chama Portal Educacional, destinado ao empreendedor que fara os programas educacionais. É onde ele realiza os cadastros, acompanha os modulos, consome conteudos, responde questionarios, realiza as atividades como subir material, preencher dados de evolucao financeira (faturamento, renda, investimento e poupanca).
+- Renomear/padronizar "Plataforma Educacional (Cliente)" para Portal Educacional em toda a v1 (alinha com o contrato e com App Gestor / Strapi CMS).
+- Enriquecer a descrição da Empreendedora listando explicitamente as funções do portal (cadastro, módulos, conteúdos, questionários, uploads, dados financeiros).
+- Nos fluxos dos UCs, usar "via Portal Educacional" quando ajudar a clareza — por exemplo UC4, UC21, UC36, UC43, UC45.
+- Diagrama de contexto com três frontends internos:
+Portal Educacional → Empreendedora
+App Gestor → Gestor/Educador e Gestor de Programa
+Strapi CMS → Administrador
+Painel de Dados (BI) → Administrador
+- definiu-se que os dados legados servem para consulta de participaçao em programas passados, mas nao para preencher os dados de cadastro
+- os dados pregressos devem somar aos valores totalizadores de partiipantes, beneficiados, certificados e premiados

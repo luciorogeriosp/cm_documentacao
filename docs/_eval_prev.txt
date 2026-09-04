@@ -1,0 +1,83 @@
+## Veredito
+
+**Pronto com ressalvas** — dá para abrir um Sprint 1 **fino** (auth, CMS skeleton, inscrição, infra). **Não** está travado o suficiente para puxar o MVP completo em velocidade sem fechar ~5 decisões.
+
+A documentação está forte como **alinhamento de produto/domínio**. Ainda não é um **contrato de implementação** fechado.
+
+---
+
+## O que está bem
+
+- Glossário de domínio coerente: online vs presencial/híbrido, aprovação ≠ alocação ≠ OK, maratona ≠ risco, API paga só no aceite em P/H.
+- Fluxo de seleção (UC24/UC17/UC25) e Visita Técnica bem descritos no Gestor.
+- Protótipo do **Aplicativo Gestor** alinhado à v6 (link mágico, ocupação, KPIs de maratona, UC53).
+- ADR da jornada com ER/DDL/filas — útil para engenharia, ainda **Proposto**.
+- `fora_escopo_v1` deixa claro o aditivo comercial vs baseline original.
+
+---
+
+## Bloqueadores antes de “desenvolver de verdade”
+
+| # | Bloqueador | Por quê trava |
+|---|------------|----------------|
+| 1 | **Quem dispara o 1º WhatsApp após qualificar?** | Domínio: aprovação dispara. UC25: comunicar é manual/informativo. UC33: “UC25 ou automático conforme edição” — flag inexistente no UC9. |
+| 2 | **Quem libera atividade no online?** | Timer UC33 vs checkbox do gestor UC34. Sem isso, status `liberada` fica ambíguo. |
+| 3 | **Mautic vs backend** | v6/kick-off ainda citam Mautic; ADR prefere backend; `fora_escopo` trata Mautic como negociável. UC33 não dá para desenhar. |
+| 4 | **MVP listado ≠ narrativa v6** | Essenciais omitem UC56/UC57; UC51 (vídeo WhatsApp) está como secundário mas é crítico no online. |
+| 5 | **Sem OpenAPI / contratos** | Gestor, Cliente, Gupshup e webhooks de OK não paralelizam com segurança. |
+
+---
+
+## Riscos médios (não param o dia 1, geram retrabalho)
+
+- **Cliente** ainda “alinhado à v5”: fraco em P/H = mesmo comportamento, efetivação pelo grupo, maratona, Visita Técnica.
+- UC20 sem cabeçalho `###` — quebra rastreio.
+- Fórmula exata de risco (7 vs 14 dias; ≥3 **ou** aderência &lt;40%) precisa de tabela de decisão única.
+- UC35 “extra não conta na certificação” vs UC13 “todas as atividades contam”.
+- Coletivo: % de beneficiamento com questionários individuais + obrigações compartilhadas mal fechado.
+- DDL só da jornada; faltam empreendimento, doação, seleção, presença.
+- NFRs e cenários de teste (Given/When/Then) quase ausentes.
+- Escopo comercial: UCs prometem P1–P9; aditivo ainda em negociação → risco de construir o que não está pago.
+
+---
+
+## Prontidão por frente
+
+| Frente | Nota | Comentário |
+|--------|------|------------|
+| Domínio / regras de negócio | 4/5 | Narrativa rica; 2–3 decisões críticas abertas |
+| Protótipo Gestor | 4/5 | Bom para UX e fluxos |
+| Protótipo Cliente | 2.5/5 | Inscrição ok; pós-v5 incompleto |
+| ADR jornada | 3.5/5 | Acionável, não aprovado |
+| MVP / backlog | 2.5/5 | Priorização contraditória |
+| Contratos técnicos | 1.5/5 | Sem OpenAPI, env matrix, testes |
+| Comercial vs build | 2/5 | Aditivo não fechado |
+
+UCs críticos (amostra): UC3/21/24/53 ≈ 4; UC9/13/33/34 ≈ 3 — bons para desenho, fracos para aceite de sprint.
+
+---
+
+## O que eu autorizaria como PM
+
+**Sim — Sprint 0 / Sprint 1 estreito:**
+- Repos, auth link mágico, Strapi tipos básicos, landing + pré-cadastro + inscrição, esqueleto AWS
+- Em paralelo: fechar as 5 decisões acima + OpenAPI v0 do caminho crítico
+
+**Não — ainda:**
+- Implementar UC33/UC51/UC52/UC53/UC56 “de ponta a ponta”
+- Tratar a v6 inteira como backlog pago do MVP
+- Dividir time em Gestor + Cliente + jornada sem contrato de API e decisão Mautic
+
+---
+
+## Checklist mínimo para “go” de desenvolvimento amplo
+
+1. Decisão escrita: **trigger pós-aprovação** (auto vs botão UC25) + flag no UC9  
+2. Decisão: **liberação online = só timer** (gestor só acompanha) **ou** híbrido timer+checkbox  
+3. ADR **aprovado** e v6 alinhada (Mautic fora do WhatsApp path ou não)  
+4. Tabela MVP include/exclude por UC × modalidade  
+5. OpenAPI v0: auth, inscrição, seleção, webhook OK → lote  
+6. Atualizar Cliente à v6 (P/H, grupo, maratona)  
+7. Congelar aditivo comercial do que entra em 2027  
+
+**Resumo em uma frase:** documentação excelente para alinhar produto; insuficiente sozinha para fábrica de features — falta fechar decisões de orquestração, MVP real e contratos técnicos.

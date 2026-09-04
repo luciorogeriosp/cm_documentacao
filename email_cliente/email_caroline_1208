@@ -1,0 +1,76 @@
+Janela de Horários para Disparo de Mensagens
+Em alinhamento interno com a Vi, definimos a seguinte métrica para os parâmetros de envio e disparos de mensagens:
+
+Segunda a Sexta-feira: janela de 12 horas, com disparos das 08h às 20h.
+
+Sábados: janela de 8 horas, com disparos das 08h às 16h.
+
+Domingos e Feriados: sem disparos programados.
+
+Dúvida/Consulta para a equipe técnica: Considerando a experiência e as boas práticas de UX e entrega de mensagens de vocês, esse intervalo faz sentido? Ficamos no aguardo da avaliação de vocês!
+
+Fluxo da Edição / Ciclo de Formação (Visão Geral)
+Para reforçar e garantir que o sistema contemple a jornada completa da aluna, mapeamos o ciclo em 7 etapas principais:
+
+Divulgação e Inscrição: Abertura via formulário de pré-inscrição (que já está sendo adaptado por vocês dentro do sistema). (Anexo: Forms Inscrição.)
+
+Seleção de Perfil: Análise do perfil da empreendedora e do negócio frente aos pré-requisitos e critérios do regulamento oficial. (Anexo: Regulamento.)
+
+Início da Formação: Envio das 10 videoaulas + atividades (formulário de diagnóstico inicial + questionários de fixação de conteúdo). (Anexo: Atividades )
+
+Ação de Check-point / Reengajamento (15 dias de curso): Como a formação dura entre 30 e 40 dias, acionamos uma mini campanha de incentivo (duração de 3 a 5 dias, geralmente em fins de semana ou feriados) para resgatar alunas desaceleradas e reduzir a evasão.
+
+Gatilho de Recompensa: Quem conclui a pendência ganha acesso a um material educativo extra relacionado à edição.
+
+Conclusão e Emissão de Certificados: Finalização do ciclo com a emissão do certificado de conclusão diretamente pelo sistema (ponto super importante para automatizarmos).
+
+Base de Concluintes e Convite do Workshop: O sistema da Lys consolida a lista de participantes que finalizaram 100% da formação. A partir dessa base, enviamos o convite do Workshop de Encerramento (atualmente via e-mail, para evitar custos extras com disparos de WhatsApp).
+
+Workshop ao Vivo e Etapa Final: Evento de fechamento onde realizamos a seleção das alunas elegíveis para a fase de doação (Mentoria Individual + Capital Semente).
+
+Regras de Negócio e KPIs: Seleção para Doação (Mentoria + Capital Semente)
+Para que a seleção das contempladas seja justa e automatizada, precisamos que o sistema aplique os seguintes filtros:
+
+Validação de Conclusão: Apenas empreendedoras presentes na base oficial de concluintes do ciclo podem participar.
+
+Presença Confirmada na Live (Workshop):
+
+A transmissão é fechada (link enviado apenas para concluintes).
+
+Durante a transmissão, revelamos uma Palavra-Chave.
+
+A aluna deve preencher a Lista de Presença dentro do prazo estipulado ao vivo. (Anexo: Exemplo_Forms_Lista_Presenca)
+
+Avaliação de Conteúdo (Prova Final):
+
+Logo após o fechamento da lista de presença, disparado um e-mail com o formulário de avaliação do ciclo + workshop.
+
+O prazo para resposta é rígido (geralmente 24 horas). (Anexo: Exemplo_Forms_Avaliacao_Final)
+
+Filtro Combinado de Elegibilidade (Algoritmo de Seleção):
+
+Critério A — Nota na Avaliação Final: Priorizar maiores pontuações (escala 0 a 100).
+
+Critério B — Agilidade e Palavra-Chave: Validar se citou a palavra-chave correta e o tempo de resposta do formulário.
+
+Critério C — Desempenho Histórico na Formação: A aluna precisa ter mantido uma pontuação média satisfatória durante o curso (ex.: na última edição, a pontuação máxima era 42, e estabelecemos corte mínimo em 35 pontos).
+
+Critério D — Regra de Duplicidade / Carência de 3 Anos (Filtro do Consulado): O sistema deve verificar se a participante já foi contemplada com doação nos últimos 3 anos em qualquer programa do Consulado da Mulher. Se foi premiada nos últimos 3 anos, fica ineligível; se o prêmio foi há mais de 3 anos (ou nunca premiada), está liberada.
+
+Obs.: Após este fluxo, especificamente 30 dias após o fim do ciclo de formação/edição, nós disparamos o formulário de diagnóstico final para monitorarmos e entendermos o quanto a empreendedora identifica que foi impactada pelo curso. (Anexo: Forms pós 30 dias )
+
+Processo Pós-Seleção e Proposta: Módulo de Gestão de Mentorias
+Após a aplicação dos filtros acima e definição das finalistas (geralmente 50 empreendedoras por ciclo), realizamos a comunicação oficial e a coleta de documentação bancária/recibos (atualmente gerados manualmente via Canva/Word).. (Anexo modelos: Recibo, Card mentoria e Lista de finalistas )
+
+Pensando em otimizar e centralizar toda a operação dentro da plataforma, gostaria de propor a inclusão de um módulo dedicado à Gestão de Mentorias no sistema.
+
+Estrutura Sugerida para o Módulo de Mentoria:
+Painel de Acompanhamento (Status): Visualização clara das mentorias ativas (ex.: A Iniciar, Em Andamento, Concluída, Pendente).
+
+Ficha da Mentorada e Match: Centralização dos dados de contato da empreendedora e facilidade para vincular ao perfil do mentor voluntário responsável.
+
+Repositório de Documentos e Feedbacks: Espaço para upload dos relatórios de avaliação, feedbacks dos mentores e devolutivas das mentoradas.
+
+Histórico de Longo Prazo: Registro do histórico de evolução da empreendedora e do negócio para futuras consultas e acompanhamentos de impacto do Consulado.
+
+Acredito que esses pontos cobrem todo o nosso fluxo atual e as necessidades de automação.

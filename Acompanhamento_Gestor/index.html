@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Consulado da Mulher — Acompanhamento do Projeto</title>
+  <style>
+    :root {
+      --bg: #f4f6f9; --card: #fff; --text: #1a2332; --muted: #5c6b7a;
+      --accent: #7b2d5b; --accent-light: #f3e8ef; --border: #dde3ea; --ok: #2d6a4f;
+      --scope-mvp: #1d4ed8; --scope-f2: #6b7280; --scope-f3: #9ca3af;
+      --st-nao: #6b7280; --st-andamento: #b45309;
+      --plano-dentro: #2d6a4f; --plano-fora: #be123c;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.35; }
+    header { background: linear-gradient(135deg, #5a1f44, #7b2d5b); color: #fff; padding: .75rem 1rem; }
+    header h1 { margin: 0 0 .15rem; font-size: 1.15rem; }
+    header p { margin: 0; opacity: .9; font-size: .85rem; }
+    .banner { background: #fef3c7; border-bottom: 1px solid #fcd34d; padding: .4rem 1rem; font-size: .8rem; display: none; }
+    .banner.visible { display: block; }
+    .toolbar {
+      display: flex; flex-wrap: wrap; gap: .35rem; padding: .4rem 1rem;
+      background: var(--card); border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 20;
+    }
+    .toolbar button, .toolbar label.btn {
+      padding: .3rem .65rem; border: 1px solid var(--border); background: var(--card);
+      border-radius: 5px; cursor: pointer; font-size: .78rem; display: inline-block;
+    }
+    .toolbar button:hover, .toolbar label.btn:hover { background: var(--accent-light); border-color: var(--accent); }
+    .panels { padding: .5rem 1rem; display: grid; gap: .5rem; }
+    .panel-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: .4rem; }
+    .panel-title { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 0 0 .3rem; }
+    .card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: .45rem .65rem;
+    }
+    .card .label { font-size: .65rem; color: var(--muted); text-transform: uppercase; }
+    .card .value { font-size: 1.1rem; font-weight: 700; color: var(--accent); }
+    .card .sub { font-size: .68rem; color: var(--muted); margin-top: .1rem; }
+    .scope-card .value { font-size: 1.25rem; }
+    .scope-card.scope-MVP { border-left: 3px solid var(--scope-mvp); }
+    .scope-card.scope-Fase-2 { border-left: 3px solid var(--scope-f2); }
+    .scope-card.scope-Fase-3 { border-left: 3px solid var(--scope-f3); }
+    .andamento-card.st-Não-iniciado { border-left: 3px solid var(--st-nao); }
+    .andamento-card.st-Em-andamento { border-left: 3px solid var(--st-andamento); }
+    .plano-card.plano-dentro { border-left: 3px solid var(--plano-dentro); }
+    .plano-card.plano-fora { border-left: 3px solid var(--plano-fora); }
+    .cap-card { border-left: 3px solid #9d174d; }
+    main { max-width: 1100px; margin: 0 auto; padding: 0 .75rem 1.5rem; }
+    details { background: var(--card); border: 1px solid var(--border); border-radius: 6px; margin-bottom: .35rem; }
+    details details { margin: .25rem .4rem; border-radius: 5px; }
+    summary {
+      list-style: none; cursor: pointer; padding: .45rem .75rem; font-weight: 600;
+      display: flex; align-items: center; gap: .4rem; user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before {
+      content: ""; width: 0; height: 0;
+      border-left: 5px solid var(--accent); border-top: 3.5px solid transparent; border-bottom: 3.5px solid transparent;
+      transition: transform .2s; flex-shrink: 0;
+    }
+    details[open] > summary::before { transform: rotate(90deg); }
+    .phase > summary { font-size: 1rem; background: var(--accent-light); }
+    .block-title {
+      font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em;
+      color: var(--muted); padding: .35rem .75rem .1rem; margin: 0;
+    }
+    .phase-desc, .artifact-desc {
+      padding: 0 .75rem .35rem; margin: -.1rem 0 0; color: var(--muted); font-size: .8rem;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .leaf-list { list-style: none; margin: 0; padding: 0 .35rem .35rem; }
+    .leaf-item {
+      display: grid; grid-template-columns: 1fr auto; gap: .25rem .65rem;
+      padding: .35rem .65rem; border-top: 1px solid var(--border); align-items: center; position: relative;
+    }
+    .leaf-item:first-child { border-top: none; }
+    .leaf-body h4 { margin: 0 0 .1rem; font-size: .88rem; line-height: 1.25; }
+    .leaf-body p {
+      margin: 0 0 .15rem; font-size: .78rem; color: var(--muted); line-height: 1.3;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .leaf-when { font-size: .72rem; color: var(--ok); }
+    .leaf-meta { display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: .3rem; min-width: 0; }
+    .meta-badges { display: flex; flex-wrap: wrap; gap: .25rem; justify-content: flex-end; }
+    .pick-btn {
+      font-size: .65rem; padding: .15rem .4rem; border-radius: 3px; font-weight: 600;
+      border: 1px solid transparent; cursor: pointer;
+      display: inline-flex; align-items: center; gap: .15rem; white-space: nowrap;
+    }
+    .pick-btn:hover { filter: brightness(.95); }
+    .pick-btn.scope-MVP { background: #dbeafe; color: var(--scope-mvp); }
+    .pick-btn.scope-Fase-2 { background: #f3f4f6; color: var(--scope-f2); }
+    .pick-btn.scope-Fase-3 { background: #f9fafb; color: var(--scope-f3); }
+    .pick-btn.st-Não-iniciado { background: #f3f4f6; color: var(--st-nao); }
+    .pick-btn.st-Em-andamento { background: #fef3c7; color: var(--st-andamento); }
+    .pick-menu {
+      position: absolute; right: .65rem; top: 2rem; z-index: 30;
+      background: var(--card); border: 1px solid var(--border); border-radius: 6px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.12); min-width: 130px; padding: .25rem 0;
+    }
+    .pick-menu[hidden] { display: none; }
+    .pick-menu button {
+      display: block; width: 100%; text-align: left; padding: .35rem .75rem;
+      border: none; background: none; cursor: pointer; font-size: .8rem;
+    }
+    .pick-menu button:hover { background: var(--accent-light); }
+    .pick-menu button.active { font-weight: 700; color: var(--accent); }
+    .pct-wrap { display: flex; align-items: center; gap: .2rem; }
+    .pct-wrap input {
+      width: 3rem; padding: .2rem .3rem; border: 1px solid var(--border);
+      border-radius: 3px; text-align: right; font-size: .8rem;
+    }
+    .pct-badge {
+      font-size: .75rem; font-weight: 700; color: var(--accent); margin-left: auto;
+      padding: .1rem .4rem; background: var(--accent-light); border-radius: 3px;
+    }
+    .leaf-item.fora-plano { background: #fff8fa; }
+    .leaf-item.fora-plano .leaf-body h4::after {
+      content: " · fora do plano"; font-size: .65rem; font-weight: 600; color: var(--plano-fora);
+    }
+    .toggle-wrap {
+      display: inline-flex; align-items: center; gap: .3rem; cursor: pointer;
+      font-size: .62rem; color: var(--muted); user-select: none;
+    }
+    .toggle-wrap input { position: absolute; opacity: 0; width: 0; height: 0; }
+    .toggle-track {
+      width: 1.7rem; height: .95rem; background: #fecdd3; border-radius: 999px;
+      position: relative; transition: background .2s; flex-shrink: 0;
+    }
+    .toggle-track::after {
+      content: ""; position: absolute; top: 1.5px; left: 1.5px; width: .7rem; height: .7rem;
+      background: #fff; border-radius: 50%; transition: transform .2s; box-shadow: 0 1px 2px rgba(0,0,0,.15);
+    }
+    .toggle-wrap input:checked + .toggle-track { background: #86efac; }
+    .toggle-wrap input:checked + .toggle-track::after { transform: translateX(.7rem); }
+    .toggle-wrap input:focus-visible + .toggle-track { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .ref-id { font-size: .6rem; color: #aaa; }
+    .cap-group {
+      margin: .2rem .35rem .4rem; border: 1px dashed #c4b5c0; background: #faf7f9;
+    }
+    .cap-group > summary { font-size: .82rem; background: #f3e8ef; padding: .35rem .6rem; }
+    .cap-group .pct-badge { font-size: .7rem; }
+    .cap-part-title {
+      font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .03em;
+      color: var(--muted); padding: .3rem .65rem .05rem; margin: 0;
+    }
+    .cap-badge {
+      display: inline-block; font-size: .6rem; font-weight: 600; background: #fce7f3;
+      color: #9d174d; padding: .05rem .3rem; border-radius: 3px; margin: .1rem 0 0;
+    }
+    .cap-badge.cap-nucleo { background: #e0e7ff; color: #3730a3; }
+    .derived-panel-wrap {
+      list-style: none; margin: .15rem 0 .4rem; padding: 0;
+    }
+    .derived-panel {
+      margin: 0; border: 1px dashed #c4b5c0; border-radius: 5px; background: #faf7f9;
+    }
+    .derived-panel > summary {
+      font-size: .72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .03em; color: var(--accent); background: #f3e8ef;
+      padding: .4rem .65rem; border-radius: 5px;
+    }
+    .derived-panel[open] > summary { border-radius: 5px 5px 0 0; }
+    .derived-panel .derived-body { padding: .35rem .65rem .45rem; }
+    .derived-panel .derived-hint {
+      margin: 0 0 .35rem; font-size: .72rem; color: var(--muted); line-height: 1.3;
+    }
+    .derived-panel .derived-count {
+      font-size: .7rem; font-weight: 700; color: var(--accent); margin-left: auto;
+      padding: .05rem .35rem; background: #fff; border-radius: 3px;
+    }
+    .derived-panel ul { list-style: none; margin: 0; padding: 0; }
+    .derived-panel .derived-body > ul > li {
+      display: flex; flex-wrap: wrap; gap: .15rem .5rem; align-items: baseline;
+      padding: .25rem 0; border-top: 1px solid var(--border); font-size: .78rem;
+    }
+    .derived-panel .derived-body > ul > li:first-child { border-top: none; }
+    .derived-panel a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    .derived-panel a:hover { text-decoration: underline; }
+    .derived-panel .derived-src { font-size: .65rem; color: var(--muted); }
+    .derived-panel .derived-empty { font-size: .75rem; color: var(--muted); font-style: italic; margin: 0; }
+    .leaf-item.derived-flash { outline: 2px solid var(--accent); outline-offset: -2px; background: var(--accent-light); }
+    .extensoes-tags { display: flex; flex-wrap: wrap; gap: .2rem; margin: .15rem 0 .1rem; }
+    .extensoes-tags span {
+      font-size: .6rem; font-weight: 600; background: #fff7ed; color: #c2410c;
+      padding: .05rem .3rem; border-radius: 3px;
+    }
+    .leaf-flags { display: flex; flex-wrap: wrap; gap: .35rem .55rem; justify-content: flex-end; width: 100%; }
+    .toggle-wrap.toggle-ext .toggle-track { background: #fed7aa; }
+    .toggle-wrap.toggle-ext input:checked + .toggle-track { background: #fdba74; }
+    .leaf-ext-detail {
+      grid-column: 1 / -1;
+      padding: .15rem 0 .1rem;
+    }
+    .leaf-ext-detail[hidden] { display: none !important; }
+    .leaf-ext-detail label {
+      display: block; font-size: .62rem; font-weight: 700; color: #c2410c;
+      text-transform: uppercase; letter-spacing: .03em; margin-bottom: .2rem;
+    }
+    .leaf-ext-detail textarea {
+      width: 100%; min-height: 2.6rem; resize: vertical;
+      padding: .35rem .5rem; border: 1px solid #fdba74; border-radius: 4px;
+      font: inherit; font-size: .78rem; line-height: 1.35; background: #fffbeb;
+    }
+    .leaf-ext-detail textarea:focus {
+      outline: 2px solid #c2410c; outline-offset: 1px;
+    }
+    .pct-wrap.pct-ext { opacity: .4; pointer-events: none; }
+    .pct-wrap.pct-ext.pct-ext-active { opacity: 1; pointer-events: auto; }
+    .pct-wrap .pct-label { font-size: .58rem; color: var(--muted); white-space: nowrap; }
+    .pct-wrap.pct-ext-active .pct-label { color: #c2410c; font-weight: 600; }
+    /* Fora do plano = tipo/item novo; não usa o conceito de extensão */
+    .leaf-item.fora-plano .toggle-ext,
+    .leaf-item.fora-plano .pct-wrap.pct-ext,
+    .leaf-item.fora-plano .leaf-ext-detail { display: none !important; }
+    footer { padding: .75rem 1rem; font-size: .75rem; color: var(--muted); }
+    @media (max-width: 600px) {
+      .leaf-item { grid-template-columns: 1fr; align-items: start; }
+      .leaf-meta { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Consulado da Mulher</h1>
+    <p>Acompanhamento do projeto — visão executiva</p>
+  </header>
+  <div class="banner" id="loadBanner">
+    Não foi possível carregar <strong>estrutura.json</strong> automaticamente.
+    <button type="button" id="btnLoadEstrutura">Carregar estrutura.json</button>
+    ou sirva esta pasta com um servidor local (<code>python -m http.server</code>).
+  </div>
+  <div class="toolbar">
+    <button type="button" id="btnExpand">Expandir tudo</button>
+    <button type="button" id="btnCollapse">Recolher tudo</button>
+    <button type="button" id="btnExportEstrutura">Exportar estrutura.json</button>
+    <button type="button" id="btnExportStatus">Exportar status.json</button>
+    <button type="button" id="btnExportSnapshot">Exportar snapshot completo</button>
+    <button type="button" id="btnImport">Importar JSON</button>
+    <input type="file" id="fileImport" accept=".json" hidden>
+    <label class="btn" for="fileEstrutura">Carregar estrutura.json</label>
+    <input type="file" id="fileEstrutura" accept=".json" hidden>
+    <button type="button" id="btnSaveLocal">Salvar no navegador</button>
+  </div>
+  <div class="panels">
+    <section>
+      <p class="panel-title">Plano original do cliente <span style="font-weight:400;text-transform:none">(ref. escopo_original_cliente.txt — independente de MVP/Fase 2)</span></p>
+      <div class="panel-row" id="planoSummary"></div>
+    </section>
+    <section>
+      <p class="panel-title">Capacidades com extensões <span style="font-weight:400;text-transform:none">(núcleo no plano original + acréscimos do projeto)</span></p>
+      <div class="panel-row" id="capSummary"></div>
+    </section>
+    <section>
+      <p class="panel-title">Progresso por fase do projeto</p>
+      <div class="panel-row" id="phaseSummary"></div>
+    </section>
+    <section>
+      <p class="panel-title">Atividades por escopo (MVP / Fase 2 / Fase 3)</p>
+      <div class="panel-row" id="scopeSummary"></div>
+    </section>
+    <section>
+      <p class="panel-title">Status de andamento</p>
+      <div class="panel-row" id="andamentoSummary"></div>
+    </section>
+  </div>
+  <main id="app"></main>
+  <footer>
+    Versão ago/2026 · Edite <a href="estrutura.json">estrutura.json</a> ·
+    <a href="../escopo_original_cliente.txt">Plano original do cliente</a> ·
+    <a href="../Estrutura_Evolucao_Projeto.csv">Planilha técnica (CSV)</a>
+  </footer>
+  <script>
+    const STATUS_KEY = "acompanhamento_gestor_status_v5";
+    let ESTRUTURA = null;
+    let SCOPES = ["MVP", "Fase 2", "Fase 3"];
+    let ANDAMENTO = ["Não iniciado", "Em andamento"];
+    let status = { version: 5, estruturaVersion: null, updatedAt: null, items: {} };
+    let openPickMenu = null;
+
+    function tokenClass(s) { return s.replace(/\s+/g, "-"); }
+    function scopeClass(s) { return "scope-" + tokenClass(s); }
+    function andamentoClass(s) { return "st-" + tokenClass(s); }
+
+    function normalizeScope(scope) {
+      return scope === "Agora" ? "MVP" : scope;
+    }
+
+    function iterItems(fn) {
+      if (!ESTRUTURA) return;
+      ESTRUTURA.phases.forEach(p => p.artifacts.forEach(a =>
+        a.blocks.forEach(b => b.items.forEach(it => fn(it)))));
+    }
+
+    function findItem(id) {
+      let found = null;
+      iterItems(it => { if (it.id === id) found = it; });
+      return found;
+    }
+
+    function getItemState(it) {
+      const st = status.items[it.id] || {};
+      let pct = st.pct;
+      if (pct == null && it.defaultPct != null) pct = it.defaultPct;
+      if (pct == null && ESTRUTURA.csvDefaults && ESTRUTURA.csvDefaults[it.csvId]) {
+        pct = ESTRUTURA.csvDefaults[it.csvId];
+      }
+      if (pct == null || pct === "") pct = 0;
+      pct = Number(pct);
+      if (isNaN(pct)) pct = 0;
+      let pctExtensao = st.pctExtensao;
+      if (pctExtensao == null && it.defaultPctExtensao != null) pctExtensao = it.defaultPctExtensao;
+      if (pctExtensao == null || pctExtensao === "") pctExtensao = 0;
+      pctExtensao = Number(pctExtensao);
+      if (isNaN(pctExtensao)) pctExtensao = 0;
+      const scope = normalizeScope(st.scope != null ? st.scope : it.scope);
+      const andamento = st.andamento || "Não iniciado";
+      const planoOriginal = st.planoOriginal != null ? st.planoOriginal : (it.planoOriginal !== false);
+      // Extensão só faz sentido se o núcleo estava no plano original
+      let teveExtensao = false;
+      if (planoOriginal) {
+        if (st.teveExtensao != null) teveExtensao = !!st.teveExtensao;
+        else teveExtensao = !!(it.extensoes && it.extensoes.length);
+      }
+      let detalheExtensao = st.detalheExtensao;
+      if (detalheExtensao == null || detalheExtensao === "") {
+        detalheExtensao = (it.extensoes && it.extensoes.length) ? it.extensoes.join("; ") : "";
+      }
+      return { pct, pctExtensao, scope, andamento, planoOriginal, teveExtensao, detalheExtensao };
+    }
+
+    function ensureStatusItem(id) {
+      if (!status.items[id]) status.items[id] = {};
+      return status.items[id];
+    }
+
+    function saveStatus() {
+      status.updatedAt = new Date().toISOString();
+      status.estruturaVersion = ESTRUTURA?.version || null;
+      localStorage.setItem(STATUS_KEY, JSON.stringify(status));
+    }
+
+    function loadStatus() {
+      try {
+        const raw = localStorage.getItem(STATUS_KEY)
+          || localStorage.getItem("acompanhamento_gestor_status_v4")
+          || localStorage.getItem("acompanhamento_gestor_status_v3")
+          || localStorage.getItem("acompanhamento_gestor_status_v2");
+        if (raw) status = { version: 5, items: {}, ...JSON.parse(raw) };
+      } catch { status = { version: 5, items: {} }; }
+      iterItems(it => {
+        const st = status.items[it.id];
+        if (st?.scope) it.scope = normalizeScope(st.scope);
+        else it.scope = normalizeScope(it.scope);
+      });
+    }
+
+    function applyStatusToUI() {
+      document.querySelectorAll("input[type='number'][data-leaf-id][data-pct-field='pct']").forEach(inp => {
+        const id = inp.dataset.leafId;
+        const it = findItem(id);
+        if (!it) return;
+        inp.value = getItemState(it).pct;
+      });
+      document.querySelectorAll("input[type='number'][data-leaf-id][data-pct-field='pctExtensao']").forEach(inp => {
+        const id = inp.dataset.leafId;
+        const it = findItem(id);
+        if (!it) return;
+        const st = getItemState(it);
+        inp.value = st.pctExtensao;
+        const wrap = inp.closest(".pct-wrap");
+        if (wrap) wrap.classList.toggle("pct-ext-active", usesPctExtensao(it, st));
+      });
+      document.querySelectorAll(".pick-btn[data-kind='scope']").forEach(btn => {
+        const id = btn.dataset.leafId;
+        const it = findItem(id);
+        if (!it) return;
+        const st = getItemState(it);
+        btn.textContent = st.scope + " ▾";
+        btn.className = "pick-btn " + scopeClass(st.scope);
+        btn.dataset.kind = "scope";
+      });
+      document.querySelectorAll(".pick-btn[data-kind='andamento']").forEach(btn => {
+        const id = btn.dataset.leafId;
+        const it = findItem(id);
+        if (!it) return;
+        const st = getItemState(it);
+        btn.textContent = st.andamento + " ▾";
+        btn.className = "pick-btn " + andamentoClass(st.andamento);
+        btn.dataset.kind = "andamento";
+      });
+      document.querySelectorAll(".toggle-plano input[data-leaf-id]").forEach(inp => {
+        const id = inp.dataset.leafId;
+        const it = findItem(id);
+        if (!it) return;
+        const st = getItemState(it);
+        inp.checked = st.planoOriginal;
+        updatePlanoRowVisual(id, st.planoOriginal);
+      });
+      document.querySelectorAll(".toggle-ext input[data-leaf-id]").forEach(inp => {
+        const id = inp.dataset.leafId;
+        const it = findItem(id);
+        if (!it) return;
+        const st = getItemState(it);
+        inp.checked = st.teveExtensao;
+        syncExtensaoUI(id);
+      });
+      document.querySelectorAll("textarea[data-detalhe-ext]").forEach(ta => {
+        const id = ta.dataset.leafId;
+        const it = findItem(id);
+        if (!it) return;
+        ta.value = getItemState(it).detalheExtensao;
+      });
+      refreshDerivedPanels();
+    }
+
+    function updatePlanoRowVisual(id, dentro) {
+      const row = document.querySelector(`.leaf-item[data-leaf-row="${id}"]`);
+      if (row) row.classList.toggle("fora-plano", !dentro);
+    }
+
+    function usesPctExtensao(it, st) {
+      return !!(st.planoOriginal && st.teveExtensao && canConfigureExtensao(it));
+    }
+
+    function canConfigureExtensao(it) {
+      // Folhas que já são a fatia "extensão" do Desenvolvimento não repetem o toggle
+      return it.capacidadeParte !== "extensao";
+    }
+
+    function syncExtensaoUI(id) {
+      const it = findItem(id);
+      if (!it) return;
+      const st = getItemState(it);
+      const row = document.querySelector(`.leaf-item[data-leaf-row="${id}"]`);
+      if (!row) return;
+      updatePlanoRowVisual(id, st.planoOriginal);
+      const detail = row.querySelector(".leaf-ext-detail");
+      if (detail) detail.hidden = !(st.planoOriginal && st.teveExtensao);
+      const wrap = row.querySelector(".pct-wrap.pct-ext");
+      if (wrap) {
+        wrap.classList.toggle("pct-ext-active", usesPctExtensao(it, st));
+        const inp = wrap.querySelector("input");
+        if (inp) {
+          if (usesPctExtensao(it, st)) inp.removeAttribute("tabindex");
+          else inp.setAttribute("tabindex", "-1");
+        }
+      }
+      const tog = row.querySelector(".toggle-ext input");
+      if (tog) tog.checked = st.teveExtensao;
+    }
+
+    function findItemContext(id) {
+      let ctx = null;
+      if (!ESTRUTURA) return null;
+      ESTRUTURA.phases.forEach(p => p.artifacts.forEach(a =>
+        a.blocks.forEach(b => b.items.forEach(it => {
+          if (it.id === id) ctx = { phase: p.title, artifact: a.title, block: b.title, item: it };
+        }))));
+      return ctx;
+    }
+
+    function collectForaPlanoItems() {
+      const list = [];
+      iterItems(it => {
+        if (it.id === "1.1") return;
+        const st = getItemState(it);
+        if (!st.planoOriginal) list.push(it);
+      });
+      return list;
+    }
+
+    function collectImpactaModeloItems() {
+      const list = [];
+      iterItems(it => {
+        if (it.id === "1.3") return;
+        if (it.impactaModelo) list.push(it);
+      });
+      return list;
+    }
+
+    function fillDerivedList(ul, items, emptyMsg) {
+      ul.innerHTML = "";
+      const panel = ul.closest(".derived-panel");
+      const countEl = panel && panel.querySelector(".derived-count");
+      if (countEl) countEl.textContent = String(items.length);
+      if (!items.length) {
+        const p = document.createElement("p");
+        p.className = "derived-empty";
+        p.textContent = emptyMsg;
+        ul.appendChild(p);
+        return;
+      }
+      items.forEach(it => {
+        const ctx = findItemContext(it.id);
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = "#leaf-" + encodeURIComponent(it.id);
+        a.textContent = it.title;
+        a.addEventListener("click", e => {
+          e.preventDefault();
+          const target = document.getElementById("leaf-" + it.id);
+          if (target) {
+            let el = target.parentElement;
+            while (el) {
+              if (el.tagName === "DETAILS") el.open = true;
+              el = el.parentElement;
+            }
+            target.scrollIntoView({ behavior: "smooth", block: "center" });
+            target.classList.add("derived-flash");
+            setTimeout(() => target.classList.remove("derived-flash"), 1400);
+          }
+        });
+        li.appendChild(a);
+        const src = document.createElement("span");
+        src.className = "derived-src";
+        src.textContent = ctx
+          ? (ctx.artifact + (it.capacidadeLabel ? " · " + it.capacidadeLabel : ""))
+          : (it.csvId || it.id);
+        li.appendChild(src);
+        ul.appendChild(li);
+      });
+    }
+
+    function createExtrasForaPlanoPanel() {
+      const items = collectForaPlanoItems();
+      const wrap = document.createElement("li");
+      wrap.className = "derived-panel-wrap";
+      const details = document.createElement("details");
+      details.className = "derived-panel";
+      details.open = true;
+      details.dataset.derived = "fora-plano";
+      details.innerHTML = `
+        <summary>Extras / fora do plano (to-do de documentação)
+          <span class="derived-count">${items.length}</span></summary>
+        <div class="derived-body">
+          <p class="derived-hint">Itens marcados fora do plano original — checklist do que ainda precisa constar na v7 / regras. Não são folhas novas; vêm do Desenvolvimento e do catálogo.</p>
+          <ul data-derived-list="fora-plano"></ul>
+        </div>`;
+      fillDerivedList(
+        details.querySelector("[data-derived-list='fora-plano']"),
+        items,
+        "Nenhum item fora do plano no momento."
+      );
+      wrap.appendChild(details);
+      return wrap;
+    }
+
+    function createExtrasModeloPanel() {
+      const items = collectImpactaModeloItems();
+      const wrap = document.createElement("li");
+      wrap.className = "derived-panel-wrap";
+      const details = document.createElement("details");
+      details.className = "derived-panel";
+      details.open = true;
+      details.dataset.derived = "impacta-modelo";
+      details.innerHTML = `
+        <summary>Extras que crescem o modelo
+          <span class="derived-count">${items.length}</span></summary>
+        <div class="derived-body">
+          <p class="derived-hint">Itens com impacto no schema / modelo de dados (formulário dinâmico, entrevista, faturamento ampliado, etc.).</p>
+          <ul data-derived-list="impacta-modelo"></ul>
+        </div>`;
+      fillDerivedList(
+        details.querySelector("[data-derived-list='impacta-modelo']"),
+        items,
+        "Nenhum item marcado com impacto no modelo."
+      );
+      wrap.appendChild(details);
+      return wrap;
+    }
+
+    function refreshDerivedPanels() {
+      const fora = document.querySelector("[data-derived-list='fora-plano']");
+      if (fora) {
+        fillDerivedList(fora, collectForaPlanoItems(), "Nenhum item fora do plano no momento.");
+      }
+      const modelo = document.querySelector("[data-derived-list='impacta-modelo']");
+      if (modelo) {
+        fillDerivedList(modelo, collectImpactaModeloItems(), "Nenhum item marcado com impacto no modelo.");
+      }
+    }
+
+    function renderApp() {
+      const app = document.getElementById("app");
+      app.innerHTML = "";
+      if (!ESTRUTURA) return;
+      ESTRUTURA.phases.forEach(phase => {
+        const phaseEl = document.createElement("details");
+        phaseEl.className = "phase";
+        phaseEl.dataset.groupId = phase.id;
+        phaseEl.open = true;
+        phaseEl.innerHTML = `
+          <summary>${phase.title} <span class="pct-badge" data-badge="${phase.id}">—</span></summary>
+          <p class="phase-desc">${phase.desc}</p>`;
+        phase.artifacts.forEach(art => {
+          const artEl = document.createElement("details");
+          artEl.className = "artifact";
+          artEl.dataset.groupId = art.id;
+          artEl.innerHTML = `
+            <summary>${art.title} <span class="pct-badge" data-badge="${art.id}">—</span></summary>
+            <p class="artifact-desc">${art.desc}</p>`;
+          art.blocks.forEach(block => {
+            const h = document.createElement("p");
+            h.className = "block-title";
+            h.textContent = block.title;
+            artEl.appendChild(h);
+            appendBlockContent(artEl, block);
+          });
+          phaseEl.appendChild(artEl);
+        });
+        app.appendChild(phaseEl);
+      });
+      bindEvents();
+      updateAllBadges();
+      renderSummaries();
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+    }
+
+    function partitionBlock(items) {
+      const seen = {};
+      const order = [];
+      items.forEach(it => {
+        if (!it.capacidade) {
+          const last = order[order.length - 1];
+          if (last && last.type === "avulsos") last.items.push(it);
+          else order.push({ type: "avulsos", items: [it] });
+          return;
+        }
+        if (!seen[it.capacidade]) {
+          seen[it.capacidade] = { key: it.capacidade, label: it.capacidadeLabel || it.capacidade, items: [] };
+          order.push({ type: "cap", group: seen[it.capacidade] });
+        }
+        seen[it.capacidade].items.push(it);
+      });
+      return order;
+    }
+
+    function createLeafList(items) {
+      const ul = document.createElement("ul");
+      ul.className = "leaf-list";
+      items.forEach(it => {
+        ul.appendChild(createLeafItem(it));
+        if (it.id === "1.1") ul.appendChild(createExtrasForaPlanoPanel());
+        if (it.id === "1.3") ul.appendChild(createExtrasModeloPanel());
+      });
+      return ul;
+    }
+
+    function createLeafItem(it) {
+      const st = getItemState(it);
+      const li = document.createElement("li");
+      li.className = "leaf-item" + (st.planoOriginal ? "" : " fora-plano");
+      li.dataset.leafRow = it.id;
+      li.id = "leaf-" + it.id;
+      let capBadge = "";
+      if (it.capacidadeParte === "extensao") {
+        capBadge = `<span class="cap-badge">Extensão de ${escapeHtml(it.capacidadeLabel || it.capacidade)}</span>`;
+      } else if (it.capacidade && !it.catalogoTipo) {
+        capBadge = `<span class="cap-badge cap-nucleo">${escapeHtml(it.capacidadeLabel || it.capacidade)}</span>`;
+      }
+      const extActive = usesPctExtensao(it, st);
+      let extFlags = "";
+      let pctExtHtml = "";
+      let detailHtml = "";
+      if (canConfigureExtensao(it)) {
+        extFlags = `
+          <label class="toggle-wrap toggle-ext" title="Atividade estava no plano e depois ganhou escopo extra (extensão). Só disponível se Plano original estiver ligado.">
+            <input type="checkbox" data-leaf-id="${it.id}" ${st.teveExtensao ? "checked" : ""} aria-label="Teve extensão">
+            <span class="toggle-track"></span>
+            <span>Teve extensão</span>
+          </label>`;
+        pctExtHtml = `
+          <div class="pct-wrap pct-ext${extActive ? " pct-ext-active" : ""}" title="% do aumento de escopo (extensão)">
+            <span class="pct-label">% extensão</span>
+            <input type="number" min="0" max="100" step="1" data-leaf-id="${it.id}" data-pct-field="pctExtensao"
+              value="${st.pctExtensao}" aria-label="Percentual extensão" ${extActive ? "" : "tabindex='-1'"}>
+            <span>%</span>
+          </div>`;
+        detailHtml = `
+          <div class="leaf-ext-detail" ${st.planoOriginal && st.teveExtensao ? "" : "hidden"}>
+            <label for="detalhe-ext-${escapeHtml(it.id)}">Detalhe da extensão (aumento de escopo)</label>
+            <textarea id="detalhe-ext-${escapeHtml(it.id)}" data-leaf-id="${it.id}" data-detalhe-ext
+              rows="2" placeholder="Ex.: +3 indicadores; dificuldade; anexo obrigatório">${escapeHtml(st.detalheExtensao)}</textarea>
+          </div>`;
+      }
+      const pctLabelHtml = it.catalogoTipo
+        ? `<span class="pct-label">% núcleo</span>`
+        : "";
+      li.innerHTML = `
+        <div class="leaf-body">
+          <h4>${escapeHtml(it.title)}</h4>
+          <p>${escapeHtml(it.what)}</p>
+          <div class="leaf-when">Quando: ${escapeHtml(it.when)}</div>
+          ${capBadge}
+          <div class="ref-id">Ref. ${escapeHtml(it.csvId || it.id)}</div>
+        </div>
+        <div class="leaf-meta">
+          <div class="leaf-flags">
+            <label class="toggle-wrap toggle-plano" title="Contemplado no plano original do cliente (escopo_original_cliente.txt)">
+              <input type="checkbox" data-leaf-id="${it.id}" ${st.planoOriginal ? "checked" : ""} aria-label="Plano original">
+              <span class="toggle-track"></span>
+              <span>Plano original</span>
+            </label>
+            ${extFlags}
+          </div>
+          <div class="meta-badges">
+            <button type="button" class="pick-btn ${scopeClass(st.scope)}"
+              data-leaf-id="${it.id}" data-kind="scope" aria-haspopup="listbox" aria-expanded="false">
+              ${escapeHtml(st.scope)} ▾
+            </button>
+            <button type="button" class="pick-btn ${andamentoClass(st.andamento)}"
+              data-leaf-id="${it.id}" data-kind="andamento" aria-haspopup="listbox" aria-expanded="false">
+              ${escapeHtml(st.andamento)} ▾
+            </button>
+          </div>
+          <div class="pct-wrap" title="${it.catalogoTipo ? "Progresso do núcleo" : "Percentual"}">
+            ${pctLabelHtml}
+            <input type="number" min="0" max="100" step="1" data-leaf-id="${it.id}" data-pct-field="pct"
+              value="${st.pct}" aria-label="${it.catalogoTipo ? "Percentual núcleo" : "Percentual"}">
+            <span>%</span>
+          </div>
+          ${pctExtHtml}
+        </div>
+        ${detailHtml}`;
+      return li;
+    }
+
+    function appendBlockContent(artEl, block) {
+      partitionBlock(block.items).forEach(entry => {
+        if (entry.type === "avulsos") {
+          artEl.appendChild(createLeafList(entry.items));
+          return;
+        }
+        const nucleos = entry.group.items.filter(it => it.capacidadeParte === "nucleo");
+        const extensoes = entry.group.items.filter(it => it.capacidadeParte === "extensao");
+        if (entry.group.items.length === 1) {
+          artEl.appendChild(createLeafList(entry.group.items));
+          return;
+        }
+        const nucleoNoPlano = nucleos.some(it => getItemState(it).planoOriginal);
+        const capEl = document.createElement("details");
+        capEl.className = "cap-group";
+        capEl.open = true;
+        capEl.dataset.groupId = "cap-" + entry.group.key + "-" + artEl.dataset.groupId;
+        const nucleoTxt = nucleoNoPlano ? "núcleo no plano original" : "núcleo fora do plano original";
+        const extTxt = extensoes.length === 1
+          ? "1 extensão neste artefato"
+          : extensoes.length + " extensões neste artefato";
+        capEl.innerHTML = `<summary>${escapeHtml(entry.group.label)} · ${nucleoTxt} · ${extTxt}
+          <span class="pct-badge" data-badge="${capEl.dataset.groupId}">—</span></summary>`;
+        if (nucleos.length) {
+          const t = document.createElement("p");
+          t.className = "cap-part-title";
+          t.textContent = "Núcleo (plano original)";
+          capEl.appendChild(t);
+          capEl.appendChild(createLeafList(nucleos));
+        }
+        if (extensoes.length) {
+          const t = document.createElement("p");
+          t.className = "cap-part-title";
+          t.textContent = "Extensões (fora do plano original)";
+          capEl.appendChild(t);
+          capEl.appendChild(createLeafList(extensoes));
+        }
+        artEl.appendChild(capEl);
+      });
+    }
+
+    function bindPctInput(inp) {
+      const field = inp.dataset.pctField || "pct";
+      const apply = () => {
+        const id = inp.dataset.leafId;
+        const v = inp.value === "" || isNaN(Number(inp.value)) ? 0 : Number(inp.value);
+        if (inp.value === "") inp.value = "0";
+        ensureStatusItem(id)[field] = v;
+        saveStatus();
+        updateAllBadges();
+        renderSummaries();
+      };
+      inp.addEventListener("input", apply);
+      inp.addEventListener("blur", () => {
+        if (inp.value === "" || isNaN(Number(inp.value))) {
+          inp.value = "0";
+          ensureStatusItem(inp.dataset.leafId)[field] = 0;
+          saveStatus();
+          updateAllBadges();
+          renderSummaries();
+        }
+      });
+    }
+
+    function bindEvents() {
+      document.querySelectorAll(".pick-btn[data-leaf-id]").forEach(btn => {
+        btn.addEventListener("click", e => {
+          e.stopPropagation();
+          openPicker(btn);
+        });
+      });
+      document.querySelectorAll(".toggle-plano input[data-leaf-id]").forEach(inp => {
+        inp.addEventListener("change", () => {
+          const id = inp.dataset.leafId;
+          const dentro = inp.checked;
+          const row = ensureStatusItem(id);
+          row.planoOriginal = dentro;
+          const it = findItem(id);
+          if (it) it.planoOriginal = dentro;
+          if (!dentro) {
+            // Fora do plano = capacidade nova; não usa o conceito de extensão
+            row.teveExtensao = false;
+          } else if (it && canConfigureExtensao(it)) {
+            // Voltou ao plano: se a estrutura já documenta extensões, religa
+            delete row.teveExtensao;
+            if (it.extensoes && it.extensoes.length) {
+              row.teveExtensao = true;
+              if (row.detalheExtensao == null || row.detalheExtensao === "") {
+                row.detalheExtensao = it.extensoes.join("; ");
+              }
+              const ta = document.querySelector(`textarea[data-detalhe-ext][data-leaf-id="${id}"]`);
+              if (ta && !ta.value) ta.value = row.detalheExtensao;
+            }
+          }
+          saveStatus();
+          updatePlanoRowVisual(id, dentro);
+          if (it && canConfigureExtensao(it)) syncExtensaoUI(id);
+          refreshDerivedPanels();
+          renderSummaries();
+        });
+      });
+      document.querySelectorAll(".toggle-ext input[data-leaf-id]").forEach(inp => {
+        inp.addEventListener("change", () => {
+          const id = inp.dataset.leafId;
+          const it = findItem(id);
+          const st = it ? getItemState(it) : null;
+          if (st && !st.planoOriginal) {
+            inp.checked = false;
+            ensureStatusItem(id).teveExtensao = false;
+            saveStatus();
+            syncExtensaoUI(id);
+            return;
+          }
+          const on = inp.checked;
+          ensureStatusItem(id).teveExtensao = on;
+          if (on && it) {
+            const row = ensureStatusItem(id);
+            if (row.detalheExtensao == null || row.detalheExtensao === "") {
+              const seed = (it.extensoes && it.extensoes.length) ? it.extensoes.join("; ") : "";
+              if (seed) {
+                row.detalheExtensao = seed;
+                const ta = document.querySelector(`textarea[data-detalhe-ext][data-leaf-id="${id}"]`);
+                if (ta && !ta.value) ta.value = seed;
+              }
+            }
+          }
+          saveStatus();
+          syncExtensaoUI(id);
+          renderSummaries();
+        });
+      });
+      document.querySelectorAll("textarea[data-detalhe-ext]").forEach(ta => {
+        ta.addEventListener("input", () => {
+          ensureStatusItem(ta.dataset.leafId).detalheExtensao = ta.value;
+          saveStatus();
+        });
+      });
+      document.querySelectorAll("input[type='number'][data-leaf-id][data-pct-field]").forEach(bindPctInput);
+    }
+
+    function openPicker(btn) {
+      closePicker();
+      const id = btn.dataset.leafId;
+      const kind = btn.dataset.kind;
+      const it = findItem(id);
+      if (!it) return;
+      const st = getItemState(it);
+      const options = kind === "scope" ? SCOPES : ANDAMENTO;
+      const current = kind === "scope" ? st.scope : st.andamento;
+      const menu = document.createElement("div");
+      menu.className = "pick-menu";
+      menu.setAttribute("role", "listbox");
+      options.forEach(opt => {
+        const el = document.createElement("button");
+        el.type = "button";
+        el.textContent = opt;
+        el.setAttribute("role", "option");
+        if (opt === current) el.classList.add("active");
+        el.addEventListener("click", e => {
+          e.stopPropagation();
+          if (kind === "scope") setScope(id, opt);
+          else setAndamento(id, opt);
+          closePicker();
+        });
+        menu.appendChild(el);
+      });
+      btn.closest(".leaf-item").appendChild(menu);
+      openPickMenu = menu;
+      btn.setAttribute("aria-expanded", "true");
+    }
+
+    function closePicker() {
+      if (openPickMenu) {
+        openPickMenu.remove();
+        openPickMenu = null;
+      }
+      document.querySelectorAll(".pick-btn[aria-expanded='true']").forEach(b =>
+        b.setAttribute("aria-expanded", "false"));
+    }
+
+    function setScope(id, scope) {
+      scope = normalizeScope(scope);
+      const it = findItem(id);
+      if (!it) return;
+      it.scope = scope;
+      const row = ensureStatusItem(id);
+      row.scope = scope;
+      saveStatus();
+      const btn = document.querySelector(`.pick-btn[data-leaf-id="${id}"][data-kind="scope"]`);
+      if (btn) {
+        btn.textContent = scope + " ▾";
+        btn.className = "pick-btn " + scopeClass(scope);
+        btn.dataset.kind = "scope";
+      }
+      renderSummaries();
+    }
+
+    function setAndamento(id, andamento) {
+      ensureStatusItem(id).andamento = andamento;
+      saveStatus();
+      const btn = document.querySelector(`.pick-btn[data-leaf-id="${id}"][data-kind="andamento"]`);
+      if (btn) {
+        btn.textContent = andamento + " ▾";
+        btn.className = "pick-btn " + andamentoClass(andamento);
+        btn.dataset.kind = "andamento";
+      }
+      renderSummaries();
+    }
+
+    document.addEventListener("click", () => closePicker());
+
+    function avgInContainer(el) {
+      const vals = [];
+      el.querySelectorAll("input[type='number'][data-leaf-id][data-pct-field='pct']").forEach(inp => {
+        const v = inp.value === "" || isNaN(parseFloat(inp.value)) ? 0 : parseFloat(inp.value);
+        vals.push(v);
+      });
+      return vals.length ? Math.round(vals.reduce((a, b) => a + b, 0) / vals.length) : null;
+    }
+
+    function updateBadge(groupId) {
+      const badge = document.querySelector(`[data-badge="${groupId}"]`);
+      const container = document.querySelector(`details[data-group-id="${groupId}"]`);
+      if (!badge || !container) return;
+      const avg = avgInContainer(container);
+      badge.textContent = avg != null ? avg + "%" : "—";
+    }
+
+    function updateAllBadges() {
+      if (!ESTRUTURA) return;
+      ESTRUTURA.phases.forEach(phase => {
+        phase.artifacts.forEach(art => updateBadge(art.id));
+        updateBadge(phase.id);
+      });
+      document.querySelectorAll(".cap-group[data-group-id]").forEach(el => updateBadge(el.dataset.groupId));
+    }
+
+    function renderSummaries() {
+      const phaseEl = document.getElementById("phaseSummary");
+      const scopeEl = document.getElementById("scopeSummary");
+      const andamentoEl = document.getElementById("andamentoSummary");
+      const planoEl = document.getElementById("planoSummary");
+      const capEl = document.getElementById("capSummary");
+      if (!ESTRUTURA) {
+        phaseEl.innerHTML = scopeEl.innerHTML = andamentoEl.innerHTML = planoEl.innerHTML = capEl.innerHTML = "";
+        return;
+      }
+      phaseEl.innerHTML = ESTRUTURA.phases.map(p => {
+        const badge = document.querySelector(`[data-badge="${p.id}"]`);
+        return `<div class="card"><div class="label">${p.title}</div>
+          <div class="value">${badge ? badge.textContent : "—"}</div></div>`;
+      }).join("");
+
+      const counts = {};
+      const pctSum = {};
+      const pctN = {};
+      SCOPES.forEach(s => { counts[s] = 0; pctSum[s] = 0; pctN[s] = 0; });
+      const andCounts = {};
+      ANDAMENTO.forEach(s => { andCounts[s] = 0; });
+      let planoDentro = 0, planoFora = 0;
+      const capByKey = {};
+      iterItems(it => {
+        const st = getItemState(it);
+        counts[st.scope] = (counts[st.scope] || 0) + 1;
+        andCounts[st.andamento] = (andCounts[st.andamento] || 0) + 1;
+        if (st.planoOriginal) planoDentro++; else planoFora++;
+        pctSum[st.scope] += Number(st.pct);
+        pctN[st.scope]++;
+        if (it.capacidade) {
+          if (!capByKey[it.capacidade]) {
+            capByKey[it.capacidade] = { key: it.capacidade, label: it.capacidadeLabel || it.capacidade, nucleos: 0, extensoes: 0 };
+          }
+          if (it.capacidadeParte === "extensao") capByKey[it.capacidade].extensoes++;
+          else capByKey[it.capacidade].nucleos++;
+        }
+      });
+      const tipoCaps = Object.values(capByKey).filter(c => c.key.startsWith("tipo-"));
+      const capsComExt = Object.values(capByKey).filter(c => c.extensoes > 0);
+      const totalExt = capsComExt.reduce((n, c) => n + c.extensoes, 0);
+      planoEl.innerHTML = `
+        <div class="card plano-card plano-dentro">
+          <div class="label">Dentro do plano original</div>
+          <div class="value">${planoDentro}</div>
+          <div class="sub">contemplado no RFP inicial</div>
+        </div>
+        <div class="card plano-card plano-fora">
+          <div class="label">Fora do plano original</div>
+          <div class="value">${planoFora}</div>
+          <div class="sub">evolução / complemento do projeto</div>
+        </div>`;
+      capEl.innerHTML = `
+        <div class="card cap-card">
+          <div class="label">Tipos de atividade</div>
+          <div class="value">${tipoCaps.length}</div>
+          <div class="sub">catálogo 1.2 (C-level) · operação em CMS/Gestor/Cliente/Backend</div>
+        </div>
+        <div class="card cap-card">
+          <div class="label">Capacidades com extensões</div>
+          <div class="value">${capsComExt.length}</div>
+          <div class="sub">${totalExt} extensão${totalExt === 1 ? "" : "ões"} ligadas a núcleos do plano original</div>
+        </div>` + capsComExt.map(c => `
+        <div class="card cap-card">
+          <div class="label">${escapeHtml(c.label)}</div>
+          <div class="value">${c.extensoes}</div>
+          <div class="sub">${c.nucleos} núcleo${c.nucleos === 1 ? "" : "s"} · ${c.extensoes} extensão${c.extensoes === 1 ? "" : "ões"}</div>
+        </div>`).join("");
+      scopeEl.innerHTML = SCOPES.map(s => {
+        const avg = pctN[s] ? Math.round(pctSum[s] / pctN[s]) : null;
+        return `<div class="card scope-card ${scopeClass(s)}">
+          <div class="label">${s}</div>
+          <div class="value">${counts[s] || 0}</div>
+          <div class="sub">${avg != null ? "Média " + avg + "%" : "atividades"}</div>
+        </div>`;
+      }).join("");
+      andamentoEl.innerHTML = ANDAMENTO.map(s => {
+        return `<div class="card andamento-card ${andamentoClass(s)}">
+          <div class="label">${s}</div>
+          <div class="value">${andCounts[s] || 0}</div>
+          <div class="sub">atividades</div>
+        </div>`;
+      }).join("");
+    }
+
+    function downloadJson(filename, obj) {
+      const blob = new Blob([JSON.stringify(obj, null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      a.click();
+    }
+
+    function buildEstruturaExport() {
+      return JSON.parse(JSON.stringify(ESTRUTURA));
+    }
+
+    function buildStatusExport() {
+      const items = {};
+      Object.entries(status.items).forEach(([id, st]) => {
+        items[id] = { ...st };
+        if (items[id].scope) items[id].scope = normalizeScope(items[id].scope);
+      });
+      return {
+        version: 5,
+        estruturaVersion: ESTRUTURA?.version,
+        updatedAt: new Date().toISOString(),
+        items,
+      };
+    }
+
+    function buildSnapshot() {
+      return {
+        type: "snapshot",
+        version: 5,
+        updatedAt: new Date().toISOString(),
+        estrutura: buildEstruturaExport(),
+        status: buildStatusExport(),
+      };
+    }
+
+    async function loadEstruturaFromObject(data) {
+      if (!data.phases) throw new Error("JSON inválido: falta phases");
+      ESTRUTURA = data;
+      if (data.meta?.scopes) SCOPES = data.meta.scopes.filter(s => s !== "Agora");
+      if (data.meta?.andamentoStatuses) ANDAMENTO = data.meta.andamentoStatuses;
+      iterItems(it => { it.scope = normalizeScope(it.scope); });
+      document.getElementById("loadBanner").classList.remove("visible");
+      loadStatus();
+      renderApp();
+      applyStatusToUI();
+      updateAllBadges();
+      renderSummaries();
+    }
+
+    async function tryFetchEstrutura() {
+      try {
+        const res = await fetch("estrutura.json", { cache: "no-store" });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        await loadEstruturaFromObject(await res.json());
+        return true;
+      } catch {
+        document.getElementById("loadBanner").classList.add("visible");
+        return false;
+      }
+    }
+
+    function importJsonData(data) {
+      if (data.type === "snapshot" && data.estrutura && data.status) {
+        loadEstruturaFromObject(data.estrutura);
+        status = { version: 5, items: {}, ...data.status };
+        iterItems(it => {
+          const st = status.items[it.id];
+          if (st?.scope) it.scope = normalizeScope(st.scope);
+          else it.scope = normalizeScope(it.scope);
+        });
+        saveStatus();
+        applyStatusToUI();
+        updateAllBadges();
+        renderSummaries();
+        alert("Snapshot importado.");
+        return;
+      }
+      if (data.phases) {
+        loadEstruturaFromObject(data);
+        alert("Estrutura importada.");
+        return;
+      }
+      if (data.items || data.version >= 2) {
+        status = { version: 5, items: {}, ...data };
+        Object.values(status.items).forEach(st => {
+          if (st.scope) st.scope = normalizeScope(st.scope);
+        });
+        iterItems(it => {
+          const st = status.items[it.id];
+          if (st?.scope) it.scope = normalizeScope(st.scope);
+          else it.scope = normalizeScope(it.scope);
+        });
+        saveStatus();
+        applyStatusToUI();
+        updateAllBadges();
+        renderSummaries();
+        alert("Status importado.");
+        return;
+      }
+      alert("Formato JSON não reconhecido.");
+    }
+
+    document.getElementById("btnExpand").onclick = () =>
+      document.querySelectorAll("details").forEach(d => d.open = true);
+    document.getElementById("btnCollapse").onclick = () =>
+      document.querySelectorAll("details").forEach(d => d.open = false);
+    document.getElementById("btnExportEstrutura").onclick = () => {
+      if (!ESTRUTURA) return alert("Carregue a estrutura primeiro.");
+      downloadJson("estrutura.json", buildEstruturaExport());
+    };
+    document.getElementById("btnExportStatus").onclick = () => {
+      if (!ESTRUTURA) return alert("Carregue a estrutura primeiro.");
+      downloadJson("status.json", buildStatusExport());
+    };
+    document.getElementById("btnExportSnapshot").onclick = () => {
+      if (!ESTRUTURA) return alert("Carregue a estrutura primeiro.");
+      downloadJson("snapshot_" + new Date().toISOString().slice(0, 10) + ".json", buildSnapshot());
+    };
+    document.getElementById("btnSaveLocal").onclick = () => {
+      saveStatus();
+      alert("Status salvo no navegador.");
+    };
+    document.getElementById("btnImport").onclick = () =>
+      document.getElementById("fileImport").click();
+    document.getElementById("btnLoadEstrutura").onclick = () =>
+      document.getElementById("fileEstrutura").click();
+    document.getElementById("fileEstrutura").onchange = e => readFile(e.target, importJsonData);
+    document.getElementById("fileImport").onchange = e => readFile(e.target, importJsonData);
+
+    function readFile(input, cb) {
+      const f = input.files[0];
+      if (!f) return;
+      const r = new FileReader();
+      r.onload = () => {
+        try { cb(JSON.parse(r.result)); }
+        catch { alert("JSON inválido"); }
+        input.value = "";
+      };
+      r.readAsText(f);
+    }
+
+    tryFetchEstrutura();
+  </script>
+</body>
+</html>

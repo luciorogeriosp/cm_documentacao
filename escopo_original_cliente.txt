@@ -1,0 +1,109 @@
+Projeto: SISTEMA DE GESTÃO DE PROGRAMAS SOCIAIS
+
+1. Apresentação da Organização
+
+O Instituto Consulado da Mulher é uma organização sem fins lucrativos sediada em São Paulo, focada na inclusão produtiva de mulheres empreendedoras em situação de vulnerabilidade social. Oferecemos assessoria, mentoria e capacitação gratuita, com aulas presenciais e online, abrangendo temas como empreendedorismo, finanças, marketing, precificação, gestão de pessoas, sustentabilidade e formalização de empresas.
+
+Nossa missão é desenvolver a autonomia financeira, educacional e emocional de mulheres, por meio de ações de inclusão socioprodutiva que evidenciem suas potencialidades.
+
+Atualmente, realizamos o acompanhamento dos programas e das pessoas participantes por meio de planilhas e ferramentas descentralizadas, apenas um dos nossos programas possui um sistema elaborado de forma voluntária em 2015, que gera apenas dados quantitativos em formato de csv, estando desatualizado e sem possibilidade de melhorias. Para otimizar nossa gestão e ampliar nosso impacto social, buscamos uma solução tecnológica que centralize as informações de todos os programas e automatize nossos processos.
+
+2. Objetivo da Contratação
+
+Selecionar um sistema que atenda às necessidades operacionais da organização, incluindo a gestão de beneficiadas, videoaulas, controle de participação, acompanhamento de indicadores e disparo de mensagens e materiais. O sistema deve ser acessível, intuitivo e de fácil implementação, considerando o perfil de público beneficiado e também orçamento reduzido da organização.
+
+Buscamos soluções de baixo custo mensal ou oferecidas pro bono por meio de parcerias com empresas que apoiam causas sociais.
+
+3. Funcionalidades e Requisitos Técnicos
+
+3.1. Funcionalidades Essenciais
+
+O sistema deve contemplar os seguintes módulos e funcionalidades:
+
+A) Gestão de Pessoas Beneficiadas
+
+Cadastro de participantes com informações básicas (nome, idade, contato, CPF, endereço, escolaridade, perfil socioeconômico, raça…)
+
+Atualização de dados ao longo do programa
+
+Registro de frequência nas atividades
+
+Histórico de participação em programas anteriores
+
+B) Videoaulas e disparo de mensagens
+
+Deve ter local para que as videoaulas gravadas sejam armazenadas e possam ser assistidas pelas pessoas beneficiadas. 
+
+Deve gerar controle de quantas aulas foram assistidas, se foram assistidas de forma integral, se concluídas, entre outras. 
+
+Podendo ser através de trilha com a continuidade ou assistir de forma aleatória (possibilidade de escolha antes do programa ser lançado de como será o formato)
+
+Envio de mensagens individuais e em grupo via WhatsApp com materiais, aulas e links para aulas ao vivo. As aulas ao vivo são pela plataforma do Google meet ou via youtube.
+
+Possibilidade de programar mensagens automáticas (exemplo: lembrete de aulas, prazo para envio de exercícios)
+
+Chat para tirar dúvidas
+
+C) Recebimento de Materiais e Exercícios
+
+Área para envio e recebimento de materiais e tarefas
+
+Registro e acompanhamento Área de preenchimento/envio mensal pela empreendedora da: renda, faturamento, Investimento e Poupança
+
+Notificação automática para beneficiadas sobre novos conteúdos
+
+Confirmação de recebimento e conclusão de exercícios
+
+Preenchimento de perguntas/formulário que serão utilizadas para medir a evolução dos indicadores qualitativos e quantitativos das participantes dos programas, preenchimento tanto pela beneficiada como pelo time que atende. Geralmente no início e no fim do processo, ou ter a possibilidade de escolher os períodos, quantidades e perguntas.
+
+D) Inscrição e Gestão de Programas
+
+Formulários de inscrição online, hoje realizamos as inscrições através de um formulário Google, então ou ser possível migrar a planilha com as inscrições para dentro do sistema ou essa inscrição já ser realizada dentro do próprio sistema, já devendo considerar os aceites de Privacidade de Dados e Uso de Imagem.
+
+Organização de grupos e turmas conforme critérios definidos pela organização
+
+Controle de vagas e confirmações de participação
+
+E) Relatórios e Indicadores de Impacto
+
+Geração de relatório: Sobre frequência, participação e desempenho das beneficiadas
+
+Número de pessoas inscritas
+
+Número de pessoas selecionadas
+
+Número de pessoas que iniciaram o curso
+
+Número de pessoas que concluíram todas as atividades
+
+Relatórios quantitativos: Evolução e acompanhamento da Renda, faturamento, Investimento e Poupança das participantes, anual ou durante o tempo do projeto.
+
+Relatório qualitativos: Tanto dos indicadores, como do perfil sócio econômico por beneficiária e por programa
+
+Dashboard visual com métricas de impacto social
+
+Relatórios de avaliação das aulas e NP pesquisas de avaliação sobre o formato do curso, aulas, etc.
+
+F) Controle de Usuários e Permissões
+
+Diferentes níveis de acesso para equipe da organização
+
+Interface para administradores, gestores e educadores
+
+Acesso para as pessoas beneficiadas
+
+
+3.2. Requisitos Técnicos
+
+Hospedagem: O sistema deve ser baseado em cloud (nuvem) para evitar necessidade de servidores próprios.
+
+Acessibilidade: Compatível com dispositivos móveis e desktop
+
+Integrações: Capacidade de integração com WhatsApp, e-mail e outras ferramentas utilizadas pela organização que é o Google.
+
+Segurança: Conformidade com a LGPD (Lei Geral de Proteção de Dados) para garantir a privacidade das beneficiadas, duplo fator de autenticação nos sistemas administrativos, controle de tempo de expiração de senhas, controle de troca de senhas.
+
+Usuários Ativos: O sistema deve suportar aproximadamente um número anual de 2.000 a 3.000 participantes de diversos programas (não serão todos acessos simultâneo), acesso para uma equipe de 15-20 pessoas, com 3 administradores.
+
+Segurança de Infraestrutura: teste de penetração anual em sistemas e infraestrutura
+

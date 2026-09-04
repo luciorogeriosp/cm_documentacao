@@ -1,0 +1,23 @@
+observacoes v5
+
+- regras de cumprimento da LGPD: processo de anonimizaçao automatica dos dados, os dados precisam ser anonimizados apos 5 anos que o usuario deu o aceite dos dados. Apos 5 anos, se o usuario acessar ou estiver ainda utilizando o sistema, ele precisa pedir novamente o aceite, que precisa ser revalidado (criar base para armazenar os aceites, datas de aceitacao, e anonimizacao?)
+
+- o gestor de unidade pode realizar todas as atividades do gestor de turma, mas o gestor de turma so age sobre a sua turma. Um gestor de turma nao pode mover um usuario para outra turma ou unidade.
+- o gestor de turma solicita pedido de doaçao, mas apenas o gestor de unidade pode aprovar.
+- deixe bem claro as atividades de cada tipo de usuario:
+-- gestor de unidade: analisa os inscritos, classifica em aprovado, em analise ou reprovado, aloca empreendedores em turmas, move empreendedor entre turmas e unidades, aprova doacoes, inscreve novos empreendedores, pode acumular todas as funcoes do gestor de turma tb.
+-- gestor de turma: libera atividades, determina a data e localidade da realizacao de atividades presenciais, aprova os dados enviados nas atividades de registro de faturamento, analise as respostas das provas, pode criar atividade extra (apenas atividade presencial), confere os uploads de materiais enviados pelas empreendedores, registra desistencia
+- Existem dois niveis de grupo de whatsapp para a aplicacao: um para os gestores de unidade conversarem com os gestores de turma, e um para os gestores de unidade e turma conversarem com os empreendedores. Os gestores de unidade podem ser gestores de turma tb. Ambos os gestores podem enviar mensagens para o grupo de whatsapp atraves de ferramenta de facilitamento de envio (copiar no clipboard mensagem pre-formatada e link de acesso direto para o grupo). Apenas os gestores de Unidade podem mover um usuario de turma e unidade (historico de atividades, as atividades fora do programa oficial sao perdidos)
+- caso haja apenas uma unidade associada a uma edicao, o empreendedor ja eh alocado nela automaticamente. O mesmo ocorre com turma, se houver apenas uma turma, o empreendedor ja esta nela. Isso eh importante para facilitar o processo online, onde o empreendedor se inscreve e não ha acompanhamento pessoal no consumo do curso.
+- os disparos de comunicacao de aprovacao ou reprovação dos inscritos nos programas deve ocorrer 1 dia apos o encerramento da fase de seleçao (ou conforme definicao do edital)
+- os dados ora capturados de CPF das empreendedoras que nao foram aprovadas devem ser anonimizados 1 dia apos o encerramento da fase de selecao.
+- permanecem os registros da participacao, que podem ser recuperados quando houver uma nova inscricao com aquele CPF
+- para consulta de usuarios antigos, o CPF sera transformado em um HASH e havera a busca pelos HASH´s dos empreendedores passados ou que nao foram aprovados
+- solicitacao de desligamento do programa -> a empreendedora pode a qualquer momento solicitar o desligamento do programa, respondendo um questionario simples e um campo de razao do abandono. A partir dessa solicitacao o participante sai das automaçoes e programas.
+- o gestor de turma e de unidade podem adicionar uma observacao na empreendedora que nao esta comparecendo para acompanhamento, quando ha casos mais graves como doenca de depressao
+- as atividades, ao serem liberadas pelo gestor de turma tem um prazo de 48 horas para serem realizadas, ou um prazo predeterminado pelo gestor ao liberar a atividade.
+- no programa empreende mulher, ha um acompanhamento individual, onde o gestor de turma marca uma visita presencial que leva em media 2 horas para acompanhamento presencial. Adicionar uma funcionalidade para marcacao dessa visita com visualizacao em um calendario (avaliar integracao com o google calendar)
+- mostrar grafico por segmento de atividade dos empreendedores na pagina do gestor de turma e de unidade.
+- base de dados legada -> vamos carregar os dados legados anonimizados, e vamos criar uma consulta pelo CPF dos novos participantes para resgatar participaçções pregressas nos programas do Consulado da Mulher. A consulta deve passar um CPF e devolver as participações em anos passados e em quais programas.
+- os usuarios nao sao premiados, eles sao contemplados com doação, entao trocar os termos premiado por contemplado
+- implementar um lembrete via WhatsApp para quem não finalizou a inscrição, com o consenso estabelecido para um disparo após 24 horas

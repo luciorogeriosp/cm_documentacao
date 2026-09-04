@@ -1,0 +1,125 @@
+﻿id;cat;nome;tipo;cx_b0;pf_b0;cx_b1;pf_b1;delta;natureza;uc;origem
+ILF-01;DATA;Colaborador / Perfil / Role;ILF;M;10;M;10;0;SAME;UC1,UC5;RFP §F
+ILF-02;DATA;Programa (metodologia);ILF;M;10;M;10;0;SAME;UC7;RFP §D
+ILF-03;DATA;Edição;ILF;M;10;A;15;5;EXPAND;UC9,UC13;RFP §D, risco, doação, templates
+ILF-04;DATA;Unidade;ILF;B;7;B;7;0;SAME;UC66;RFP implícito
+ILF-05;DATA;Turma;ILF;M;10;M;10;0;SAME;UC16;RFP §D grupos/turmas
+ILF-06;DATA;Módulo educacional;ILF;M;10;M;10;0;SAME;UC15;RFP trilha
+ILF-07;DATA;Atividade (tipos + config);ILF;M;10;A;15;5;EXPAND;UC15;RFP, UC15 12 tipos
+ILF-08;DATA;Empreendedora / pessoa;ILF;A;15;A;15;0;SAME;UC21,UC27;RFP §A
+ILF-09;DATA;Empreendimento (negócio);ILF;-;0;A;15;15;NEW;UC31;Coletivo
+ILF-10;DATA;Inscrição / participação na edição;ILF;M;10;A;15;5;EXPAND;UC21,UC29;RFP, score/status
+ILF-11;DATA;Lead / pré-inscrição;ILF;-;0;M;10;10;NEW;UC19,UC26;Mini CRM
+ILF-12;DATA;Aceite / consentimento LGPD;ILF;M;10;M;10;0;SAME;UC20;RFP aceites
+ILF-13;DATA;Progresso atividade / liberação;ILF;M;10;A;15;5;EXPAND;UC33,UC34;liberada≠enviada≠concluída
+ILF-14;DATA;Presença / frequência;ILF;M;10;M;10;0;SAME;UC40,UC41;RFP §A
+ILF-15;DATA;Entrega / upload / aprovação;ILF;M;10;M;10;0;SAME;UC43,UC44;RFP §C
+ILF-16;DATA;Dados financeiros mensais;ILF;M;10;M;10;0;SAME;UC45,UC46;RFP
+ILF-17;DATA;Questionário / resposta / NPS;ILF;M;10;M;10;0;SAME;UC39;RFP
+ILF-18;DATA;Mensagem / log de disparo;ILF;M;10;M;10;0;SAME;UC49;RFP WA/e-mail
+ILF-19;DATA;Template Meta / e-mail;ILF;B;7;M;10;3;EXPAND;UC9;Templates Meta
+ILF-20;DATA;AlertRule + Binding + DispatchLog;ILF;-;0;A;15;15;NEW;UC87,UC52;Alertas tipados
+ILF-21;DATA;Doação / recibo / PIX;ILF;B;7;A;15;8;EXPAND;UC57,UC86;RFP fraco, funil+recibo
+ILF-22;DATA;Mentoria;ILF;-;0;M;10;10;NEW;UC70;Caroline 12/08
+ILF-23;DATA;Observação de acompanhamento;ILF;-;0;B;7;7;NEW;UC77;
+ILF-24;DATA;Certificado / beneficiamento;ILF;B;7;M;10;3;EXPAND;UC55,UC13;% por edição
+ILF-25;DATA;Pesquisa pós-programa;ILF;-;0;M;10;10;NEW;UC82;D+30
+ILF-26;DATA;Organização / patrocinador;ILF;-;0;B;7;7;NEW;UC10,UC11;
+ILF-27;DATA;Base legado (participações);ILF;B;7;M;10;3;EXPAND;UC62;Hash CPF
+ILF-28;DATA;Magic link / sessão token;ILF;B;7;M;10;3;EXPAND;UC3,UC4,UC54;Deep links
+ILF-29;DATA;Fila jornada (eventos OK/lote);ILF;-;0;M;10;10;NEW;UC33;ADR jornada
+ILF-30;DATA;Critérios seleção / régua edição;ILF;B;7;M;10;3;EXPAND;UC12;6 critérios
+EIF-01;DATA;Gupshup (templates/status WA);EIF;M;7;M;7;0;SAME;UC49;RFP WhatsApp
+EIF-02;DATA;SendGrid (e-mail/eventos);EIF;M;7;M;7;0;SAME;UC54;RFP e-mail
+CMS-01;CMS;Login administrador (e-mail/senha);EI;B;3;B;3;0;SAME;UC2;RFP §F
+CMS-02;CMS;Cadastrar/editar colaborador;EI;M;4;M;4;0;SAME;UC1;RFP
+CMS-03;CMS;Gerenciar roles/permissões;EI;M;4;M;4;0;SAME;UC5;RFP
+CMS-04;CMS;Configurar autenticação (políticas);EI;M;4;M;4;0;SAME;UC6;2FA CMS fora UFP MVP
+CMS-05;CMS;Cadastrar/editar programa;EI;M;4;M;4;0;SAME;UC7;RFP
+CMS-06;CMS;Criar/configurar edição;EI;M;4;A;6;2;EXPAND;UC9;Limiares, doação, WA
+CMS-07;CMS;Cadastrar unidade;EI;B;3;B;3;0;SAME;UC66;RFP
+CMS-08;CMS;Criar módulo e atividades;EI;M;4;A;6;2;EXPAND;UC15;12 tipos
+CMS-09;CMS;Configurar régua/bloqueios seleção;EI;B;3;A;6;3;EXPAND;UC12;6 critérios
+CMS-10;CMS;Configurar % beneficiamento/certificação;EI;B;3;M;4;1;EXPAND;UC13;Por edição
+CMS-11;CMS;Configurar elegibilidade doação A-D;EI;-;0;M;4;4;NEW;UC14;
+CMS-12;CMS;Associar organização à edição;EI;-;0;B;3;3;NEW;UC11;
+CMS-13;CMS;Encerrar edição (freeze);EI;-;0;M;4;4;NEW;UC81;
+CMS-14;CMS;Criar formulário pesquisa pós-programa;EI;-;0;M;4;4;NEW;UC82;
+CMS-15;CMS;CRUD AlertRule (catálogo tipado);EI;-;0;A;6;6;NEW;UC87;
+CMS-16;CMS;Simular audiência / teste envio alerta;EQ;-;0;M;4;4;NEW;UC87;
+CMS-17;CMS;Listar programas/edições (admin);EQ;B;3;B;3;0;SAME;UC7,UC9;
+CMS-18;CMS;Cadastrar organização;EI;-;0;B;3;3;NEW;UC10;
+CMS-19;CMS;Cadastrar voluntário/mentor;EI;-;0;B;3;3;NEW;UC73;
+INS-01;INSCR;Pré-cadastro (lead + aceites WA);EI;B;3;M;4;1;EXPAND;UC19,UC20;WA obrigatório
+INS-02;INSCR;Inscrição completa (multi-etapas);EI;A;6;A;6;0;SAME;UC21;RFP
+INS-03;INSCR;Validar elegibilidade automática;EO;M;5;A;7;2;EXPAND;UC23;Bloqueios + score
+INS-04;INSCR;Consultar histórico legado por CPF;EQ;M;4;M;4;0;SAME;UC22,UC62;RFP
+INS-05;INSCR;Retomar inscrição / UUID dispositivo;EI;-;0;M;4;4;NEW;UC67;
+INS-06;INSCR;Atualizar dados empreendedora;EI;M;4;M;4;0;SAME;UC27;RFP
+INS-07;INSCR;Mini CRM — listar/exportar leads;EQ;-;0;M;4;4;NEW;UC26;
+INS-08;INSCR;Mini CRM — disparo manual lembrete;EO;-;0;M;5;5;NEW;UC26;
+INS-09;INSCR;Aceitar termos LGPD/imagem;EI;M;4;M;4;0;SAME;UC20;RFP
+SEL-01;SELECAO;Classificar inscrições (status);EI;M;4;M;4;0;SAME;UC24;RFP
+SEL-02;SELECAO;Aplicar/exibir score X/Y na seleção;EQ;-;0;M;4;4;NEW;UC24,UC12;
+SEL-03;SELECAO;Entrevista de seleção (P/H);EI;-;0;M;4;4;NEW;UC84;
+SEL-04;SELECAO;Alocar em turma;EI;M;4;M;4;0;SAME;UC17;RFP
+SEL-05;SELECAO;Remanejar unidade/turma;EI;B;3;M;4;1;EXPAND;UC18;Any time
+SEL-06;SELECAO;Comunicar resultado seleção;EO;M;5;A;7;2;EXPAND;UC25;Inicia jornada
+SEL-07;SELECAO;Criar/editar turma + link grupo WA;EI;M;4;M;4;0;SAME;UC16;RFP
+SEL-08;SELECAO;Agrupar empreendimento coletivo;EI;-;0;A;6;6;NEW;UC31;
+SEL-09;SELECAO;Mover empreendedora entre negócios;EI;-;0;M;4;4;NEW;UC32;
+SEL-10;SELECAO;Export CSV inscritas;EO;B;4;B;4;0;SAME;UC24;
+SEL-11;SELECAO;Dashboard edições (gestor);EQ;B;3;M;4;1;EXPAND;UC3;
+SEL-12;SELECAO;Login gestor link mágico;EI;M;4;M;4;0;SAME;UC3;RFP
+SEL-13;SELECAO;Registrar desistência/cancelamento;EI;B;3;M;4;1;EXPAND;UC30;
+JOR-01;JORNADA;Liberar atividades (visão módulo);EI;M;4;A;6;2;EXPAND;UC34;
+JOR-02;JORNADA;Orquestrar jornada OK/lote (backend);EO;-;0;A;7;7;NEW;UC33;
+JOR-03;JORNADA;Consumir conteúdo / home programa;EQ;M;4;M;4;0;SAME;UC36;RFP
+JOR-04;JORNADA;Registrar progresso videoaula;EI;M;4;M;4;0;SAME;UC37;RFP
+JOR-05;JORNADA;Assistir live / KW presença online;EI;B;3;A;6;3;EXPAND;UC38;Funil
+JOR-06;JORNADA;Responder questionário;EI;M;4;M;4;0;SAME;UC39;RFP
+JOR-07;JORNADA;Presença QR / deep link;EI;M;4;M;4;0;SAME;UC40;RFP
+JOR-08;JORNADA;Presença manual;EI;B;3;B;3;0;SAME;UC41;RFP
+JOR-09;JORNADA;Consultar frequência;EQ;B;3;B;3;0;SAME;UC42;RFP
+JOR-10;JORNADA;Enviar tarefa (upload);EI;M;4;M;4;0;SAME;UC43;RFP
+JOR-11;JORNADA;Aprovar entrega/financeiro;EI;M;4;M;4;0;SAME;UC44,UC46;RFP
+JOR-12;JORNADA;Enviar dados financeiros mensais;EI;M;4;A;6;2;EXPAND;UC45;Zero justificado
+JOR-13;JORNADA;Adicionar aula presencial extra;EI;B;3;B;3;0;SAME;UC35;
+JOR-14;JORNADA;Relato de oficina + export presença;EO;-;0;M;5;5;NEW;UC80;
+JOR-15;JORNADA;Calendário de atividades (cliente);EQ;B;3;B;3;0;SAME;UC68;
+JOR-16;JORNADA;Agendar visita técnica;EI;-;0;M;4;4;NEW;UC78;
+JOR-17;JORNADA;Inserir dados em nome da empreendedora;EI;-;0;M;4;4;NEW;UC69;
+JOR-18;JORNADA;Ranking / engajamento / estados risco;EQ;B;3;A;6;3;EXPAND;UC56;
+JOR-19;JORNADA;Emitir certificado / beneficiamento auto;EO;M;5;A;7;2;EXPAND;UC55;
+JOR-20;JORNADA;Solicitar certificado (autoatendimento);EQ;B;3;B;3;0;SAME;UC63;
+JOR-21;JORNADA;Solicitar desligamento;EI;-;0;M;4;4;NEW;UC79;
+COM-01;COMMS;Disparar WA individual (API);EO;M;5;M;5;0;SAME;UC49;RFP
+COM-02;COMMS;Comunicar grupo WA (facilitador);EO;B;4;M;5;1;EXPAND;UC50;
+COM-03;COMMS;Enviar vídeo/conteúdo WA (lote);EO;M;5;A;7;2;EXPAND;UC51;Pós-OK
+COM-04;COMMS;Enviar link mágico;EO;M;5;M;5;0;SAME;UC54;RFP
+COM-05;COMMS;Mensagens direcionadas manuais online;EO;-;0;A;7;7;NEW;UC53;
+COM-06;COMMS;Avaliador + fila alertas (backend);EO;B;4;A;7;3;EXPAND;UC52,UC87;RFP programar msgs
+COM-07;COMMS;Binding alertas na edição (Unidade);EI;-;0;M;4;4;NEW;UC87;
+COM-08;COMMS;Preview audiência / histórico alertas;EQ;-;0;M;4;4;NEW;UC87;
+COM-09;COMMS;Chat dúvidas (Agente IA);EI;M;4;M;4;0;SAME;UC64;RFP chat
+COM-10;COMMS;Notificar novo conteúdo;EO;B;4;B;4;0;SAME;UC33;RFP
+COM-11;COMMS;Login empreendedora link mágico;EI;M;4;M;4;0;SAME;UC4;RFP
+COM-12;COMMS;Consultar consumo msgs WA (BI);EQ;-;0;B;3;3;NEW;UC65;
+DOA-01;DOACAO;Sugerir/aprovar doação P/H (manual);EI;B;3;A;6;3;EXPAND;UC57;
+DOA-02;DOACAO;Selecionar elegíveis lote A-D;EI;-;0;M;4;4;NEW;UC85;
+DOA-03;DOACAO;Funil online liberar doação (regras);EO;-;0;A;7;7;NEW;UC38,UC57;
+DOA-04;DOACAO;Coletar PIX/bancário e recibo;EI;-;0;A;6;6;NEW;UC86;
+DOA-05;DOACAO;Analisar capital semente;EQ;B;3;M;4;1;EXPAND;UC58;
+DOA-06;DOACAO;Gestão de mentorias;EI;-;0;A;6;6;NEW;UC70;
+DOA-07;DOACAO;Workshop encerramento (operar live);EI;-;0;M;4;4;NEW;UC38;
+DOA-08;DOACAO;Registrar observação acompanhamento;EI;-;0;B;3;3;NEW;UC77;
+BI-01;BI_LGPD;Dashboard impacto (consulta);EQ;A;6;A;6;0;SAME;UC59;RFP
+BI-02;BI_LGPD;Relatórios quantitativos;EO;A;7;A;7;0;SAME;UC60;RFP
+BI-03;BI_LGPD;Relatórios qualitativos;EO;M;5;M;5;0;SAME;UC61;RFP
+BI-04;BI_LGPD;Totalizadores com dados pregressos;EO;M;5;M;5;0;SAME;UC71;RFP
+BI-05;BI_LGPD;Visualizar pesquisa pós-programa;EQ;-;0;M;4;4;NEW;UC82;
+BI-06;BI_LGPD;Anonimizar dados / revalidar aceite;EO;M;5;A;7;2;EXPAND;UC76;
+BI-07;BI_LGPD;Classificar status participante (motor);EO;B;4;M;5;1;EXPAND;UC29;
+BI-08;BI_LGPD;Disparar pesquisa pós-programa;EO;-;0;M;5;5;NEW;UC82;
+BI-09;BI_LGPD;Visão multi-unidade gestor;EQ;-;0;M;4;4;NEW;UC83;
+BI-10;BI_LGPD;Alerta compatibilidade navegador;EQ;-;0;B;3;3;NEW;UC72;

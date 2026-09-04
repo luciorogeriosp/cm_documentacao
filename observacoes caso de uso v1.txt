@@ -1,0 +1,20 @@
+Observaçoes v1
+- as aulas ao vivo sao feitas tambem pelo youtube, nao pelo google meet
+- ha envios de videos tambem pelo whatsapp
+- login da empreendedora pode ser tambem pelo email
+- organizar o fluxo de casos de uso em pre-inscricao, inscricao, seleção e aprovaçao/aplicacao do programa
+- pre-cadastro deve ter um checkbox para aprovaçao de comunicacao
+- remover UC21 — Importar Inscrições de Fonte Externa
+- o gestor de programa pode mover o empreendedor de negocio
+- UC27 — Cadastrar Empreendimento Coletivo -> detalhar que o gestor de programa pode associar uma empreendedora a um negocio, ou adicionar um empreendedor a um negocio
+- nao existe trilha, e sim programa. Um programa e um conjunto de modulos. um programa pode ser online sequencial ou presencial, onde o educador/assessor determina qual atividade vai ser realizada, que pode ser fora da sequencia determinada. um modulo pode ser de um tipo apenas, e eh um conjunto de atividades.
+- tipos de atividades podem ser: gestão de pessoas, formalização de empresas, sustentabilidade, marketing, precificação, finanças, empreendedorismo
+- adicionar criterios de premiação
+- na UC10 — Cadastrar Unidade e Parceiro, o cadastro eh de organizaçao, que pode ser associado a edição de um ano como patrocinador ou parceiro
+- um me
+- remover UC57 — Exportar Relatórios (Excel / PDF)
+- remover UC58 — Importar Dados Históricos
+- Ajustar o cadastro de membros
+- UC1 – Cadastro de Usuário da Equipe usa o sistema de usuarios do STRAPI, adequar a descricao ao modelo de usuarios do STRAPI
+- o usuario do STRAPI, chamado de Administrador,  gerencia a criacao de conteudos, modelagem dos programas, criacao de modulos educacionais, associacao dos modulos educacionais aos programas, gestao de organizacoes parceiras, organizacoes associadas, cadastro de membros gestores dos programas, associacao dos membros a programas e turmas
+- ha um aplicativo gestor, que eh onde o gestor das turmas faz a gestao, acompanhamento e interaçao com as turmas efetivamente

@@ -1,0 +1,21 @@
+# Observações — Casos de Uso v4 (jul/2026)
+
+## UC67 — UUID de dispositivo e deep links
+
+1. **UUID emitido após inscrição completa (UC21)**, não no pré-cadastro. Pré-cadastro pode guardar apenas progresso temporário da inscrição incompleta.
+
+2. **localStorage** persiste UUID opaco vinculado à participante e ao par **programa + edição**. Retorno ao Aplicativo Cliente resolve usuário pelo UUID via backend.
+
+3. **Deep links** (UC54): URL com `turma_id`, `atividade_id`, `acao` (ex.: `presenca`, `videoaula`). Com UUID e sessão persistente válidos (~30 dias — UC4), **executa ação automaticamente** (ex.: UC40 — presença sem passos extras).
+
+4. QR Code de presença codifica a mesma estrutura de URL.
+
+5. UC67 passou de Fase 3 para **MVP**.
+
+- Todo registro da empreendedora é vinculado obrigatoriamente a programa, edição e unidade e turma.
+- a unica atividade extra que o gestor de turma pode adicionar sao Aulas Presenciais
+- o modelo de envio de atividades dos modulos online é intercalado por um tempo, que libera a nova atividade. Uma atividade de video precisa de uma resposta do usuario para que os videos sejam enviados como midia. Uma vez que essa resposta eh recebida, ele deve enviar todos os videos nao enviados ainda, que devem estar na tab_empreendedor_atividade, com ids de programa, edicao, unidade, turma e status igual 'atividade_liberada'.
+- Gestor de Turma — nao pode alterar o temporizador entre atividades, e o temporizador so faz sentido em atividades do tipo online, onde não ha um gestor atuante acompanhando as atividades e empreendedores.
+- as interações de grupo deverao ser uma atividade manual do gestor de turmas. A UC50 deve tratar como um processo facilitador do sistema, onde o sistema apresenta um botao "Comunicar para Grupo", que quando clicado, copia uma mensagem customizada com os dados que ele adicionou (uma localidade, por exemplo) e abre em uma nova aba o link para o grupo de whatsapp previamente registrado, onde o gestor precisa colar do clipboard os dados e enviar.
+- tornar claro a relacao entre empreendedor e empreendimento, em que um empreendimento pode ter N empreendedores. Ainda nao ha definicao sobre as regras para multiplos envios de dados sobre a mesma empresa, mas em geral, o empreendimento tem apenas 1 registro daquele dado, seja qual for o empreendedor ligado a ela que submeta os dados.
+- definir como dados que vao ser anonimizados apos 5 anos como CPF, email e telefone. Todos eles sao de consulta reversivel, podendo ser localizados e restituidos os aceites de dados sem perda do historico.

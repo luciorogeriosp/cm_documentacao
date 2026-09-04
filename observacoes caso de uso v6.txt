@@ -1,0 +1,38 @@
+obaservacoes v6
+
+- a Videoaula pré-gravada pode ser visualizada dentro do website educacional atraves de um objeto que carrega um video do youtube ou se for um programa online, ele tambem recebe um arquivo de video no whatsapp do usuario, entao o video em formato compativel com o whatsapp precisa ser cadastrado na atividade para envio
+- mude o nome da atividade teste de conhecimento para questionario
+- remova do projeto a resposta aberta pois ela esta contida dentro do questionario
+- no UC33, alterar para: Modelo de liberação intercalada: cada atividade online é liberada após decorrido o temporizador configurado no módulo (UC15), independente se a atividade foi realizada ou nao. Um temporizado libera as atividades subsequentes que estao programadas, sendo que o gatilho para envio do material é a resposta do usuario com o consentimento do envio dos materiais (video e atividade).
+- apos a inscricao para participação do usuario, ele recebe a seguinte mensagem: Olá! Ficamos muito felizes em saber do seu interesse em participar do #EmpreendeNoZap - Marketing, programa oferecido pelo Instituto Consulado da Mulher. 🎉
+
+Gostaríamos de informar que recebemos a sua pré-inscrição para o curso e agora é só aguardar! 
+
+Entraremos em contato na segunda quinzena de Maio por aqui mesmo, no WhatsApp, para informar sobre a seleção.
+
+Até logo! 😉
+- apos a aprovaçao para participacao, ele recebe a seguinte mensagem: Seja bem-vindo(a) ao #EmpreendeNoZap - Marketing: Mais estratégia, menos improviso, oferecido pelo Instituto Consulado da Mulher! 🎉
+Envie agora um “OK” para confirmar a sua participação ou clique no botão abaixo. Botao de OK para iniciar a participaçao
+- Apos clicar no botao de OK para participar, recebe a segguinte mensagem: ✨ Seja bem-vinda ao EmpreendeNoZap -  Marketing: Mais estratégia, menos improviso! 🎉
+
+Uma jornada criada para ajudar você a comunicar melhor o seu negócio, atrair os clientes certos e vender com mais estratégia 💡💛
+
+E, ao final, quem concluir o curso e responder às atividades concorre a uma bonificação imperdível! 🤩
+
+📌 Salve este número na sua agenda para não perder nenhum conteúdo!
+- recebe tambem um video inicial, mais o texto: ✨ Você não está sozinha nessa jornada!
+
+Entre na nossa comunidade e troque experiências, ideias e aprendizados com outras empreendedoras 💛
+
+👉 https://chat.whatsapp.com/EbUry35G3pjLxDEtd7LzFo
+
+Um espaço para crescer, se inspirar e caminhar juntas 🚀
+- e tambem recebe o material de apoio (download de conteudo):Agora é com você! Clique no link a seguir para realizar a atividade de hoje e, em seguida, acesse o Material de Apoio exclusivo 😀
+
+https://educa.consuladodamulher.org.br/aula/nome-da-atividade/
+- depois de cumprido o tempo que o proximo gatinho de comunicacao, ele recebe uma mensagem que precisa de resposta para receber o proximo video: Já está disponível sua aula sobre Diagnóstico - Seu cliente entende seu negócio em poucos segundos?. Envie agora um 'OK' para receber.
+- se o empreendedor clicar no botao OK, ele deve receber todas as atividades liberadas (video, questionario, download de conteudo, etc.)
+- todo link enviado para o whatsapp do empreendedor já deve conter um link magico de autenticacao do usuario incluido, realizando a autenticacao e carregando a atividade correta (seja video, questionario, download de conteudo, preenchimento de faturamento, etc.)
+- fiquei com duvida sobre a atividade Texto Aberto, acredito que ela nao seja um modulo que compoem uma aula, correto?
+- o gatinho de comunicacao deve ler as proximas atividades que ele deve disparar e enviar uma mensagem perguntando se o empreendedor quer receber aqueles conteudos. A mensagem deve citar o titulo da proxima atividade liberada, e quando o usuario clica no OK, sao enviadas todas as atividades liberadas e ainda nao recebidas.
+- adicione na lista de atividades um questionario que pode ser de 3 tipos: questionario inicial, questionario final e NPS.

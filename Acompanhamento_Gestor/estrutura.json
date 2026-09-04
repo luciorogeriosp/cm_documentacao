@@ -1,0 +1,2891 @@
+{
+  "version": "1.6",
+  "meta": {
+    "title": "Consulado da Mulher — Acompanhamento do Projeto",
+    "scopes": [
+      "MVP",
+      "Fase 2",
+      "Fase 3"
+    ],
+    "andamentoStatuses": [
+      "Não iniciado",
+      "Em andamento"
+    ],
+    "planoOriginalLabel": "Plano original do cliente",
+    "planoOriginalRef": "../escopo_original_cliente.txt",
+    "capacidadePartes": [
+      "nucleo",
+      "extensao"
+    ],
+    "updated": "2026-08-30",
+    "specRef": "../Casos de Uso - Consulado da Mulher_v7.md",
+    "comercialRef": "../fora_escopo_v2.md"
+  },
+  "csvDefaults": {
+    "1.1": 70,
+    "1.4": 80,
+    "1.5": 80,
+    "2.1.1": 70,
+    "2.2": 70,
+    "2.3": 20,
+    "2.4": 10,
+    "2.5": 0,
+    "2.6": 10,
+    "2.7": 0
+  },
+  "phases": [
+    {
+      "id": "phase-levantamento",
+      "title": "Levantamento",
+      "desc": "Definição do produto, regras de negócio e validação com stakeholders antes da construção.",
+      "artifacts": [
+        {
+          "id": "art-doc",
+          "title": "Documentação e validação",
+          "desc": "Base acordada que orienta todo o sistema.",
+          "blocks": [
+            {
+              "title": "Entregas de levantamento",
+              "items": [
+                {
+                  "id": "1.1",
+                  "csvId": "1.1",
+                  "title": "Casos de uso e regras de negócio",
+                  "what": "Documento **v7** (85 UCs): inscrição, seleção 3 etapas (UC84 P/H), jornada, comunicação UC88/UC87, doação por modalidade. Abaixo: extras fora do plano original (to-do de documentação).",
+                  "when": "Antes do desenvolvimento",
+                  "scope": "MVP",
+                  "defaultPct": 70,
+                  "planoOriginal": false
+                },
+                {
+                  "id": "1.3",
+                  "csvId": "1.3",
+                  "title": "Modelo conceitual de dados",
+                  "what": "Como se relacionam programa, edição, unidade, turma, empreendedora e empreendimento. Abaixo: extras que crescem o modelo.",
+                  "when": "Antes da construção",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                },
+                {
+                  "id": "1.4",
+                  "csvId": "1.4",
+                  "title": "Validação do protótipo — App Gestor",
+                  "what": "Telas validadas para operação da equipe (seleção, turma, acompanhamento).",
+                  "when": "Com gestores de unidade e turma",
+                  "scope": "MVP",
+                  "defaultPct": 80,
+                  "planoOriginal": false
+                },
+                {
+                  "id": "1.5",
+                  "csvId": "1.5",
+                  "title": "Validação do protótipo — Painel Admin",
+                  "what": "Telas validadas para montagem de programas e edições.",
+                  "when": "Com administradores de programa",
+                  "scope": "MVP",
+                  "defaultPct": 80,
+                  "planoOriginal": false
+                },
+                {
+                  "id": "1.6",
+                  "csvId": "1.6",
+                  "title": "Validação do protótipo — App Cliente",
+                  "what": "Fluxo de inscrição e jornada da empreendedora validado.",
+                  "when": "Com equipe de programa",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                },
+                {
+                  "id": "1.7",
+                  "csvId": "1.7",
+                  "title": "Identidade visual e experiência mobile",
+                  "what": "Padrão visual e uso prioritário no celular.",
+                  "when": "Antes do desenvolvimento das telas",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                }
+              ]
+            },
+            {
+              "title": "1.2 Catálogo de tipos de atividade",
+              "items": [
+                {
+                  "id": "cat-tipo-aula",
+                  "csvId": "2.5.3.1",
+                  "title": "Aula",
+                  "what": "Cadastrar a aula no módulo: **natureza original** (presencial/ao vivo), título e descrição (UC15). Unifica presencial e ao vivo. **Sem** data/hora/local/link no CMS. Não existe em edição 100% online. Extensões: QR Code e chamada manual (natureza presencial); Relato do encontro (natureza presencial); Replay opcional (natureza ao vivo — sem nova presença).",
+                  "when": "Encontros P/H (presencial ou ao vivo)",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-aula",
+                  "capacidadeLabel": "Aula",
+                  "capacidadeParte": "nucleo",
+                  "extensoes": [
+                    "QR Code e chamada manual (natureza presencial)",
+                    "Relato do encontro (natureza presencial)",
+                    "Replay opcional (natureza ao vivo — sem nova presença)"
+                  ],
+                  "catalogoTipo": true,
+                  "defaultPctExtensao": 0
+                },
+                {
+                  "id": "cat-tipo-video-aula",
+                  "csvId": "2.5.3.2",
+                  "title": "Vídeo Aula",
+                  "what": "Publicar o vídeo no módulo (título, descrição, arquivo na plataforma educacional). Em online, pode haver também arquivo compatível com WhatsApp (UC51); conclusão oficial permanece na plataforma.",
+                  "when": "Durante módulos",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-video-aula",
+                  "capacidadeLabel": "Vídeo Aula",
+                  "capacidadeParte": "nucleo",
+                  "catalogoTipo": true,
+                  "defaultPctExtensao": 0
+                },
+                {
+                  "id": "cat-tipo-atividade",
+                  "csvId": "2.5.3.8",
+                  "title": "Atividade (questionário genérico)",
+                  "what": "Montar o questionário genérico no módulo (perguntas objetivas e abertas), distinto do inicial, do final e do NPS.",
+                  "when": "Conforme módulo",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-atividade",
+                  "capacidadeLabel": "Atividade (questionário genérico)",
+                  "capacidadeParte": "nucleo",
+                  "catalogoTipo": true,
+                  "defaultPctExtensao": 0
+                },
+                {
+                  "id": "cat-tipo-tarefa-casa",
+                  "csvId": "2.5.3.5",
+                  "title": "Tarefa de casa",
+                  "what": "Cadastrar a tarefa no módulo: enunciado, dica e arquivos de referência (pré-carregados do CMS; gestor só define prazo).",
+                  "when": "Conforme módulo",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-tarefa-casa",
+                  "capacidadeLabel": "Tarefa de casa",
+                  "capacidadeParte": "nucleo",
+                  "catalogoTipo": true,
+                  "defaultPctExtensao": 0
+                },
+                {
+                  "id": "cat-tipo-faturamento",
+                  "csvId": "2.5.3.7",
+                  "title": "Registro de faturamento",
+                  "what": "Incluir o registro periódico no módulo (mês de referência). Núcleo do plano original: **4 indicadores** — renda, faturamento, investimento e poupança. Reporte ao programa, não fluxo de caixa pessoal. Extensões: +3 indicadores: despesas fixas, nº de clientes, nº de produtos vendidos; Autoavaliação de dificuldade (5 rostos); Anexo obrigatório (planilha, foto ou print).",
+                  "when": "Competência mensal",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-faturamento",
+                  "capacidadeLabel": "Registro de faturamento",
+                  "capacidadeParte": "nucleo",
+                  "impactaModelo": true,
+                  "extensoes": [
+                    "+3 indicadores: despesas fixas, nº de clientes, nº de produtos vendidos",
+                    "Autoavaliação de dificuldade (5 rostos)",
+                    "Anexo obrigatório (planilha, foto ou print)"
+                  ],
+                  "catalogoTipo": true,
+                  "defaultPctExtensao": 0
+                },
+                {
+                  "id": "cat-tipo-download",
+                  "csvId": "2.5.3.6",
+                  "title": "Download de conteúdo",
+                  "what": "Anexar o material de apoio no módulo (caderno, planilha, checklist, kit de artes).",
+                  "when": "Conforme módulo",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-download",
+                  "capacidadeLabel": "Download de conteúdo",
+                  "capacidadeParte": "nucleo",
+                  "catalogoTipo": true,
+                  "defaultPctExtensao": 0
+                },
+                {
+                  "id": "cat-tipo-plano-acao",
+                  "csvId": "2.5.3.10",
+                  "title": "Plano de ação",
+                  "what": "Incluir o plano de ação no módulo (orientação para metas do empreendimento). Não estava no plano original como tipo próprio.",
+                  "when": "Conforme módulo",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-plano-acao",
+                  "capacidadeLabel": "Plano de ação",
+                  "capacidadeParte": "nucleo",
+                  "catalogoTipo": true,
+                  "defaultPctExtensao": 0
+                },
+                {
+                  "id": "cat-tipo-visita-tecnica",
+                  "csvId": "2.5.3.11",
+                  "title": "Visita técnica",
+                  "what": "Disponibilizar o tipo visita no módulo (só presencial/híbrido). Não estava no plano original.",
+                  "when": "Agendamento P/H",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-visita-tecnica",
+                  "capacidadeLabel": "Visita técnica",
+                  "capacidadeParte": "nucleo",
+                  "catalogoTipo": true,
+                  "defaultPctExtensao": 0
+                },
+                {
+                  "id": "cat-tipo-q-inicial",
+                  "csvId": "2.5.3.3",
+                  "title": "Questionário inicial",
+                  "what": "Cadastrar o instrumento de diagnóstico de entrada (T0) no módulo, com as perguntas definidas pela equipe.",
+                  "when": "Início da jornada",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-q-inicial",
+                  "capacidadeLabel": "Questionário inicial",
+                  "capacidadeParte": "nucleo",
+                  "catalogoTipo": true,
+                  "defaultPctExtensao": 0
+                },
+                {
+                  "id": "cat-tipo-q-final",
+                  "csvId": "2.5.3.4",
+                  "title": "Questionário final",
+                  "what": "Cadastrar o instrumento de avaliação de saída (T1) no módulo. Em online (funil UC38), só libera após KW válida da atividade de presença pós-live.",
+                  "when": "Fim da jornada",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-q-final",
+                  "capacidadeLabel": "Questionário final",
+                  "capacidadeParte": "nucleo",
+                  "catalogoTipo": true,
+                  "defaultPctExtensao": 0
+                },
+                {
+                  "id": "cat-tipo-nps",
+                  "csvId": "2.5.3.12",
+                  "title": "NPS",
+                  "what": "Incluir a pesquisa de satisfação (NPS) no módulo, com máscara única para online, presencial e híbrido.",
+                  "when": "Encerramento",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-nps",
+                  "capacidadeLabel": "NPS",
+                  "capacidadeParte": "nucleo",
+                  "catalogoTipo": true,
+                  "defaultPctExtensao": 0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-desenvolvimento",
+      "title": "Desenvolvimento",
+      "desc": "Construção dos painéis, aplicativos, motor de regras e integrações que sustentam cada edição.",
+      "artifacts": [
+        {
+          "id": "art-cms",
+          "title": "CMS Administrativo",
+          "desc": "Montar o programa antes de abrir inscrições — estrutura-mãe que alimenta Gestor e Cliente.",
+          "blocks": [
+            {
+              "title": "Arcabouço do sistema",
+              "items": [
+                {
+                  "id": "cms-arc-1",
+                  "csvId": "cms-arc-1",
+                  "title": "Estrutura-mãe por edição",
+                  "what": "Tudo que a equipe e a empreendedora veem em cada edição nasce da configuração feita aqui.",
+                  "when": "Antes de cada ciclo",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                },
+                {
+                  "id": "cms-arc-2",
+                  "csvId": "2.2.2",
+                  "title": "Perfis de acesso da equipe",
+                  "what": "Quem administra o programa, quem opera a unidade e quem opera a turma.",
+                  "when": "Cadastro inicial da equipe",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                }
+              ]
+            },
+            {
+              "title": "Cadastros necessários",
+              "items": [
+                {
+                  "id": "2.2.1",
+                  "csvId": "2.2.1",
+                  "title": "Acesso administrativo",
+                  "what": "Login seguro da equipe de configuração.",
+                  "when": "Uso contínuo",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.2.3",
+                  "csvId": "2.2.3",
+                  "title": "Programas (metodologia)",
+                  "what": "Modelo reutilizável de capacitação; modalidade online/P/H; duração Longa / Média / Curta para o BI.",
+                  "when": "Antes de abrir edições",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.2.4",
+                  "csvId": "2.2.4",
+                  "title": "Edições",
+                  "what": "Calendário de inscrição, seleção e aplicação; modalidade; metas de beneficiados; orçamento de doação **por unidade**; prazo pós-live (online).",
+                  "when": "Por edição",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "cms-orcamento-unidade",
+                  "csvId": "2.2.4",
+                  "title": "Orçamento de doação por unidade",
+                  "what": "Extensão: Admin define teto R$ **por unidade** na edição (UC9) — **somente no CMS**; Gestor consulta saldos (UC57). Impacta modelo.",
+                  "when": "Por edição",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "doacao-ph",
+                  "capacidadeLabel": "Doação P/H",
+                  "capacidadeParte": "extensao",
+                  "impactaModelo": true
+                },
+                {
+                  "id": "2.2.5",
+                  "csvId": "2.2.5",
+                  "title": "Unidades",
+                  "what": "Pontos regionais de operação.",
+                  "when": "Por edição",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.2.6",
+                  "csvId": "2.2.6",
+                  "title": "Módulos e tipos de atividade",
+                  "what": "Sequência pedagógica: o administrador monta cada módulo com os **11 tipos** canônicos (UC15). **Aula** unifica presencial e ao vivo (natureza na liberação). Progresso C-level = catálogo 1.2; aqui é a operação no CMS. Conteúdo extra (UC35) fica fora da enum.",
+                  "when": "Antes da aplicação",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.2.7-bloqueio",
+                  "csvId": "2.2.7",
+                  "title": "Bloqueios de inscrição",
+                  "what": "Quem não pode se cadastrar: idade menor de 18 e, no presencial/híbrido, indisponibilidade para encontros.",
+                  "when": "Por edição",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "classificar-inscritas",
+                  "capacidadeLabel": "Classificar inscritas",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "2.2.7-regua",
+                  "csvId": "2.2.7",
+                  "title": "Régua pontuável — 6 critérios",
+                  "what": "Ativar ou desativar até 6 critérios (tempo de negócio, renda, CLT, cargo público, internet, WhatsApp) e cortes por edição. Score X/Y apoia a classificação — não aprova automaticamente.",
+                  "when": "Por edição",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "classificar-inscritas",
+                  "capacidadeLabel": "Classificar inscritas",
+                  "capacidadeParte": "extensao"
+                },
+                {
+                  "id": "cms-cadastro-ficha-base",
+                  "csvId": "2.2.4",
+                  "title": "Ficha de inscrição — base da edição",
+                  "what": "Configurar a ficha unificada da inscrição: texto de instruções, categorias de faturamento e Guia do Participante. Núcleo do cadastro no sistema (substitui Google Forms).",
+                  "when": "Por edição",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "cadastro-inscricao",
+                  "capacidadeLabel": "Cadastro / inscrição da empreendedora",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cms-cadastro-form-dinamico",
+                  "csvId": "2.2.4",
+                  "title": "Formulário dinâmico da inscrição",
+                  "what": "Extensão: Admin monta campos e perguntas variáveis por edição (ordem, tipo, obrigatoriedade, bloco, show/hide). Impacta CMS, Cliente, Backend, modelo de dados, Gestor e o que entra ou não no BI.",
+                  "when": "Por edição",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "cadastro-inscricao",
+                  "capacidadeLabel": "Cadastro / inscrição da empreendedora",
+                  "capacidadeParte": "extensao",
+                  "impactaModelo": true
+                },
+                {
+                  "id": "2.2.8",
+                  "csvId": "2.2.8",
+                  "title": "Beneficiamento e certificação",
+                  "what": "Percentual de conclusão para certificar e considerar beneficiada.",
+                  "when": "Por edição",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.2.9",
+                  "csvId": "2.2.9",
+                  "title": "Encerramento de edição",
+                  "what": "Congelar a operação após o fim do ciclo.",
+                  "when": "Fim da edição",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                }
+              ]
+            },
+            {
+              "title": "Comunicação unificada (UC88)",
+              "items": [
+                {
+                  "id": "cms-pacotes-comunicacao",
+                  "csvId": "2.6.1",
+                  "title": "Pacotes de comunicação (UC88)",
+                  "what": "Catálogo CMS reutilizável: templates Meta/Gupshup — **1 por** `TipoAtividade` (Aula: presencial + ao_vivo); momentos de jornada; mesmo corpo alimenta API online (UC33) e clipboard P/H (UC50). Edição **seleciona pacote** (UC9).",
+                  "when": "Antes / durante edições",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "comunicacao-uc88",
+                  "capacidadeLabel": "Comunicação unificada (UC88)",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cms-alertas",
+                  "csvId": "2.3.5.7",
+                  "title": "Alertas automáticos — aba Alertas (UC87)",
+                  "what": "Na **mesma área Comunicação (UC88)**: regras tipadas (gatilho + params + canal + cadência + exitWhen). Execução no Backend (UC52) — sem Mautic.",
+                  "when": "Antes / durante edições",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "alertas-engajamento",
+                  "capacidadeLabel": "Alertas de engajamento",
+                  "capacidadeParte": "nucleo"
+                }
+              ]
+            },
+            {
+              "title": "Tipos de atividade nos módulos",
+              "items": [
+                {
+                  "id": "cms-tipo-aula",
+                  "csvId": "2.2.6",
+                  "title": "Aula — cadastrar no módulo",
+                  "what": "Cadastrar a aula no módulo: **natureza original** (presencial/ao vivo), título e descrição (UC15). Unifica presencial e ao vivo. **Sem** data/hora/local/link no CMS. Não existe em edição 100% online.",
+                  "when": "Antes da aplicação",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-aula",
+                  "capacidadeLabel": "Aula",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cms-tipo-video-aula",
+                  "csvId": "2.2.6",
+                  "title": "Vídeo Aula — cadastrar no módulo",
+                  "what": "Publicar o vídeo no módulo (título, descrição, arquivo na plataforma educacional). Em online, pode haver também arquivo compatível com WhatsApp (UC51); conclusão oficial permanece na plataforma.",
+                  "when": "Antes da aplicação",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-video-aula",
+                  "capacidadeLabel": "Vídeo Aula",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cms-tipo-atividade",
+                  "csvId": "2.2.6",
+                  "title": "Atividade (questionário genérico) — cadastrar no módulo",
+                  "what": "Montar o questionário genérico no módulo (perguntas objetivas e abertas), distinto do inicial, do final e do NPS.",
+                  "when": "Antes da aplicação",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-atividade",
+                  "capacidadeLabel": "Atividade (questionário genérico)",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cms-tipo-tarefa-casa",
+                  "csvId": "2.2.6",
+                  "title": "Tarefa de casa — cadastrar no módulo",
+                  "what": "Cadastrar a tarefa no módulo: enunciado, dica e arquivos de referência (pré-carregados do CMS; gestor só define prazo).",
+                  "when": "Antes da aplicação",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-tarefa-casa",
+                  "capacidadeLabel": "Tarefa de casa",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cms-tipo-faturamento",
+                  "csvId": "2.2.6",
+                  "title": "Registro de faturamento — cadastrar no módulo",
+                  "what": "Incluir o registro periódico no módulo (mês de referência). Núcleo do plano original: **4 indicadores** — renda, faturamento, investimento e poupança. Reporte ao programa, não fluxo de caixa pessoal.",
+                  "when": "Antes da aplicação",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-faturamento",
+                  "capacidadeLabel": "Registro de faturamento",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cms-tipo-download",
+                  "csvId": "2.2.6",
+                  "title": "Download de conteúdo — cadastrar no módulo",
+                  "what": "Anexar o material de apoio no módulo (caderno, planilha, checklist, kit de artes).",
+                  "when": "Antes da aplicação",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-download",
+                  "capacidadeLabel": "Download de conteúdo",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cms-tipo-plano-acao",
+                  "csvId": "2.2.6",
+                  "title": "Plano de ação — cadastrar no módulo",
+                  "what": "Incluir o plano de ação no módulo (orientação para metas do empreendimento). Não estava no plano original como tipo próprio.",
+                  "when": "Antes da aplicação",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-plano-acao",
+                  "capacidadeLabel": "Plano de ação",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cms-tipo-visita-tecnica",
+                  "csvId": "2.2.6",
+                  "title": "Visita técnica — cadastrar no módulo",
+                  "what": "Disponibilizar o tipo visita no módulo (só presencial/híbrido). Não estava no plano original.",
+                  "when": "Antes da aplicação",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-visita-tecnica",
+                  "capacidadeLabel": "Visita técnica",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cms-tipo-q-inicial",
+                  "csvId": "2.2.6",
+                  "title": "Questionário inicial — cadastrar no módulo",
+                  "what": "Cadastrar o instrumento de diagnóstico de entrada (T0) no módulo, com as perguntas definidas pela equipe.",
+                  "when": "Antes da aplicação",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-q-inicial",
+                  "capacidadeLabel": "Questionário inicial",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cms-tipo-q-final",
+                  "csvId": "2.2.6",
+                  "title": "Questionário final — cadastrar no módulo",
+                  "what": "Cadastrar o instrumento de avaliação de saída (T1) no módulo. Em online (funil UC38), só libera após KW válida da atividade de presença pós-live.",
+                  "when": "Antes da aplicação",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-q-final",
+                  "capacidadeLabel": "Questionário final",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cms-tipo-nps",
+                  "csvId": "2.2.6",
+                  "title": "NPS — cadastrar no módulo",
+                  "what": "Incluir a pesquisa de satisfação (NPS) no módulo, com máscara única para online, presencial e híbrido.",
+                  "when": "Antes da aplicação",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-nps",
+                  "capacidadeLabel": "NPS",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cms-tipo-faturamento-7",
+                  "csvId": "2.2.6",
+                  "title": "Registro de faturamento — 7 indicadores",
+                  "what": "Extensão: além dos 4 do plano (renda, faturamento, investimento, poupança), o módulo passa a coletar despesas fixas, nº de clientes e nº de produtos vendidos.",
+                  "when": "Antes da aplicação",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-faturamento",
+                  "capacidadeLabel": "Registro de faturamento",
+                  "capacidadeParte": "extensao",
+                  "impactaModelo": true
+                },
+                {
+                  "id": "cms-tipo-faturamento-dificuldade",
+                  "csvId": "2.2.6",
+                  "title": "Registro de faturamento — indicador de dificuldade",
+                  "what": "Extensão: configurar a coleta obrigatória da autoavaliação de dificuldade (5 níveis com rostos) no registro mensal.",
+                  "when": "Antes da aplicação",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-faturamento",
+                  "capacidadeLabel": "Registro de faturamento",
+                  "capacidadeParte": "extensao",
+                  "impactaModelo": true
+                },
+                {
+                  "id": "cms-tipo-faturamento-anexo",
+                  "csvId": "2.2.6",
+                  "title": "Registro de faturamento — anexo obrigatório",
+                  "what": "Extensão: exigir anexo (planilha, foto ou print) no envio do registro mensal.",
+                  "when": "Antes da aplicação",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-faturamento",
+                  "capacidadeLabel": "Registro de faturamento",
+                  "capacidadeParte": "extensao",
+                  "impactaModelo": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "art-gestor",
+          "title": "Aplicativo Gestor",
+          "desc": "Operar a edição do início ao encerramento — equipe de unidade e de turma no mesmo aplicativo.",
+          "blocks": [
+            {
+              "title": "A. Entrada",
+              "items": [
+                {
+                  "id": "2.4.1.1",
+                  "csvId": "2.4.1.1",
+                  "title": "Acesso por link seguro",
+                  "what": "Gestor entra por e-mail, sem senha.",
+                  "when": "Sempre",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.4.1.2",
+                  "csvId": "2.4.1.2",
+                  "title": "Lista de edições",
+                  "what": "Visão das edições sob responsabilidade do colaborador.",
+                  "when": "Após login",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.4.1.4",
+                  "csvId": "2.4.1.4",
+                  "title": "Painel operacional da edição",
+                  "what": "Indicadores rápidos: inscritas, pendentes, próximos passos.",
+                  "when": "Ao abrir uma edição",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                }
+              ]
+            },
+            {
+              "title": "B. Seleção de participantes",
+              "items": [
+                {
+                  "id": "2.4.2.1",
+                  "csvId": "2.4.2.1",
+                  "title": "Classificar inscritas",
+                  "what": "Listar inscritas e marcar qualificada, em análise ou não qualificada com base no cadastro. Não inicia o curso.",
+                  "when": "Fase de seleção",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "classificar-inscritas",
+                  "capacidadeLabel": "Classificar inscritas",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "2.4.2.1-ext-score",
+                  "csvId": "2.4.2.1",
+                  "title": "Score X/Y na classificação",
+                  "what": "Exibir pontuação da régua (X de Y critérios ativos) e o detalhe de cada critério no painel de classificação. Apoia a decisão; não substitui o status manual.",
+                  "when": "Fase de seleção",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "classificar-inscritas",
+                  "capacidadeLabel": "Classificar inscritas",
+                  "capacidadeParte": "extensao"
+                },
+                {
+                  "id": "2.4.2.3",
+                  "csvId": "2.4.2.3",
+                  "title": "Agrupar empreendimentos",
+                  "what": "Unir sócias do mesmo negócio informal em um único empreendimento.",
+                  "when": "Durante a seleção",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                },
+                {
+                  "id": "2.4.2.4",
+                  "csvId": "2.4.2.4",
+                  "title": "Entrevista de seleção",
+                  "what": "Extensão da seleção P/H (não está no RFP): criar sessões, agendar qualificadas (convocação), registrar presença/ausência, aprovar ou realocar. Ausente → não aprovada automaticamente (salvo realocação). Só P/H — online segue classificar → comunicar.",
+                  "when": "Seleção P/H",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "entrevista-selecao",
+                  "capacidadeLabel": "Entrevista de seleção (P/H)",
+                  "capacidadeParte": "extensao",
+                  "impactaModelo": true
+                },
+                {
+                  "id": "ges-entrevista-convocar",
+                  "csvId": "2.4.2.6",
+                  "title": "Convocar para a entrevista (faixa de comunicação)",
+                  "what": "Extensão: no Comunicar, enviar convite só a qualificadas **já alocadas em sessão** (UC25 faixa 1). Trava: sem alocação na entrevista não há convite.",
+                  "when": "Seleção P/H",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "entrevista-selecao",
+                  "capacidadeLabel": "Entrevista de seleção (P/H)",
+                  "capacidadeParte": "extensao"
+                },
+                {
+                  "id": "2.4.2.5",
+                  "csvId": "2.4.2.5",
+                  "title": "Alocar turmas",
+                  "what": "Distribuir aprovadas pelas turmas da unidade (soft capacity — alerta sem hard lock).",
+                  "when": "Após classificação/entrevista",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.4.2.6",
+                  "csvId": "2.4.2.6",
+                  "title": "Comunicar resultado",
+                  "what": "Informar aprovadas e não aprovadas. Este passo inicia a jornada educacional. Status Cliente humanizados.",
+                  "when": "Fim da seleção",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.4.2.7",
+                  "csvId": "2.4.2.5",
+                  "title": "Remanejar unidade/turma",
+                  "what": "Mover participante entre unidades a qualquer momento (incl. pré-qualificação), com confirmação.",
+                  "when": "Contínuo",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                }
+              ]
+            },
+            {
+              "title": "C. Antes e durante o curso",
+              "items": [
+                {
+                  "id": "2.4.2.9",
+                  "csvId": "2.4.2.9",
+                  "title": "Mini-CRM — resgatar inscrições",
+                  "what": "Lista de quem começou e não terminou o cadastro; contato para concluir.",
+                  "when": "Durante inscrição e seleção",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                },
+                {
+                  "id": "ges-cadastro-ficha-dinamica",
+                  "csvId": "2.4.2.1",
+                  "title": "Ficha dinâmica na seleção e inserção assistida",
+                  "what": "Extensão: ler respostas dos campos variáveis na classificação/ficha; quando autorizado (UC69), preencher o mesmo schema da edição no lugar da empreendedora.",
+                  "when": "Seleção e operação",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "cadastro-inscricao",
+                  "capacidadeLabel": "Cadastro / inscrição da empreendedora",
+                  "capacidadeParte": "extensao",
+                  "impactaModelo": true
+                },
+                {
+                  "id": "2.4.3.1",
+                  "csvId": "2.4.3.1",
+                  "title": "Configurar turma e grupo WhatsApp",
+                  "what": "Turma operacional + link do grupo para comunicação com a turma.",
+                  "when": "Após aprovação",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.4.3.6",
+                  "csvId": "2.4.3.6",
+                  "title": "Liberar atividades (presencial/híbrido)",
+                  "what": "Gestor escolhe o que liberar módulo a módulo.",
+                  "when": "Durante a aplicação P/H",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.4.3.7",
+                  "csvId": "2.4.3.7",
+                  "title": "Acompanhar progresso (online)",
+                  "what": "Visão do que foi liberado, enviado e concluído — jornada automática.",
+                  "when": "Durante a aplicação online",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.4.3.8",
+                  "csvId": "2.4.3.8",
+                  "title": "Registrar presença nos encontros",
+                  "what": "Chamada por QR Code ou lista manual.",
+                  "when": "Cada encontro presencial",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.4.3.9",
+                  "csvId": "2.4.3.9",
+                  "title": "Aprovar tarefas e faturamento",
+                  "what": "Validar entregas ou pedir revisão.",
+                  "when": "Conforme prazos das atividades",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.4.3.10",
+                  "csvId": "2.4.3.10",
+                  "title": "Comunicação no grupo WhatsApp",
+                  "what": "Ferramenta para copiar mensagens e abrir o grupo da turma.",
+                  "when": "Durante o curso P/H",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.4.3.11",
+                  "csvId": "2.4.3.11",
+                  "title": "Painel de acompanhamento da turma",
+                  "what": "Quem está engajada, quem parou; alertas de risco na jornada online.",
+                  "when": "Contínuo",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                },
+                {
+                  "id": "ges-alertas-binding",
+                  "csvId": "2.4.3.11",
+                  "title": "Alertas automáticos da edição",
+                  "what": "Ativar/pausar regras do CMS, ajustar parâmetros, preview de audiência e histórico (UC87). Disparo manual UC53/UC26 como reforço.",
+                  "when": "Durante a edição",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "alertas-engajamento",
+                  "capacidadeLabel": "Alertas de engajamento",
+                  "capacidadeParte": "nucleo"
+                }
+              ]
+            },
+            {
+              "title": "Tipos de atividade — operação",
+              "items": [
+                {
+                  "id": "ges-tipo-aula",
+                  "csvId": "2.4.3.6",
+                  "title": "Aula — interface de gestão",
+                  "what": "Liberar com natureza **default** do CMS (editável até ministrar); presencial: data, hora, endereço; QR e chamada; relato. Ao vivo: data, hora, link Meet/plataforma; comparecimento. Comunicar no grupo da turma.",
+                  "when": "Encontros P/H (presencial ou ao vivo)",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-aula",
+                  "capacidadeLabel": "Aula",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "ges-tipo-video-aula",
+                  "csvId": "2.4.3.6",
+                  "title": "Vídeo Aula — interface de gestão",
+                  "what": "Liberar com data-prazo (sugestão D+2); ver quem assistiu; comunicar o link.",
+                  "when": "Durante módulos",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-video-aula",
+                  "capacidadeLabel": "Vídeo Aula",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "ges-tipo-atividade",
+                  "csvId": "2.4.3.6",
+                  "title": "Atividade (questionário genérico) — interface de gestão",
+                  "what": "Liberar com data-prazo; ver quem respondeu; consultar consolidado e respostas abertas. Sem fila de aprovação.",
+                  "when": "Conforme módulo",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-atividade",
+                  "capacidadeLabel": "Atividade (questionário genérico)",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "ges-tipo-tarefa-casa",
+                  "csvId": "2.4.3.6",
+                  "title": "Tarefa de casa — interface de gestão",
+                  "what": "Liberar com data-prazo; conferir entregas; aprovar ou pedir revisão (sem reprovação); comentar com a empreendedora; comunicar o prazo.",
+                  "when": "Conforme módulo",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-tarefa-casa",
+                  "capacidadeLabel": "Tarefa de casa",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "ges-tipo-faturamento",
+                  "csvId": "2.4.3.6",
+                  "title": "Registro de faturamento — interface de gestão",
+                  "what": "Liberar com data-prazo; conferir e aprovar ou pedir revisão os **4 indicadores** do núcleo; acompanhar a evolução da turma. Zero em faturamento/renda exige justificativa.",
+                  "when": "Competência mensal",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-faturamento",
+                  "capacidadeLabel": "Registro de faturamento",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "ges-tipo-download",
+                  "csvId": "2.4.3.6",
+                  "title": "Download de conteúdo — interface de gestão",
+                  "what": "Liberar com data-prazo; ver quem baixou. Online: template + arquivos no WhatsApp após OK; P/H: comunicar o template no grupo. Arquivos também no Cliente.",
+                  "when": "Conforme módulo",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-download",
+                  "capacidadeLabel": "Download de conteúdo",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "ges-tipo-plano-acao",
+                  "csvId": "2.4.3.6",
+                  "title": "Plano de ação — interface de gestão",
+                  "what": "Liberar com data-prazo; ver quem fez; criar, Revisar (com observação) e acompanhar metas; histórico preservado (sem exclusão destrutiva); comunicar o prazo.",
+                  "when": "Conforme módulo",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-plano-acao",
+                  "capacidadeLabel": "Plano de ação",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "ges-tipo-visita-tecnica",
+                  "csvId": "2.4.3.6",
+                  "title": "Visita técnica — interface de gestão",
+                  "what": "Abrir agenda de visitas: data, hora e local ou videoconferência por empreendedora; agrupamento de endereços próximos (~2 km) e detecção de conflito; registrar o observado; comunicar o agendamento.",
+                  "when": "Agendamento P/H",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-visita-tecnica",
+                  "capacidadeLabel": "Visita técnica",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "ges-tipo-q-inicial",
+                  "csvId": "2.4.3.6",
+                  "title": "Questionário inicial — interface de gestão",
+                  "what": "Liberar com data-prazo; ver quem respondeu; consultar o consolidado da turma (pizza / adesão).",
+                  "when": "Início da jornada",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-q-inicial",
+                  "capacidadeLabel": "Questionário inicial",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "ges-tipo-q-final",
+                  "csvId": "2.4.3.6",
+                  "title": "Questionário final — interface de gestão",
+                  "what": "Liberar com data-prazo no encerramento; ver quem respondeu; comparar com o diagnóstico inicial. Encerramento P/H = módulo obrigatório de carga (≠ funil online).",
+                  "when": "Fim da jornada",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-q-final",
+                  "capacidadeLabel": "Questionário final",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "ges-tipo-nps",
+                  "csvId": "2.4.3.6",
+                  "title": "NPS — interface de gestão",
+                  "what": "Liberar com data-prazo; ver respondentes e faixas (promotoras, neutras, detratoras).",
+                  "when": "Encerramento",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-nps",
+                  "capacidadeLabel": "NPS",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "2.4.3.8-qr",
+                  "csvId": "2.4.3.8",
+                  "title": "Aula — QR Code e chamada (presencial)",
+                  "what": "Extensão operacional da natureza presencial: QR imprimível e registro manual por nome ou CPF.",
+                  "when": "Cada aula presencial",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-aula",
+                  "capacidadeLabel": "Aula",
+                  "capacidadeParte": "extensao"
+                },
+                {
+                  "id": "2.4.3.13",
+                  "csvId": "2.4.3.13",
+                  "title": "Aula — relato do encontro (presencial)",
+                  "what": "Extensão operacional: campo 'Como foi o encontro' e exportação da presença após a realização.",
+                  "when": "Após a aula presencial",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-aula",
+                  "capacidadeLabel": "Aula",
+                  "capacidadeParte": "extensao"
+                },
+                {
+                  "id": "ges-conteudo-extra",
+                  "csvId": "2.4.3.12",
+                  "title": "Conteúdo extra (UC35)",
+                  "what": "Fora da enum TipoAtividade: gestor de turma adiciona item pontual além da matriz (presencial ou ao vivo). Não conta %/carga/beneficiamento; enquanto não liberado, pode ser excluído.",
+                  "when": "Durante a aplicação P/H",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                },
+                {
+                  "id": "ges-tipo-faturamento-7",
+                  "csvId": "2.4.3.9",
+                  "title": "Registro de faturamento — conferir 7 indicadores",
+                  "what": "Extensão: na aprovação, conferir também despesas fixas, clientes e produtos vendidos (além dos 4 do núcleo).",
+                  "when": "Competência mensal",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-faturamento",
+                  "capacidadeLabel": "Registro de faturamento",
+                  "capacidadeParte": "extensao",
+                  "impactaModelo": true
+                },
+                {
+                  "id": "ges-tipo-faturamento-dificuldade",
+                  "csvId": "2.4.3.9",
+                  "title": "Registro de faturamento — ver dificuldade na aprovação",
+                  "what": "Extensão: exibir a dificuldade declarada no modal de aprovação, no histórico por competência e no resumo da turma (distribuição dos 5 níveis).",
+                  "when": "Competência mensal",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-faturamento",
+                  "capacidadeLabel": "Registro de faturamento",
+                  "capacidadeParte": "extensao",
+                  "impactaModelo": true
+                },
+                {
+                  "id": "ges-tipo-faturamento-anexo",
+                  "csvId": "2.4.3.9",
+                  "title": "Registro de faturamento — conferir anexo",
+                  "what": "Extensão: na aprovação, verificar o anexo obrigatório do registro mensal.",
+                  "when": "Competência mensal",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-faturamento",
+                  "capacidadeLabel": "Registro de faturamento",
+                  "capacidadeParte": "extensao"
+                }
+              ]
+            },
+            {
+              "title": "D. Encerramento e doação",
+              "items": [
+                {
+                  "id": "2.4.4.1",
+                  "csvId": "2.4.4.1",
+                  "title": "Encerrar edição",
+                  "what": "Fechar operação da edição (freeze).",
+                  "when": "Após fim do calendário",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.4.4.1b",
+                  "csvId": "2.3.4.1",
+                  "title": "Beneficiamento e certificados",
+                  "what": "Emissão conforme percentual configurado na edição.",
+                  "when": "Encerramento",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.4.4.2-ph",
+                  "csvId": "2.4.4.2",
+                  "title": "Doação P/H — sugerir a qualquer momento",
+                  "what": "Análise manual: turma sugere doação em qualquer fase (modalidade + itens/valores); não depende de live nem questionário.",
+                  "when": "Durante o programa P/H",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "doacao-ph",
+                  "capacidadeLabel": "Doação P/H",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "2.4.4.3-ph",
+                  "csvId": "2.4.4.3",
+                  "title": "Doação P/H — aprovar",
+                  "what": "Unidade aprova ou recusa a sugestão (consome orçamento da unidade). Dois passos rastreáveis mesmo se a mesma pessoa sugeriu.",
+                  "when": "Durante o programa P/H",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "doacao-ph",
+                  "capacidadeLabel": "Doação P/H",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "ges-doacao-on-live",
+                  "csvId": "2.4.4.2",
+                  "title": "Doação online — live de encerramento",
+                  "what": "Configurar live YouTube+StreamYard (fora da plataforma) e convidar só quem concluiu 100% das atividades.",
+                  "when": "Fim da formação online",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "doacao-online",
+                  "capacidadeLabel": "Doação online",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "ges-doacao-on-funil",
+                  "csvId": "2.4.4.2",
+                  "title": "Doação online — acompanhar funil",
+                  "what": "Ver quem fez 100%, entrou na live, validou presença/KW (prazo+timestamp) e acertou 100% no quiz (liberada para doação). Exibe data/hora exatas da conclusão do quiz.",
+                  "when": "Fim da formação online",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "doacao-online",
+                  "capacidadeLabel": "Doação online",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "ges-doacao-on-timestamp-quiz",
+                  "csvId": "2.4.4.2",
+                  "title": "Doação online — timestamp do quiz",
+                  "what": "Extensão: relatório/acompanhamento com data e horário exatos da conclusão do questionário final (além do timestamp da KW).",
+                  "when": "Fim da formação online",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "doacao-online",
+                  "capacidadeLabel": "Doação online",
+                  "capacidadeParte": "extensao"
+                },
+                {
+                  "id": "2.4.4.2-on",
+                  "csvId": "2.4.4.2",
+                  "title": "Doação online — sugerir (só liberadas)",
+                  "what": "Sugerir doação (capital semente/material) apenas para quem passou no funil; suporte a doação em massa e múltiplos itens.",
+                  "when": "Após liberação pelo funil",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "doacao-online",
+                  "capacidadeLabel": "Doação online",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "2.4.4.3-on",
+                  "csvId": "2.4.4.3",
+                  "title": "Doação online — aprovar",
+                  "what": "Unidade aprova ou recusa entre as liberadas pelo funil (individual ou massa). Consome orçamento da unidade. Ranking pós-elegibilidade ≠ régua inscrição.",
+                  "when": "Após liberação pelo funil",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "doacao-online",
+                  "capacidadeLabel": "Doação online",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "ges-doacao-massa",
+                  "csvId": "2.4.4.2",
+                  "title": "Doação em massa",
+                  "what": "Selecionar múltiplas participantes e aplicar modalidade/valor em lote (P/H ou liberadas online).",
+                  "when": "Operação de doação",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "doacao-ph",
+                  "capacidadeLabel": "Doação P/H",
+                  "capacidadeParte": "extensao"
+                },
+                {
+                  "id": "ges-doacao-itens",
+                  "csvId": "2.4.4.2",
+                  "title": "Doação — múltiplos itens (1:N)",
+                  "what": "Extensão: cada doação admite N linhas (produto + valor) empilhadas. Gestor cadastra itens na sugestão/aprovação; material espelha no recibo. Impacta modelo.",
+                  "when": "Operação de doação",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "doacao-ph",
+                  "capacidadeLabel": "Doação P/H",
+                  "capacidadeParte": "extensao",
+                  "impactaModelo": true
+                },
+                {
+                  "id": "ges-orcamento-unidade",
+                  "csvId": "2.4.4.3",
+                  "title": "Orçamento de doação por unidade",
+                  "what": "Extensão: saldos **disponível / consumido / em análise / saldo** por unidade na tela Doação (UC57). Valores definidos no CMS (UC9); Gestor **consulta**, não altera orçamento.",
+                  "when": "Configuração e operação",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "doacao-ph",
+                  "capacidadeLabel": "Doação P/H",
+                  "capacidadeParte": "extensao",
+                  "impactaModelo": true
+                },
+                {
+                  "id": "2.4.4.4",
+                  "csvId": "2.4.4.4",
+                  "title": "Lote auxiliar (carência / volume)",
+                  "what": "Filtros auxiliares A–D e seleção em lote — não substituem análise P/H nem o funil online.",
+                  "when": "Operação avançada",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                },
+                {
+                  "id": "ges-pos-pix",
+                  "csvId": "2.4.4.3",
+                  "title": "Pós-liberação — solicitar PIX/conta",
+                  "what": "Pedir conta ou PIX (CPF-PIX imutável se chave = CPF) e, se material, endereço com ponto de referência (comum P/H e online).",
+                  "when": "Após liberada para doação",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "pos-liberacao-doacao",
+                  "capacidadeLabel": "Pós-liberação da doação",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "ges-pos-recibo",
+                  "csvId": "2.4.4.3",
+                  "title": "Pós-liberação — gerar e acompanhar recibo",
+                  "what": "Recibo conta 725 com prazo até 60 dias no texto; dinheiro assina antes, material após confirmação de recebimento; assinatura obrigatória; itens da doação no recibo; aceites.",
+                  "when": "Após liberada para doação",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "pos-liberacao-doacao",
+                  "capacidadeLabel": "Pós-liberação da doação",
+                  "capacidadeParte": "nucleo"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "art-cliente",
+          "title": "Aplicativo Cliente",
+          "desc": "Jornada da empreendedora — do primeiro contato ao certificado.",
+          "blocks": [
+            {
+              "title": "A. Inscrição — três momentos",
+              "items": [
+                {
+                  "id": "2.5.1.2",
+                  "csvId": "2.5.1.2",
+                  "title": "1. Mini-CRM — aceites e captura inicial",
+                  "what": "Link da edição, termos LGPD/WhatsApp, nome, telefone e e-mail. Equipe pode resgatar quem abandonou.",
+                  "when": "Início da inscrição",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.5.1.3",
+                  "csvId": "2.5.1.3",
+                  "title": "1. Mini-CRM — pré-cadastro",
+                  "what": "Registro como lead antes da ficha completa.",
+                  "when": "Início da inscrição",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.5.1.4",
+                  "csvId": "2.5.1.4",
+                  "title": "2. Cadastro completo",
+                  "what": "Núcleo: ficha unificada em 4 blocos (instruções, pessoais, empreendimento, socioeconômico) + aceites + vínculo programa/edição/unidade. Substitui o Google Forms do RFP.",
+                  "when": "Após pré-cadastro",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "cadastro-inscricao",
+                  "capacidadeLabel": "Cadastro / inscrição da empreendedora",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "2.5.1.4-ext-schema",
+                  "csvId": "2.5.1.4",
+                  "title": "2. Cadastro — formulário dinâmico (schema da edição)",
+                  "what": "Extensão: UI dirigida pelo schema da edição (progresso, show/hide, validação, retomada). Campos variáveis e Guia do Participante aparecem só quando configurados no CMS.",
+                  "when": "Após pré-cadastro",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "cadastro-inscricao",
+                  "capacidadeLabel": "Cadastro / inscrição da empreendedora",
+                  "capacidadeParte": "extensao",
+                  "impactaModelo": true
+                },
+                {
+                  "id": "2.5.1.4b-bloqueio",
+                  "csvId": "2.5.1.4",
+                  "title": "3. Cadastro da edição — bloqueios",
+                  "what": "Perguntas da edição que impedem concluir a inscrição: idade e, no presencial/híbrido, disponibilidade para encontros; escolha de unidade.",
+                  "when": "Mesma ficha, variável por edição",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "classificar-inscritas",
+                  "capacidadeLabel": "Classificar inscritas",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "2.5.1.4b-regua",
+                  "csvId": "2.5.1.4",
+                  "title": "3. Cadastro da edição — critérios pontuáveis",
+                  "what": "Captura no cadastro dos dados usados pelos 6 critérios da régua (tempo de negócio, renda, CLT, cargo, internet, WhatsApp).",
+                  "when": "Mesma ficha, variável por edição",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "classificar-inscritas",
+                  "capacidadeLabel": "Classificar inscritas",
+                  "capacidadeParte": "extensao"
+                },
+                {
+                  "id": "2.5.1.5",
+                  "csvId": "2.5.1.5",
+                  "title": "Confirmação e orientação WhatsApp",
+                  "what": "Status em seleção + prazo estimado + contato com a organização.",
+                  "when": "Fim da inscrição",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                }
+              ]
+            },
+            {
+              "title": "B. Espera e aprovação",
+              "items": [
+                {
+                  "id": "cli-wait-1",
+                  "csvId": "cli-wait-1",
+                  "title": "Período de seleção",
+                  "what": "Empreendedora aguarda; sem acesso ao curso.",
+                  "when": "Entre inscrição e comunicação",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "cli-wait-2",
+                  "csvId": "2.4.2.6",
+                  "title": "Resultado da seleção",
+                  "what": "Comunicação de aprovada ou não aprovada.",
+                  "when": "Fim da seleção",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "cli-wait-3",
+                  "csvId": "2.3.3.0",
+                  "title": "Início jornada online",
+                  "what": "Após aprovação, módulos liberados automaticamente em sequência.",
+                  "when": "Pós-comunicação (online)",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "cli-wait-4",
+                  "csvId": "2.6.4",
+                  "title": "Início jornada presencial/híbrida",
+                  "what": "Convite ao grupo da turma; participação efetivada ao entrar no grupo.",
+                  "when": "Pós-comunicação (P/H)",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                }
+              ]
+            },
+            {
+              "title": "C. Realização do curso (tipos de atividade)",
+              "items": [
+                {
+                  "id": "cli-tipo-aula",
+                  "csvId": "2.5.3.1",
+                  "title": "Aula — exibir e operacionalizar no Cliente",
+                  "what": "Presencial: ver local/material e confirmar presença (QR). Ao vivo: entrar na transmissão no horário.",
+                  "when": "Encontros P/H (presencial ou ao vivo)",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-aula",
+                  "capacidadeLabel": "Aula",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cli-tipo-video-aula",
+                  "csvId": "2.5.3.2",
+                  "title": "Vídeo Aula — exibir e operacionalizar no Cliente",
+                  "what": "Assistir o conteúdo gravado no aplicativo, no próprio ritmo, até o percentual de conclusão.",
+                  "when": "Durante módulos",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-video-aula",
+                  "capacidadeLabel": "Vídeo Aula",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cli-tipo-atividade",
+                  "csvId": "2.5.3.8",
+                  "title": "Atividade (questionário genérico) — exibir e operacionalizar no Cliente",
+                  "what": "Responder o questionário no aplicativo até o prazo.",
+                  "when": "Conforme módulo",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-atividade",
+                  "capacidadeLabel": "Atividade (questionário genérico)",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cli-tipo-tarefa-casa",
+                  "csvId": "2.5.3.5",
+                  "title": "Tarefa de casa — exibir e operacionalizar no Cliente",
+                  "what": "Baixar o material de apoio, realizar o exercício e enviar arquivo ou resposta no aplicativo.",
+                  "when": "Conforme módulo",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-tarefa-casa",
+                  "capacidadeLabel": "Tarefa de casa",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cli-tipo-faturamento",
+                  "csvId": "2.5.3.7",
+                  "title": "Registro de faturamento — exibir e operacionalizar no Cliente",
+                  "what": "Informar no aplicativo os **4 indicadores** do mês (renda, faturamento, investimento, poupança); justificar se faturamento ou renda = 0.",
+                  "when": "Competência mensal",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-faturamento",
+                  "capacidadeLabel": "Registro de faturamento",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cli-tipo-download",
+                  "csvId": "2.5.3.6",
+                  "title": "Download de conteúdo — exibir e operacionalizar no Cliente",
+                  "what": "Baixar o arquivo no aplicativo. Na online, os mesmos documentos também chegam no WhatsApp após o OK. Sem envio de volta.",
+                  "when": "Conforme módulo",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-download",
+                  "capacidadeLabel": "Download de conteúdo",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cli-tipo-plano-acao",
+                  "csvId": "2.5.3.10",
+                  "title": "Plano de ação — exibir e operacionalizar no Cliente",
+                  "what": "Preencher o plano e acompanhar as metas no aplicativo; responder quando a gestora pedir revisão.",
+                  "when": "Conforme módulo",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-plano-acao",
+                  "capacidadeLabel": "Plano de ação",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cli-tipo-visita-tecnica",
+                  "csvId": "2.5.3.11",
+                  "title": "Visita técnica — exibir e operacionalizar no Cliente",
+                  "what": "Ver data e local (ou link) da visita no aplicativo; receber o registro depois da visita.",
+                  "when": "Agendamento P/H",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-visita-tecnica",
+                  "capacidadeLabel": "Visita técnica",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cli-tipo-q-inicial",
+                  "csvId": "2.5.3.3",
+                  "title": "Questionário inicial — exibir e operacionalizar no Cliente",
+                  "what": "Responder o diagnóstico no aplicativo, no início do curso.",
+                  "when": "Início da jornada",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-q-inicial",
+                  "capacidadeLabel": "Questionário inicial",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cli-tipo-q-final",
+                  "csvId": "2.5.3.4",
+                  "title": "Questionário final — exibir e operacionalizar no Cliente",
+                  "what": "Responder a avaliação de saída no aplicativo (online: após presença/KW da live).",
+                  "when": "Fim da jornada",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-q-final",
+                  "capacidadeLabel": "Questionário final",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cli-tipo-nps",
+                  "csvId": "2.5.3.12",
+                  "title": "NPS — exibir e operacionalizar no Cliente",
+                  "what": "Responder a pesquisa de satisfação no aplicativo.",
+                  "when": "Encerramento",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-nps",
+                  "capacidadeLabel": "NPS",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cli-tipo-faturamento-7",
+                  "csvId": "2.5.3.7",
+                  "title": "Registro de faturamento — preencher 7 indicadores",
+                  "what": "Extensão: além de renda, faturamento, investimento e poupança, informar despesas fixas, nº de clientes e nº de produtos vendidos.",
+                  "when": "Competência mensal",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-faturamento",
+                  "capacidadeLabel": "Registro de faturamento",
+                  "capacidadeParte": "extensao",
+                  "impactaModelo": true
+                },
+                {
+                  "id": "cli-tipo-faturamento-dificuldade",
+                  "csvId": "2.5.3.7",
+                  "title": "Registro de faturamento — declarar dificuldade",
+                  "what": "Extensão: escolher obrigatoriamente a dificuldade do preenchimento (5 rostos: muito difícil → muito fácil).",
+                  "when": "Competência mensal",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-faturamento",
+                  "capacidadeLabel": "Registro de faturamento",
+                  "capacidadeParte": "extensao",
+                  "impactaModelo": true
+                },
+                {
+                  "id": "cli-tipo-faturamento-anexo",
+                  "csvId": "2.5.3.7",
+                  "title": "Registro de faturamento — enviar anexo",
+                  "what": "Extensão: anexar planilha, foto ou print; sem anexo o envio é bloqueado.",
+                  "when": "Competência mensal",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-faturamento",
+                  "capacidadeLabel": "Registro de faturamento",
+                  "capacidadeParte": "extensao",
+                  "impactaModelo": true
+                },
+                {
+                  "id": "cli-aula-replay",
+                  "csvId": "2.5.3.1",
+                  "title": "Aula — replay (ao vivo)",
+                  "what": "Extensão: assistir a gravação depois da transmissão, sem gerar nova presença.",
+                  "when": "Após a aula ao vivo",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-aula",
+                  "capacidadeLabel": "Aula",
+                  "capacidadeParte": "extensao"
+                },
+                {
+                  "id": "2.5.2.1",
+                  "csvId": "2.5.2.1",
+                  "title": "Home com progresso",
+                  "what": "Visão dos módulos e percentual concluído.",
+                  "when": "Durante o curso",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                }
+              ]
+            },
+            {
+              "title": "D. Conclusão e doação",
+              "items": [
+                {
+                  "id": "2.5.2.4",
+                  "csvId": "2.5.2.4",
+                  "title": "Certificados",
+                  "what": "Consulta e solicitação quando atingir o percentual da edição.",
+                  "when": "Após beneficiamento",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.5.1.6",
+                  "csvId": "2.5.1.6",
+                  "title": "Acesso por link mágico",
+                  "what": "Retorno ao app sem senha, por WhatsApp ou e-mail.",
+                  "when": "Sempre",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "cli-doacao-on-100",
+                  "csvId": "2.5.2.1",
+                  "title": "Doação online — atingir 100% das atividades",
+                  "what": "Concluir todas as atividades da edição para poder entrar na live de encerramento.",
+                  "when": "Fim da formação online",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "doacao-online",
+                  "capacidadeLabel": "Doação online",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cli-doacao-on-live",
+                  "csvId": "2.5.3.9",
+                  "title": "Doação online — participar da live",
+                  "what": "Abrir a live no YouTube (StreamYard; fora da plataforma). Só quem fez 100%.",
+                  "when": "Fim da formação online",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "doacao-online",
+                  "capacidadeLabel": "Doação online",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cli-doacao-on-kw",
+                  "csvId": "2.5.3.4",
+                  "title": "Doação online — presença (palavra-chave)",
+                  "what": "Após a live: atividade de presença com KW (case/acento-insensitive; prazo rígido; timestamp).",
+                  "when": "Após a live",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "doacao-online",
+                  "capacidadeLabel": "Doação online",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cli-doacao-on-quiz",
+                  "csvId": "2.5.3.4",
+                  "title": "Doação online — questionário 100% certo",
+                  "what": "Responder o questionário final só após KW válida; só 100% de acertos libera para doação.",
+                  "when": "Após a palavra-chave",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "doacao-online",
+                  "capacidadeLabel": "Doação online",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cli-status-ux",
+                  "csvId": "2.5.1.1",
+                  "title": "Status humanizados na home",
+                  "what": "Rótulos: inscrita / aguardando seleção ou entrevista / aprovada / ativa / concluída — evitar “matriculada”. WhatsApp = canal principal de aviso.",
+                  "when": "Contínuo",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                },
+                {
+                  "id": "cli-pos-pix",
+                  "csvId": "2.5.2.4",
+                  "title": "Pós-liberação — indicar conta ou PIX",
+                  "what": "Informar onde deseja receber (CPF-PIX imutável se chave = CPF); se material, endereço com ponto de referência.",
+                  "when": "Após liberada para doação",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "pos-liberacao-doacao",
+                  "capacidadeLabel": "Pós-liberação da doação",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "cli-pos-recibo",
+                  "csvId": "2.5.2.4",
+                  "title": "Pós-liberação — assinar recibo e aceites",
+                  "what": "Visualizar itens da doação; assinar recibo (obrigatório; texto até 60 dias) e aceites. Material: só após confirmar recebimento.",
+                  "when": "Após liberada para doação",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "pos-liberacao-doacao",
+                  "capacidadeLabel": "Pós-liberação da doação",
+                  "capacidadeParte": "nucleo"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "art-backend",
+          "title": "Retaguarda — motor de regras",
+          "desc": "Regras automáticas, integrações e proteção de dados — invisível à empreendedora, essencial ao ciclo.",
+          "blocks": [
+            {
+              "title": "Regras e segurança",
+              "items": [
+                {
+                  "id": "2.3.2.3-bloqueio",
+                  "csvId": "2.3.2.3",
+                  "title": "Validação de bloqueios na inscrição",
+                  "what": "Impedir cadastro quando idade ou disponibilidade presencial não atendem a regra da edição.",
+                  "when": "Na inscrição",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "classificar-inscritas",
+                  "capacidadeLabel": "Classificar inscritas",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "2.3.2.3-score",
+                  "csvId": "2.3.2.3",
+                  "title": "Cálculo do score X/Y",
+                  "what": "Calcular quantos critérios ativos da régua a inscrita atende, para apoiar a classificação no Gestor.",
+                  "when": "Na inscrição",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "classificar-inscritas",
+                  "capacidadeLabel": "Classificar inscritas",
+                  "capacidadeParte": "extensao"
+                },
+                {
+                  "id": "be-cadastro-persistir",
+                  "csvId": "2.3.2.3",
+                  "title": "Persistir inscrição, empreendedora e empreendimento",
+                  "what": "Núcleo: gravar inscrição completa, criar empreendedora e empreendimento vinculados, UUID de dispositivo e status em seleção.",
+                  "when": "Ao concluir o cadastro",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "cadastro-inscricao",
+                  "capacidadeLabel": "Cadastro / inscrição da empreendedora",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "be-cadastro-schema",
+                  "csvId": "2.3.2.3",
+                  "title": "Schema e respostas dinâmicas da inscrição",
+                  "what": "Extensão: API do schema da edição; validação server-side; snapshot da definição no submit; respostas tipadas (JSON/EAV) sem misturar perguntas variáveis ao BI comparável. Alinha retomada e alerta de inscrição incompleta.",
+                  "when": "Na inscrição",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "cadastro-inscricao",
+                  "capacidadeLabel": "Cadastro / inscrição da empreendedora",
+                  "capacidadeParte": "extensao",
+                  "impactaModelo": true
+                },
+                {
+                  "id": "be-entrevista-modelo",
+                  "csvId": "2.4.2.4",
+                  "title": "Modelo de dados — entrevista de seleção",
+                  "what": "Extensão: sessões (data, hora, local, capacidade), alocação de qualificadas, presença/ausência, decisão aprovar/não aprovar, realocação e CSV de presença. Status ausente → não aprovada (auto). Alimenta travas do Comunicar (convite só com sessão; liberação só com turma).",
+                  "when": "Seleção P/H",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "entrevista-selecao",
+                  "capacidadeLabel": "Entrevista de seleção (P/H)",
+                  "capacidadeParte": "extensao",
+                  "impactaModelo": true
+                },
+                {
+                  "id": "2.3.1.2",
+                  "csvId": "2.3.1.2",
+                  "title": "Links de acesso seguros",
+                  "what": "Empreendedora e gestor entram sem senha, por link personalizado.",
+                  "when": "Login",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.3.4.1",
+                  "csvId": "2.3.4.1",
+                  "title": "Cálculo de beneficiamento e certificado",
+                  "what": "Automático conforme % da edição.",
+                  "when": "Encerramento",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "be-doacao-on-funil",
+                  "csvId": "2.3.4.1",
+                  "title": "Doação online — regras do funil",
+                  "what": "Bloquear live sem 100%; validar palavra-chave; liberar doação só com questionário 100% certo; gravar timestamp do quiz.",
+                  "when": "Fim da formação online",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "doacao-online",
+                  "capacidadeLabel": "Doação online",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "be-doacao-itens",
+                  "csvId": "2.3.4.1",
+                  "title": "Doação — persistir itens 1:N",
+                  "what": "Extensão: modelo e API para N linhas (produto + valor) por doação. Impacta modelo.",
+                  "when": "Operação de doação",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "doacao-ph",
+                  "capacidadeLabel": "Doação P/H",
+                  "capacidadeParte": "extensao",
+                  "impactaModelo": true
+                },
+                {
+                  "id": "be-orcamento-unidade",
+                  "csvId": "2.3.4.1",
+                  "title": "Orçamento por unidade — regras e log",
+                  "what": "Extensão: teto por unidade definido no CMS (UC9); validar consumo na aprovação (UC57); saldos por unidade. Impacta modelo.",
+                  "when": "Configuração e operação",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "doacao-ph",
+                  "capacidadeLabel": "Doação P/H",
+                  "capacidadeParte": "extensao",
+                  "impactaModelo": true
+                },
+                {
+                  "id": "be-pos-doacao",
+                  "csvId": "2.3.4.1",
+                  "title": "Pós-liberação — persistir PIX, recibo e aceites",
+                  "what": "Guardar dados bancários (CPF-PIX imutável), itens no recibo, assinatura obrigatória e aceites; copy até 60 dias.",
+                  "when": "Após liberada para doação",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "pos-liberacao-doacao",
+                  "capacidadeLabel": "Pós-liberação da doação",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "2.2.14",
+                  "csvId": "2.2.14",
+                  "title": "Proteção de dados (LGPD)",
+                  "what": "Consentimentos, anonimização de não aprovadas.",
+                  "when": "Contínuo",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                }
+              ]
+            },
+            {
+              "title": "Regras por tipo de atividade",
+              "items": [
+                {
+                  "id": "be-tipo-aula",
+                  "csvId": "2.3.3.0",
+                  "title": "Aula — API, regras e persistência",
+                  "what": "Presença/comparecimento conta no progresso e no beneficiamento; após qualquer presença a liberação não pode ser cancelada. Inexistente em edição online.",
+                  "when": "Encontros P/H (presencial ou ao vivo)",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-aula",
+                  "capacidadeLabel": "Aula",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "be-tipo-video-aula",
+                  "csvId": "2.3.3.0",
+                  "title": "Vídeo Aula — API, regras e persistência",
+                  "what": "Conclusão com percentual assistido (padrão 80%, configurável); conta no beneficiamento.",
+                  "when": "Durante módulos",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-video-aula",
+                  "capacidadeLabel": "Vídeo Aula",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "be-tipo-atividade",
+                  "csvId": "2.3.3.0",
+                  "title": "Atividade (questionário genérico) — API, regras e persistência",
+                  "what": "Marcar realizado / não realizado; respostas alimentam consolidado da turma.",
+                  "when": "Conforme módulo",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-atividade",
+                  "capacidadeLabel": "Atividade (questionário genérico)",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "be-tipo-tarefa-casa",
+                  "csvId": "2.3.3.0",
+                  "title": "Tarefa de casa — API, regras e persistência",
+                  "what": "Fila aprovar / revisar (sem reprovação); entrega conta no beneficiamento após aprovação.",
+                  "when": "Conforme módulo",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-tarefa-casa",
+                  "capacidadeLabel": "Tarefa de casa",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "be-tipo-faturamento",
+                  "csvId": "2.3.3.0",
+                  "title": "Registro de faturamento — API, regras e persistência",
+                  "what": "Um registro por competência e empreendimento; só o aprovado conta; persiste os 4 indicadores do núcleo; zero sem observação bloqueia envio.",
+                  "when": "Competência mensal",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-faturamento",
+                  "capacidadeLabel": "Registro de faturamento",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "be-tipo-download",
+                  "csvId": "2.3.3.0",
+                  "title": "Download de conteúdo — API, regras e persistência",
+                  "what": "Enviar arquivos no lote pós-OK (independente da flag de videoaula). Marcar baixou / não baixou no Cliente; conta no beneficiamento após o download na plataforma.",
+                  "when": "Conforme módulo",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-download",
+                  "capacidadeLabel": "Download de conteúdo",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "be-tipo-plano-acao",
+                  "csvId": "2.3.3.0",
+                  "title": "Plano de ação — API, regras e persistência",
+                  "what": "Marcar fez / não fez; histórico de edições das metas; status pode ir para análise das gestoras.",
+                  "when": "Conforme módulo",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-plano-acao",
+                  "capacidadeLabel": "Plano de ação",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "be-tipo-visita-tecnica",
+                  "csvId": "2.3.3.0",
+                  "title": "Visita técnica — API, regras e persistência",
+                  "what": "Não existe em edição 100% online; visita realizada conta no progresso da participante.",
+                  "when": "Agendamento P/H",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-visita-tecnica",
+                  "capacidadeLabel": "Visita técnica",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "be-tipo-q-inicial",
+                  "csvId": "2.3.3.0",
+                  "title": "Questionário inicial — API, regras e persistência",
+                  "what": "Respostas T0 ficam disponíveis para comparar com o questionário final e com os indicadores qualitativos.",
+                  "when": "Início da jornada",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-q-inicial",
+                  "capacidadeLabel": "Questionário inicial",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "be-tipo-q-final",
+                  "csvId": "2.3.3.0",
+                  "title": "Questionário final — API, regras e persistência",
+                  "what": "Insumo do encerramento e da consolidação de beneficiamento; compara T0 e T1; online: trava pós-KW e 100% certo para liberar doação.",
+                  "when": "Fim da jornada",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-q-final",
+                  "capacidadeLabel": "Questionário final",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "be-tipo-nps",
+                  "csvId": "2.3.3.0",
+                  "title": "NPS — API, regras e persistência",
+                  "what": "Classificar respostas em promotora / neutra / detratora; alimentar relatório de avaliação do curso.",
+                  "when": "Encerramento",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-nps",
+                  "capacidadeLabel": "NPS",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "be-tipo-faturamento-7",
+                  "csvId": "2.5.3.7",
+                  "title": "Registro de faturamento — persistir 7 indicadores",
+                  "what": "Extensão: modelo e validação dos 3 campos adicionais (despesas fixas, clientes, produtos); séries históricas passam a carregar o conjunto ampliado.",
+                  "when": "Competência mensal",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-faturamento",
+                  "capacidadeLabel": "Registro de faturamento",
+                  "capacidadeParte": "extensao",
+                  "impactaModelo": true
+                },
+                {
+                  "id": "be-tipo-faturamento-dificuldade",
+                  "csvId": "2.5.3.7",
+                  "title": "Registro de faturamento — persistir dificuldade",
+                  "what": "Extensão: gravar a escala de 5 níveis; bloquear envio sem dificuldade; disponibilizar agregados para o Gestor e o BI.",
+                  "when": "Competência mensal",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-faturamento",
+                  "capacidadeLabel": "Registro de faturamento",
+                  "capacidadeParte": "extensao",
+                  "impactaModelo": true
+                },
+                {
+                  "id": "be-tipo-faturamento-anexo",
+                  "csvId": "2.5.3.7",
+                  "title": "Registro de faturamento — persistir anexo",
+                  "what": "Extensão: armazenar o anexo obrigatório; rejeitar submit sem arquivo.",
+                  "when": "Competência mensal",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-faturamento",
+                  "capacidadeLabel": "Registro de faturamento",
+                  "capacidadeParte": "extensao",
+                  "impactaModelo": true
+                },
+                {
+                  "id": "be-tipo-beneficiamento",
+                  "csvId": "2.2.8",
+                  "title": "Toda atividade liberada conta no beneficiamento",
+                  "what": "Não há tipo 'que não beneficia': o percentual de conclusão considera todas as atividades liberadas na edição.",
+                  "when": "Durante o curso",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                }
+              ]
+            },
+            {
+              "title": "Jornada online e mensagens",
+              "items": [
+                {
+                  "id": "2.3.3.0",
+                  "csvId": "2.3.3.0",
+                  "title": "Liberação automática da jornada online",
+                  "what": "Após aprovação, módulos liberados em sequência; confirmação OK da empreendedora. Fila de jornada (≠ fila de alertas).",
+                  "when": "Pós-comunicação online",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.3.5.2",
+                  "csvId": "2.3.5.2",
+                  "title": "Integração WhatsApp",
+                  "what": "Templates de inscrição, aprovação e atividades. Download: template + arquivos no WhatsApp após OK (também no Cliente).",
+                  "when": "Inscrição e jornada",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.3.5.4",
+                  "csvId": "2.3.5.4",
+                  "title": "Disparo após comunicar aprovação",
+                  "what": "Primeiro gatilho da jornada online.",
+                  "when": "Fim da seleção",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.3.5.1",
+                  "csvId": "2.3.5.1",
+                  "title": "E-mail transacional",
+                  "what": "Links de acesso e comunicações por e-mail.",
+                  "when": "Contínuo",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "be-fila-alertas",
+                  "csvId": "2.3.5.7",
+                  "title": "Fila de alertas (engajamento)",
+                  "what": "Avaliar regras UC87, respeitar cadência/exitWhen, enviar via SendGrid/Gupshup. Substitui Mautic.",
+                  "when": "Contínuo",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "alertas-engajamento",
+                  "capacidadeLabel": "Alertas de engajamento",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "be-alertas-eval",
+                  "csvId": "2.3.5.7",
+                  "title": "Avaliador de métricas de alerta",
+                  "what": "Job + eventos: inscrição incompleta, prazo, backlog, fim de edição, risco curto, check-point.",
+                  "when": "Contínuo",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "alertas-engajamento",
+                  "capacidadeLabel": "Alertas de engajamento",
+                  "capacidadeParte": "extensao"
+                },
+                {
+                  "id": "2.3.5.5",
+                  "csvId": "2.3.5.5",
+                  "title": "Envio de vídeo por WhatsApp",
+                  "what": "Complemento opcional na jornada online: arquivo compatível com WhatsApp, além do consumo oficial na plataforma.",
+                  "when": "Durante curso online",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-video-aula",
+                  "capacidadeLabel": "Vídeo Aula",
+                  "capacidadeParte": "extensao"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "art-comunicacao",
+          "title": "Comunicação e WhatsApp",
+          "desc": "Eventos de mensagem que conectam inscrição, seleção e jornada — templates via pacotes UC88.",
+          "blocks": [
+            {
+              "title": "Fluxos de comunicação",
+              "items": [
+                {
+                  "id": "2.6.1",
+                  "csvId": "2.6.1",
+                  "title": "Seleção de pacote na edição (UC9)",
+                  "what": "Admin escolhe **PacoteComunicacao** (UC88) na edição; snapshot na publicação. Substitui templates inline por edição.",
+                  "when": "Configuração por edição",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                },
+                {
+                  "id": "2.6.2",
+                  "csvId": "2.6.2",
+                  "title": "Primeiro contato pós-cadastro",
+                  "what": "Empreendedora escreve no número da organização; sistema responde (template do pacote).",
+                  "when": "Após inscrição completa",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.6.3",
+                  "csvId": "2.6.3",
+                  "title": "Comunicar aprovação/reprovação",
+                  "what": "Disparo do resultado da seleção (UC25 — inicia jornada das aptas).",
+                  "when": "Fim da seleção",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.6.5",
+                  "csvId": "2.6.5",
+                  "title": "Jornada online — liberar / OK / lote",
+                  "what": "Mecânica de liberação e lembretes (UC33).",
+                  "when": "Durante curso online",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.6.6",
+                  "csvId": "2.6.6",
+                  "title": "Alertas de risco de evasão",
+                  "what": "Mensagens automáticas UC87/UC53 para quem parou na jornada online.",
+                  "when": "Durante curso online",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                }
+              ]
+            },
+            {
+              "title": "Mensageria por tipo de atividade",
+              "items": [
+                {
+                  "id": "msg-tipo-aula",
+                  "csvId": "2.6.5",
+                  "title": "Aula — mensagens e lembretes",
+                  "what": "Mensagem no grupo com data, horário e endereço ou link; lembrete antes da sessão.",
+                  "when": "Encontros P/H (presencial ou ao vivo)",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-aula",
+                  "capacidadeLabel": "Aula",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "msg-tipo-video-aula",
+                  "csvId": "2.6.5",
+                  "title": "Vídeo Aula — mensagens e lembretes",
+                  "what": "Mensagem com prazo e link da aula; lembrete de vencimento para quem ainda não assistiu.",
+                  "when": "Durante módulos",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-video-aula",
+                  "capacidadeLabel": "Vídeo Aula",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "msg-tipo-atividade",
+                  "csvId": "2.6.5",
+                  "title": "Atividade (questionário genérico) — mensagens e lembretes",
+                  "what": "Mensagem com prazo e link; lembrete de vencimento.",
+                  "when": "Conforme módulo",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-atividade",
+                  "capacidadeLabel": "Atividade (questionário genérico)",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "msg-tipo-tarefa-casa",
+                  "csvId": "2.6.5",
+                  "title": "Tarefa de casa — mensagens e lembretes",
+                  "what": "Mensagem com prazo e link para enviar; lembrete de vencimento; aviso quando a gestora pedir revisão.",
+                  "when": "Conforme módulo",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-tarefa-casa",
+                  "capacidadeLabel": "Tarefa de casa",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "msg-tipo-faturamento",
+                  "csvId": "2.6.5",
+                  "title": "Registro de faturamento — mensagens e lembretes",
+                  "what": "Mensagem com prazo e link do formulário; lembrete de vencimento.",
+                  "when": "Competência mensal",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-faturamento",
+                  "capacidadeLabel": "Registro de faturamento",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "msg-tipo-download",
+                  "csvId": "2.6.5",
+                  "title": "Download de conteúdo — mensagens e lembretes",
+                  "what": "Template Download + arquivos no WhatsApp da usuária (online, após OK); os mesmos documentos no Cliente. Lembrete se ainda não baixou.",
+                  "when": "Conforme módulo",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-download",
+                  "capacidadeLabel": "Download de conteúdo",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "msg-tipo-plano-acao",
+                  "csvId": "2.6.5",
+                  "title": "Plano de ação — mensagens e lembretes",
+                  "what": "Mensagem com prazo e link do plano; lembrete de vencimento; aviso de revisão.",
+                  "when": "Conforme módulo",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-plano-acao",
+                  "capacidadeLabel": "Plano de ação",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "msg-tipo-visita-tecnica",
+                  "csvId": "2.6.5",
+                  "title": "Visita técnica — mensagens e lembretes",
+                  "what": "Mensagem de agendamento e lembrete; não há grupo coletivo para este tipo.",
+                  "when": "Agendamento P/H",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-visita-tecnica",
+                  "capacidadeLabel": "Visita técnica",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "msg-tipo-q-inicial",
+                  "csvId": "2.6.5",
+                  "title": "Questionário inicial — mensagens e lembretes",
+                  "what": "Mensagem com prazo e link; lembrete de vencimento.",
+                  "when": "Início da jornada",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-q-inicial",
+                  "capacidadeLabel": "Questionário inicial",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "msg-tipo-q-final",
+                  "csvId": "2.6.5",
+                  "title": "Questionário final — mensagens e lembretes",
+                  "what": "Mensagem com prazo e link; lembrete de vencimento.",
+                  "when": "Fim da jornada",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-q-final",
+                  "capacidadeLabel": "Questionário final",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "msg-tipo-nps",
+                  "csvId": "2.6.5",
+                  "title": "NPS — mensagens e lembretes",
+                  "what": "Mensagem com prazo e link; lembrete de vencimento.",
+                  "when": "Encerramento",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-nps",
+                  "capacidadeLabel": "NPS",
+                  "capacidadeParte": "nucleo"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "art-bi",
+          "title": "BI e indicadores",
+          "desc": "Painel de Dados (Looker Studio): impacto institucional, funil executivo e relatórios — separados da visão operacional do App Gestor.",
+          "blocks": [
+            {
+              "title": "Escopo contemplado — visão executiva",
+              "items": [
+                {
+                  "id": "2.7.1",
+                  "csvId": "2.7.1",
+                  "title": "Funil executivo — inscritas, selecionadas, iniciaram, concluíram",
+                  "what": "KPIs do dashboard C-level: inscritas → selecionadas → iniciaram → concluíram (beneficiadas / certificadas). Distinto dos totais operacionais do App Gestor.",
+                  "when": "Durante e após edição",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.7.5",
+                  "csvId": "2.7.3",
+                  "title": "Evolução de renda e faturamento",
+                  "what": "Núcleo: séries e consolidado de **renda** e **faturamento** a partir dos registros aprovados — visão executiva do Painel de Dados.",
+                  "when": "Durante e após edição",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-faturamento",
+                  "capacidadeLabel": "Registro de faturamento",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "bi-perfil-socioeconomico",
+                  "csvId": "2.7.3",
+                  "title": "Perfil socioeconômico por programa",
+                  "what": "Relatórios qualitativos consolidados: gênero, raça/cor (recorte negras IBGE), idade, filhos, escolaridade e demais campos comparáveis — por programa e edição.",
+                  "when": "Durante e após edição",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.7.2",
+                  "csvId": "2.7.2",
+                  "title": "Dashboard visual de impacto social",
+                  "what": "Painel Looker Studio ligado ao banco: KPIs, filtros (programa, edição, região, UF, município) e comparativos com base legada (UC59).",
+                  "when": "Pós-piloto",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.7.6",
+                  "csvId": "2.7.3",
+                  "title": "NPS e pesquisas de avaliação",
+                  "what": "Consolidado de NPS (promotoras, neutras, detratoras) e demais pesquisas de avaliação (aulas, formato do curso, pós-programa UC82) por edição e programa.",
+                  "when": "Encerramento",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-nps",
+                  "capacidadeLabel": "NPS",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "2.7.3",
+                  "csvId": "2.7.3",
+                  "title": "Relatório como artefato",
+                  "what": "Geração de relatórios exportáveis (quantitativos e qualitativos) para prestação de contas — disponível na visão executiva e também fora dela (UC60/UC61).",
+                  "when": "Contínuo",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "bi-serie-anual",
+                  "csvId": "2.7.3",
+                  "title": "Série anual",
+                  "what": "Evolução anual dos indicadores (funil, renda, faturamento, NPS) — agregação por ano de competência ou série histórica durante o projeto.",
+                  "when": "Contínuo",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                }
+              ]
+            },
+            {
+              "title": "Escopo contemplado — fora do executivo",
+              "items": [
+                {
+                  "id": "2.7.4",
+                  "csvId": "2.7.1",
+                  "title": "Frequência e participação",
+                  "what": "Quem fez / não fez por tipo de atividade: presença, vídeo, tarefas, downloads, questionários. Base operacional dos relatórios de participação — não entra no dashboard C-level.",
+                  "when": "Durante e após edição",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "bi-investimento-poupanca",
+                  "csvId": "2.7.3",
+                  "title": "Investimento e poupança",
+                  "what": "Séries e consolidado de **investimento** e **poupança** a partir dos registros aprovados — contemplado no RFP, fora da visão executiva resumida.",
+                  "when": "Durante e após edição",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true,
+                  "capacidade": "tipo-faturamento",
+                  "capacidadeLabel": "Registro de faturamento",
+                  "capacidadeParte": "nucleo"
+                },
+                {
+                  "id": "bi-relatorio-beneficiaria",
+                  "csvId": "2.7.3",
+                  "title": "Relatório por beneficiária",
+                  "what": "Ficha consolidada por empreendedora: perfil, frequência, evolução financeira, NPS e histórico de participação — drill-down operacional.",
+                  "when": "Durante e após edição",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                }
+              ]
+            },
+            {
+              "title": "Além do escopo",
+              "items": [
+                {
+                  "id": "bi-metas-institucionais",
+                  "csvId": "bi-metas-institucionais",
+                  "title": "Metas institucionais e prazos contratuais",
+                  "what": "Painel de metas da organização e marcos contratuais (beneficiamento, certificação, doação) com prazos e % de cumprimento por edição/programa.",
+                  "when": "Contínuo",
+                  "scope": "Fase 3",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                },
+                {
+                  "id": "bi-capital-semente-doacoes",
+                  "csvId": "bi-capital-semente-doacoes",
+                  "title": "Capital semente e doações",
+                  "what": "Consolidado de capital semente concedido: valor, modalidade, beneficiárias e empreendimentos contemplados — visão financeira de impacto.",
+                  "when": "Durante e após edição",
+                  "scope": "Fase 3",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                },
+                {
+                  "id": "bi-mapa-regioes",
+                  "csvId": "bi-mapa-regioes",
+                  "title": "Mapa de regiões",
+                  "what": "Visualização geográfica de participantes e impacto por UF, município e região — gráficos e mapa interativo no Painel de Dados.",
+                  "when": "Durante e após edição",
+                  "scope": "Fase 3",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                },
+                {
+                  "id": "bi-mentorias",
+                  "csvId": "bi-mentorias",
+                  "title": "Acompanhamento das mentorias",
+                  "what": "Indicadores de mentorias registradas: sessões, horas, mentores e empreendedoras atendidas por edição/unidade.",
+                  "when": "Durante e após edição",
+                  "scope": "Fase 3",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                },
+                {
+                  "id": "bi-tipos-doacao-valores",
+                  "csvId": "bi-tipos-doacao-valores",
+                  "title": "Tipos de doação e valores",
+                  "what": "Breakdown por tipo de doação (capital semente, material, etc.) e valores concedidos — consolidado para prestação de contas.",
+                  "when": "Durante e após edição",
+                  "scope": "Fase 3",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                },
+                {
+                  "id": "bi-pessoas-empreendimentos",
+                  "csvId": "bi-pessoas-empreendimentos",
+                  "title": "Divisão empreendedoras e empreendimentos",
+                  "what": "Contagem dupla UC71: N empreendedoras (beneficiadas, certificadas, ativas) × 1 empreendimento × 1 doação por negócio coletivo.",
+                  "when": "Durante e após edição",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                },
+                {
+                  "id": "bi-analise-persona",
+                  "csvId": "bi-analise-persona",
+                  "title": "Análise de Persona",
+                  "what": "Persona representativa gerada a partir dos filtros do dashboard (perfil demográfico e socioeconômico médio da seleção).",
+                  "when": "Durante e após edição",
+                  "scope": "Fase 3",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                }
+              ]
+            },
+            {
+              "title": "Extensões — registro de faturamento",
+              "items": [
+                {
+                  "id": "bi-tipo-faturamento-7",
+                  "csvId": "2.7.3",
+                  "title": "Evolução econômica — 7 indicadores",
+                  "what": "Extensão: séries e consolidado também com despesas fixas, nº de clientes e nº de produtos vendidos.",
+                  "when": "Durante e após edição",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-faturamento",
+                  "capacidadeLabel": "Registro de faturamento",
+                  "capacidadeParte": "extensao"
+                },
+                {
+                  "id": "bi-tipo-faturamento-dificuldade",
+                  "csvId": "2.7.3",
+                  "title": "Evolução econômica — dificuldade de preenchimento",
+                  "what": "Extensão: distribuição da autoavaliação de dificuldade (5 níveis) por turma/edição — indicador qualitativo de aderência ao reporte.",
+                  "when": "Durante e após edição",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "tipo-faturamento",
+                  "capacidadeLabel": "Registro de faturamento",
+                  "capacidadeParte": "extensao"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "art-alertas",
+          "title": "Alertas de engajamento",
+          "desc": "Regras tipadas no CMS, binding no Gestor, fila no Backend (SendGrid + Gupshup). Mautic removido do projeto.",
+          "blocks": [
+            {
+              "title": "Capacidade transversal",
+              "items": [
+                {
+                  "id": "alertas-resumo",
+                  "csvId": "alertas-resumo",
+                  "title": "Duas filas de comunicação",
+                  "what": "Fila jornada (UC33 OK/lote) ≠ fila alertas (UC87). Mesma janela comercial WhatsApp; templates distintos.",
+                  "when": "Arquitetura",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false,
+                  "capacidade": "alertas-engajamento",
+                  "capacidadeLabel": "Alertas de engajamento",
+                  "capacidadeParte": "nucleo"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "art-infra",
+          "title": "Infraestrutura",
+          "desc": "Ambientes onde o sistema roda com segurança.",
+          "blocks": [
+            {
+              "title": "Ambientes",
+              "items": [
+                {
+                  "id": "2.1.1",
+                  "csvId": "2.1.1",
+                  "title": "Homologação",
+                  "what": "Ambiente de testes antes de produção.",
+                  "when": "Durante desenvolvimento",
+                  "scope": "MVP",
+                  "defaultPct": 70,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.1.2",
+                  "csvId": "2.1.2",
+                  "title": "Produção",
+                  "what": "Ambiente oficial para edições reais.",
+                  "when": "Go-live",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                },
+                {
+                  "id": "2.1.3",
+                  "csvId": "2.1.3",
+                  "title": "Publicação automatizada",
+                  "what": "Deploy seguro de novas versões.",
+                  "when": "Contínuo",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-implementacao",
+      "title": "Implementação",
+      "desc": "Colocar em operação, capacitar equipe e concluir o primeiro ciclo completo com edições piloto.",
+      "artifacts": [
+        {
+          "id": "art-impl-op",
+          "title": "Operação e piloto",
+          "desc": "Da preparação ao primeiro ciclo fechado com beneficiamento e doação.",
+          "blocks": [
+            {
+              "title": "Ciclo piloto",
+              "items": [
+                {
+                  "id": "imp-1",
+                  "csvId": "imp-1",
+                  "title": "Conteúdo pedagógico no CMS",
+                  "what": "Vídeos, questionários e materiais da edição piloto cadastrados.",
+                  "when": "Antes de abrir inscrições",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                },
+                {
+                  "id": "imp-2",
+                  "csvId": "2.8.2",
+                  "title": "Capacitação da equipe",
+                  "what": "Gestores de unidade e turma treinados nos fluxos.",
+                  "when": "Antes do go-live",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                },
+                {
+                  "id": "imp-3",
+                  "csvId": "imp-3",
+                  "title": "Piloto — 1 edição online + 1 P/H",
+                  "what": "Duas edições reais cobrindo os dois modelos de jornada.",
+                  "when": "Implementação",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                },
+                {
+                  "id": "imp-4",
+                  "csvId": "2.8.2",
+                  "title": "Homologação com gestores reais",
+                  "what": "Validação em ambiente de testes com usuários finais.",
+                  "when": "Pré go-live",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                },
+                {
+                  "id": "imp-5",
+                  "csvId": "imp-5",
+                  "title": "Go-live — inscrições abertas",
+                  "what": "Primeira edição aberta ao público.",
+                  "when": "Implementação",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                },
+                {
+                  "id": "imp-6",
+                  "csvId": "imp-6",
+                  "title": "Acompanhamento semanal do ciclo",
+                  "what": "Seleção → curso → encerramento → doação.",
+                  "when": "Durante piloto",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                },
+                {
+                  "id": "2.8.1",
+                  "csvId": "2.8.1",
+                  "title": "Testes do ciclo completo",
+                  "what": "Inscrição até doação em ambiente integrado.",
+                  "when": "Pré piloto",
+                  "scope": "MVP",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                },
+                {
+                  "id": "2.8.3",
+                  "csvId": "2.8.3",
+                  "title": "Ajustes pós-piloto",
+                  "what": "Melhorias após primeira edição.",
+                  "when": "Após piloto",
+                  "scope": "Fase 2",
+                  "defaultPct": null,
+                  "planoOriginal": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

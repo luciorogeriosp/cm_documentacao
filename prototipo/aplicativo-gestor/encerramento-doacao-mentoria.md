@@ -52,8 +52,9 @@ Menu muda com a **modalidade da edição**. Turma **não** vê o bloco Doação.
 Processos / totalizadores     ← aprovar com APROVAR
 Recibo / PIX / Aceites        ← pós-aprovação (UC86)
 Notas fiscais                 ← NF 1:N (material)
-Mentorias                     ← Unidade (opcional)
 ```
+
+Mentorias P/H **não** entram neste bloco — menu regular. Ver [08-registrar-mentoria.md](gestor-unidade/08-registrar-mentoria.md).
 
 Módulo Encerramento (carga) → na **grade de Módulos**, não neste menu.
 
@@ -68,7 +69,7 @@ Processos / totalizadores     ← só liberadas; APROVAR
 Recibo / PIX / Aceites
 Notas fiscais                 ← NF 1:N (material)
 [ Lote auxiliar ]             ← opcional (carência etc.)
-Mentorias
+Mentorias                     ← etapa final da jornada
 ```
 
 Rotas:
@@ -80,7 +81,7 @@ Rotas:
 | Doação | `/gestor/e/[edicaoId]/doacao` | Ambas |
 | Recibo / PIX / Aceites | `/gestor/e/[edicaoId]/doacao/recibo` | Ambas |
 | Notas fiscais | `/gestor/e/[edicaoId]/doacao/notas-fiscais` | Ambas (material) |
-| Mentorias | `/gestor/e/[edicaoId]/mentorias` | Ambas |
+| Mentorias | `/gestor/e/[edicaoId]/mentorias` | Online = Encerramento; P/H = programa regular |
 
 ---
 
@@ -250,7 +251,9 @@ Após **aprovação da doação** (Unidade, pop-up + digitar **APROVAR**). Clien
 
 ## 5. Gestão de Mentorias (UC70)
 
-Roadmap: Unidade opera; origem típica = liberadas / quem recebeu doação.
+**Online (este pacote):** etapa **final**; lote → diagnóstico Cliente → pool; fallback Unidade; card visual. Tela: [08-registrar-mentoria.md](gestor-unidade/08-registrar-mentoria.md) §1. Rede: [13-voluntarios.md](gestor-unidade/13-voluntarios.md).
+
+**P/H:** **fora** deste pacote (menu regular): agenda gestor **ou** enviar ao pool. Mesmo arquivo, §2.
 
 ---
 
@@ -269,7 +272,9 @@ Ver [12-modulo-encerramento-ph.md](gestor-unidade/12-modulo-encerramento-ph.md).
 | Configurar live / funil | consulta | ✓ | — | ✓ |
 | NF 1:N + acompanhar recebimento | status no negócio | ✓ (aba NF) | ✓ | ✓ |
 | Recibo / PIX | status no negócio | ✓ (aba Recibo) | ✓ | ✓ |
-| Lote auxiliar A–D | consulta | ✓ | opc. | opc. |
+| Mentorias online (encerramento + pool) | consulta | ✓ | — | ✓ |
+| Voluntários (recorte da edição) | ✓ | ✓ | ✓ | ✓ |
+| Ações de voluntariado | — | — | — | — |
 
 ---
 

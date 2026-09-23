@@ -1,7 +1,7 @@
 # Design — Sistema de Gestão de Programas Sociais (Consulado da Mulher)
 
 **Versão:** 1.0 — jul/2026  
-**Fontes:** [escopo_original_cliente.txt](escopo_original_cliente.txt), [Casos de Uso v3](Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v3.md), contrato EWTI × Consulado da Mulher (08.05.2026)
+**Fontes:** [escopo_original_cliente.txt](escopo_original_cliente.txt), [Casos de Uso v8](Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v8.md) (canônico; v7 e anteriores são histórico), contrato EWTI × Consulado da Mulher (08.05.2026)
 
 ---
 
@@ -153,7 +153,7 @@ Programa → Edição → Unidade → Turma → Participante (Empreendedora)
 | **Tarefa de casa** (upload) | Aplicativo Cliente | **Obrigatória** (UC44) |
 | Link externo | Aplicativo Cliente | — |
 | Certificado | Automático (UC55) | — |
-| **Registro dados financeiros** | Aplicativo Cliente (mensal) | **Obrigatória** (UC44) |
+| **Saúde financeira** | Aplicativo Cliente (mensal) | **Obrigatória** (UC44) |
 | Temporizador | Mautic | — |
 | Texto aberto (WhatsApp) | Gupshup via Mautic | — |
 
@@ -184,11 +184,12 @@ Pré-inscrita → Inscrita → Selecionada → Em assessoria → Beneficiada →
 | ------ | ---------- | ------ |
 | **Administrador do Sistema** | CMS + BI | Global (master): usuários, migrações, configuração |
 | **Administrador de Programa** | CMS | Programa(s) / edição(ões) atribuídos |
-| **Gestor de Unidade** | Aplicativo Gestor | Todas as turmas da unidade; seleção, indicadores |
-| **Gestor de Turma** | Aplicativo Gestor | Uma turma: validação, sequência, presencial, dados de acesso |
+| **Gestor de Unidade** | Aplicativo Gestor | Todas as turmas da unidade; seleção, indicadores; aloca mentoria |
+| **Gestor de Turma** | Aplicativo Gestor | Uma turma; aloca mentoria P/H da turma |
+| **Gestor de Voluntariado** | Aplicativo Gestor (menu nacional) | Ações, rede, consulta de mentorias |
 | **Colaborador** | CMS / Gestor | Pode acumular papéis de gestor |
 | **Empreendedora** | Aplicativo Cliente | Próprios dados e atividades |
-| **Voluntário / Mentor** | Gestor (consulta) | Mentoria (UC70) |
+| **Voluntário / Mentor** | Portal do voluntariado (login mágico) | UC70, UC73, UC89, UC90 |
 
 ### 4.2 Autenticação
 
@@ -295,7 +296,7 @@ flowchart LR
 
 - **Engajamento** = **conclusão de atividade**, não apenas visualização de vídeo.
 - Questionários: feedback explicativo **sem nota** ao participante.
-- Dados financeiros: registro **mensal** (faturamento, renda, investimento, poupança, despesas, clientes, produtos vendidos).
+- Saúde financeira: registro **mensal** (entradas: faturamento, empréstimos, clientes, produtos; saídas: despesas, investimento, poupança, dívidas; renda/retirada; **capital de giro** calculado).
 
 ---
 
@@ -396,7 +397,7 @@ Detalhamento: [Alocacao Casos de Uso - Time Desenvolvimento.md](Alocacao%20Casos
 
 | Documento | Conteúdo |
 | --------- | -------- |
-| [Casos de Uso v3](Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v3.md) | 75 casos de uso detalhados |
+| [Casos de Uso v8](Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v8.md) | 87 casos de uso (canônico) |
 | [escopo_original_cliente.txt](escopo_original_cliente.txt) | Escopo inicial da organização |
 | [contrato/](contrato/) | Contrato de licenciamento (08.05.2026) |
 | [time_desenvolvimento.md](time_desenvolvimento.md) | Estrutura da equipe |

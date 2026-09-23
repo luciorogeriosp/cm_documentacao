@@ -8,7 +8,7 @@ Escopo: o que o gestor configura antes de liberar, como a atividade é comunicad
 
 Relação com outros documentos:
 
-- [Casos de Uso - Consulado da Mulher_v7.md](Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v7.md) — casos de uso completos (UC15, UC34, UC13, UC33, UC35, UC44, UC45, UC53, UC78, UC80 etc.).
+- [Casos de Uso - Consulado da Mulher_v8.md](Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v8.md) — casos de uso completos (UC15, UC34, UC13, UC33, UC35, UC44, UC45, UC53, UC78, UC80 etc.).
 - [prototipo/Aplicativo Gestor.md](prototipo/Aplicativo%20Gestor.md) — visão geral das telas e da navegação.
 
 São **11 tipos** de atividade, definidos em `TipoAtividade` (canônico com UC15). A reunião **24/ago.** unificou **Evento Presencial** e **Aula ao Vivo** no tipo **Aula**; a **natureza original** (presencial ou ao vivo) é definida no **CMS** (UC15) e operacionalizada na **liberação** do Gestor (UC34), com possibilidade de alteração até ministrar.

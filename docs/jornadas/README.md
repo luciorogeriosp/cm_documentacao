@@ -14,9 +14,10 @@ Não há um único sequence do início ao fim: cada **fase** tem o seu diagrama.
 | Arquivo | Conteúdo |
 | ------- | -------- |
 | Este README | Convenções, mapa comparativo, tabela-mãe de gatilhos |
-| [online.md](online.md) | Inscrição, seleção, partida UC25, loop OK/lote, consumo, alertas, funil, doação |
-| [presencial-hibrido.md](presencial-hibrido.md) | Inscrição, seleção 3 etapas, efetivação, loop UC34/UC50, extra/visita, encerramento, doação |
+| [online.md](online.md) | Inscrição, seleção, partida UC25, loop OK/lote, consumo, alertas, funil, doação, **mentoria de encerramento (lote + diagnóstico + pool)** |
+| [presencial-hibrido.md](presencial-hibrido.md) | Inscrição, seleção 3 etapas, efetivação, loop UC34/UC50, extra/visita, **mentoria regular (agenda gestor ou pool)**, encerramento, doação |
 | [pos-liberacao.md](pos-liberacao.md) | PIX/recibo/material (comum) + desistência |
+| [Simulador de comunicação](../../simulador-comunicacao/README.md) | Ferramenta à parte: percorre online e P/H com os textos de cada passo |
 
 ---
 
@@ -33,17 +34,21 @@ flowchart LR
     SelOn[Classificar_UC25]
     LoopOn[Temporizador_OK_lote]
     Funil[Funil_100_Live_KW_Quiz]
+    MentOn[Mentoria_encerramento_UC70]
   end
   subgraph ph [PH]
     SelPH[Classificar_entrevista_alocar_UC25]
     LoopPH[Liberar_UC34_grupo_UC50]
+    MentPH[Mentoria_regular_UC70]
     EncPH[Modulo_encerramento]
     DoaPH[Doacao_manual]
   end
   Inscricao --> SelOn
   Inscricao --> SelPH
   SelOn --> LoopOn --> Funil --> PosDoacao
+  Funil --> MentOn
   SelPH --> LoopPH --> EncPH
+  LoopPH --> MentPH
   LoopPH --> DoaPH
   EncPH --> PosDoacao
   DoaPH --> PosDoacao
@@ -66,8 +71,10 @@ Usar só os que entram na fase.
 | ----- | ---- |
 | `Empreendedora` | Pessoa no WhatsApp / App Cliente |
 | `AppCliente` | Aplicativo Cliente |
-| `GestorUnidade` | Seleção, UC25, aprovar doação, binding de alertas |
-| `GestorTurma` | Liberar P/H, presença, sugerir doação, grupo WA |
+| `AppVoluntario` | Portal do voluntariado (pool, aceite, diário, ações) |
+| `GestorUnidade` | Seleção, UC25, aprovar doação, binding de alertas, alocar mentoria |
+| `GestorTurma` | Liberar P/H, presença, sugerir doação, grupo WA, alocar mentoria da turma |
+| `GestorVoluntariado` | Ações, rede nacional, consulta de mentorias |
 | `Backend` | Regras + persistência |
 | `FilaJornada` | UC33 — liberar / OK / lote — **só online** |
 | `FilaAlertas` | UC87 — nurturing / risco |
@@ -102,11 +109,12 @@ Duas filas distintas: **jornada** (UC33) ≠ **alertas** (UC87). Mautic não faz
 | **Liberação de conteúdo** | Temporizador (FilaJornada). Gestor **só acompanha** | Checkbox do gestor (UC34), encontro a encontro |
 | **Envio WhatsApp de conteúdo** | Resposta **OK** da empreendedora → lote das `liberada` ainda não enviadas | Sem lote Gupshup. Depois do UC25, só grupo (UC50, envio **fora** da API) |
 | **WhatsApp pago (API)** | Contínuo: template inscrição, UC25, OK/lote, **documentos de Download** e vídeos (UC51), UC53 | UC25 (único envio operacional pago) + 1º contato opcional. Depois: grupo |
-| **Papel do Gestor de Turma na execução** | Acompanha; aprova entregas; resgate **manual** UC53 | Libera (UC34), comunica grupo (UC50), presença, aprova entregas, conteúdo extra |
-| **Papel do Gestor de Unidade** | Classificar, comunicar, aprovar doação, binding de alertas | Classificar, entrevista, alocar, comunicar (3 faixas), aprovar doação, binding de alertas |
+| **Papel do Gestor de Turma na execução** | Acompanha; aprova entregas; resgate **manual** UC53 | Libera (UC34), comunica grupo (UC50), presença, aprova entregas, conteúdo extra; **mentoria P/H:** aloca lote da turma |
+| **Papel do Gestor de Unidade** | Classificar, comunicar, aprovar doação, binding de alertas; **mentoria online** (lote, fallback) | Classificar, entrevista, alocar, comunicar (3 faixas), aprovar doação; **mentoria P/H:** aloca lote ou Atendido pelo gestor |
 | **Doação** | Funil rígido no **fim**: 100% → live → KW → quiz 100% certo. Só então sugerir/aprovar | Análise **manual** a **qualquer momento** (individual ou massa). Encerramento **não** libera |
+| **Mentoria (UC70)** | Encerramento: lote → diagnóstico no Cliente (hub Mentoria) → **pool**. `vagas` (default 1). Certificado **por pessoa × sessão**. | Programa **regular**. Hub `/app/mentorias`. Unidade/Turma **aloca lote** **ou** voluntário pega. **≠ extra ≠ visita**. GV consulta nacionalmente. |
 | **Risco de evasão** | Liberadas sem realização **> 10 dias** **ou** a **5 dias do término** com pendências. Maratona **não** é risco | Silêncio ≥ **15 dias** + represamento (programa longo) |
-| **Certificado** | Automático (UC55) quando o **empreendimento** atinge o % da edição; PDF em cascata para todas as sócias | Igual |
+| **Certificado** | Automático (UC55) quando o **empreendimento** atinge o % da edição; PDF em cascata para todas as sócias. Mentoria individual: **um certificado por pessoa × sessão** (mentor + mentorada). Coletiva e campanha: **sem** certificado | Igual |
 
 Regra transversal: **classificar ≠ comunicar ≠ liberar atividades**.
 

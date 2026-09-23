@@ -1,7 +1,7 @@
 # Protótipo — Aplicativo Cliente
 
 **Versão:** consolidado — ago/2026 (alinhado à v6)  
-**Fontes:** [Casos de Uso v7](../Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v7.md), [Design.md](../Design.md), reuniões jun–ago/2026
+**Fontes:** [Casos de Uso v8](../Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v8.md), [Design.md](../Design.md), reuniões jun–ago/2026
 
 Documentação consolidada de interfaces do **Aplicativo Cliente** (pré-inscrita/empreendedora).
 
@@ -30,16 +30,18 @@ Documentação consolidada de interfaces do **Aplicativo Cliente** (pré-inscrit
 16. Atividade — teste / questionário
 17. Atividade — presença via QR Code
 18. Atividade — tarefa de casa
-19. Atividade — dados financeiros mensais
+19. Atividade — saúde financeira
 20. Atividade — indicadores
 21. Atividade — pesquisa de satisfação
 22. Atividade — download
 23. Atividade — link externo
 24. Meu perfil
 25. Meu histórico
-26. Certificados
+26. Certificados (filtro Programa | Mentoria)
 27. Solicitar desligamento (UC79)
 28. Chat de dúvidas (IA)
+29. Hub Mentoria — Início CMS + Em aberto · Minhas · Encerradas (UC70)
+30. Solicitar mentoria — formulário canônico (UC70)
 
 ---
 
@@ -64,7 +66,8 @@ Elementos reutilizados em todas as telas autenticadas e no fluxo de inscrição.
 
 - Logo Consulado da Mulher
 - Nome da edição/programa (truncado em mobile)
-- Menu hambúrguer: Home, Calendário, Meu perfil, Meu histórico, Certificados, Sair
+- Menu hambúrguer: Home, Calendário, Meu perfil, Meu histórico, Certificados, Sair — **sem** Mentoria
+- Barra inferior: Home · Mentoria · Calendário · Perfil (P/H sempre; online só após lote)
 
 ### Barra de progresso (inscrição)
 
@@ -728,7 +731,7 @@ Tela principal após autenticação: visão do programa, módulos, progresso ger
 │    • Tarefa casa        ⚠       │  ← aguardando aprovação
 │  ▼ Módulo 2 — Vendas      ○     │
 │    • Videoaula 2        ○       │
-│    • Dados financeiros  🔒      │
+│    • Saúde financeira   🔒      │
 ├─────────────────────────────────┤
 │  [ Calendário ]  [ Meu perfil ] │
 └─────────────────────────────────┘
@@ -1045,58 +1048,12 @@ Enviar documentos/fotos da tarefa de casa para aprovação do gestor de turma.
 
 | Campo | Valor |
 | ----- | ----- |
-| **Rota** | `/app/atividade/[id]` (tipo: dados_financeiros) |
+| **Rota** | `/app/atividade/[id]` (tipo: `saude_financeira`) |
 | **Perfil** | Empreendedora |
 | **UCs** | UC45, UC44 |
 | **Prioridade** | MVP |
 
----
-
-## Objetivo
-
-Registrar dados financeiros do mês de referência para acompanhamento de impacto.
-
----
-
-## Wireframe
-
-```
-┌─────────────────────────────────┐
-│  [←]  Dados financeiros         │
-│  Mês de referência: Maio/2027   │
-│  Status: Aprovado ✓             │
-├─────────────────────────────────┤
-│  Faturamento (R$) *             │
-│  [___________]                  │
-│  Renda pessoal (R$) *           │
-│  Investimento no negócio (R$)   │
-│  Poupança (R$)                  │
-│  Despesas fixas (R$)            │
-│  Nº de clientes                 │
-│  Nº de produtos vendidos        │
-├─────────────────────────────────┤
-│  Quão difícil foi preencher? *  │
-│  [😣] [🙁] [😐] [🙂] [😄]         │
-│  muito difícil … muito fácil    │
-├─────────────────────────────────┤
-│  Documentos comprobatórios      │
-│  [ + Anexar ]                   │
-├─────────────────────────────────┤
-│  [ Enviar para avaliação ]      │
-└─────────────────────────────────┘
-```
-
----
-
-## Regras
-
-- Coleta **mensal** recorrente pelo Cliente (reporte ao programa — não é fluxo de caixa pessoal)
-- Validação: renda ≤ faturamento (alerta se inconsistente)
-- Valor **0** em faturamento ou renda: **observação obrigatória**
-- Mês sem movimento: permite zeros com justificativa
-- **Dificuldade** obrigatória (5 níveis com emoticon); visível ao gestor na aprovação e no resumo da turma
-- Aprovação obrigatória gestor (UC44/UC46); gestor pode marcar **revisão**
-- Acessível também via link mágico WhatsApp (UC54)
+Tela canônica (grade, empréstimos, capital de giro, sobra): [16-atividade-dados-financeiros.md](aplicativo-cliente/16-atividade-dados-financeiros.md). Briefing: [ia-saude-financeira.md](../briefings/ia-saude-financeira.md).
 
 ---
 
@@ -1274,7 +1231,7 @@ Direcionar a recurso externo e registrar conclusão ao retornar ou confirmar ace
 | ----- | ----- |
 | **Rota** | `/app/perfil` |
 | **Perfil** | Empreendedora |
-| **UCs** | UC27 |
+| **UCs** | UC27, UC79 |
 | **Prioridade** | MVP |
 
 ---
@@ -1318,6 +1275,7 @@ Visualizar e editar dados cadastrais, exceto CPF validado.
 - **Nome social**: editável; usado como nome de exibição no app
 - Unidade: somente **Gestor de Unidade** altera/move (UC17/UC18) — Gestor de Turma não move
 - Vínculos programa/edição/unidade/turma preservados
+- **Mentoria** não fica no perfil — área própria no menu inferior: [29-mentorias-hub.md](aplicativo-cliente/29-mentorias-hub.md).
 
 ---
 
@@ -1369,14 +1327,14 @@ Linha do tempo dos programas, edições, status e certificações da própria pa
 | ----- | ----- |
 | **Rota** | `/app/certificados` |
 | **Perfil** | Empreendedora |
-| **UCs** | UC63, UC55 |
+| **UCs** | UC63, UC55, UC70 |
 | **Prioridade** | MVP |
 
 ---
 
 ## Objetivo
 
-Consultar e baixar certificados emitidos automaticamente quando critérios de UC13 forem atendidos.
+Consultar e baixar certificados: **Programa** (UC13) e **Mentoria** (um por caso ao `finalizada`). Sem certificado se `atendida_gestor`.
 
 ---
 
@@ -1385,16 +1343,13 @@ Consultar e baixar certificados emitidos automaticamente quando critérios de UC
 ```
 ┌─────────────────────────────────┐
 │  [←]  Meus certificados         │
+│  [ Programa ] [ Mentoria ]      │
 ├─────────────────────────────────┤
 │  ┌─────────────────────────┐    │
-│  │ 🎓 Certificado          │    │
 │  │ Programa Empreenda 2027 │    │
 │  │ Emitido: 15/08/2027     │    │
 │  │ [ Baixar PDF ]          │    │
 │  └─────────────────────────┘    │
-├─────────────────────────────────┤
-│  Nenhum certificado pendente.   │
-│  Continue suas atividades!      │
 └─────────────────────────────────┘
 ```
 
@@ -1402,8 +1357,10 @@ Consultar e baixar certificados emitidos automaticamente quando critérios de UC
 
 ## Regras
 
+- Filtro **Programa | Mentoria**
+- Mentoria: um certificado por caso ao `finalizada` — **não** se `atendida_gestor`
 - PDF gerado pelo backend (UC55)
-- Disponível após classificação como certificada
+- Disponível após classificação como certificada (Programa)
 - Envio também pode ocorrer via WhatsApp (Gupshup)
 
 ---
@@ -1500,5 +1457,16 @@ Canal de autoatendimento com IA para dúvidas frequentes sobre o programa e uso 
 - Fora do escopo MVP imediato (evolução contratual)
 - Não substitui contato humano do gestor
 - Custos de IA reportados na Fase 3 (contrato)
+
+---
+
+## Hub Mentoria (UC70)
+
+Área própria `/app/mentorias` no menu inferior. Telas detalhadas: [29-mentorias-hub.md](aplicativo-cliente/29-mentorias-hub.md) e [28-solicitar-mentoria.md](aplicativo-cliente/28-solicitar-mentoria.md).
+
+- Início: módulo CMS; **Solicitar** bloqueado até concluir
+- Abas: **Em aberto · Minhas · Encerradas**
+- Encerramento: texto + NPS plataforma + NPS mentor (`atendida_gestor` sem NPS de mentor e sem certificado)
+- Certificados: filtro Programa | Mentoria
 
 ---

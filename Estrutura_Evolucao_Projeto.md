@@ -1,7 +1,7 @@
 # Estrutura de evolução do projeto — reporte semanal
 
 **Versão:** ago/2026  
-**Fontes:** [Casos de Uso v7](Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v7.md), [Tipos_de_Atividade.md](Tipos_de_Atividade.md), [prototipo/](prototipo/)  
+**Fontes:** [Casos de Uso v8](Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v8.md), [Tipos_de_Atividade.md](Tipos_de_Atividade.md), [prototipo/](prototipo/)  
 **Planilha:** importar [Estrutura_Evolucao_Projeto.csv](Estrutura_Evolucao_Projeto.csv) no Google Sheets
 
 **Convenção:** *Módulo educacional* = **tipo de atividade** que compõe os módulos temáticos (12 tipos em `TipoAtividade`, UC15) — ver seção 2.5.3.

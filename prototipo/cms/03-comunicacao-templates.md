@@ -6,7 +6,7 @@
 | **Perfil** | Administrador do Sistema / Administrador de Programa |
 | **UCs** | UC88, UC87, UC9, UC25, UC33, UC50 |
 | **Prioridade** | MVP |
-| **Fonte** | [Casos de Uso v7 — UC88](../../Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v7.md) · [Tipos de Atividade](../../Tipos_de_Atividade.md) |
+| **Fonte** | [Casos de Uso v7 — UC88](../../Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v7.md) · [comunicacao.md](../../docs/jornadas/comunicacao.md) · [Tipos de Atividade](../../Tipos_de_Atividade.md) |
 
 > **Área separada** de edição, módulos e atividades. Todos os textos aprovados (Meta/Gupshup) e e-mail ficam aqui. **Mesmo corpo** alimenta envio via API (online) e facilitador de grupo (P/H — clipboard).
 
@@ -61,12 +61,19 @@ Um **template Gupshup/Meta** (e opcionalmente e-mail) por **`TipoAtividade`**. *
 │ Pacote: Consulado presencial 2026                            │
 │ Modalidade: [ Presencial / híbrido ▼ ]  Versão: 3  [● Ativo]│
 ├──────────────────────────────────────────────────────────────┤
-│ Momentos de jornada (não são tipos UC15)                     │
+│ Momentos de jornada (não são tipos UC15) — inventário UC88   │
 │  inscricao_pos_inbound     WA [ inscricao_v1 ▼ ]             │
+│  selecao_entrevista        WA [ entrevista_v1 ▼ ]      P/H   │
 │  selecao_aprovacao (UC25)  WA [ aprovacao_grupo_v1 ▼ ]       │
 │  selecao_nao_aprovada      WA [ nao_aprovada_v1 ▼ ]          │
 │  jornada_pedir_ok          WA [ boas_vindas_ok_v1 ▼ ]  online│
-│  jornada_solicitar_conteudo WA [ proximo_conteudo_v1 ▼ ]     │
+│  jornada_boas_vindas       WA [ boas_vindas_lote_v1 ▼] online│
+│  jornada_comunidade        WA [ comunidade_v1 ▼ ]      online│
+│  live_convite / mentoria_disponivel / doacao_* / certificado │
+│  edicao_encerrada / pesquisa_d30 / link_magico_cliente       │
+│  Rede: vol_cadastro_* · vol_acao_* · vol_mentoria_combinada  │
+│        vol_certificado · link_magico_voluntario (e-mail)     │
+│  Operação: link_magico_gestor (e-mail)                       │
 ├──────────────────────────────────────────────────────────────┤
 │ Por tipo de atividade (11 + Aula×2)                          │
 │ Tipo              Variante     Template Meta WA    E-mail    │
@@ -154,3 +161,4 @@ Mesma rota `/admin/comunicacao`, aba **Alertas**. Regras tipadas (`inscription_i
 4. P/H: clipboard usa corpo do template Meta; Unidade pode override antes de copiar.
 5. Online: UC33 usa templates do pacote via API.
 6. Alertas configuráveis na **mesma** área CMS.
+7. Slots de **rede de voluntariado** (`vol_*`) e links mágicos existem no mesmo catálogo (não exigem pacote por edição). Inventário: UC88.

@@ -2,7 +2,7 @@
 
 **Modalidade:** presencial e híbrido (mesmo comportamento operacional; a distinção é só no BI)  
 **Convenções:** [README](README.md)  
-**Fontes:** [Casos de Uso v7](../../Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v7.md) UC16–UC17, UC24–UC25, UC34–UC35, UC40–UC44, UC50, UC57, UC84; [módulo encerramento P/H](../../prototipo/aplicativo-gestor/gestor-unidade/12-modulo-encerramento-ph.md)
+**Fontes:** [Casos de Uso v7](../../Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v7.md) UC16–UC17, UC24–UC25, UC34–UC35, UC40–UC44, UC50, UC57, UC70, UC73, UC78, UC84; [módulo encerramento P/H](../../prototipo/aplicativo-gestor/gestor-unidade/12-modulo-encerramento-ph.md); [mentorias P/H](../../prototipo/aplicativo-gestor/gestor-unidade/08-registrar-mentoria.md); [voluntários](../../prototipo/aplicativo-gestor/gestor-unidade/13-voluntarios.md)
 
 Índice
 
@@ -13,9 +13,10 @@
 5. [Efetivação da participação](#5-efetivacao-da-participacao)
 6. [Loop de encontro](#6-loop-de-encontro)
 7. [Conteúdo extra e visita técnica](#7-conteudo-extra-e-visita-tecnica)
-8. [Risco de evasão — duração longa](#8-risco-de-evasao--duracao-longa)
-9. [Encerramento](#9-encerramento)
-10. [Doação](#10-doacao)
+8. [Mentoria (programa regular)](#8-mentoria-programa-regular)
+9. [Risco de evasão — duração longa](#9-risco-de-evasao--duracao-longa)
+10. [Encerramento](#10-encerramento)
+11. [Doação](#11-doacao)
 
 Pós-liberação (PIX/recibo) e desistência: [pos-liberacao.md](pos-liberacao.md).
 
@@ -326,6 +327,8 @@ Prazo padrão D+2 nas atividades assíncronas. Unidade pode operar tudo o que a 
 
 Fora do loop feliz da matriz. Extra **não** conta %/carga e **não existe** no online. Visita técnica só P/H.
 
+Três coisas distintas: **conteúdo extra (UC35)** = encontro coletivo pontual da turma, fora da matriz. **Visita técnica (UC78)** = atividade da matriz, 1 a 1, conta %. **Mentoria (UC70)** = sessão individual de **2 horas** sobre o negócio, no programa regular — [seção 8](#8-mentoria-programa-regular).
+
 ```mermaid
 sequenceDiagram
   autonumber
@@ -356,12 +359,62 @@ sequenceDiagram
 
 | Passo | Momento | Tipo | Quem | Canal | O que NÃO faz |
 | ----- | ------- | ---- | ---- | ----- | ------------- |
-| opt extra UC35 | Criar extra | GESTOR | Turma | App Gestor | Não entra em % / carga / beneficiamento |
-| opt visita | Liberar + agendar | GESTOR | Turma | App Gestor | Não existe no online |
+| opt extra UC35 | Criar extra | GESTOR | Turma | App Gestor | Não entra em % / carga / beneficiamento; **≠ mentoria** |
+| opt visita | Liberar + agendar | GESTOR | Turma | App Gestor | Não existe no online; **≠ mentoria** |
 
 ---
 
-## 8. Risco de evasão — duração longa
+## 8. Mentoria (programa regular)
+
+Caso com **N consultas** (UC70). **Não** é extra nem visita. **Não** fica no Encerramento. **Sem** agenda/slot de 2h.
+
+**Híbrido:** pedido do app cai em **Abertas**. Unidade **ou** Turma **aloca lote** (1º = líder) **ou** um voluntário **pega** (vira líder). Alternativa: **Atendido pelo gestor** (fecha sem BI). Cadastro UC73 obrigatório. Educador interno **não** entra na métrica de voluntários.
+
+Formulário canônico: **área** CMS + **4 perguntas Caroline** + períodos. **Sem** data/hora.
+
+Entrada no Cliente: área **Mentoria** no menu inferior (`/app/mentorias`). **Solicitar** bloqueado até o módulo CMS do Início. Inclusão pelo Gestor não exige treino.
+
+```mermaid
+sequenceDiagram
+  autonumber
+  participant Empreendedora
+  participant AppCliente
+  participant Gestor
+  participant Backend
+  participant AppVoluntario
+
+  Empreendedora ->> AppCliente: pedido sem slot
+  AppCliente ->> Backend: aberta
+  Backend -->> AppVoluntario: Abertas card negocio
+
+  alt voluntario pega
+    AppVoluntario ->> Backend: pega vira lider
+  else gestor aloca lote
+    Gestor ->> Backend: N mentores primeiro lider
+  else atendido pelo gestor
+    Gestor ->> Backend: atendida_gestor sem BI
+  else recusa
+    Gestor ->> Backend: recusa com motivo
+  end
+
+  opt lote alocado
+    Backend -->> AppVoluntario: some de Em aberto vai a Minhas
+    AppVoluntario ->> Backend: lider agenda e registra consultas
+    AppVoluntario ->> Backend: lider encerra texto e NPSes
+    Backend -->> AppCliente: texto + NPS plataforma + NPS mentor
+  end
+```
+
+| Passo | Momento | Tipo | Quem | Canal | O que NÃO faz |
+| ----- | ------- | ---- | ---- | ----- | ------------- |
+| app | Pedir no hub Mentoria | MANUAL | Empreendedora | `/app/mentorias` | Sem slot; treino CMS bloqueia Solicitar |
+| alt pega | Pegar em Em aberto | MANUAL | Voluntário | portal do voluntariado | Vira líder |
+| alt lote | Alocar mentores | GESTOR | Unidade ou Turma | `/mentorias` | Não acrescenta depois |
+| alt gestor | Atendido pelo gestor | GESTOR | Unidade ou Turma | `/mentorias` | Sem BI / certificado |
+
+---
+
+## 9. Risco de evasão — duração longa
 
 Perfil P/H longo (6–12 meses): silêncio ≥ **15 dias** + represamento. **Não** usar o filtro curto do online (10d / 5d do fim). Não há UC53. Cobrança operacional = grupo (UC50). Alertas UC87 só se a regra tiver audiência P/H (ex. e-mail).
 
@@ -401,9 +454,9 @@ sequenceDiagram
 
 ---
 
-## 9. Encerramento
+## 10. Encerramento
 
-Formatura / integração, se contar carga, é **módulo ou aula obrigatória** na grade de Módulos — tipo **Aula** (presencial ou Meet). **Não** é o funil Live → KW → Quiz. **Não** libera doação.
+Formatura / integração, se contar carga, é **módulo ou aula obrigatória** na grade de Módulos — tipo **Aula** (presencial ou Meet). **Não** é o funil Live → KW → Quiz. **Não** libera doação. **Mentoria P/H não entra neste módulo** — opera no programa regular ([seção 8](#8-mentoria-programa-regular)).
 
 ```mermaid
 sequenceDiagram
@@ -431,7 +484,7 @@ sequenceDiagram
 
 ---
 
-## 10. Doação
+## 11. Doação
 
 Análise **manual a qualquer momento** do programa (inclusive em massa), independente do módulo de encerramento. Turma e Unidade **sugerem no empreendimento**; Unidade **aprova só na tela Doação** (pop-up + digitar **APROVAR**). Não há doação automática. Depois: [pos-liberacao.md](pos-liberacao.md).
 

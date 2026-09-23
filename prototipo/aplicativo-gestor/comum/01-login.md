@@ -3,7 +3,7 @@
 | Campo | Valor |
 | ----- | ----- |
 | **Rota** | `/gestor/login` · callback `/gestor/auth/callback?token=…` |
-| **Perfil** | Gestor de Unidade, Gestor de Turma |
+| **Perfil** | Gestor de Unidade, Gestor de Turma, Gestor de Voluntariado |
 | **UCs** | UC3 (link mágico — sem senha) |
 | **Prioridade** | MVP |
 
@@ -37,8 +37,8 @@ Autenticar gestores **somente por link mágico**: o usuário informa o e-mail, r
 
 ## Pós-login
 
-- Destino: **Dashboard de edições** (`/gestor`) — lista edições às quais está associado.
-- Ao selecionar uma edição → home operacional + menu do perfil (Unidade = todas as ferramentas).
+- **Gestor de Voluntariado:** entra **direto** em `/gestor/voluntariado` (home + menu contextual). **Não** há página de edições neste perfil.
+- **Unidade / Turma:** **Dashboard de edições** (`/gestor`) → ao selecionar uma edição, home operacional + menu (Unidade = todas **sem Campanhas**)
 
 ---
 

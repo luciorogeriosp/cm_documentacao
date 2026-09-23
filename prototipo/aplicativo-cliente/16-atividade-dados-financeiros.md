@@ -1,17 +1,18 @@
-# Atividade — Dados financeiros mensais
+# Atividade — Saúde financeira
 
 | Campo | Valor |
 | ----- | ----- |
-| **Rota** | `/app/atividade/[id]` (tipo: dados_financeiros) |
+| **Rota** | `/app/atividade/[id]` (tipo: `saude_financeira` ou `dados_financeiros`) |
 | **Perfil** | Empreendedora |
 | **UCs** | UC45, UC44 |
 | **Prioridade** | MVP |
+| **Briefing** | [ia-saude-financeira.md](../../briefings/ia-saude-financeira.md) |
 
 ---
 
 ## Objetivo
 
-**Reporte ao programa** da evolução do negócio (não é fluxo de caixa pessoal). Preenchimento **pela empreendedora**.
+**Reporte póstumo** da saúde financeira do mês que já passou (não é fluxo de caixa do dia a dia). Preenchimento **pela empreendedora**. Resultado calculado: **capital de giro**.
 
 ---
 
@@ -19,44 +20,52 @@
 
 ```
 ┌─────────────────────────────────┐
-│  [←]  Dados financeiros         │
-│  Mês de referência: Maio/2027   │
-│  Status: Aprovado ✓             │
-│  ℹ Reporte ao programa — não é  │
-│    seu fluxo de caixa pessoal   │
+│  [←]  Saúde financeira          │
+│  Maio/2027 · Aguardando aprov.  │
+│  ℹ Reporte do mês que já passou │
+│    — prazo: 10º dia útil de jun.│
 ├─────────────────────────────────┤
-│  Faturamento (R$) *             │
-│  [___________]                  │
-│  Renda pessoal (R$) *           │
-│  Investimento no negócio (R$)   │
-│  Poupança (R$)                  │
-│  Despesas fixas (R$)            │
-│  Nº de clientes                 │
-│  Nº de produtos vendidos        │
+│            Média  Mar  Abr  Mai*│
+│ ENTRADAS                        │
+│ Faturamento 2800 2100 3000 [3200│
+│ Empréstimos    0    0    0 [   0│
+│ Nº clientes   18   14   20 [  22│
+│ Nº produtos   40   32   45 [  48│
+│ SAÍDAS                          │
+│ Despesas    1100 1000 1200 [1150│
+│ Investimento 200    0  400 [ 200│
+│ Poupança     150  100  200 [ 150│
+│ Dívidas      180  200  160 [ 180│
+│ Renda/retir. 900  800 1000 [ 900│
+│ Capital giro 270    0   40 [ 620│
 ├─────────────────────────────────┤
-│  Se faturamento ou renda = 0:   │
-│  Observação / justificativa *   │
-│  [________________________]     │
+│ Neste mês sobrou R$ 970 depois  │
+│ das despesas, dívidas e da sua  │
+│ retirada. Você destinou R$ 200  │
+│ ao negócio e R$ 150 à poupança. │
 ├─────────────────────────────────┤
-│  Quão difícil foi preencher? *  │
-│  [😣] [🙁] [😐] [🙂] [😄]         │
-│  muito difícil … muito fácil    │
-├─────────────────────────────────┤
-│  Documentos / planilha (opc.)   │
-│  [ + Anexar ]                   │
-├─────────────────────────────────┤
-│  [ Enviar para avaliação ]      │
+│ Quão difícil foi preencher? *   │
+│ [😣] [🙁] [😐] [🙂] [😄]          │
+│ Planilha ou foto do mês *       │
+│ [ + Anexar ]                    │
+│ [ Enviar para avaliação ]       │
 └─────────────────────────────────┘
 ```
+
+`*` = coluna editável. Média e meses passados = somente leitura. Em mobile a grade **rola na horizontal**. Sem abas, acordeão ou dashboard de cards.
 
 ---
 
 ## Regras
 
-- Coleta **mensal** recorrente pelo Cliente (não pela gestora via planilha)
-- Validação: renda ≤ faturamento (alerta se inconsistente)
-- Valor **0** em faturamento ou renda: **observação obrigatória**
-- Mês sem movimento: zeros com justificativa
-- **Dificuldade** obrigatória (5 níveis com emoticon); visível ao gestor na aprovação/histórico e no resumo da turma; gestor pode registrar via UC69
-- Aprovação obrigatória gestor (UC44/UC46); gestor pode marcar **revisão**
-- Acessível também via link mágico WhatsApp (UC54)
+- **1 registro por competência e empreendimento**
+- Cada mês começa **em branco** (sem carry-forward / saldo inicial)
+- **Anexo obrigatório**. Sem anexo = não envia
+- **Dificuldade** obrigatória (5 níveis)
+- Faturamento = 0 **ou** Renda/retirada = 0 → justificativa
+- Renda/retirada > Faturamento → alerta (não bloqueia)
+- Capital de giro = (Faturamento + Empréstimos) − Despesas − Investimento − Poupança − Dívidas − Renda/retirada (pode ser negativo)
+- Média = meses **aprovados** da edição. Disparidade > 30% → célula âmbar (não em nº clientes/produtos)
+- Em revisão: banner com comentário da educadora
+- Aprovado: grade travada
+- Link mágico WhatsApp (UC54)

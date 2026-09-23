@@ -1,14 +1,17 @@
 **Casos de Uso — Sistema de Gestão de Programas Sociais (Consulado da Mulher) — v7**
 
-Especificação funcional canônica do sistema. Arquitetura em **cinco grupos**:
+Versão histórica (setembro/2026). Canônico: [v8](Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v8.md).
 
-1. **CMS de Administração** — modelagem de programas, edições, módulos, unidades, organizações, colaboradores, pacotes de comunicação (UC88) e alertas (UC87).
-2. **Aplicativo Gestor** — operação de seleção, turma, doação e Mini CRM (UC26); autenticação por link mágico.
-3. **Aplicativo Cliente** — jornada da empreendedora; autenticação por link mágico; Agente de IA (UC64).
-4. **Painel de Dados (BI)** — dashboards e relatórios (Looker Studio).
-5. **Sistemas de Retaguarda (Backend)** — APIs, regras, fila de jornada (UC33) e fila de alertas (UC87/UC52); integrações Gupshup e SendGrid.
+Especificação funcional do sistema. Arquitetura em **seis grupos**:
 
-**Documentos relacionados:** [Tipos_de_Atividade.md](Tipos_de_Atividade.md) · [prototipo/](prototipo/) · histórico de decisões em [reunioes/](reunioes/)
+1. **CMS de Administração** — modelagem de programas, edições, módulos, unidades, organizações, colaboradores, pacotes de comunicação (UC88) e alertas (UC87); catálogo de áreas de mentoria, **tipos de Ação**, textos e **módulo de treino** do portal do voluntariado.
+2. **Aplicativo Gestor** — operação de seleção, turma, doação, Mini CRM (UC26), **mentorias** (Unidade/Turma alocam); perfil **Gestor de Voluntariado** com menu nacional de ações, voluntários e mentorias; autenticação por link mágico.
+3. **Aplicativo Cliente** — jornada da empreendedora; autenticação por link mágico; Agente de IA (UC64); pedido/diagnóstico de mentoria (UC70).
+4. **Portal do voluntariado** — cadastro, módulo CMS, pool de demandas, ações, aceite e diário (UC73/UC70/UC89/UC90); autenticação por link mágico (e-mail).
+5. **Painel de Dados (BI)** — dashboards e relatórios (Looker Studio).
+6. **Sistemas de Retaguarda (Backend)** — APIs, regras, fila de jornada (UC33) e fila de alertas (UC87/UC52); integrações Gupshup e SendGrid.
+
+**Documentos relacionados:** [Tipos_de_Atividade.md](Tipos_de_Atividade.md) · [docs/jornadas/comunicacao.md](docs/jornadas/comunicacao.md) (leitura operacional dos slots UC88) · [prototipo/](prototipo/) · histórico de decisões em [reunioes/](reunioes/)
 
 Stack: Next.js, Node.js, Express, Prisma, MySQL; hospedagem AWS.
 
@@ -18,7 +21,7 @@ Stack: Next.js, Node.js, Express, Prisma, MySQL; hospedagem AWS.
 
 ## Atores
 
-Atores são apenas quem **interage** com o sistema. Cadastros gerenciados pelo sistema (Colaborador, Voluntário/Mentor, Organização) viraram **entidades de domínio**; Backend é **camada do sistema** (ver Plataformas do Sistema).
+Atores são apenas quem **interage** com o sistema. Cadastros gerenciados pelo sistema (Colaborador, Organização) viraram **entidades de domínio**; **Voluntário / Mentor** é ator (portal do voluntariado). Backend é **camada do sistema** (ver Plataformas do Sistema).
 
 ### Atores — Pessoas
 
@@ -26,11 +29,13 @@ Atores são apenas quem **interage** com o sistema. Cadastros gerenciados pelo s
 | Ator                                                 | Descrição                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Pré-inscrita (Lead)**                              | Pessoa que iniciou o processo de inscrição mas **ainda não concluiu** a inscrição completa (UC19/UC20/UC21). Objeto do mini CRM (UC26) e dos lembretes de inscrição incompleta (alerta automático UC87 + disparo manual). Torna-se **Empreendedora** ao concluir a inscrição completa (UC21).                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| **Empreendedora**                                    | Mulher empreendedora em situação de vulnerabilidade social, com **inscrição completa** registrada. Acessa o **Aplicativo Cliente** exclusivamente por **link mágico** (WhatsApp ou e-mail) — **não há senha** de autenticação. Realiza atualização cadastral, módulos, conteúdos, questionários, uploads, dados financeiros mensais e solicitação de desligamento (UC79). Todo registro operacional vincula-se a **programa**, **edição**, **unidade** e **turma**. A **qualificação** na seleção (UC24) classifica o perfil; a **Comunicar aprovação** (UC25) é o que **inicia a jornada educacional** (online → UC33; P/H → convite ao grupo). Unidade/turma podem vir da inscrição (automático se únicas) ou da distribuição na tela de seleção. |
+| **Empreendedora**                                    | Mulher empreendedora em situação de vulnerabilidade social, com **inscrição completa** registrada. Acessa o **Aplicativo Cliente** exclusivamente por **link mágico** (WhatsApp ou e-mail) — **não há senha** de autenticação. Realiza atualização cadastral, módulos, conteúdos, questionários, uploads, **saúde financeira** mensal (UC45), solicitação de desligamento (UC79) e **mentoria (UC70)** na área **Mentoria** do menu inferior (`/app/mentorias`: Início = módulo CMS; abas **Em aberto · Minhas · Encerradas**). **Solicitar** bloqueado até concluir o módulo. Inclusão pelo Gestor **não** exige treino. No **P/H**, o pedido vai a **Em aberto** do portal do voluntariado; Unidade/Turma aloca lote **ou** um voluntário pega; ou **Atendido pelo gestor** sem BI. No **online**, diagnóstico só após entrar no lote de encerramento. Encerramento: texto + NPS da plataforma + NPS do mentor (`atendida_gestor`: sem NPS de mentor, sem certificado). Certificados: filtro **Programa \| Mentoria**. Todo registro operacional vincula-se a **programa**, **edição**, **unidade** e **turma**. A **qualificação** na seleção (UC24) classifica o perfil; a **Comunicar aprovação** (UC25) é o que **inicia a jornada educacional** (online → UC33; P/H → convite ao grupo). Unidade/turma podem vir da inscrição (automático se únicas) ou da distribuição na tela de seleção. |
 | **Administrador do Sistema (CMS de Administração)**  | Perfil **master** com controle total: usuários, programas, unidades, migrações excepcionais e configuração global.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | **Administrador de Programa (CMS de Administração)** | Usuário do CMS com escopo restrito a programas/edições. Gerencia conteúdos, programas, edições (incluindo módulos associados), organizações, colaboradores e unidades do seu escopo.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| **Gestor de Unidade (Aplicativo Gestor)**            | Usa o **mesmo Aplicativo Gestor**, autenticado por **link mágico**. Visão sobre **todas as turmas da unidade** na edição. **Inclui funções do Gestor de Turma** mais: **seleção em etapas** — classificar (UC24), **entrevista de seleção** P/H (UC84), alocar turma (UC17), **comunicar** (UC25); remanejar (UC18); doação sugerir/aprovar (UC57); inscrever (UC21/UC69); agrupar empreendimentos (UC31); **ativar/ajustar alertas automáticos** da edição (UC87).                                                                                                                                                                                                                                                                                 |
-| **Gestor de Turma (Aplicativo Gestor)**              | Usa o **mesmo Aplicativo Gestor**, autenticado por **link mágico**. **Age apenas sobre a própria turma** na edição selecionada. Responsabilidades: **visão por módulo** e **liberação de atividades** escolhidas pelo gestor (UC34), data/local de presenciais, **aprova faturamento e entregas** (UC44), analisa questionários, cria atividade extra **só presencial** (UC35), relato de oficina (UC80), uploads, desistência (UC30) e **sugere doação** (aprovação Unidade — UC57). Comunicação de grupo WhatsApp manual (UC50); edita e-mail/telefone. **Não** move entre turmas/unidades e **não altera** temporizadores online (UC33). Pode inserir dados em nome da empreendedora (UC69).                                                     |
+| **Gestor de Unidade (Aplicativo Gestor)**            | Usa o **mesmo Aplicativo Gestor**, autenticado por **link mágico**. Visão sobre **todas as turmas da unidade** na edição. **Inclui funções do Gestor de Turma** mais: **seleção em etapas** — classificar (UC24), **entrevista de seleção** P/H (UC84), alocar turma (UC17), **comunicar** (UC25); remanejar (UC18); doação sugerir/aprovar (UC57); inscrever (UC21/UC69); agrupar empreendimentos (UC31); **ativar/ajustar alertas automáticos** da edição (UC87); **mentorias (UC70)** — aloca lote de mentores (1º = líder; cadastro UC73) ou **Atendido pelo gestor** (sem BI); recorte de voluntários da edição só para **escolher mentor**; **não** opera ações (UC90). Acesso mocado com auditoria. |
+| **Gestor de Turma (Aplicativo Gestor)**              | Usa o **mesmo Aplicativo Gestor**, autenticado por **link mágico**. **Age apenas sobre a própria turma** na edição selecionada. Responsabilidades: **visão por módulo** e **liberação de atividades** escolhidas pelo gestor (UC34), data/local de presenciais, **aprova saúde financeira e entregas** (UC44), analisa questionários, cria atividade extra **só presencial** (UC35), relato de oficina (UC80), uploads, desistência (UC30) e **sugere doação** (aprovação Unidade — UC57). Comunicação de grupo WhatsApp manual (UC50); edita e-mail/telefone. **Não** move entre turmas/unidades e **não altera** temporizadores online (UC33). Pode inserir dados em nome da empreendedora (UC69) ou usar **acesso mocado** (auditoria). Em **mentorias P/H (UC70)** **aloca lote** de mentores (cadastro UC73; 1º = líder), comunica via `wa.me`, **Atendido pelo gestor** (sem BI) ou recusa. Consulta voluntários da edição para alocar. **Não** opera ações (UC90). Parceiro **Multiplica por Elas** usa as **mesmas telas de Turma**. Horas de educador interno **não** entram na métrica de voluntários. |
+| **Gestor de Voluntariado (Aplicativo Gestor)**       | Perfil **CMS** (UC1/UC5) no **mesmo Aplicativo Gestor** (link mágico). **Não tem** Dashboard de edições: o login abre **direto** `/gestor/voluntariado` com o **menu contextual** (Home, Gestão de ações, Gestão de voluntários, Gestão de mentorias). Opera ações (criar, ativas, convites, inscrições, resultados — UC90) em **todas as edições** (ação pode existir sem edição). Aprova cadastros da rede (UC73). Consulta mentorias (abertas / em andamento / finalizadas e as abertas há muito tempo); **não** aloca lote (isso fica na Unidade/Turma). Pode acumular papéis com Unidade/Turma (cada perfil tem o próprio shell). |
+| **Voluntário / Mentor (portal do voluntariado)**     | Pessoa da **rede de voluntariado** (cerne; mentoria é uma ação). Cadastro **único** e **individual** mesmo em grupo (UC73): modalidades **individual**, **coletiva** e/ou **Ações**; áreas de interesse e expertise; dados sensíveis no padrão das empreendedoras. Auth **link mágico no e-mail** (UC89). **P/H:** abas **Em aberto · Minhas · Encerradas**; pega demanda (vira líder) ou entra em lote alocado; só o líder agenda/registra/encerra; todos preenchem texto+NPS; horas e certificado herdados. Treino = **módulo CMS** (bloqueia Pegar). **Online:** pool com `vagas` N e diário por pessoa. Inscreve-se em **ações** (UC90; confirmação do Gestor de Voluntariado). “Em atividade numa edição” é derivado. |
 
 
 
@@ -41,7 +46,7 @@ Atores são apenas quem **interage** com o sistema. Cadastros gerenciados pelo s
 | Ator                                | Descrição                                                                                                                                                                                                |
 | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Gupshup (WhatsApp Business API)** | Provedor de envio de mensagens WhatsApp: texto, links com login mágico, solicitações e envio de videoaulas. Acionado **somente pelo Backend**.                                                           |
-| **SendGrid (E-mail)**               | Provedor de envio de e-mails transacionais: links mágicos da **empreendedora** (UC4/UC54) e do **gestor** (UC3), lembretes/alertas (UC26/UC87) e comunicações gerais. Acionado **somente pelo Backend**. |
+| **SendGrid (E-mail)**               | Provedor de envio de e-mails transacionais: links mágicos da **empreendedora** (UC4/UC54), do **gestor** (UC3) e do **voluntário** (UC89), lembretes/alertas (UC26/UC87) e comunicações gerais. Acionado **somente pelo Backend**. |
 | **YouTube**                         | Ator secundário para videoaulas gravadas e transmissões ao vivo.                                                                                                                                         |
 
 
@@ -51,8 +56,7 @@ Atores são apenas quem **interage** com o sistema. Cadastros gerenciados pelo s
 
 Cadastros **gerenciados pelo sistema**, sem interação própria (sem login/interface):
 
-- **Colaborador** — funcionário do Consulado cadastrado no CMS (UC1); é o **cadastro** que recebe os perfis de **Administrador de Programa**, **Gestor de Unidade** e/ou **Gestor de Turma** (pode acumular papéis). Quem atua nos UCs é sempre o **papel** atribuído, não o colaborador em si.
-- **Voluntário / Mentor** — pessoa cadastrada (mentor ou palestrante/oficineiro) para processos de mentoria (UC70/UC73). **Não acessa o sistema**; o registro de mentoria é operado pelos gestores.
+- **Colaborador** — funcionário do Consulado cadastrado no CMS (UC1); é o **cadastro** que recebe os perfis de **Administrador de Programa**, **Gestor de Unidade**, **Gestor de Turma** e/ou **Gestor de Voluntariado** (pode acumular papéis). Quem atua nos UCs é sempre o **papel** atribuído, não o colaborador em si.
 - **Organização (Patrocinador / Parceiro)** — pessoa jurídica (CNPJ) associável a uma edição como patrocinador ou parceiro (UC10/UC11). Caso se confirme visão restrita no BI para financiadores (UC59), retorna como ator secundário.
 
 > **Convenção:** **Sistemas de Retaguarda (Backend)** são **camadas do sistema em construção** (ver Plataformas do Sistema), não atores externos. Quando citados em casos de uso, indicam **execução automática** pelo sistema, não um usuário. **Mautic não faz parte do projeto.**
@@ -61,21 +65,23 @@ Cadastros **gerenciados pelo sistema**, sem interação própria (sem login/inte
 
 ### Plataformas do Sistema
 
-O sistema é organizado em **cinco grupos** (plataformas/camadas):
+O sistema é organizado em **seis grupos** (plataformas/camadas):
 
-1. **CMS de Administração** — modelagem de programas, edições, módulos, unidades, organizações e colaboradores (implementado com Strapi); **cria/configura** pesquisa pós-programa (UC82), **pacotes de comunicação** (UC88) e **alertas automáticos** (UC87 — mesma área Comunicação).
-2. **Aplicativo Gestor** — app **único** para **Gestor de Unidade** e **Gestor de Turma**; autenticação por **link mágico**; home = **Dashboard de edições**; inclui **Mini CRM** (UC26); **dispara** pesquisa pós-programa (UC82); Unidade **ativa/ajusta** alertas da edição (UC87).
-3. **Aplicativo Cliente** — interface da empreendedora (inscrição, atividades, uploads, dados financeiros); autenticação exclusiva por **link mágico**; inclui **Agente de IA** / chat de dúvidas (UC64).
-4. **Painel de Dados (BI)** — dashboards, indicadores e relatórios em **Looker Studio / Data Studio** ligado ao banco (fora do app operacional); acessos Google geridos pelo Consulado; **visualiza** resultados da pesquisa pós-programa (UC82). **Orçamento não entra** no dashboard operacional.
-5. **Sistemas de Retaguarda (Backend)** — APIs, regras de negócio, **duas filas de comunicação**: (a) **jornada WhatsApp** liberar / OK / lote — UC33; (b) **alertas de engajamento** — UC87/UC52; integrações (Gupshup, SendGrid), autenticação, persistência. Sem motor externo de marketing.
+1. **CMS de Administração** — modelagem de programas, edições, módulos, unidades, organizações e colaboradores (implementado com Strapi); **cria/configura** pesquisa pós-programa (UC82), **pacotes de comunicação** (UC88) e **alertas automáticos** (UC87 — mesma área Comunicação); catálogo de **áreas de mentoria**, **tipos de Ação** (palestra, gravação, oficina pontual — **sem** doação de sangue), textos das modalidades, **módulo de treino** (mesmos tipos de atividade), materiais, `prazo_match_horas` e limiares de inatividade / mentoria aberta há muito tempo.
+2. **Aplicativo Gestor** — app **único** para **Gestor de Unidade**, **Gestor de Turma** e **Gestor de Voluntariado**; autenticação por **link mágico**. Unidade/Turma: home = **Dashboard de edições**. Gestor de Voluntariado: **não tem** página de edições — login abre direto `/gestor/voluntariado` com o menu contextual. Inclui **Mini CRM** (UC26); **dispara** pesquisa pós-programa (UC82); Unidade **ativa/ajusta** alertas da edição (UC87).
+3. **Aplicativo Cliente** — interface da empreendedora (inscrição, atividades, uploads, dados financeiros); autenticação exclusiva por **link mágico**; inclui **Agente de IA** / chat de dúvidas (UC64); diagnóstico/pedido de mentoria (UC70).
+4. **Portal do voluntariado** — portal da rede: cadastro único, módulo CMS, pool, ações, aceite, card, diário, certificados; auth **link mágico por e-mail** (UC89).
+5. **Painel de Dados (BI)** — dashboards, indicadores e relatórios em **Looker Studio / Data Studio** ligado ao banco (fora do app operacional); acessos Google geridos pelo Consulado; **visualiza** resultados da pesquisa pós-programa (UC82). **Orçamento não entra** no dashboard operacional.
+6. **Sistemas de Retaguarda (Backend)** — APIs, regras de negócio, **duas filas de comunicação**: (a) **jornada WhatsApp** liberar / OK / lote — UC33; (b) **alertas de engajamento** — UC87/UC52; integrações (Gupshup, SendGrid), autenticação, persistência. Sem motor externo de marketing.
 
 
 | Camada                   | Responsabilidade principal                                                                                                 |
 | ------------------------ | -------------------------------------------------------------------------------------------------------------------------- |
-| **CMS de Administração** | Configuração, cadastros, critérios, conteúdo; pesquisa pós-programa; **pacotes de comunicação** (UC88); **alertas** (UC87) |
-| **Aplicativo Gestor**    | Operação de seleção/turma/doação; Mini CRM; disparo UC82; binding de alertas na edição                                     |
-| **Aplicativo Cliente**   | Jornada da empreendedora; Agente de IA (UC64)                                                                              |
-| **Painel de Dados (BI)** | Indicadores, relatórios, totalizadores; resultados UC82                                                                    |
+| **CMS de Administração** | Configuração, cadastros, critérios, conteúdo; pesquisa pós-programa; **pacotes de comunicação** (UC88); **alertas** (UC87); áreas/módulo treino; perfil Gestor de Voluntariado |
+| **Aplicativo Gestor**    | Operação de seleção/turma/doação; Mini CRM; Unidade/Turma **alocam mentorias**; Gestor de Voluntariado opera ações/rede; disparo UC82; binding de alertas              |
+| **Aplicativo Cliente**   | Jornada da empreendedora; Agente de IA (UC64); diagnóstico/pedido UC70                                                     |
+| **Portal do voluntariado**| Cadastro, módulo CMS, pool, ações, aceite, diário, certificados (UC73/UC70/UC89/UC90)                                                 |
+| **Painel de Dados (BI)** | Indicadores; UC82; sessões/área; **pessoas voluntárias únicas**/ano; horas voluntário ≠ equipe                         |
 | **Backend**              | APIs, regras, persistência, tokens, UUID (UC67), Gupshup/SendGrid, **fila jornada** (UC33) e **fila alertas** (UC87)       |
 
 
@@ -245,7 +251,7 @@ Admin **cria** pacotes e regras de alerta na **Comunicação (UC88)**; Unidade *
 
 - **CPF**: armazenado com técnica **HMAC-SHA256 + pepper** ([referência](https://ogeradordecpf.com.br/armazenar-cpf/)); usado como chave de identificação sem armazenamento em texto claro. A busca por participantes passados ou não aprovados é feita pelo **hash do CPF** (UC62).
 - **Autenticação empreendedora**: somente **link mágico** — sem senha (UC4).
-- **Autenticação Aplicativo Gestor**: somente **link mágico** por e-mail — sem senha (UC3); primeira tela = Dashboard de edições.
+- **Autenticação Aplicativo Gestor**: somente **link mágico** por e-mail — sem senha (UC3). Unidade/Turma: primeira tela = Dashboard de edições. **Gestor de Voluntariado:** primeira tela = `/gestor/voluntariado` (sem página de edições).
 - **Autenticação CMS de Administração**: e-mail e senha; políticas de complexidade e expiração (UC6). **2FA**: previsto no Anexo LGPD do contrato — implementação conforme exigência contratual, .
 - **UUID de dispositivo (UC67)**: emitido após inscrição completa; localStorage; deep links com `turma_id`, `atividade_id`, `acao` — presença automática (UC40).
 - **Base de consentimentos (LGPD)**: o sistema mantém **registro dos aceites** (LGPD geral, dados sensíveis, cookies/armazenamento local, comunicação/WhatsApp, uso de imagem, regulamento), com **versão do termo, data/hora e dispositivo**, além do **controle de datas de anonimização**. Essa base é a referência para o processo automático de anonimização e revalidação (UC20, UC76).
@@ -261,13 +267,16 @@ Admin **cria** pacotes e regras de alerta na **Comunicação (UC88)**; Unidade *
 flowchart LR
   PI["Pré-inscrita (Lead)"] --> AC[Aplicativo Cliente]
   E[Empreendedora] --> AC
+  VOL[Voluntário / Mentor] --> AV[Portal do voluntariado]
   GU[Gestor de Unidade] --> AG[Aplicativo Gestor]
   GT[Gestor de Turma] --> AG
+  GV[Gestor de Voluntariado] --> AG
   ADM[Administrador do Sistema] --> CMS[CMS de Administração]
   ADM --> BI[Painel de Dados BI]
   ADMP[Administrador de Programa] --> CMS
   AC --> API[Sistemas de Retaguarda Backend]
   AG --> API
+  AV --> API
   CMS --> API
   BI --> API
   API --> GP[Gupshup WhatsApp]
@@ -389,7 +398,9 @@ UC84 — Entrevista de Seleção (Etapa 2 — P/H)
 UC85 — Selecionar Elegíveis à Doação (Filtros auxiliares A–D + Lote)  
 UC86 — Coletar Dados Bancários / PIX, Recibo e Aceites (pós-liberação — comum)  
 UC87 — Configurar e Orquestrar Alertas Automáticos  
-UC88 — Gerenciar Pacotes de Comunicação (Templates Meta/Gupshup)
+UC88 — Gerenciar Pacotes de Comunicação (Templates Meta/Gupshup)  
+UC89 — Login Voluntário (Link Mágico)  
+UC90 — Ações de Voluntariado
 
 ---
 
@@ -417,7 +428,8 @@ UC76 — Anonimizar Dados e Revalidar Consentimento (LGPD)
 UC81 — Encerrar Edição (Freeze Operacional)  
 UC82 — Criar / configurar Pesquisa Pós-Programa *(D+30 padrão; disparo = Gestor; visualização = BI)*  
 UC87 — Configurar Alertas Automáticos *(aba Alertas em UC88; orquestra Backend)*  
-UC88 — Gerenciar Pacotes de Comunicação *(catálogo templates Meta/Gupshup; jornada P/H e online)*
+UC88 — Gerenciar Pacotes de Comunicação *(catálogo templates Meta/Gupshup; jornada P/H e online)*  
+UC90 — Catálogo de tipos de Ação *(ações de voluntariado; sem doação de sangue)*
 
 ### Aplicativo Gestor — Gestor de Unidade
 
@@ -434,7 +446,8 @@ UC50 — Comunicar para Grupo WhatsApp *(facilitador manual — UC16/UC66)*
 UC56 — Consultar Ranking e Engajamento *(online: maratona / represamento / risco)*  
 UC57 — Aprovar Doação (Contemplação) *(também pode sugerir; pós lote UC85)*  
 UC58 — Analisar Elegibilidade para Capital Semente  
-UC70 — Gestão de Mentorias *(painel, match, docs, histórico)*  
+UC70 — Gestão de Mentorias *(online: lote + pool; P/H: agenda gestor **ou** pool; vagas N; card visual)*  
+UC73 — Rede de Voluntários *(recorte da edição para alocar mentoria)*  
 UC77 — Registrar Observação de Acompanhamento  
 UC82 — Disparar Pesquisa Pós-Programa *(D+30 padrão; formulário Admin; resultados BI)*  
 UC83 — Visão Multi-Unidade no Aplicativo Gestor *(terceiro nível)*  
@@ -442,6 +455,15 @@ UC84 — Entrevista de Seleção *(etapa 2 — só P/H)*
 UC85 — Selecionar Elegíveis à Doação *(filtros A–D + seleção em lote)*  
 UC86 — Coletar Dados Bancários / PIX e Recibo de Doação  
 UC87 — Instanciar / pausar Alertas da Edição *(EditionAlertBinding)*
+
+### Aplicativo Gestor — Gestor de Voluntariado
+
+> Perfil CMS; menu nacional no mesmo Aplicativo Gestor (sem `edicaoId` obrigatório).
+
+UC3 — Login Gestor (Link Mágico) → home `/gestor/voluntariado`  
+UC73 — Rede de Voluntários *(aprovar, filtrar, inativos, em mentoria)*  
+UC70 — Gestão de Mentorias *(consulta nacional: abertas / em andamento / finalizadas)*  
+UC90 — Ações de Voluntariado *(criar, editar, slug, convites, inscrições, resultados)*
 
 ### Aplicativo Gestor — Gestor de Turma
 
@@ -490,9 +512,17 @@ UC68 — Visualizar Calendário de Atividades
 UC72 — Exibir Alerta de Compatibilidade de Navegador
 
 **Fase 5 — Conclusão**  
-UC63 — Consultar e Solicitar Certificado (Autoatendimento)  
+UC63 — Consultar e Solicitar Certificado (Autoatendimento) *(inclui certificado por sessão de mentoria individual)*  
+UC70 — Mentoria *(P/H: hub `/app/mentorias` + módulo CMS; online: diagnóstico só no lote de encerramento)*  
 UC79 — Solicitar Desligamento do Programa *(questionário + motivo)*  
 UC82 — Responder Pesquisa Pós-Programa *(quando disparada)*
+
+### Aplicativo Voluntário (portal do voluntariado)
+
+UC73 — Cadastrar Voluntário ou Mentor *(autoinscrição: individual/coletiva/ações, interesse/expertise, dados sensíveis, módulo CMS)*  
+UC70 — Gestão de Mentorias *(Em aberto / Minhas / Encerradas; Pegar após módulo CMS)*  
+UC89 — Login Voluntário (Link Mágico)  
+UC90 — Ações de Voluntariado *(slug, landing, inscrição; GV confirma)*
 
 ### Sistemas de Retaguarda (Backend)
 
@@ -505,7 +535,8 @@ UC51 — Enviar Vídeo ou Conteúdo via WhatsApp
 UC52 — Orquestrar Alertas / Nurturing *(fila alertas; execução UC87)*  
 UC54 — Enviar Link Mágico Personalizado  
 UC55 — Classificar Beneficiamento e Emitir Certificado Automaticamente  
-UC87 — Avaliar e Enfileirar Alertas Automáticos *(Backend — dono da automação)*
+UC87 — Avaliar e Enfileirar Alertas Automáticos *(Backend — dono da automação)*  
+UC89 — Login Voluntário (Link Mágico) *(token e-mail)*
 
 ### Painel de Dados (BI)
 
@@ -529,14 +560,14 @@ UC82 — Visualizar resultados da Pesquisa Pós-Programa
 
 **Descrição**
 
-Permite que o **Administrador do Sistema** ou **Administrador de Programa** cadastre **colaboradores** (funcionários do Consulado) utilizando o **sistema nativo de usuários do CMS de Administração**, atribuindo perfil (Administrador de Programa, Gestor de Unidade, Gestor de Turma) e vinculando a programas, unidades e turmas.
+Permite que o **Administrador do Sistema** ou **Administrador de Programa** cadastre **colaboradores** (funcionários do Consulado) utilizando o **sistema nativo de usuários do CMS de Administração**, atribuindo perfil (Administrador de Programa, Gestor de Unidade, Gestor de Turma, **Gestor de Voluntariado**) e vinculando a programas, unidades e turmas. **Gestor de Voluntariado** é nacional (não exige unidade/turma); pode acumular com Unidade/Turma.
 
 **Atores**
 
 - **Administrador do Sistema (CMS de Administração)**: cadastro global e migrações excepcionais.
 - **Administrador de Programa (CMS de Administração)**: cadastro restrito ao escopo do seu programa.
 
-> O **colaborador** é a **entidade cadastrada** (não um ator): recebe os perfis de Administrador de Programa, Gestor de Unidade e/ou Gestor de Turma, podendo acumular papéis.
+> O **colaborador** é a **entidade cadastrada** (não um ator): recebe os perfis de Administrador de Programa, Gestor de Unidade, Gestor de Turma e/ou Gestor de Voluntariado, podendo acumular papéis.
 
 **Pré-condições**
 
@@ -547,7 +578,7 @@ Permite que o **Administrador do Sistema** ou **Administrador de Programa** cada
 
 - O **Administrador** acessa **Configurações → Painel de Administração → Usuários** no CMS de Administração.
 - Seleciona **Convidar usuário** ou **Criar novo usuário**.
-- Informa nome, e-mail, perfil (Administrador de Programa, Gestor de Unidade ou Gestor de Turma), status ativo/inativo (UC74) e unidade(s) vinculada(s) (UC66).
+- Informa nome, e-mail, perfil (Administrador de Programa, Gestor de Unidade, Gestor de Turma ou **Gestor de Voluntariado**), status ativo/inativo (UC74) e unidade(s) vinculada(s) (UC66) — unidade opcional se o único perfil for Gestor de Voluntariado.
 - Associa programas, edições e turmas permitidos conforme LGPD.
 - O CMS de Administração envia e-mail de convite para definição de **senha do CMS** (quando o perfil inclui acesso administrativo).
 - O colaborador define senha do **CMS** (UC2/UC6). O acesso ao **Aplicativo Gestor** é por **link mágico** no e-mail cadastrado (UC3) — sem senha no app operacional.
@@ -612,17 +643,20 @@ Acesso ao backoffice **CMS de Administração** para modelagem de programas, edi
 
 **Descrição**
 
-Acesso ao **Aplicativo Gestor** (app **único** para Gestor de Unidade e Gestor de Turma) exclusivamente por **link mágico** enviado por **e-mail** — **não há senha** neste aplicativo. Após autenticar, a **primeira tela** é o **Dashboard de edições**: lista todas as edições às quais o colaborador está associado (como Unidade e/ou Turma), com indicadores relevantes ao perfil em cada card. Ao **selecionar uma edição**, o sistema carrega o shell operacional com as **ferramentas do papel naquela edição** — o Gestor de Unidade recebe **todas** as ferramentas (seleção, alocação, doação, operação de turma etc.); o Gestor de Turma, apenas as de operação da(s) sua(s) turma(s).
+Acesso ao **Aplicativo Gestor** (app **único** para Gestor de Unidade, Gestor de Turma e **Gestor de Voluntariado**) exclusivamente por **link mágico** enviado por **e-mail** — **não há senha** neste aplicativo.
+
+- **Unidade / Turma:** a **primeira tela** é o **Dashboard de edições**. Ao **selecionar uma edição**, o sistema carrega o shell operacional com as **ferramentas do papel naquela edição**.
+- **Gestor de Voluntariado:** **não tem** Dashboard de edições. Após o login, entra **direto** em `/gestor/voluntariado` com o **menu contextual** (Home, Gestão de ações, Gestão de voluntários, Gestão de mentorias). Sem `edicaoId`, sem Trocar edição.
 
 **Atores**
 
-- **Gestor de Unidade**, **Gestor de Turma**.
-- **Sistemas de Retaguarda (Backend)** — geração e validação do token; resolução de vínculos edição/unidade/turma.
+- **Gestor de Unidade**, **Gestor de Turma**, **Gestor de Voluntariado**.
+- **Sistemas de Retaguarda (Backend)** — geração e validação do token; resolução de vínculos edição/unidade/turma e do perfil nacional de voluntariado.
 - **SendGrid** — entrega do e-mail com link (ator secundário).
 
 **Pré-condições**
 
-- Colaborador cadastrado no CMS (UC1), ativo, com perfil Gestor de Unidade e/ou Gestor de Turma vinculado a ao menos uma edição (ou unidade/turma da edição).
+- Colaborador cadastrado no CMS (UC1), ativo, com perfil Gestor de Unidade e/ou Gestor de Turma vinculado a ao menos uma edição **ou** perfil **Gestor de Voluntariado**.
 
 **Fluxo Principal**
 
@@ -630,21 +664,22 @@ Acesso ao **Aplicativo Gestor** (app **único** para Gestor de Unidade e Gestor 
 2. Informa **apenas o e-mail** cadastrado e solicita o link de acesso.
 3. Sistema envia e-mail com **link mágico** (token de uso único / curta validade).
 4. Gestor abre o link; backend valida o token e inicia a sessão.
-5. Sistema exibe o **Dashboard de edições** com cards das edições associadas (papel na edição, KPIs conforme Unidade ou Turma — ex.: inscritas/qualificadas/doações pendentes ou participantes/aprovações/próximo encontro).
-6. Gestor **abre/seleciona uma edição**.
-7. Sistema carrega a **home operacional da edição** e o **menu de ferramentas** conforme o papel nessa edição (Unidade = menu completo; Turma = operação da turma). Pode trocar de edição retornando ao Dashboard de edições.
+5. **Gestor de Voluntariado:** home `/gestor/voluntariado` + menu contextual (não lista edições). **Unidade/Turma:** **Dashboard de edições**.
+6. Unidade/Turma **abre/seleciona uma edição**.
+7. Sistema carrega a **home operacional da edição** e o **menu de ferramentas** conforme o papel nessa edição (Unidade = menu completo **sem Campanhas**; Turma = operação da turma). Pode trocar de edição retornando ao Dashboard. **Gestor de Voluntariado** permanece no shell nacional — não há Trocar edição.
 
 **Fluxos Alternativos**
 
-- **Sem edições associadas**: mensagem orientando contato com administrador.
+- **Sem edições associadas** (e sem perfil de Voluntariado): mensagem orientando contato com administrador.
+- **Gestor de Voluntariado**: não exige edição; **nunca** abre o Dashboard de edições.
 - **Link expirado ou já usado**: solicita novo envio pelo mesmo e-mail.
 - **E-mail não cadastrado / inativo**: mensagem genérica (não enumera existência do usuário); sem envio efetivo ou envio sem efeito operacional.
-- **Deep link com** `edicao_id`: após autenticar, pode abrir direto a edição (se autorizada); senão, Dashboard de edições.
-- **Edição encerrada (freeze)**: acesso em modo consulta/BI conforme UC81, se permitido.
+- **Deep link com** `edicao_id`: só Unidade/Turma, se autorizada; Gestor de Voluntariado ignora e permanece em `/gestor/voluntariado`.
+- **Edição encerrada (freeze)**: acesso em modo consulta/BI conforme UC81, se permitido (Unidade/Turma).
 
 **Pós-condições**
 
-- Gestor autenticado; sessão ativa com timeout configurável; contexto de edição selecionado para operação.
+- Gestor autenticado; sessão ativa com timeout configurável. Unidade/Turma: contexto de edição selecionado para operação. Gestor de Voluntariado: sessão nacional em `/gestor/voluntariado`, **sem** contexto de edição.
 
 **Exceções**
 
@@ -718,8 +753,8 @@ Configura roles nativas do **CMS de Administração** e permissões por entidade
 **Fluxo Principal**
 
 - Acessa **Configurações → Painel de Administração → Funções (Roles)**.
-- Edita permissões CRUD por entidade para cada role.
-- Restringe escopo (programas/edições/turmas).
+- Edita permissões CRUD por entidade para cada role (inclui role **Gestor de Voluntariado**: ações, rede, consulta de mentorias; sem seleção/doação/turma).
+- Restringe escopo (programas/edições/turmas) — Gestor de Voluntariado é **nacional**.
 - Salva configuração.
 
 **Pós-condições**
@@ -734,7 +769,7 @@ Configura roles nativas do **CMS de Administração** e permissões por entidade
 
 **Descrição**
 
-Configura políticas de autenticação do **CMS de Administração** (e-mail/senha: expiração, complexidade, histórico) e parâmetros de **link mágico** do **Aplicativo Gestor** e do **Aplicativo Cliente** (validade do token, timeout de sessão), além do armazenamento seguro de CPF (**HMAC-SHA256 + pepper**). **2FA** no CMS previsto no Anexo LGPD — implementação conforme exigência contratual. Empreendedora (UC4) e gestores no Aplicativo Gestor (UC3) **não utilizam senha** — apenas link mágico.
+Configura políticas de autenticação do **CMS de Administração** (e-mail/senha: expiração, complexidade, histórico) e parâmetros de **link mágico** do **Aplicativo Gestor**, do **Aplicativo Cliente** e do **Aplicativo Voluntário** (validade do token, timeout de sessão), além do armazenamento seguro de CPF (**HMAC-SHA256 + pepper**). **2FA** no CMS previsto no Anexo LGPD — implementação conforme exigência contratual. Empreendedora (UC4), gestores no Aplicativo Gestor (UC3) e voluntários (UC89) **não utilizam senha** — apenas link mágico.
 
 **Atores**
 
@@ -747,13 +782,13 @@ Configura políticas de autenticação do **CMS de Administração** (e-mail/sen
 **Fluxo Principal**
 
 - Define política de expiração, complexidade e histórico de senhas para acesso ao **CMS**.
-- Define validade/uso único dos tokens de link mágico (Cliente e Gestor) e timeout de sessão.
+- Define validade/uso único dos tokens de link mágico (Cliente, Gestor e Voluntário) e timeout de sessão.
 - Configura pepper e política de hash para CPF.
 - Registra configuração de 2FA para fase contratual posterior, se aplicável.
 
 **Pós-condições**
 
-- Políticas de segurança ativas para CMS (senha) e apps Cliente/Gestor (link mágico).
+- Políticas de segurança ativas para CMS (senha) e apps Cliente/Gestor/Voluntário (link mágico).
 
 ---
 
@@ -1045,7 +1080,7 @@ Cria **módulo** como conjunto ordenado de **atividades educacionais**, com **te
 | **Vídeo Aula**              | Conteúdo gravado; data-prazo (padrão D+2); conclusão com **80%** assistido; YouTube e/ou arquivo WhatsApp online (UC37/UC51)                               | Assistiram / não assistiram                                                                                                                                                                                                                                                                                                                        |
 | **Questionário**            | Questionário **genérico** configurável no Admin (simples, múltipla e/ou aberta); distinto de Inicial/Final/NPS; consolidado + abertas no Gestor            | Fizeram / não fizeram                                                                                                                                                                                                                                                                                                                              |
 | **Tarefa de Casa**          | Conteúdo pré-carregado do CMS; gestor define **só** data-prazo + comunicação; entrega do empreendimento; aprovar ou **revisar** — sem reprovar (UC43/UC44) | Aprovadas ou em revisão / total                                                                                                                                                                                                                                                                                                                    |
-| **Registro de Faturamento** | Mês de referência + valor + seletor de **dificuldade**; anexo **obrigatório**; **1 por competência/empreendimento**; só **aprovados** contam (UC45/UC44)   | Registros aprovados / total                                                                                                                                                                                                                                                                                                                        |
+| **Saúde financeira**        | Mês de referência; grade entradas/saídas + **capital de giro**; seletor de **dificuldade**; anexo **obrigatório**; **1 por competência/empreendimento**; só **aprovados** contam (UC45/UC44) | Registros aprovados / total                                                                                                                                                                                                                                                                                                                        |
 | **Download de Conteúdo**    | Material de apoio; template UC88; **online:** arquivos enviados no WhatsApp após OK **e** disponíveis no Cliente; lista baixaram / não baixaram; sem entrega | Baixaram / não baixaram                                                                                                                                                                                                                                                                                                                            |
 | **Plano de Ação**           | Metas do empreendimento; gestor pode criar/alterar status das metas (UC31)                                                                                 | Fizeram / não fizeram                                                                                                                                                                                                                                                                                                                              |
 | **Visita Técnica**          | Agenda 1 a 1 (UC78); logística ~2 km; conflitos de horário; **inexistente no online**; em P/H presencial ou online                                         | Visitas realizadas / participantes                                                                                                                                                                                                                                                                                                                 |
@@ -1061,7 +1096,7 @@ Cria **módulo** como conjunto ordenado de **atividades educacionais**, com **te
 | Tipo                                                                                                                                   | Presencial / híbrido                  | Online                        |
 | -------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- | ----------------------------- |
 | Aula, Visita Técnica                                                                                                                   | Permitidos                            | **Não** exibir / não associar |
-| Vídeo Aula, Atividade, Tarefa de Casa, Registro de Faturamento, Download, Plano de Ação, Questionário Inicial, Questionário Final, NPS | Permitidos                            | Permitidos                    |
+| Vídeo Aula, Atividade, Tarefa de Casa, Saúde financeira, Download, Plano de Ação, Questionário Inicial, Questionário Final, NPS | Permitidos                            | Permitidos                    |
 | Conteúdo extra (UC35)                                                                                                                  | Permitido (fora da enum; não conta %) | **Não**                       |
 
 
@@ -1860,7 +1895,7 @@ No **Aplicativo Gestor**, a visão por módulo em accordion serve a dois modos:
 | **Vídeo Aula**              | Data-prazo (padrão **D+2**, não passada); mensagem do template **Vídeo Aula** (UC88) + link plataforma                                                                                                                                                                      | Listas **assistiram / não assistiram**; conclusão com **80%** assistido (UC37)                                                                                                                                       |
 | **Atividade**               | Data-prazo; comunicação com link do questionário genérico (Admin)                                                                                                                                                                                                           | Fizeram / não fizeram; pizza (simples/múltipla) + respostas abertas por empreendedora                                                                                                                                |
 | **Tarefa de Casa**          | Conteúdo do **CMS** (somente leitura); gestor define **data-prazo** + comunicação                                                                                                                                                                                           | Não fez / em análise / aprovada; **aprovar** ou **revisar** com comentário (UC44) — **nunca** reprovar; WhatsApp ao responsável                                                                                      |
-| **Registro de Faturamento** | Mês de referência; data-prazo; comunicação                                                                                                                                                                                                                                  | Não fez / em aprovação / aprovada; valor + **dificuldade** + **anexo obrigatório**; só **aprovados** no progresso; gráfico evolutivo (UC45)                                                                          |
+| **Saúde financeira**        | Mês de referência; data-prazo; comunicação                                                                                                                                                                                                                                  | Não fez / em aprovação / aprovada; grade + **capital de giro** + **dificuldade** + **anexo obrigatório**; só **aprovados** no progresso; médias históricas (UC45)                                                     |
 | **Download de Conteúdo**    | Data-prazo; anexos. **Online:** template Download + **arquivos no WhatsApp** após OK (UC33/UC51); os mesmos documentos no Cliente. **P/H:** template UC88 + UC50; arquivos no Cliente                                                                                       | Baixaram / não baixaram                                                                                                                                                                                              |
 | **Plano de Ação**           | Data-prazo; comunicação                                                                                                                                                                                                                                                     | Fizeram / não fizeram; gestor cria metas e altera status                                                                                                                                                             |
 | **Visita Técnica**          | Liberar → agenda 1 a 1 (UC78); só P/H                                                                                                                                                                                                                                       | Pendentes / agendadas / realizadas; calendário; logística ~2 km; conflitos                                                                                                                                           |
@@ -1920,7 +1955,7 @@ No **Aplicativo Gestor**, a visão por módulo em accordion serve a dois modos:
 
 Permite ao **Gestor de Turma** adicionar **conteúdo extra** (encontro, material ou sessão pontual) **além da matriz** da edição — **único** tipo de item extra que o gestor pode incluir. **Não** altera a estrutura central do módulo/edição nem adiciona outros tipos da enum (videoaula, tarefa etc.).
 
-**Regra canônica:** conteúdo extra **não conta** para percentual de conclusão, carga horária nem beneficiamento (UC13). Substitui a nomenclatura anterior “aula presencial extra”.
+**Regra canônica:** conteúdo extra **não conta** para percentual de conclusão, carga horária nem beneficiamento (UC13). Substitui a nomenclatura anterior “aula presencial extra”. **Não é mentoria (UC70):** encontro coletivo pontual da turma continua extra; mentoria é sessão individual de 2h sobre o negócio.
 
 Em P/H, o gestor pode marcar a sessão como **presencial** (local) ou **ao vivo** (link), alinhado ao tipo **Aula** (UC15).
 
@@ -2052,6 +2087,8 @@ Participação em transmissão ao vivo via **YouTube**. Há dois usos distintos:
 **Descrição**
 
 Atividade do tipo **questionário** no catálogo UC15. Há **três tipos instrumentais** (Inicial / Final / NPS) e, em separado, o tipo **Atividade** (questionário **genérico** configurável no Admin — também com simples/múltipla/aberta e consolidado no Gestor).
+
+Padrão único **online e P/H** (17/set): três etapas de feedback do **programa** — **chegada** (Questionário Inicial), **NPS final** (tipo NPS no encerramento) e **D+30** (UC82, gatilho automático). Edições com parceiro **Multiplica por Elas** podem acrescentar perguntas de organização no CMS da edição; não é tela nova. Formulário de satisfação de **mentoria/ação** (voluntariado) permanece pendência Heitor/Sandra — não inventar perguntas aqui.
 
 
 | Tipo (UC15)              | Uso                                                                                                                                            |
@@ -2253,44 +2290,57 @@ O gestor **aprova** ou **solicita revisão** (botão **Revisar** — substitui �
 
 
 
-### UC45 – Enviar Registro de Dados Financeiros Mensais
+### UC45 – Enviar Registro de Saúde Financeira Mensal
 
 **Descrição**
 
-Registro **mensal** vinculado ao **empreendimento** (UC31), preenchido **pela empreendedora** no **Aplicativo Cliente** (não é imputação pela gestora via planilha/WhatsApp). A plataforma **não** é fluxo de caixa pessoal: é **reporte ao programa** para acompanhar evolução do negócio. A empreendedora pode manter controle próprio (caderno/Excel) e apenas reportar os números solicitados.
+Registro **mensal** vinculado ao **empreendimento** (UC31), preenchido **pela empreendedora** no **Aplicativo Cliente**. A plataforma **não** é fluxo de caixa em tempo real: é **reporte póstumo** do mês que já passou (prazo típico: **10º dia útil** do mês seguinte).
 
-**Campos mensais (canônicos hoje):** faturamento; renda pessoal; despesas fixas; número de clientes; número de produtos vendidos; investimento; poupança. **Anexo obrigatório** (planilha, foto ou print); sem anexo o envio é bloqueado. **Autoavaliação de dificuldade** do preenchimento (escala de **5 níveis** com rostos). Liberação pelo gestor (UC34) com **data limite** e comunicação WhatsApp com **link** para a atividade. **Regra rígida:** **um único registro por competência (mês) e empreendimento**, mesmo com N sócios. Interface com **disclaimers** de apoio. Requer **aprovação** do gestor (UC44); gestor pode marcar **revisão** (UC46). Conta para beneficiamento (UC13).
+Título da atividade: **Saúde financeira**. Interface em **colunas** (planilha): Média + meses da edição; só a coluna da competência atual é editável. Análise por **médias históricas** (meses **aprovados**); célula em âmbar se divergir **mais de 30%** da média (não aplica a nº clientes/produtos).
 
-> **Rascunho — saúde financeira (aguarda planilha de referência):** proposta de nomenclatura **Entradas** (faturamento), **Saídas** (investimento, poupança, despesas do negócio, **dívidas**) e **Renda** como resultado. Resultado mensal pode ser **negativo**; “renda/retirada desejada” não. Planilha mensal permanece **obrigatória**. Detalhe de investimento × dívida e dívida pessoal vs empresarial = pendente de especificação. Não alterar DET/UI até o Excel.
+**Entradas:** faturamento; **empréstimos** (financiamentos do negócio no mês); **saldo do mês anterior** (informativo, **sem trava**; **zerado** no 1º mês da edição; nos seguintes sugere o resultado aprovado do mês anterior, editável); nº de clientes; nº de produtos vendidos.  
+**Saídas (desta ordem):** despesas; investimento; poupança; **dívidas** (valor **pago** no mês).  
+**Renda/retirada** (informado, ≥ 0) — o que ela tirou do negócio.  
+**Despesas / capital de giro** (calculado, somente leitura; **pode ser negativo**). Rótulo **provisório** (17/set): nomenclatura *capital de giro* vs *saldo do período* permanece aberta.
 
-**Dificuldade (obrigatória):** escala visual de **5 níveis** com emoticon — muito difícil 😣, difícil 🙁, tranquilo 😐, fácil 🙂, muito fácil 😄 (botões lado a lado, não dropdown). No Gestor: exibida no modal de aprovação, na tabela do histórico por competência e no **resumo por atividade** (distribuição das respostas). O gestor pode registrar a dificuldade em nome da empreendedora (UC69).
+```
+Entradas (R$) = Faturamento + Empréstimos + Saldo do mês anterior
+Saídas = Despesas + Investimento + Poupança + Dívidas
+Despesas / capital de giro = Entradas − Saídas − Renda/retirada
+```
+
+**Sobra** (só leitura pedagógica, não é campo): `Faturamento + Empréstimos − Despesas − Dívidas − Renda/retirada`. O sistema devolve uma frase (o que sobrou e o que foi a investimento/poupança) — não é planner.
+
+**Anexo obrigatório** (planilha, foto ou print). **Dificuldade** obrigatória (escala de **5 níveis** com rostos). Liberação pelo gestor (UC34) com data limite e WhatsApp com **link**. **Um único registro por competência e empreendimento**, mesmo com N sócios. Requer **aprovação** (UC44); gestor pode marcar **revisão** (UC46). Conta para beneficiamento (UC13). Dívida pessoal vs profissional e estoque de dívida **não** entram neste incremento.
+
+**Dificuldade (obrigatória):** muito difícil 😣, difícil 🙁, tranquilo 😐, fácil 🙂, muito fácil 😄 (botões lado a lado). No Gestor: modal de aprovação, histórico por competência e resumo da turma. O gestor pode registrar via UC69 ou acesso mocado.
 
 **Atores**
 
-- **Empreendedora**, **Gestor de Turma** (assistido ou via UC69).
+- **Empreendedora**, **Gestor de Turma** (assistido, UC69 ou acesso mocado).
 
 **Pré-condições**
 
-- Atividade de faturamento **liberada** (UC34); participante vinculada à turma.
+- Atividade de saúde financeira **liberada** (UC34); participante vinculada à turma.
 
 **Fluxo Principal**
 
-- Acessa formulário mensal no Aplicativo Cliente ou via **link** da comunicação WhatsApp (UC50/UC54).
-- Preenche valores do mês de referência; **anexa documento obrigatório** (planilha/foto/print); **escolhe a dificuldade**.
-- Sistema valida consistência (ex.: renda ≤ faturamento) e presença do anexo.
+- Acessa a grade no Aplicativo Cliente ou via **link** WhatsApp (UC50/UC54).
+- Preenche a coluna do mês; **anexa documento obrigatório**; **escolhe a dificuldade**.
+- Sistema valida consistência (alerta se renda/retirada > faturamento), presença do anexo e zeros com justificativa.
 - Status "aguardando aprovação" (UC44).
 
 **Fluxos Alternativos**
 
 - **Sem anexo**: bloqueia envio até anexar.
 - **Dados inconsistentes**: alerta e solicita correção.
-- **Zero em faturamento ou renda**: **observação/justificativa obrigatória**.
-- **Mês sem movimento**: permite registro zerado com justificativa (mesma regra nos dois campos acima).
+- **Zero em faturamento ou renda/retirada**: **observação/justificativa obrigatória**.
+- **Mês sem movimento**: permite registro zerado com justificativa.
 - **Revisão pelo gestor** (UC46): empreendedora reavalia e reenvia.
 
 **Pós-condições**
 
-- Dados mensais, anexo e dificuldade registrados para evolução, acompanhamento pedagógico e BI.
+- Dados mensais (incl. saldo do mês anterior), anexo, dificuldade e resultado **Despesas / capital de giro** registrados para evolução, acompanhamento pedagógico e BI.
 
 ---
 
@@ -2664,7 +2714,7 @@ Suporta **doação em massa**: selecionar múltiplos **empreendimentos** na tela
 
 **Ranking / desempate** (quando o orçamento não cobre todas as liberadas): nº de dependentes, qualidade das respostas, análise subjetiva excepcional — **após** elegibilidade; **≠** régua UC12.
 
-Filtros auxiliares (UC14/UC85, ex. carência 3 anos) podem bloquear ou apoiar a decisão; **não** substituem os gatilhos acima. **Não há doação automática.** Após aprovação / liberação, coleta de **dados bancários/PIX**, **recibo**, **NFs (material)** e **aceites** seguem UC86 (comum às duas jornadas). Mentoria vinculada: UC70 (roadmap).
+Filtros auxiliares (UC14/UC85, ex. carência 3 anos) podem bloquear ou apoiar a decisão; **não** substituem os gatilhos acima. **Não há doação automática.** Após aprovação / liberação, coleta de **dados bancários/PIX**, **recibo**, **NFs (material)** e **aceites** seguem UC86 (comum às duas jornadas). No **online**, a mentoria de encerramento (UC70) abre em lote a partir das finalistas / doação aprovada; a empreendedora preenche o diagnóstico no Cliente e a demanda vai ao **pool** do Aplicativo Voluntário. No **P/H**, a mentoria **não** depende deste portão — opera no programa regular (Abertas / alocação em lote **ou** Atendido pelo gestor).
 
 **Atores**
 
@@ -2732,7 +2782,7 @@ Análise estruturada: entregas, fluxo de caixa, constância, necessidade de equi
 
 **Painel de Dados (BI)** em **Looker Studio / Data Studio**, ligado ao banco (fora do app operacional); acessos Google geridos pelo Consulado. Entregável contratual. Exibe KPIs de **mulheres beneficiadas** (não “atendidas”), certificadas, **ativas** na jornada (antes de atingir o % de beneficiamento), quem **recebeu doação**, **relatos de atividades** e **frequências** (UC80), além da evolução financeira. Totalizadores consolidam dados atuais com **dados pregressos** (UC71).
 
-**Nomenclatura e recortes :** pretas + pardas = **mulheres negras** (IBGE); filtros de região, UF, município, idade, presença de filhos; **orçamento não entra** no dashboard (dado operacional do sistema, sem planilha externa). Funil executivo: inscritas → selecionadas → iniciadas / **ativas** → beneficiadas (50%) → certificadas / recebeu doação.
+**Nomenclatura e recortes :** pretas + pardas = **mulheres negras** (IBGE); filtros de região, UF, município, idade, presença de filhos; **orçamento não entra** no dashboard (dado operacional do sistema, sem planilha externa). Funil executivo: inscritas → selecionadas → iniciadas / **ativas** → beneficiadas (50%) → certificadas / recebeu doação. **Mentorias (UC70):** contar **sessões por área** (catálogo CMS: Finanças, Marketing, Vendas, Gestão, Comunicação, Formalização, Saúde e bem-estar, Tecnologia, …). Uma sessão com áreas extras na ficha (pós-encontro) entra em cada série. Também **horas de voluntário** (P/H: minutos do líder, herdados pelos acompanhantes; online: diário por pessoa) e NPS ao encerrar. **Atendido pelo gestor** **não** entra nesta série. Mentoria coletiva entra só em horas/vínculo, **sem** certificado. **Ação (UC90)** concluída: certificado genérico de participação para **todas** as pessoas confirmadas na equipe (data + carga horária). **Voluntariado:** **pessoas voluntárias únicas no ano** (não conta ações; colaborador interno **nunca** entra nesta série). **Horas de voluntário ≠ horas de equipe.** Export **ITG 2002**: planilha pessoa/atividade/horas/data, sem valor de mercado no sistema. Campanhas agrupam por **programa/ação**.
 
 **Atores**
 
@@ -2840,11 +2890,15 @@ Consulta **somente leitura** à base legada de sistemas anteriores (2015/planilh
 
 **Descrição**
 
-Reenvio de certificado já emitido (UC55).
+Reenvio de certificado já emitido (UC55). Tipos no portal do voluntariado: **Mentoria** e **Ação**.
+
+- **Programa** (UC13/UC55): empreendedora; filtro no Cliente. Inalterado.
+- **Mentoria** (UC70): no portal, um por pessoa × mentoria P/H (acompanhante **herda**) ou × sessão online. Mentorada P/H recebe ao `finalizada`. Mentorada do **online / Zap** **não** recebe certificado de mentoria (benefício de finalista). `atendida_gestor`: sem certificado.
+- **Ação** (UC90): ao concluir a ação, certificado **genérico de participação** (dados, data, carga horária) para **todas** as pessoas `confirmado` na equipe, independentemente de quem registrou as horas. **Não** há certificado de mentoria coletiva. Layout (Canva) é arte; o sistema gera PDF com tipo Mentoria | Ação.
 
 **Atores**
 
-- **Empreendedora**; **Chat IA** (opcional).
+- **Empreendedora**; **Voluntário / Mentor**; **Chat IA** (opcional).
 
 **Pré-condições**
 
@@ -3041,26 +3095,35 @@ Exibe calendário **visual** das atividades da turma no **Aplicativo Cliente**: 
 
 **Descrição**
 
-Permite ao **gestor de turma** registrar dados, entregas ou lançamentos financeiros **em nome da empreendedora** no Aplicativo Gestor, com **rastreabilidade** (quem inseriu, quando e motivo). Usado quando a participante não tem acesso ao Aplicativo Cliente ou em situações de alta vulnerabilidade digital . O sistema **não se passa** pela empreendedora — o log registra explicitamente a ação do gestor.
+Dois modos, ambos com **auditoria** (quem, quando, o quê):
+
+1. **Inserir em nome** — o gestor preenche no Aplicativo Gestor (cadastro, entrega UC43, saúde financeira UC45) com **justificativa**. O sistema **não** abre a sessão da empreendedora; o log registra a ação do gestor.
+2. **Acesso mocado** (10/set) — o gestor **abre a conta** da empreendedora no Aplicativo Cliente, com faixa visível “você está acessando como [nome]”. Cada tela vista e cada alteração gravada entram no log. Usado quando ela não consegue operar o app.
 
 **Atores**
 
-- **Gestor de Turma (Aplicativo Gestor)**.
+- **Gestor de Turma**, **Gestor de Unidade** (Aplicativo Gestor).
 
 **Pré-condições**
 
 - Participante vinculada à turma (programa + edição + unidade + turma); permissão no Aplicativo Gestor.
 
-**Fluxo Principal**
+**Fluxo Principal — inserir em nome**
 
 - Localiza participante no Aplicativo Gestor.
-- Seleciona tipo de dado (cadastro, entrega UC43, financeiro UC45).
+- Seleciona tipo de dado (cadastro, entrega UC43, saúde financeira UC45).
 - Preenche campos e registra justificativa.
 - Sistema grava com flag "inserido por gestor/educador" e notifica participante quando aplicável.
 
+**Fluxo Principal — acesso mocado**
+
+- Localiza participante → **Acessar como**.
+- Sistema inicia sessão mocada com banner e log contínuo.
+- Gestor opera as telas do Cliente; ao sair, a sessão dela permanece intacta.
+
 **Pós-condições**
 
-- Dado registrado com auditoria completa.
+- Dado ou navegação registrados com auditoria completa (autor, timestamp, campos alterados).
 
 ---
 
@@ -3070,37 +3133,127 @@ Permite ao **gestor de turma** registrar dados, entregas ou lançamentos finance
 
 **Descrição**
 
-**Módulo de Gestão de Mentorias** no Aplicativo Gestor, vinculado a programa/edição. Associa **voluntário/mentor** (UC73) à empreendedora/empreendimento (em geral finalista ou quem recebeu doação — UC85/UC57). Substitui o registro operacional mínimo anterior por um painel completo.
+Apoio ao negócio por mentores da rede (UC73). **Não confundir** com **conteúdo extra** (UC35) nem com **visita técnica** (UC78).
 
-**Estrutura do módulo**
+- **Online:** sessão individual de **2 horas** no encerramento (lote → pool com `vagas`).
+- **P/H:** **caso com N consultas** (não há slot de 2h nem agenda do gestor). O pedido do app **precisa** de mentor(es) voluntários **ou** fecha com **Atendido pelo gestor** (sem BI).
 
+Duas áreas no Gestor (menu irmão):
 
-| Área                         | Conteúdo                                                                               |
-| ---------------------------- | -------------------------------------------------------------------------------------- |
-| **Painel de status**         | A iniciar · Em andamento · Concluída · Pendente                                        |
-| **Ficha + match**            | Dados de contato da mentorada; vínculo ao perfil do mentor voluntário (UC73)           |
-| **Repositório**              | Upload de relatórios de avaliação, feedbacks dos mentores e devolutivas das mentoradas |
-| **Histórico de longo prazo** | Evolução da empreendedora e do negócio para consultas e impacto do Consulado (UC28)    |
+- **Mentorias** — `/gestor/e/[edicaoId]/mentorias` — fila das demandas.
+- **Voluntários** — `/gestor/e/[edicaoId]/voluntarios` — rede de pessoas (UC73).
 
+**Área (obrigatória).** Catálogo CMS: **Finanças**, **Marketing**, **Vendas**, **Gestão**, **Comunicação**, **Formalização**, **Saúde e bem-estar**, **Tecnologia** (+ admin). Select **único** no pedido. Cadastro do voluntário é **agnóstico** a uma ação futura.
+
+**Formulário canônico** (Cliente e diagnóstico online):
+
+1. Ajuda em que área?
+2. Qual motivo te levou a empreender?
+3. Olhando o momento atual, qual é a maior dificuldade ou dúvida?
+4. O que gostaria de ter resolvido ou planejado?
+5. Melhor período (Manhã 8–12, Tarde 12–18, Noite 18–21, Finais de semana)
+
+**Sem campo de data/hora** no P/H. O líder agenda depois do contato.
+
+**Card em dois estados (P/H)**
+
+- **Abertas (pré-alocação):** só negócio — nome do empreendimento, segmento/ramo, tempo, **faturamento**, produto/serviço, períodos, área, motivo, dificuldade, o que resolver. **Sem** nome da pessoa, sócios, telefone, e-mail, @rede. Sem CPF, PIX, endereço.
+- **Ativas (pós-alocação):** libera nome da empreendedora, **nome dos sócios**, WhatsApp e e-mail. Gestor vê contato **sempre**.
+
+**Online** mantém o card único (nome visível; telefone só após aceite), com `vagas` N.
+
+| Modalidade | Onde no Gestor | Origem | Mentor | Status |
+| ---------- | -------------- | ------ | ------ | ------ |
+| **Online** | Encerramento (etapa **final**) | Lote finalistas / doação → diagnóstico → pool | Voluntário | `aguardando_diagnostico` · `aberta` (`vagas` > 0) · `pendente`. Match: `aceita` · `em_andamento` · `concluida` |
+| **P/H** | Programa regular | Pedido no Cliente (ou Unidade cria) | Lote de voluntários (1º = **líder**) | `aberta` · `ativa` · `encerrada_nps` · `finalizada` · `atendida_gestor` · `recusada` |
+
+**Online — mentoria de encerramento** *(inalterado no desenho de 2h / `vagas`)*
+
+- Copy: etapa **final** da jornada.
+- Lote → diagnóstico no Cliente → demanda `aberta` no pool (edição ativa + datas de aplicação).
+- Voluntário aceita (decrementa `vagas`, revela WhatsApp), **diário próprio**.
+- Timeout CMS (`prazo_match_horas`, padrão 72): Unidade vincula um ou vários (cada um na base UC73).
+
+**P/H — programa regular (canônico novo)**
+
+Não há agenda/slot de 2h, “Aprovar e agendar” nem Unidade/Turma como mentor da sessão.
+
+Pedido no hub **Mentoria** do Cliente (`/app/mentorias`; **não** no perfil nem no hambúrguer). Início = **módulo educacional no CMS** (mesmos tipos de atividade do programa). **Solicitar** bloqueado até concluir. Inclusão pelo Gestor **não** exige treino: o caso aparece em Minhas (ou Em aberto se ainda sem lote). Abas da empreendedora: **Em aberto · Minhas · Encerradas**. O pedido cai em **Em aberto** do **portal do voluntariado** (recorte área de interesse / expertise).
+
+Dois caminhos de alocação — **lote único**; depois **não** se acrescenta mentor:
+
+1. **Gestor (Unidade ou Turma)** aloca N mentores de uma vez. Select obrigatório **tipo: Mentoria | Ação** (Univille / educador classifica; o voluntário **não** escolhe o enquadramento). O **primeiro da lista é o líder**; os demais são acompanhantes. Pode mandar `wa.me` avisando a alocação **antes ou depois** da consulta (o link não aloca).
+2. **Voluntário** pega a demanda em Abertas → vira **líder** (lote de 1; tipo permanece **Mentoria**).
+
+Se o educador marcar **Ação**, a demanda segue UC90 (diário da ação, certificado genérico de participação para todo o lote ao concluir) — sem ciclo de consultas/NPS de mentoria. Se **Mentoria**, segue este UC.
+
+No instante da alocação a demanda **sai de Em aberto para todos** e entra só em **Minhas** dos selecionados. Todo mentor do lote precisa existir na base UC73.
+
+**Atendido pelo gestor:** fecha o pedido **sem** sessão, horas, certificado nem pessoa voluntária no BI (horas de equipe, se registradas, ficam fora da série de voluntariado).
+
+**Papéis no lote P/H**
+
+| Papel | Card completo | Agenda / registra consulta / encerra | NPS ao encerrar | Horas, atividade, certificado |
+| ----- | ------------- | ------------------------------------ | --------------- | ----------------------------- |
+| **Líder** | sim | sim | sim (plataforma + mentorada) | gera o registro |
+| **Acompanhante** | sim | não | sim (obrigatório) | **herda** o registro do líder |
+| **Atendido pelo gestor** | — | — | — | **não** entra no BI de mentoria |
+
+**Ciclo de consultas (só o líder)**
+
+1. Contata as empreendedoras (WhatsApp/e-mail do card) e agenda a **primeira consulta**.
+2. Registra: se **ocorreu**; como foi; **tempo** (combobox de **30 em 30 min**: 30 min, 1h, 1h30, 2h, …; persistido em minutos); se haverá **próxima**.
+3. Se **não ocorreu:** remarcar **ou** encerrar com motivo (lista CMS).
+4. Próxima: repete agenda → registro.
+5. **Encerrar:** motivo (lista CMS) + **texto sobre a mentoria** + NPS do líder (plataforma + mentorada). Dispara NPS dos acompanhantes (texto + plataforma + mentorada) e da mentorada (texto + plataforma + mentor). Status `encerrada_nps` até todos enviarem; então `finalizada`.
+
+**Abas do portal do voluntariado (P/H):** **Em aberto** · **Minhas** · **Encerradas**. Treino = **módulo CMS**; **Pegar** bloqueado até concluir. Alocação pelo Gestor: o caso aparece em Minhas; líder só agenda/registra/encerra depois do treino.
+
+**Diário / horas / certificado**
+
+- **P/H:** só o líder registra consultas/minutos; acompanhantes herdam as mesmas horas e o certificado **individual por pessoa × mentoria** (UC63), visível no **portal do voluntariado** (`/voluntario/certificados`). Mentorada também recebe certificado ao `finalizada` (não em `atendida_gestor`); filtro **Programa | Mentoria** no Cliente.
+- **Online:** diário próprio por voluntário; certificado **por pessoa × sessão**.
+- Soma alimenta BI (horas de voluntário; export **ITG 2002** = planilha pessoa/atividade/horas/data, **sem** valor de mercado no sistema). Sem certificado de **coletiva**. Ação (UC90) gera certificado genérico ao concluir. Horas de **voluntário** ≠ horas de **equipe**.
+- Mentorada do **online / Zap** **não** recebe certificado de mentoria.
+
+**Permissões (Mentorias)**
+
+| Ação | Unidade | Turma | Cliente | Voluntário |
+| ---- | :-----: | :---: | :-----: | :--------: |
+| Alocar lote (tipo Mentoria \| Ação) / recusar / Atendido pelo gestor / `wa.me` | sim | sim (própria turma) | pede | — |
+| Consultar lista e ficha | sim | sim (turma) | próprio pedido | Abertas (card restrito) + as suas |
+| Pegar em Em aberto (vira líder) | — | — | — | sim (após módulo CMS, modalidade individual) |
+| Agendar / registrar / encerrar | — | — | NPS ao final | **só o líder** |
+| NPS ao encerrar | — | — | texto + plataforma + mentor | todos do lote (texto + plataforma + mentorada) |
 
 **Atores**
 
-- **Gestor de Unidade**, **Gestor de Turma**. *(O voluntário/mentor é entidade de domínio — não acessa o sistema; o registro é operado pelos gestores.)*
+- **Gestor de Unidade**, **Gestor de Turma**, **Gestor de Voluntariado** (consulta nacional), **Empreendedora**, **Voluntário / Mentor**.
 
 **Pré-condições**
 
-- Critérios de mentoria definidos na edição; mentor cadastrado (UC73); preferencialmente finalista/selecionada (UC85) ou doação em curso (UC57).
+- Edição autenticada (UC3) ou voluntário autenticado (UC89). Catálogo de áreas no CMS.
+- **Online:** lote; diagnóstico para ir ao pool.
+- **P/H:** pedido enviado; voluntário `ativo` com **módulo CMS** concluído e modalidade individual para pegar ou ser alocado (alocado pelo Gestor vê o caso em Minhas mesmo com treino pendente; líder só opera depois).
 
-**Fluxo Principal**
+**Fluxo Principal — Online**
 
-- Abre **Mentorias** na edição; visualiza painel por status.
-- Cria/atualiza match mentor ↔ mentorada; registra encontros, observações e evolução.
-- Anexa documentos e feedbacks no repositório.
-- Atualiza status (A iniciar → Em andamento → Concluída / Pendente) e linha do tempo (UC28).
+1. Unidade abre lote (finalistas / doação aprovada).
+2. Empreendedora preenche diagnóstico → demanda `aberta` com `vagas` (default 1).
+3. Voluntário aceita (decrementa vaga) ou Unidade vincula um/vários no timeout → WhatsApp; diário por pessoa; `concluida` quando vagas e diários encerram.
+
+**Fluxo Principal — P/H**
+
+1. Empreendedora envia o pedido (sem slot) → `aberta`.
+2. Voluntário pega **ou** Gestor (Unidade/Turma) aloca o lote (classifica Mentoria | Ação) → `ativa`; some de Abertas.
+3. Líder agenda e registra consultas; acompanhantes só acompanham o card.
+4. Líder encerra → texto + NPS de todos os mentores do lote e da mentorada → `finalizada`.
+5. Alternativa: Gestor **Atendido pelo gestor** (`atendida_gestor`, sem BI) ou **Recusar** (motivo).
 
 **Pós-condições**
 
-- Mentoria documentada com status, match, arquivos e histórico para indicadores qualitativos e BI.
+- P/H: demanda com lote (líder + N), consultas, texto+NPS e certificados por pessoa × mentoria; BI conta sessões/casos por área, **pessoas voluntárias únicas** e horas herdadas (≠ equipe; ≠ `atendida_gestor`).
+- Online: `vagas`, matches e diários por pessoa.
 
 ---
 
@@ -3122,7 +3275,7 @@ Consolida nos relatórios e no Painel de Dados (BI) os totalizadores de **partic
 
 **Fluxo Principal**
 
-- Agrega contagens da base ativa e legada por programa/edição/período, **separando métricas de pessoas e de empreendimentos**.
+- Agrega contagens da base ativa e legada por programa/edição/período, **separando métricas de pessoas e de empreendimentos**. Inclui **sessões de mentoria por área**, **pessoas voluntárias únicas no ano** (não conta ações; colaborador interno fora) e **horas de voluntário** (UC70/UC90) distintas de **horas de equipe**.
 - Exibe totalizadores no Painel de Dados (UC59) e relatórios (UC60).
 - Distingue visualmente dados atuais vs. pregressos quando necessário.
 
@@ -3166,26 +3319,66 @@ Exibe aviso no **Aplicativo Cliente** quando o navegador ou dispositivo não ate
 
 **Descrição**
 
-Cadastra **voluntários**, **mentores** ou **palestrantes/oficineiros** vinculados a programas, para uso no **módulo de Gestão de Mentorias** (UC70 — match mentorada ↔ mentor) e em eventos.
+O voluntariado é o **cerne**; mentoria é **uma** ação. Cadastro **único** da rede (todas as edições) e **individual** mesmo quando a pessoa chega em grupo (aceite LGPD **por pessoa**). Autoinscrição no **portal do voluntariado** (cadastro geral **ou** landing da ação — UC90) ou inclusão pela equipe (CMS / Gestor de Voluntariado). Copy do formulário continua leve; falta de experiência **não** impede. O Consulado abre **mais mentorias** do que ações pontuais; o cadastro geral serve conversão futura.
+
+**Duas origens de autoinscrição**
+
+1. **Geral** — `/voluntario/inscricao`. Três modalidades visíveis (multi; **pelo menos uma** obrigatória). CTA: **Inscreva-se no programa de voluntariado**.
+2. **Via slug da ação** — `/voluntario/a/[slug]` (UC90). A pessoa **já se qualifica naquela ação**; demais frentes ficam **abaixo, opcionais**, com texto explicativo. Não fragmentar em vários cadastros. CTA daquela iniciativa (não o do programa geral). Slug **encerrado ou inválido:** mensagem de encerramento + CTA para `/voluntario/inscricao`. **MVP sem campos extras por tipo de ação** (17/set — fechado).
+
+| Bloco | Geral `/voluntario/inscricao` | Slug `/voluntario/a/[slug]` |
+| ----- | ----------------------------- | --------------------------- |
+| Nome, nome social, e-mail, WhatsApp, cidade/UF | sim | sim |
+| Como conheceu | sim | sim |
+| Dados sensíveis + aceites + regulamento automático | sim | sim |
+| “Como você quer atuar?” (3 modalidades) | sim (multi, ≥ 1) | **não** como CTA; frentes **abaixo, opcionais** |
+| Períodos e tempo de experiência | sim (períodos *) | **não** no form público — completa no perfil depois |
+| Campos extras por tipo de ação | — | **não** (MVP) |
+
+**Três modalidades** (múltipla escolha; parágrafos explicativos no form):
+
+- **Mentoria individual** — sessão 2h (UC70).
+- **Mentoria coletiva** — aula extra / live (vínculo pelo Gestor).
+- **Ações** — palestra, gravação de conteúdo, oficina pontual. Tipos no **CMS**. **Sem** doação de sangue e afins.
+
+**Áreas** (CMS, cadastro agnóstico — não trava a pessoa numa ação futura). Iniciais: Finanças, Marketing, Vendas, Gestão, Comunicação, Formalização, **Saúde e bem-estar**, **Tecnologia** (admin inclui outras). **Interesse** (atende sem ser especialista) vs **expertise** (autoridade; pode conduzir aula coletiva).
+
+**Campos adicionais:** como conheceu o Consulado (indicação, convite, parceiro, site, outro); bloco de **dados sensíveis** no mesmo padrão das empreendedoras (opção “Prefiro não responder” + aceite específico). Anonimização segue UC76.
+
+Períodos livres (vocabulário Caroline) e tempo de experiência: **só no form geral** (ou no perfil depois). Aceites LGPD.
+
+Após submissão: status `em_analise` na rede. Origem slug: também `inscrito` na ação (associação imediata); GV **confirma ou recusa** a ação (UC90) e **aprova** o cadastro → `ativo`. Ativo **não** vê o pool nem outras ações até concluir o **módulo educacional no CMS** (mesmos tipos de atividade do Cliente). UC74 inativa sem apagar histórico. Regulamento entra como **link automático** no rodapé do formulário (não depende de o gestor colar).
+
+Mensagens automáticas da rede (`vol_cadastro_recebido`, `vol_cadastro_aprovado`) saem do catálogo UC88 — e-mail típico; copy em [comunicacao.md §10](docs/jornadas/comunicacao.md).
+
+Todo mentor **alocado** (pool, lote, indicação do gestor, ação confirmada) precisa existir nesta base. Educador interno **não** é listado como voluntário.
+
+**Gestão de voluntários** (`/gestor/voluntariado/voluntarios`) — Gestor de Voluntariado, nacional:
+
+- Filtros: tipo **Individual | Coletiva | Ações**; área (interesse ou expertise; chip só expertise); nome; status; módulo CMS.
+- Recortes: **Em atividade** (mentoria `aceita`/`em_andamento`, coletiva vinculada ou ação confirmada); **Inativos há mais tempo** (`inativo` ou sem diário/aceite além do limiar CMS, default 90 dias); **Atuando em mentorias**.
+
+**Unidade / Turma** (`/gestor/e/[edicaoId]/voluntarios`): recorte para **alocar mentoria** na edição — não opera a rede nacional nem ações. Unidade **e** Turma (P/H) alocam lote de mentores.
+
+Coletiva: Gestor **vincula** voluntário (modalidade coletiva + expertise) a aula extra (UC35) ou live/workshop (UC38) para BI de horas. Sem marketplace de coletiva e sem certificado dessa modalidade. Fallback “vincular” exige perfil UC73; **não** lista colaborador interno.
 
 **Atores**
 
-- **Administrador de Programa (CMS de Administração)**, **Gestor de Unidade**.
+- **Voluntário / Mentor** (autoinscrição); **Gestor de Voluntariado** (aprova, lista, inativa, convites); **Gestor de Unidade** / **Gestor de Turma** (recorte para alocar mentoria); **Administrador de Programa**.
 
 **Pré-condições**
 
-- Programa/edição configurados.
+- Textos das modalidades, catálogo de áreas, tipos de Ação e **módulo de treino** configurados no CMS.
 
 **Fluxo Principal**
 
-- Acessa cadastro de voluntários no CMS de Administração ou Aplicativo Gestor.
-- Informa nome, contato, especialidade e programas vinculados.
-- O perfil fica disponível para **match** na ficha da mentorada (UC70).
-- Define status ativo/inativo (UC74).
+1. Voluntário preenche o cadastro público (`/voluntario/inscricao` **ou** `/voluntario/a/[slug]`) e recebe link mágico (UC89) após aprovação.
+2. Conclui o módulo CMS.
+3. Passa a ver o pool (UC70), **Ações** (UC90) e, se houver vínculo, Minhas aulas coletivas.
 
 **Pós-condições**
 
-- Voluntário disponível para mentoria e eventos.
+- Perfil na rede global; visível na Gestão de voluntários com filtros; dados sensíveis com aceite específico.
 
 ---
 
@@ -3323,7 +3516,7 @@ Permite ao **Gestor de Turma** ou **Gestor de Unidade** registrar uma **observa�
 
 **Descrição**
 
-A atividade **Visita Técnica** (UC15/UC34) é o atendimento do gestor à empreendedora: **presencial** (no local do negócio / residência) **ou online** (videoconferência) A dinâmica **não** é um evento coletivo: o gestor **agenda uma visita por vez** (1 a 1), registrando **modalidade** (presencial | online), o **endereço** (se presencial) ou o **link/canal** (se online) e a **data e hora**.
+A atividade **Visita Técnica** (UC15/UC34) é o atendimento do gestor à empreendedora: **presencial** (no local do negócio / residência) **ou online** (videoconferência) A dinâmica **não** é um evento coletivo: o gestor **agenda uma visita por vez** (1 a 1), registrando **modalidade** (presencial | online), o **endereço** (se presencial) ou o **link/canal** (se online) e a **data e hora**. **Não é mentoria (UC70):** visita técnica é atividade da matriz (conta %); mentoria é sessão de 2h sobre o negócio, fora desta grade.
 
 O Aplicativo Gestor exibe um **calendário** da gestora para agendar **sem conflito de agenda**. É **desejável** uma **gestão de logística** nas visitas presenciais: análise de endereços próximos e **agrupamento de localidades** (sugestão de sequência/rota ou “janelas” no mesmo bairro/região no mesmo dia). Logística de agrupamento = evolução futura.
 
@@ -3456,7 +3649,7 @@ Marca a **edição** como **encerrada** no sistema: dados operacionais ficam **b
 
 **Descrição**
 
-Pesquisa de acompanhamento / anamnese para participantes de **edições finalizadas** (relacionamento de longo prazo). Substitui fluxos manuais (ex.: Google Forms). **Disparo padrão:** **30 dias após o encerramento** da edição/ciclo de formação (diagnóstico de impacto), além de disparos manuais para edições passadas.
+Pesquisa de acompanhamento / anamnese para participantes de **edições finalizadas** (relacionamento de longo prazo). Substitui fluxos manuais (ex.: Google Forms). Terceira etapa do trio de feedback do programa (chegada UC39 → NPS final UC39 → **D+30** aqui), **mesmo padrão online e P/H**. **Disparo padrão:** **automático 30 dias após o encerramento** da edição/ciclo de formação (e-mail ou WhatsApp, template do pacote UC88), além de disparos manuais para edições passadas. Edições **Multiplica por Elas** podem ter perguntas extras de organização no formulário CMS.
 
 **Ownership por camada (canônico):**
 
@@ -3750,8 +3943,57 @@ Inclui na **mesma área CMS** a configuração de **alertas automáticos** (UC87
 | Bloco                   | Conteúdo                                                                                                                                        |
 | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Por** `TipoAtividade` | **1 template** por tipo (11 tipos UC15). **Aula:** **dois** templates — `presencial` e `ao_vivo` (encontro síncrono com link; ≠ edição online). |
-| **Momentos de jornada** | Slots fora da enum: `inscricao_pos_inbound`, faixas UC25, `jornada_pedir_ok`, `jornada_solicitar_conteudo`, temporizador/texto aberto (UC33)…   |
+| **Momentos de jornada** | Slots fora da enum UC15 — inventário canônico abaixo (empreendedora + rede de voluntariado + operação). Relógios de alerta ficam na aba UC87. |
 | **Metadados**           | `template_key` Gupshup/Meta (corpo sincronizado); placeholders documentados; e-mail opcional por slot                                           |
+
+
+Leitura operacional (quando / para quem / o que **não** faz / copy a revisar): [docs/jornadas/comunicacao.md](docs/jornadas/comunicacao.md). Ao criar ou duplicar um pacote, **todos** os slots abaixo precisam existir. Edição publicada grava snapshot — mudança de texto só na edição seguinte.
+
+**Slots — jornada da empreendedora**
+
+
+| Slot | Ficha em comunicacao.md | Canal típico |
+| ---- | ----------------------- | ------------ |
+| `inscricao_pos_inbound` | Recebemos sua inscrição | WhatsApp (+ e-mail se a edição ligar) |
+| `selecao_entrevista` | Convite à conversa de seleção | WhatsApp e/ou e-mail · só P/H, disparo da Unidade |
+| `selecao_aprovacao` | Você foi aprovada — boas-vindas (UC25 faixa 2) | WhatsApp e/ou e-mail |
+| `selecao_nao_aprovada` | Desta vez não foi possível seguir | WhatsApp e/ou e-mail |
+| `jornada_pedir_ok` | Já está disponível: envie OK | WhatsApp · só online |
+| `jornada_boas_vindas` | Primeiro lote — boas-vindas | WhatsApp (+ e-mail se ligar) |
+| `jornada_comunidade` | Convite à comunidade (se a edição tiver) | WhatsApp |
+| `live_convite` | Convite da live e últimos passos | e-mail típico · só online 100% |
+| `mentoria_disponivel` | Mentoria disponível | WhatsApp e/ou e-mail |
+| `doacao_aprovada` | Doação aprovada — dados de recebimento | WhatsApp e/ou e-mail |
+| `doacao_recibo` | Recibo da doação | WhatsApp e/ou e-mail |
+| `certificado_programa` | Certificado do programa | WhatsApp (PDF) |
+| `edicao_encerrada` | O programa acabou | WhatsApp e/ou e-mail |
+| `pesquisa_d30` | Pesquisa cerca de 30 dias depois (UC82) | WhatsApp e/ou e-mail |
+| `link_magico_cliente` | Novo link de acesso (UC4/UC54) | WhatsApp ou e-mail |
+
+
+Relógios `inscription_incomplete`, `activity_deadline_soon`, `backlog_liberated`, `edition_ending_pending`, `risk_short_online`, `checkpoint_midcourse` e o resgate manual (UC53) **não** são slots deste bloco — são **AlertRule** (UC87) que **referenciam** templates do mesmo catálogo.
+
+**Slots — rede de voluntariado** (mesmo CMS; ligados ao portal e às ações, não à edição da empreendedora)
+
+
+| Slot | Ficha em comunicacao.md | Canal típico |
+| ---- | ----------------------- | ------------ |
+| `vol_cadastro_recebido` | Cadastro recebido | e-mail |
+| `vol_cadastro_aprovado` | Cadastro aprovado e convite ao treino | e-mail + link mágico |
+| `link_magico_voluntario` | Link de acesso da voluntária (UC89) | **só e-mail** |
+| `vol_acao_convite` | Convite para uma ação pontual | e-mail (texto-modelo + parágrafo do disparo) |
+| `vol_acao_confirmada` | Ação confirmada | e-mail |
+| `vol_acao_recusada` | Ação recusada | e-mail |
+| `vol_mentoria_combinada` | Mentoria combinada | e-mail opcional; WhatsApp 1:1 **fora** do catálogo |
+| `vol_certificado` | Certificado da voluntária (mentoria ou ação) | e-mail + PDF no portal |
+
+
+**Slots — operação**
+
+
+| Slot | Ficha | Canal |
+| ---- | ----- | ----- |
+| `link_magico_gestor` | Link de acesso da gestora (UC3) | **só e-mail** — sem mala direta de pendência |
 
 
 **Atores**
@@ -3767,7 +4009,7 @@ Inclui na **mesma área CMS** a configuração de **alertas automáticos** (UC87
 - Acessa **Comunicação / Templates → Pacotes**.
 - Cria ou duplica pacote; informa nome, modalidade (`online`  `presencial_hibrido`  `ambos`).
 - Para cada **tipo de atividade**: associa `template_key` Meta (+ e-mail opcional). **Aula:** cadastra **presencial** e **ao_vivo** separadamente.
-- Preenche **momentos de jornada** (inscrição, aprovação, OK, etc.).
+- Preenche **momentos de jornada** do inventário (empreendedora + `vol_*` + links mágicos).
 - Aba **Alertas:** cria/edita `AlertRule` (UC87) referenciando templates do catálogo.
 - Ativa pacote; edições futuras podem selecioná-lo (UC9).
 - Publicação de edição grava **snapshot** do pacote (jornadas ativas não mudam com edição posterior do pacote).
@@ -3781,7 +4023,90 @@ Inclui na **mesma área CMS** a configuração de **alertas automáticos** (UC87
 - Módulo (UC15) e atividades **não** carregam template — herdam do pacote da edição + contexto da liberação (UC34).
 - **Download (online):** o pacote define o **template**; o backend **anexa os arquivos** da atividade no lote WhatsApp após o OK (UC51). Os **mesmos documentos** permanecem no Aplicativo Cliente.
 - **P/H — override:** **Gestor de Unidade** pode editar corpo na prévia antes de UC50; **Gestor de Turma** usa texto pré-montado.
-- Spec protótipo: `[prototipo/cms/03-comunicacao-templates.md](prototipo/cms/03-comunicacao-templates.md)`.
+- Spec protótipo: [prototipo/cms/03-comunicacao-templates.md](prototipo/cms/03-comunicacao-templates.md). Régua operacional: [docs/jornadas/comunicacao.md](docs/jornadas/comunicacao.md).
+- **Rede de voluntariado:** os slots `vol_*` e `link_magico_voluntario` vivem no **mesmo** catálogo (não exigem pacote por edição). Convite de ação usa o texto-modelo da ação + parágrafo do disparo (UC90).
+
+---
+
+
+
+### UC89 – Login Voluntário (Link Mágico)
+
+**Descrição**
+
+Acesso ao **portal do voluntariado** exclusivamente por **link mágico enviado por e-mail** — **não há senha**. Slot `link_magico_voluntario` do catálogo UC88. Mesmo padrão de token do UC3 (validade/uso único configuráveis no UC6). Após autenticar: home operacional (Em aberto / Minhas / Encerradas, **ações**, Início módulo CMS, aulas coletivas, certificados) conforme status do cadastro (em análise / treino pendente / ativo).
+
+**Atores**
+
+- **Voluntário / Mentor**.
+- **Sistemas de Retaguarda (Backend)** — geração e validação do token.
+- **SendGrid** — entrega do e-mail (ator secundário).
+
+**Pré-condições**
+
+- Cadastro UC73 existente (mesmo em `em_analise`: login mostra tela de aguardo). Inativo (UC74) não inicia sessão operacional.
+
+**Fluxo Principal**
+
+1. Voluntário acessa a URL do **portal do voluntariado**.
+2. Informa o **e-mail** cadastrado e solicita o link.
+3. Sistema envia e-mail com link mágico.
+4. Abre o link; backend valida o token e inicia a sessão.
+5. Sistema carrega o shell conforme o estado (aguardando aprovação, treino, pool).
+
+**Fluxos Alternativos**
+
+- Link expirado ou já usado: solicita novo envio.
+- E-mail não cadastrado / inativo: mensagem genérica (não enumera existência).
+
+**Pós-condições**
+
+- Voluntário autenticado; sessão com timeout configurável.
+
+---
+
+
+
+### UC90 – Ações de Voluntariado
+
+**Descrição**
+
+O **Gestor de Voluntariado** **abre uma ação** pontual da rede (palestra, gravação de conteúdo, oficina — tipos no CMS; **sem** doação de sangue). A ação **pode existir sem edição/programa**. Voluntário com modalidade **Ações** (ou interesse compatível) vê e se inscreve no **portal do voluntariado**. GV confirma ou recusa. Horas no **diário da ação** (combobox de **30 em 30 min**, persistido em minutos). BI agrupa por **programa/ação**. Ao **concluir** a ação, certificado genérico de participação para **todas** as pessoas `confirmado` (data + carga horária), independentemente de quem registrou as horas. Sem certificado de **coletiva**. Unidade/Turma **não** abrem nem confirmam ações; na alocação de uma demanda P/H o educador pode **reclassificar** Mentoria → Ação (UC70).
+
+**Landing encerrada / slug inválido:** mensagem informando o encerramento + CTA **Inscreva-se no programa de voluntariado** (`/voluntario/inscricao`). Sem formulário da ação.
+
+**Campos da ação:** título, período, tipo de Ação (CMS), áreas, `vagas`, texto de convite (modelo), **beneficiária(s) opcional(is)**, vínculo **opcional** a programa/edição. Ao criar, o sistema gera **`slug` automático** (editável). GV **edita** a ação depois de criada.
+
+**Landing pública:** `/voluntario/a/[slug]` — página + formulário daquela iniciativa (UC73). Quem chega por esse link **associa-se imediatamente** à ação (`inscrito`) e entra na rede (`em_analise`).
+
+**Convites:** GV convida voluntários já na rede (filtro tipo Ações / área) **ou procura novos** (busca na rede ainda sem inscrição nesta ação; convite por e-mail para quem ainda não é voluntário → cadastro UC73). Cada disparo tem **texto personalizado** (além do texto-modelo da ação, slot `vol_acao_convite`); o link aponta para o slug. Confirmação/recusa usam `vol_acao_confirmada` / `vol_acao_recusada`. Ao concluir a ação, `vol_certificado` (UC63).
+
+**Portal do voluntariado:** menu autenticado **Ações** (`/voluntario/acoes`; alias `/voluntario/campanhas`). Abas **Em aberto · Minhas · Encerradas**. Lista ações ativas no período; inscrição gera status `inscrito` → GV `confirmado` | `recusado`. Confirmado: diário próprio (data, descrição, tempo em combobox de 30 min). Exige módulo CMS (quem já está `ativo`).
+
+**Gestor de Voluntariado:** `/gestor/voluntariado/acoes` — criar, **editar**, ativas, histórico, copiar slug, convites (texto por disparo), confirmar/recusar inscritos, vagas, beneficiárias, **resultado operacional** (inscritos, confirmados, horas, pessoas únicas) e export ITG 2002.
+
+**Valoração ITG 2002:** o sistema **não** calcula valor de mercado. Exporta planilha (pessoa, atividade/ação, horas, data) para ajuste manual / auditoria / balanço.
+
+**Atores**
+
+- **Gestor de Voluntariado**; **Voluntário / Mentor**.
+
+**Pré-condições**
+
+- Tipos de Ação e áreas no CMS. Voluntário `ativo` com módulo CMS e modalidade Ações (ou interesse compatível) para se inscrever.
+
+**Fluxo Principal**
+
+1. Gestor de Voluntariado cria a ação (título, período, tipo, áreas, vagas, texto-modelo; edição opcional). Sistema gera `slug`.
+2. Opcional: edita; convida da rede ou por e-mail (texto personalizado + link do slug).
+3. Voluntário chega pelo slug, pelo portal autenticado ou pelo convite e se inscreve.
+4. GV confirma ou recusa.
+5. Confirmado registra horas no diário da ação (combobox 30 min).
+6. GV encerra a ação → certificado genérico para todo o grupo confirmado (UC63).
+
+**Pós-condições**
+
+- Inscrições rastreadas; horas de voluntário no BI por programa/ação; pessoa única no ano (UC59) se já não contada; certificados de participação emitidos; resultado visível na Gestão de ações.
 
 ---
 
@@ -3790,36 +4115,39 @@ Inclui na **mesma área CMS** a configuração de **alertas automáticos** (UC87
 ## Matriz Resumo: Atores × Casos de Uso Principais
 
 
-| Caso de Uso                                                                                | Empreendedora | Gestor de Unidade | Gestor de Turma | Admin (CMS) | Sistemas Externos      |
-| ------------------------------------------------------------------------------------------ | ------------- | ----------------- | --------------- | ----------- | ---------------------- |
-| UC4 Login (Aplicativo Cliente)                                                             | ●             |                   |                 |             | WhatsApp               |
-| UC19–21, UC67, UC79 Inscrição/Desligamento                                                 | ●             | ○                 | ○               | ○           |                        |
-| UC24 Classificar (etapa 1) / UC84 Entrevista de seleção P/H / UC17 Alocar / UC25 Comunicar |               | ●                 |                 | ○           | WhatsApp               |
-| UC17 Alocar unidade/turma / UC18 Remanejar                                                 |               | ●                 |                 |             |                        |
-| UC31 Empreendimento coletivo                                                               |               | ●                 | ●               |             |                        |
-| UC66 Unidade / UC16 Turma                                                                  |               | ●                 | ●               | ●           |                        |
-| UC26 Mini CRM (leads)                                                                      | ○             | ●                 | ●               | ○           | Backend/SendGrid       |
-| UC33 Jornada online (OK + temporizador)                                                    | ●             |                   |                 | ○           | Backend/WhatsApp       |
-| UC88 Pacotes de comunicação (templates)                                                    | ○             | ○                 | ○               | ●           | Gupshup/SendGrid       |
-| UC52 / UC87 Alertas automáticos                                                            | ○             | ● (binding)       | ○ (consulta)    | ● (regras)  | Backend/SendGrid/WA    |
-| UC64 Agente de IA (chat)                                                                   | ●             |                   |                 |             | Backend                |
-| UC36–39, UC68 Consumo/Questionários                                                        | ●             |                   |                 |             | YouTube                |
-| UC40–41 Presença / UC80 Relato+export                                                      | ●             | ●                 | ●               |             |                        |
-| UC44–46 Aprovação/Retificação financeira                                                   | ●             | ●                 | ●               |             |                        |
-| UC49–51, UC50 Grupo / UC53 msgs online                                                     | ○             | ●                 | ●               | ○           | WhatsApp               |
-| UC55 Certificação / UC57 Doação                                                            | ●             | ● (aprova)        | ● (solicita)    | ○           | WhatsApp               |
-| UC85 Elegíveis A–D + lote                                                                  | ○             | ●                 | ○               | ○           |                        |
-| UC86 Bancário / PIX / recibo                                                               | ●             | ●                 | ○               |             |                        |
-| UC70 Gestão de Mentorias                                                                   | ○             | ●                 | ●               | ○           |                        |
-| UC38 Workshop / Aula ao vivo                                                               | ●             | ●                 | ●               | ○           | YouTube; e-mail        |
-| UC56 Ranking/Engajamento                                                                   |               | ●                 | ●               |             |                        |
-| UC59–61, UC71 BI (relatos/frequências)                                                     |               | ●                 | ○               | ●           |                        |
-| UC62 Base Legada                                                                           | ○             | ●                 | ●               | ●           |                        |
-| UC69 / UC77 Observação                                                                     |               | ●                 | ●               |             |                        |
-| UC76 LGPD                                                                                  | ○             |                   |                 | ●           | Backend                |
-| UC78 Visita Técnica / UC81 Encerrar edição                                                 | ○             | ●                 | ●               | ●           | Calendário; logística† |
-| UC82 Pós-programa D+30 (Admin cria / Gestor dispara / BI vê)                               | ○             | ● (dispara)       |                 | ● (cria)    | WhatsApp; BI           |
-| UC83 Multi-unidade                                                                         |               | ●                 |                 | ●           |                        |
+| Caso de Uso                                                                                | Empreendedora | Gestor de Unidade | Gestor de Turma | Voluntário | Admin (CMS) | Sistemas Externos      |
+| ------------------------------------------------------------------------------------------ | ------------- | ----------------- | --------------- | ---------- | ----------- | ---------------------- |
+| UC4 Login (Aplicativo Cliente)                                                             | ●             |                   |                 |            |             | WhatsApp               |
+| UC89 Login (Aplicativo Voluntário)                                                         |               |                   |                 | ●          |             | SendGrid               |
+| UC19–21, UC67, UC79 Inscrição/Desligamento                                                 | ●             | ○                 | ○               |            | ○           |                        |
+| UC24 Classificar (etapa 1) / UC84 Entrevista de seleção P/H / UC17 Alocar / UC25 Comunicar |               | ●                 |                 |            | ○           | WhatsApp               |
+| UC17 Alocar unidade/turma / UC18 Remanejar                                                 |               | ●                 |                 |            |             |                        |
+| UC31 Empreendimento coletivo                                                               |               | ●                 | ●               |            |             |                        |
+| UC66 Unidade / UC16 Turma                                                                  |               | ●                 | ●               |            | ●           |                        |
+| UC26 Mini CRM (leads)                                                                      | ○             | ●                 | ●               |            | ○           | Backend/SendGrid       |
+| UC33 Jornada online (OK + temporizador)                                                    | ●             |                   |                 |            | ○           | Backend/WhatsApp       |
+| UC88 Pacotes de comunicação (templates)                                                    | ○             | ○                 | ○               |            | ●           | Gupshup/SendGrid       |
+| UC52 / UC87 Alertas automáticos                                                            | ○             | ● (binding)       | ○ (consulta)    |            | ● (regras)  | Backend/SendGrid/WA    |
+| UC64 Agente de IA (chat)                                                                   | ●             |                   |                 |            |             | Backend                |
+| UC36–39, UC68 Consumo/Questionários                                                        | ●             |                   |                 |            |             | YouTube                |
+| UC40–41 Presença / UC80 Relato+export                                                      | ●             | ●                 | ●               |            |             |                        |
+| UC44–46 Aprovação/Retificação financeira                                                   | ●             | ●                 | ●               |            |             |                        |
+| UC49–51, UC50 Grupo / UC53 msgs online                                                     | ○             | ●                 | ●               |            | ○           | WhatsApp               |
+| UC55 Certificação / UC57 Doação                                                            | ●             | ● (aprova)        | ● (solicita)    |            | ○           | WhatsApp               |
+| UC85 Elegíveis A–D + lote                                                                  | ○             | ●                 | ○               |            | ○           |                        |
+| UC86 Bancário / PIX / recibo                                                               | ●             | ●                 | ○               |            |             |                        |
+| UC70 Gestão de Mentorias                                                                   | ● (hub + NPS+texto) | ●      | ● (aloca lote P/H) | ● (Em aberto / Minhas / Encerradas) | ○ (áreas, módulo treino, motivos) | WhatsApp (pós-alocação) |
+| UC73 Rede de Voluntários                                                                   |               | ○ (recorte)       | ○ (recorte)     | ● (cadastro) | ● GV (aprova) |                        |
+| UC90 Ações de voluntariado                                                                 |               | —                 |                 | ● (inscrição) | ● GV / ○ tipos |                        |
+| UC38 Workshop / Aula ao vivo                                                               | ●             | ●                 | ●               | ○ (vínculo coletiva) | ○    | YouTube; e-mail        |
+| UC56 Ranking/Engajamento                                                                   |               | ●                 | ●               |            |             |                        |
+| UC59–61, UC71 BI (relatos/frequências)                                                     |               | ●                 | ○               |            | ●           |                        |
+| UC62 Base Legada                                                                           | ○             | ●                 | ●               |            | ●           |                        |
+| UC69 / UC77 Observação                                                                     |               | ●                 | ●               |            |             |                        |
+| UC76 LGPD                                                                                  | ○             |                   |                 | ○          | ●           | Backend                |
+| UC78 Visita Técnica / UC81 Encerrar edição                                                 | ○             | ●                 | ●               |            | ●           | Calendário; logística† |
+| UC82 Pós-programa D+30 (Admin cria / Gestor dispara / BI vê)                               | ○             | ● (dispara)       |                 |            | ● (cria)    | WhatsApp; BI           |
+| UC83 Multi-unidade                                                                         |               | ●                 |                 |            | ●           |                        |
 
 
 **Legenda:** ● = ator principal | ○ = ator secundário ou opcional · † logística (proximidade/agrupamento) desejável / evolução
@@ -3832,11 +4160,16 @@ Inclui na **mesma área CMS** a configuração de **alertas automáticos** (UC87
 
 Itens ainda em rascunho ou sujeitos a decisão posterior (sem priorização de escopo neste documento):
 
-- **Saúde financeira (UC45):** conceito de Entradas/Saídas + dívidas/Renda aguarda planilha de referência.
+- **Saúde financeira (UC45):** canônico (entradas/saídas, empréstimos, **saldo do mês anterior**, reporte póstumo). Resultado com rótulo provisório **Despesas / capital de giro**. **Aberto:** nomenclatura capital de giro vs saldo do período; dívida pessoal vs profissional; estoque de dívida.
 - **Encerramento online:** múltiplas palavras-chave pós-live (UC38).
-- **Mentorias (UC70):** detalhamento operacional e abas CMS associadas.
-- **Metodologia de renda, Tier 1/2, investimento×dívida:** ver [fora_escopo_v2.md](fora_escopo_v2.md) § P10 e reuniões.
+- **Formulário unificado de encerramento/satisfação** de mentoria e ação: **Heitor / Sandra** (não inventar perguntas). Certificado de **mentoria coletiva** permanece fora; certificado de **ação** e de **mentoria individual** já especificados (UC63/UC70/UC90).
+- **Copy do catálogo (UC88):** inventário de slots fechado; parágrafos ainda *a revisar* em [comunicacao.md](docs/jornadas/comunicacao.md). Bloco opcional do slug (captação de outras frentes): **Sandra / Daniele**.
+- **Metodologia de renda, Tier 1/2, investimento×dívida:** ver [fora_escopo_v2.md](fora_escopo_v2.md) § P10 e reuniões. Categorias oficiais de Ação (CMS) ainda em definição.
+
+**Fechado em 17/set (não reabrir):** cadastro via slug sem campos extras por tipo; `inscrito` imediato na ação + `em_analise` na rede; períodos/experiência **só** no form geral; CTA geral = **Inscreva-se no programa de voluntariado**; educador classifica Mentoria | Ação na alocação; horas em combobox de 30 min; certificado de ação para todo o grupo `confirmado`.
+
+**Notas operacionais (não são spec aberta):** entrega para parametrizar **30/out/2026**; abertura Empreende Mulher 2027 **15/nov/2026**; testes **só em homologação**; módulo educacional completo em **janeiro**. Paleta institucional e rótulos públicos (não expor `consuladeduca.com.br`) ficam para depois.
 
 ---
 
-*Documento v7 — agosto/2026. 85 casos de uso ativos (UC1–UC7, UC9–UC46, UC49–UC88).*
+*Documento v7 — setembro/2026. 87 casos de uso ativos (UC1–UC7, UC9–UC46, UC49–UC90). Canônico: [v8](Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v8.md).*

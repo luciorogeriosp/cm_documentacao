@@ -4,7 +4,7 @@
 | ----- | ----- |
 | **Rota** | `/app/perfil` |
 | **Perfil** | Empreendedora |
-| **UCs** | UC27 |
+| **UCs** | UC27, UC79 |
 | **Prioridade** | MVP |
 
 ---
@@ -35,7 +35,7 @@ Visualizar e editar dados cadastrais, exceto CPF validado.
 │  (somente leitura)              │
 ├─────────────────────────────────┤
 │  [ Salvar alterações ]          │
-│  [ Solicitar desistência ]      │  → UC30
+│  [ Solicitar desistência ]      │  → UC30 / UC79
 └─────────────────────────────────┘
 ```
 
@@ -45,4 +45,4 @@ Visualizar e editar dados cadastrais, exceto CPF validado.
 
 - CPF validado: **bloqueado** para edição pela empreendedora
 - Unidade: somente gestor altera (correção de alocação)
-- Vínculos programa/edição/unidade/turma preservados
+- **Mentoria** não fica no perfil — área própria no menu inferior: [29-mentorias-hub.md](29-mentorias-hub.md)

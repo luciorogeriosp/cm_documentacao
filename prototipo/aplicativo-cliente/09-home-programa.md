@@ -44,6 +44,10 @@ Tela principal após autenticação: visão do programa, módulos, progresso ger
 │    • Presença (KW)          →   │
 │    • Questionário final     🔒  │
 ├─────────────────────────────────┤
+│  ┌─────────────────────────┐    │
+│  │ Mentoria (se online + lote) │
+│  │ Ir à área Mentoria →    │
+│  └─────────────────────────┘    │
 │  [ Calendário ]  [ Meu perfil ] │
 └─────────────────────────────────┘
 ```
@@ -59,6 +63,7 @@ Tela principal após autenticação: visão do programa, módulos, progresso ger
 - Online sequencial; após live: **KW** → **questionário final 100%** ([26](26-presenca-palavra-chave.md), [13b](13b-questionario-final-doacao.md))
 - Faixa doação **só após aprovada**: *aprovada — aguarde* / *informe dados* / *confirme recebimento* / *assine o recibo* → [27-doacao-pix-recibo.md](27-doacao-pix-recibo.md). Sem faixa se só sugerida. “Liberada para doação” = funil **online**, não esta faixa.
 - **Sem** datas de pagamento na home
+- **Mentoria (online + lote):** card na home aponta para o hub [29-mentorias-hub.md](29-mentorias-hub.md). P/H: item no menu inferior, sem card obrigatório na home.
 
 ---
 
@@ -66,3 +71,4 @@ Tela principal após autenticação: visão do programa, módulos, progresso ger
 
 - Cada atividade → tela específica (11–20, 26–27)
 - Calendário → [10-calendario-atividades.md](10-calendario-atividades.md)
+- Mentoria → [29-mentorias-hub.md](29-mentorias-hub.md) (menu inferior; card na home se online + lote)

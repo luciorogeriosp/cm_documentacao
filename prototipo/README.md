@@ -2,7 +2,7 @@
 
 Documentação de telas para **Fase 1 (Prototipação)** do contrato EWTI × Consulado da Mulher.
 
-**Fontes:** [Casos de Uso v7](../Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v7.md), [Design.md](../Design.md)
+**Fontes:** [Casos de Uso v8](../Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v8.md), [Design.md](../Design.md)
 
 ---
 
@@ -19,8 +19,9 @@ Documentação de telas para **Fase 1 (Prototipação)** do contrato EWTI × Con
 
 Documentos consolidados (fonte de verdade dos menus/papéis):
 
-- **[Aplicativo Gestor.md](Aplicativo%20Gestor.md)** — app **único** Unidade + Turma (tela unificada)
+- **[Aplicativo Gestor.md](Aplicativo%20Gestor.md)** — app **único** Unidade + Turma + Gestor de Voluntariado
 - [Aplicativo Cliente.md](Aplicativo%20Cliente.md)
+- [Aplicativo Voluntario.md](Aplicativo%20Voluntario.md)
 
 > Os arquivos [Aplicativo Gestor de Unidade.md](Aplicativo%20Gestor%20de%20Unidade.md) e [Aplicativo Gestor de Turma.md](Aplicativo%20Gestor%20de%20Turma.md) são **stubs** que redirecionam ao documento unificado.
 
@@ -49,24 +50,26 @@ Autenticação exclusiva por **link mágico** (sem senha). Acesso público apena
 | 13b | [13b-questionario-final-doacao.md](aplicativo-cliente/13b-questionario-final-doacao.md) | Questionário final 100% (online) | UC39, UC38 |
 | 14 | [14-atividade-presenca-qrcode.md](aplicativo-cliente/14-atividade-presenca-qrcode.md) | Presença via QR Code | UC40 |
 | 15 | [15-atividade-tarefa-casa.md](aplicativo-cliente/15-atividade-tarefa-casa.md) | Tarefa de casa (upload) | UC43 |
-| 16 | [16-atividade-dados-financeiros.md](aplicativo-cliente/16-atividade-dados-financeiros.md) | Dados financeiros mensais | UC45 |
+| 16 | [16-atividade-dados-financeiros.md](aplicativo-cliente/16-atividade-dados-financeiros.md) | Saúde financeira | UC45 |
 | 17 | [17-atividade-indicadores.md](aplicativo-cliente/17-atividade-indicadores.md) | Indicadores (via questionário) | UC39 |
 | 18 | [18-atividade-pesquisa-satisfacao.md](aplicativo-cliente/18-atividade-pesquisa-satisfacao.md) | Pesquisa NPS / satisfação | UC39 |
 | 19 | [19-atividade-download.md](aplicativo-cliente/19-atividade-download.md) | Download de ferramenta | UC36 |
 | 20 | [20-atividade-link-externo.md](aplicativo-cliente/20-atividade-link-externo.md) | Link externo | UC36 |
-| 21 | [21-meu-perfil.md](aplicativo-cliente/21-meu-perfil.md) | Meu perfil | UC27 |
+| 21 | [21-meu-perfil.md](aplicativo-cliente/21-meu-perfil.md) | Meu perfil | UC27, UC79 |
 | 22 | [22-meu-historico.md](aplicativo-cliente/22-meu-historico.md) | Meu histórico | UC28 |
-| 23 | [23-certificados.md](aplicativo-cliente/23-certificados.md) | Certificados | UC63 |
+| 23 | [23-certificados.md](aplicativo-cliente/23-certificados.md) | Certificados (Programa \| Mentoria) | UC63, UC70 |
 | 24 | [24-cancelamento-desistencia.md](aplicativo-cliente/24-cancelamento-desistencia.md) | Cancelamento / desistência | UC30 / UC79 |
 | 25 | [25-chat-duvidas.md](aplicativo-cliente/25-chat-duvidas.md) | Chat de dúvidas (IA) | UC64 |
 | 26 | [26-presenca-palavra-chave.md](aplicativo-cliente/26-presenca-palavra-chave.md) | Presença KW pós-live (online) | UC38 |
 | 27 | [27-doacao-pix-recibo.md](aplicativo-cliente/27-doacao-pix-recibo.md) | PIX / recibo / confirmação recebimento | UC86 |
+| 28 | [28-solicitar-mentoria.md](aplicativo-cliente/28-solicitar-mentoria.md) | Solicitar mentoria (formulário canônico) | UC70 |
+| 29 | [29-mentorias-hub.md](aplicativo-cliente/29-mentorias-hub.md) | Hub Mentoria — Início CMS + Em aberto · Minhas · Encerradas | UC70 |
 
 ---
 
 ## Aplicativo Gestor (unificado)
 
-Autenticação por **link mágico** (só e-mail). **Um app**, dois perfis: Unidade **inclui** todas as capacidades de Turma. Primeira tela = **Dashboard de edições**; ao abrir uma edição, carrega o menu operacional do perfil. Ver [Aplicativo Gestor.md](Aplicativo%20Gestor.md).
+Autenticação por **link mágico** (só e-mail). **Um app**, três perfis: Unidade, Turma e **Gestor de Voluntariado**. Unidade/Turma: Dashboard de edições. GV: menu nacional. Ver [Aplicativo Gestor.md](Aplicativo%20Gestor.md).
 
 Arquivos granulares (legado / detalhamento por tela) permanecem em `aplicativo-gestor/` e devem ser lidos sob a regra do documento unificado:
 
@@ -89,14 +92,26 @@ Arquivos granulares (legado / detalhamento por tela) permanecem em `aplicativo-g
 | 06 | [06-aprovar-doacao.md](aplicativo-gestor/gestor-unidade/06-aprovar-doacao.md) | Doação — processos (**só Unidade**; APROVAR) | UC57, UC85, UC86 |
 | — | [doacao-processo-unificado.md](doacao-processo-unificado.md) | Portão vs processo; sugestão no negócio; aprovação Unidade | UC57, UC86 |
 | 07 | [07-capital-semente.md](aplicativo-gestor/gestor-unidade/07-capital-semente.md) | Parecer capital semente (≠ UC57) | UC58 |
-| 08 | [08-registrar-mentoria.md](aplicativo-gestor/gestor-unidade/08-registrar-mentoria.md) | Gestão de Mentorias | UC70 |
+| 08 | [08-registrar-mentoria.md](aplicativo-gestor/gestor-unidade/08-registrar-mentoria.md) | Mentorias (lote/pool; P/H agenda ou pool) | UC70 |
 | 09 | [09-workshop-encerramento.md](aplicativo-gestor/gestor-unidade/09-workshop-encerramento.md) | Live + Funil (**só online**) | UC38 |
 | 10 | [10-alertas-automaticos.md](aplicativo-gestor/gestor-unidade/10-alertas-automaticos.md) | Alertas automáticos (binding) | UC87 |
 | 11 | [11-notas-fiscais.md](aplicativo-gestor/gestor-unidade/11-notas-fiscais.md) | NF 1:N doações (material) | UC86 |
 | 12 | [12-modulo-encerramento-ph.md](aplicativo-gestor/gestor-unidade/12-modulo-encerramento-ph.md) | Módulo encerramento P/H (carga) | UC15, UC34 |
+| 13 | [13-voluntarios.md](aplicativo-gestor/gestor-unidade/13-voluntarios.md) | Recorte da edição para alocar mentoria | UC73 |
+| 14 | [14-campanhas-voluntariado.md](aplicativo-gestor/gestor-unidade/14-campanhas-voluntariado.md) | Legado — ações no GV | UC90 |
 | — | [encerramento-doacao-mentoria.md](aplicativo-gestor/encerramento-doacao-mentoria.md) | **Pacote:** doação Online × P/H + NF + recibo | UC38, UC57, UC86, UC70 |
+| — | [comum/card-mentoria.md](comum/card-mentoria.md) | Card visual (Gestor + Voluntário) | UC70 |
 
 > **Doação:** portão P/H (qualquer momento) vs online (funil 100%→live→KW→quiz 100%). Processo unificado: sugerir no empreendimento; Unidade aprova em `/doacao` (digitar **APROVAR**). Cliente só após aprovada. Material: NF 1:N no Gestor; recibo após confirmação de recebimento no Cliente. Canônico: [doacao-processo-unificado.md](doacao-processo-unificado.md).
+
+### Gestor de Voluntariado
+
+| # | Arquivo | Tela | UCs |
+| - | ------- | ---- | --- |
+| 00 | [00-home.md](aplicativo-gestor/gestor-voluntariado/00-home.md) | Home nacional | UC3 |
+| 01 | [01-gestao-acoes.md](aplicativo-gestor/gestor-voluntariado/01-gestao-acoes.md) | Gestão de ações (slug, editar, convite) | UC90 |
+| 02 | [02-gestao-voluntarios.md](aplicativo-gestor/gestor-voluntariado/02-gestao-voluntarios.md) | Gestão de voluntários | UC73 |
+| 03 | [03-gestao-mentorias.md](aplicativo-gestor/gestor-voluntariado/03-gestao-mentorias.md) | Gestão de mentorias (consulta) | UC70 |
 
 ### CMS de Administração
 
@@ -120,6 +135,23 @@ Arquivos granulares (legado / detalhamento por tela) permanecem em `aplicativo-g
 
 \* Visão resumida; dashboard completo no Painel BI.
 
+### Aplicativo Voluntário (portal do voluntariado)
+
+Auth: **link mágico por e-mail**. Cadastro único. Ver [Aplicativo Voluntario.md](Aplicativo%20Voluntario.md).
+
+| # | Arquivo | Tela | UCs |
+| - | ------- | ---- | --- |
+| — | [validacao-novas-solicitacoes.md](aplicativo-voluntario/validacao-novas-solicitacoes.md) | Fatia de homologação (cadastro + slug + ações) | UC73, UC89, UC90 |
+| 01 | [01-cadastro.md](aplicativo-voluntario/01-cadastro.md) | Inscrição pública (geral + slug da ação) | UC73, UC90 |
+| 02 | [02-login.md](aplicativo-voluntario/02-login.md) | Link mágico | UC89 |
+| 03 | [03-treino-materiais.md](aplicativo-voluntario/03-treino-materiais.md) | Início — módulo CMS | UC73 |
+| 04 | [04-demandas-abertas.md](aplicativo-voluntario/04-demandas-abertas.md) | Em aberto (P/H + pool online) | UC70 |
+| 05 | [05-aceitar-mentoria.md](aplicativo-voluntario/05-aceitar-mentoria.md) | Pegar / card dois estados | UC70 |
+| 06 | [06-minhas-mentorias.md](aplicativo-voluntario/06-minhas-mentorias.md) | Minhas + Encerradas | UC70, UC63 |
+| 07 | [07-aulas-coletivas.md](aplicativo-voluntario/07-aulas-coletivas.md) | Vínculos coletiva | UC73 |
+| 08 | [08-campanhas.md](aplicativo-voluntario/08-campanhas.md) | Ações (UC90) | UC90 |
+| 09 | [09-certificados.md](aplicativo-voluntario/09-certificados.md) | Certificados tipo Mentoria | UC63, UC70 |
+
 ---
 
 ## Fluxo de navegação (resumo)
@@ -136,12 +168,24 @@ flowchart TB
 
   subgraph Gestor["Aplicativo Gestor (único)"]
     LOGIN[Login — link mágico] --> EDS[Dashboard de edições]
+    LOGIN --> GVHOME[Gestor de Voluntariado]
     EDS --> DU[Home da edição + menu]
-    DU --> ENC[Encerramento: Workshop / Doação / Mentorias]
+    DU --> ENC[Encerramento: Workshop / Doação / Mentorias online]
     DU --> SEL[Seleção — só Unidade]
     ENC --> DOA[Elegíveis + lote + aprovar]
     DU --> TUR[Turmas / operação]
-    TUR --> APR[Aprovações / presença / sequência]
-    SEL --> ALC[Alocar / Mover — só Unidade]
+    TUR --> MENTPH[Mentorias P/H]
+    TUR --> VOL[Voluntarios da edicao]
+    GVHOME --> ACOES[Gestao de acoes]
+    GVHOME --> GVOL[Gestao de voluntarios]
+    GVHOME --> GMENT[Gestao de mentorias]
+    TUR --> APR[Aprovacoes / presenca / sequencia]
+    SEL --> ALC[Alocar / Mover — so Unidade]
+  end
+
+  subgraph Voluntariado["Portal do voluntariado"]
+    VC[Cadastro unico] --> VL[Link magico]
+    VL --> POOL[Em aberto / Minhas / Encerradas]
+    VL --> ACOESV[Acoes UC90]
   end
 ```

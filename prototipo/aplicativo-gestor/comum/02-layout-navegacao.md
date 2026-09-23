@@ -3,7 +3,7 @@
 | Campo | Valor |
 | ----- | ----- |
 | **Tipo** | Shell / layout |
-| **Perfil** | Gestor de Unidade, Gestor de Turma |
+| **Perfil** | Gestor de Unidade, Gestor de Turma, **Gestor de Voluntariado** |
 | **Prioridade** | MVP |
 | **Fontes** | [Aplicativo Gestor.md](../../Aplicativo%20Gestor.md) §3 · [encerramento-doacao-mentoria.md](../encerramento-doacao-mentoria.md) |
 
@@ -12,8 +12,24 @@
 ## Fluxo
 
 1. Login por **link mágico** (só e-mail)
-2. **Dashboard de edições** — cards com KPIs por perfil
-3. Ao **abrir uma edição** → shell com menu de ferramentas do papel nessa edição (Unidade = todas)
+2. **Gestor de Voluntariado:** entra **direto** em `/gestor/voluntariado` com o menu contextual. **Não** passa pelo Dashboard de edições.
+3. **Unidade/Turma:** Dashboard de edições → ao **abrir uma edição**, shell do papel nessa edição
+
+---
+
+## Shell — Gestor de Voluntariado (sem edição)
+
+Rotas sob `/gestor/voluntariado/…`. Badge do papel **Gestor de Voluntariado**. **Sem** Dashboard de edições, sem seletor de turma/modalidade, sem Trocar edição. O menu contextual já é o da sessão.
+
+```
+Voluntariado
+  Home
+  Gestão de ações
+  Gestão de voluntários
+  Gestão de mentorias
+```
+
+Telas: [00-home.md](../gestor-voluntariado/00-home.md), [01-gestao-acoes.md](../gestor-voluntariado/01-gestao-acoes.md), [02-gestao-voluntarios.md](../gestor-voluntariado/02-gestao-voluntarios.md), [03-gestao-mentorias.md](../gestor-voluntariado/03-gestao-mentorias.md).
 
 ---
 
@@ -47,6 +63,8 @@ Turma
   Turmas
   Participantes
   Módulos
+  Mentorias             ← P/H: Unidade/Turma alocam lote
+  Voluntários           ← recorte da edição para alocar mentoria (não CRM)
 
 Pendências
   Entregas a aprovar
@@ -64,8 +82,9 @@ Encerramento / Doação          ← bloco só Unidade
   Doação (processos · totais)  ← aprovar só aqui (digite APROVAR)
   Recibo / PIX / Aceites       ← pós-aprovação (UC86)
   Notas fiscais                ← NF 1:N doações (material)
-  Mentorias                    ← Unidade (opcional)
 ```
+
+**Mentorias P/H** ficam no bloco **Turma** (programa regular). **Voluntários** = atalho para escolher mentor. **Ações (UC90)** saíram deste menu — Gestor de Voluntariado. Telas: [08-registrar-mentoria.md](../gestor-unidade/08-registrar-mentoria.md), [13-voluntarios.md](../gestor-unidade/13-voluntarios.md).
 
 Turma **não** vê este bloco. Sugestão = tela de **Negócios**.
 
@@ -82,7 +101,8 @@ Doação                         ← só Unidade
   Recibo / PIX / Aceites
   Notas fiscais                ← NF 1:N (material)
   [ Lote auxiliar A–D ]        ← opcional
-  Mentorias
+  Mentorias                    ← etapa final da jornada (UC70)
+  Voluntários                  ← recorte para alocar (UC73)
 ```
 
 ```
@@ -111,6 +131,9 @@ Apoio
 | Pendências → Presença / Visitas | ✓ | ✓ | — | ✓ |
 | Mensagens direcionadas | ✓ | ✓ | só online | — |
 | Mini CRM | ✓ | ✓ | ✓ | ✓ |
+| Mentorias P/H (lista / solicitações / alocar lote) | aloca + consulta | ✓ | — | ✓ |
+| Mentorias online (encerramento + pool) | consulta | ✓ | ✓ | — |
+| Voluntários (recorte para alocar na edição) | ✓ | ✓ | ✓ | ✓ |
 
 ¹ Online: etapas 2–3 da seleção omitidas (turma única automática).
 

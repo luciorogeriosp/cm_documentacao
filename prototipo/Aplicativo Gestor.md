@@ -1,25 +1,26 @@
-# Protótipo — Aplicativo Gestor (Unidade + Turma)
+# Protótipo — Aplicativo Gestor (Unidade + Turma + Voluntariado)
 
-**Versão:** unificado — ago/2026 (alinhado à v6)  
-**Fontes:** [Casos de Uso v7](../Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v7.md), [Design.md](../Design.md), reuniões jun–ago/2026  
+**Versão:** unificado — set/2026 (alinhado à v7)  
+**Fontes:** [Casos de Uso v8](../Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v8.md), [Design.md](../Design.md), reuniões jun–set/2026  
 **Substitui:** [Aplicativo Gestor de Unidade.md](Aplicativo%20Gestor%20de%20Unidade.md) e [Aplicativo Gestor de Turma.md](Aplicativo%20Gestor%20de%20Turma.md) (stubs de redirecionamento)
 
 ---
 
 ## Princípio de produto
 
-Um único **Aplicativo Gestor**, com **tela e navegação unificadas**. O perfil define o **escopo de dados** e quais ações aparecem — não dois apps distintos.
+Um único **Aplicativo Gestor**, com navegação por **perfil**. Unidade e Turma operam **dentro da edição**. **Gestor de Voluntariado** (perfil CMS) opera um **menu nacional** (ações, rede, consulta de mentorias) **sem** `edicaoId`.
 
 | Perfil | Escopo | Capacidades |
 | ------ | ------ | ----------- |
-| **Gestor de Turma** | Apenas a(s) turma(s) sob sua responsabilidade | Operação da turma: liberar atividades, presença, aprovações de entrega, negócios, visitas, comunicação, **sugerir doação** |
-| **Gestor de Unidade** | **Todas** as turmas da unidade | **Tudo o que o Gestor de Turma faz**, mais: seleção em **3 etapas** (classificar / **entrevista de seleção** P/H / alocar), comunicar, mover entre turmas/unidades **a qualquer momento**, **aprovar doação** (e também **sugerir** doação, inclusive em massa) |
+| **Gestor de Turma** | Apenas a(s) turma(s) sob sua responsabilidade | Operação da turma; **alocar lote** de mentoria P/H da turma |
+| **Gestor de Unidade** | **Todas** as turmas da unidade | **Tudo o que o Gestor de Turma faz**, mais seleção, comunicar, mover, **aprovar doação**; aloca lote; **não** opera ações |
+| **Gestor de Voluntariado** | Nacional | Gestão de ações, voluntários e consulta de mentorias |
 
 **Doação (UC57):** o Gestor de Turma **indica/sugere**; o Gestor de Unidade **aprova**. O Gestor de Unidade pode **sugerir e, em seguida, aprovar** na mesma tela unificada (fluxo em dois passos rastreáveis, mesmo ator).
 
 **Autenticação:** exclusivamente por **link mágico** (e-mail). O gestor informa o e-mail, recebe o link e entra direto na aplicação — **sem senha**.
 
-**Fluxo de entrada:** Login (link mágico) → **Dashboard de edições** (todas as edições às quais está associado) → ao **selecionar uma edição**, carrega o shell operacional com as ferramentas do perfil naquela edição (Unidade = todas; Turma = operação da turma).
+**Fluxo de entrada:** Login (link mágico) → **Gestor de Voluntariado** entra **direto** em `/gestor/voluntariado` (menu contextual; **sem** página de edições). Unidade/Turma → **Dashboard de edições**.
 
 ---
 
@@ -45,6 +46,9 @@ Um único **Aplicativo Gestor**, com **tela e navegação unificadas**. O perfil
 19. [Cancelamento / desistência](#19-cancelamento--desistência)
 20. [Observação de acompanhamento](#20-observação-de-acompanhamento)
 21. [Lista de negócios](#21-lista-de-negócios)
+21a. [Mentorias P/H (programa regular)](#21a-mentorias--ph-programa-regular)
+21b. [Voluntários da edição](#21b-voluntários)
+21c. [Gestor de Voluntariado](#21c-gestor-de-voluntariado)
 22. [Detalhe do negócio](#22-detalhe-do-negócio)
 23. [Módulos — acompanhar e liberar atividades](#23-módulos--acompanhar-e-liberar-atividades)
 24. [Atividade presencial extra](#24-atividade-presencial-extra)
@@ -69,6 +73,8 @@ Um único **Aplicativo Gestor**, com **tela e navegação unificadas**. O perfil
 | Comunicar seleção | — | ✓ | ✓ |
 | Alocar em turma / Mover | — | ✓ | —² |
 | **Encerramento / Doação** | — (Turma **não** vê Doação) | ✓ | ✓ |
+| **Mentorias** (P/H: menu regular; online: Encerramento) | aloca + consulta | ✓ | ✓ |
+| **Voluntários** (recorte para alocar) | ✓ | ✓ | ✓ |
 | Turmas / Participantes / **Módulos** | ✓ | ✓ | ✓ |
 | Pendências → Entregas / Financeiro | ✓ | ✓ | ✓ |
 | Pendências → Presença / Visitas | ✓ | ✓ | — |
@@ -77,10 +83,8 @@ Um único **Aplicativo Gestor**, com **tela e navegação unificadas**. O perfil
 | Comunicação WhatsApp / Mini CRM | ✓ | ✓ | ✓ |
 | Mensagens direcionadas (UC53) | ✓ só online | ✓ só online | ✓ |
 
-¹ Mentoria/capital: Unidade no MVP.  
+¹ Capital semente (parecer UC58): Unidade no MVP. Mentorias: Unidade **e** Turma alocam lote (P/H). Voluntários na edição = recorte para alocar. **Ações:** Gestor de Voluntariado. O menu da edição **só aparece** depois que Unidade/Turma escolhe uma edição. GV não usa este menu.  
 ² Online: turma única automática; etapa 3 omitida.
-
-O menu operacional **só aparece depois** que o gestor escolhe uma edição no Dashboard de edições. Antes disso, a home lista apenas as edições associadas.
 
 ---
 
@@ -132,13 +136,13 @@ Autenticar o gestor **somente por link mágico**: informa o e-mail cadastrado, r
 
 ### Pós-login
 
-- O link abre a sessão e redireciona para o **Dashboard de edições** (`/gestor`) — primeira tela autenticada.
+- O link abre a sessão. **Gestor de Voluntariado** → `/gestor/voluntariado` (home + menu contextual; **sem** Dashboard de edições). Unidade/Turma → **Dashboard de edições** (`/gestor`).
 - **Não há senha**, “esqueci minha senha” nem 2FA de senha neste app.
 - Sessão com timeout configurável; novo link quando expirar.
 
 ### Regras
 
-- E-mail deve corresponder a colaborador ativo com papel de Gestor de Unidade e/ou Turma em ao menos uma edição
+- E-mail deve corresponder a colaborador ativo com papel de Gestor de Unidade e/ou Turma em ao menos uma edição **ou** perfil **Gestor de Voluntariado** (este último não exige edição)
 - Mensagem genérica na UI (não revelar se o e-mail existe) — mesma prática de segurança do link mágico
 - Envio via SendGrid (ou provedor contratual); token de uso único / curta validade
 - Deep link pode incluir destino opcional (`edicao_id`, `acao`) após autenticar
@@ -247,8 +251,9 @@ O bloco **Encerramento / Doação** muda com a **modalidade** da edição. Detal
 │ Doação (processos · totais)     │  ← aprovar só aqui; sugerir no negócio
 │ Recibo / PIX / Aceites          │
 │ Notas fiscais (NF 1:N)          │  ← material
-│ Mentorias                       │
 ```
+
+Mentorias P/H e **Voluntários** (recorte para alocar) no bloco **Turma**. Ações: [01-gestao-acoes.md](aplicativo-gestor/gestor-voluntariado/01-gestao-acoes.md). [08-registrar-mentoria.md](aplicativo-gestor/gestor-unidade/08-registrar-mentoria.md) · [13-voluntarios.md](aplicativo-gestor/gestor-unidade/13-voluntarios.md).
 
 **Online** (Doação **só Unidade**; Encerramento: Unidade opera, Turma consulta funil):
 
@@ -260,7 +265,8 @@ O bloco **Encerramento / Doação** muda com a **modalidade** da edição. Detal
 │ Processos / totalizadores       │  ← só liberadas; aprovar com APROVAR
 │ Recibo / PIX / Aceites          │
 │ Notas fiscais (NF 1:N)          │
-│ Mentorias                       │
+│ Mentorias                       │  ← etapa final da jornada
+│ Voluntários                     │  ← recorte para alocar
 ```
 
 Menu completo (exemplo Unidade, edição online):
@@ -276,6 +282,7 @@ Menu completo (exemplo Unidade, edição online):
 │ ── Turma ─────────────────────  │
 │ Turmas · Participantes          │
 │ Módulos                         │  ← hub; P/H: tipo "aula"; + conteúdo extra
+│ Mentorias · Voluntários         │  ← recorte para alocar mentoria
 │ ── Pendências ────────────────  │
 │ Entregas a aprovar       (8)    │
 │ Financeiro a aprovar     (3)    │
@@ -824,18 +831,23 @@ P/H: lista de **empreendimentos**. Online: só *liberadas*.
 | Quem | Pode |
 | ---- | ---- |
 | Turma | **Sugerir** no empreendimento (P/H sempre; online só liberadas). Sem tela Doação |
-| Unidade | Sugerir no negócio; **aprovar só em /doacao** (digitar APROVAR); NF, recibo, funil online, mentorias |
+| Unidade | Sugerir no negócio; **aprovar só em /doacao** (digitar APROVAR); NF, recibo, funil online |
 | Sistema | Aplica funil online; **não** aprova doação |
 
-### 11.4 Mentorias
+### 11.4 Mentorias — só **online** (encerramento)
+
+Etapa **final** da jornada. Lote → diagnóstico no Cliente → pool do portal do voluntariado (`vagas` N); fallback Unidade **vincula vários**; [card visual](comum/card-mentoria.md). **P/H** — [§21a](#21a-mentorias--ph-programa-regular). Recorte: [§21b](#21b-voluntários). GV: [§21c](#21c-gestor-de-voluntariado).
 
 ```
 ┌──────────────────────────────────────────────────┐
-│ Mentorias  [A iniciar] [Em andamento] [Concluída]│
-│ [ + Nova ] origem: liberadas / quem recebeu doação│
-│ ℹ Roadmap — detalhamento fase 1 a priorizar      │
+│ Mentorias — etapa final da jornada               │
+│ [ Abrir lote: finalistas / doação aprovada ]     │
+│ Maria · Marketing · Aberta no pool · 2 vagas     │
+│ [ Card ] [ Vincular voluntário… ]                │
 └──────────────────────────────────────────────────┘
 ```
+
+Canônico: [08-registrar-mentoria.md](aplicativo-gestor/gestor-unidade/08-registrar-mentoria.md).
 
 ### 11.5 Módulo Encerramento P/H (carga)
 
@@ -1031,6 +1043,71 @@ Cada inscrição cria 1 negócio; informal **não** une por nome. Agrupar é aç
 ```
 
 Selecionar **≥ 2** negócios → **Agrupar** → modal escolhe o sobrevivente; demais registros de empreendimento **apagados** (bloqueia se houver operação). Linha resultante: 1 negócio + N sócias. BI: N pessoas / 1 negócio / **1 doação**. Mover **uma** pessoa sem apagar origem = UC32 (detalhe). Sem processo aberto: **Iniciar doação** (modal no negócio). Com processo: **Ver doação** (Turma = leitura no card; Unidade = linha em `/doacao`). **Nunca Aprovar** aqui.
+
+---
+
+## 21a. Mentorias — P/H (programa regular)
+
+| Campo | Valor |
+| ----- | ----- |
+| **Rota** | `/gestor/e/[edicaoId]/mentorias` |
+| **Perfil** | Unidade e Turma alocam lote (turma = própria) |
+| **UCs** | UC70 |
+| **Prioridade** | Especificado |
+
+**Só edição presencial/híbrida.** Fora do Encerramento. Não é visita técnica nem conteúdo extra.
+
+Pedido do app **precisa** de mentor(es) ou **Atendido pelo gestor** (sem BI). Sem agenda/slot de 2h. Unidade/Turma **alocam lote** (1º = líder) | recusam | comunicam `wa.me`. Card: [comum/card-mentoria.md](comum/card-mentoria.md). Tela: [08-registrar-mentoria.md](aplicativo-gestor/gestor-unidade/08-registrar-mentoria.md).
+
+```
+┌──────────────────────────────────────────────────┐
+│ Mentorias  ⚠ 2 solicitações     (P/H)            │
+│ [ Lista ] [ Solicitações ]                       │
+│ Doces da Maria · Finanças · Ativa · Líder: Ana   │
+└──────────────────────────────────────────────────┘
+```
+
+---
+
+## 21b. Voluntários (edição)
+
+| Campo | Valor |
+| ----- | ----- |
+| **Rota** | `/gestor/e/[edicaoId]/voluntarios` |
+| **Perfil** | Unidade e Turma — atalho para alocar mentoria |
+| **UCs** | UC73, UC70 |
+| **Prioridade** | Especificado |
+
+Recorte da edição para montar o lote. Rede nacional, aprovação e ações: **Gestor de Voluntariado**. Tela: [13-voluntarios.md](aplicativo-gestor/gestor-unidade/13-voluntarios.md).
+
+```
+┌──────────────────────────────────────────────────┐
+│ Voluntários desta edição                         │
+│ Tipo [ Individual ▼]  Área [ Finanças ▼]         │
+└──────────────────────────────────────────────────┘
+```
+
+---
+
+## 21c. Gestor de Voluntariado
+
+| Campo | Valor |
+| ----- | ----- |
+| **Rota** | `/gestor/voluntariado` · `/acoes` · `/voluntarios` · `/mentorias` |
+| **Perfil** | Gestor de Voluntariado (CMS) |
+| **UCs** | UC3, UC70, UC73, UC90 |
+| **Prioridade** | Especificado |
+
+**Não tem** Dashboard de edições. O login abre **direto** a home `/gestor/voluntariado` com o **menu contextual**: Home, Gestão de ações, Gestão de voluntários, Gestão de mentorias. Sem Trocar edição.
+
+Telas: [00-home.md](aplicativo-gestor/gestor-voluntariado/00-home.md), [01-gestao-acoes.md](aplicativo-gestor/gestor-voluntariado/01-gestao-acoes.md), [02-gestao-voluntarios.md](aplicativo-gestor/gestor-voluntariado/02-gestao-voluntarios.md), [03-gestao-mentorias.md](aplicativo-gestor/gestor-voluntariado/03-gestao-mentorias.md).
+
+```
+┌──────────────────────────────────────────────────┐
+│ Voluntariado                                     │
+│ Home · Ações · Voluntários · Mentorias           │
+└──────────────────────────────────────────────────┘
+```
 
 ---
 
@@ -1567,8 +1644,12 @@ Binding das regras do CMS: ligar/pausar, override de parâmetros, preview de aud
 flowchart TB
   LOGIN[Login — só e-mail] --> MAIL[Recebe link mágico]
   MAIL --> EDS[Dashboard de edições]
+  MAIL --> GVHOME[Home voluntariado]
   EDS --> EDI[Seleciona edição]
   EDI --> HOME[Home operacional + menu do perfil]
+  GVHOME --> ACOES[Gestao de acoes]
+  GVHOME --> GVOL[Gestao de voluntarios]
+  GVHOME --> GMENT[Gestao de mentorias]
   HOME --> SEL[Seleção]
   HOME --> DOA[Doação unificada]
   HOME --> TUR[Turmas / Participantes]
@@ -1592,7 +1673,7 @@ flowchart TB
 
 ## Notas de alinhamento v6
 
-- **Login do Gestor:** link mágico por e-mail (sem senha) — alinhado à UC3 nos Casos de Uso v7; mesma UX de entrada do Aplicativo Cliente (token por e-mail).
+- **Login do Gestor:** link mágico por e-mail (sem senha) — alinhado à UC3 nos Casos de Uso v8; mesma UX de entrada do Aplicativo Cliente (token por e-mail).
 - Status de seleção: etapas **1 classificar** → **2 entrevista de seleção (P/H)** → **3 alocar** → **comunicar (3 faixas UC25)**. Score **X/Y** da régua pontuável (6 critérios ativáveis: tempo, renda, CLT, cargo, internet, WhatsApp) ↓. **Seleção em massa** (barra, Shift, distribuir auto sessão/turma, toast). Listas e CSV: **Cidade/UF + Bairro**. Qualificar **não** inicia jornada. UC25: convite só com sessão; liberação só com turma; ausente → **não aprovada** (auto) ou realocada. Rodadas até a meta.
 - **Beneficiamento / certificação:** % na edição (padrão 50% / 75%).
 - **Presencial = híbrido** na operação; no BI a modalidade só agrupa. API WhatsApp só no aceite (boas-vindas + grupo). Sem entrar no grupo → participação **não efetivada**.

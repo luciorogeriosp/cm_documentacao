@@ -2,7 +2,7 @@
 
 **Modalidade:** online (ex.: Empreende no Zap)  
 **Convenções:** [README](README.md)  
-**Fontes:** [Casos de Uso v7](../../Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v7.md) UC19–UC25, UC33, UC38, UC51, UC53, UC57, UC87; [ADR jornada online](../adr-jornada-online.md)
+**Fontes:** [Casos de Uso v7](../../Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v7.md) UC19–UC25, UC33, UC38, UC51, UC53, UC57, UC70, UC73, UC89, UC87; [ADR jornada online](../adr-jornada-online.md)
 
 Índice
 
@@ -14,6 +14,7 @@
 6. [Alertas e resgate](#6-alertas-e-resgate)
 7. [Funil de encerramento](#7-funil-de-encerramento)
 8. [Doação](#8-doacao)
+9. [Mentoria de encerramento](#9-mentoria-de-encerramento)
 
 Pós-liberação (PIX/recibo) e desistência: [pos-liberacao.md](pos-liberacao.md).
 
@@ -400,7 +401,7 @@ sequenceDiagram
 
 ## 8. Doação
 
-Só empreendimentos **liberados pelo funil**. Turma e Unidade **sugerem no empreendimento**; Unidade **aprova só na tela Doação** (pop-up + digitar **APROVAR**). Não há doação automática. Depois: [pos-liberacao.md](pos-liberacao.md).
+Só empreendimentos **liberados pelo funil**. Turma e Unidade **sugerem no empreendimento**; Unidade **aprova só na tela Doação** (pop-up + digitar **APROVAR**). Não há doação automática. Depois: [pos-liberacao.md](pos-liberacao.md). Mentoria de encerramento (UC70) abre em lote a partir das finalistas / doação aprovada — [seção 9](#9-mentoria-de-encerramento).
 
 ```mermaid
 sequenceDiagram
@@ -436,3 +437,43 @@ sequenceDiagram
 | 4–8 | Aprovar | GESTOR | Unidade | App Gestor — `/doacao` | Sem APROVAR digitado = nenhum status novo |
 | 9–10 | Aviso Cliente | AUTO | Backend | App Cliente | Sem data de pagamento; **≠ garantia** |
 | — | Filtros A–D / lote UC14 | GESTOR | Unidade | App Gestor | Auxiliares; não substituem o funil |
+
+---
+
+## 9. Mentoria de encerramento
+
+Só no **online**, etapa **final** (UC70): lote de finalistas / doação aprovada → empreendedora preenche o **diagnóstico** no Cliente → demanda `aberta` no **Aplicativo Voluntário** (só edição ativa / datas de aplicação). Pedido da empreendedora = **uma** demanda; campo **`vagas`** (default 1) no lado gestor/voluntário. Voluntário vê o **card visual**, aceita (decrementa vaga, WhatsApp), registra o **diário próprio**. Timeout: Unidade vincula **um ou vários** (cada um na base UC73). Certificado **individual por pessoa × sessão**. NPS no Cliente após `concluida`.
+
+No P/H — [presencial-hibrido.md §8](presencial-hibrido.md#8-mentoria-programa-regular).
+
+```mermaid
+sequenceDiagram
+  autonumber
+  participant GestorUnidade
+  participant Backend
+  participant AppCliente
+  participant Empreendedora
+  participant AppVoluntario
+
+  Note over GestorUnidade: GESTOR Encerramento - lote
+  GestorUnidade ->> Backend: abre lote finalistas / doacao aprovada
+  Backend -->> AppCliente: botao Mentoria no perfil
+  Empreendedora ->> AppCliente: diagnostico area + Caroline + periodos
+  AppCliente ->> Backend: demanda aberta
+  Backend -->> AppVoluntario: pool da edicao ativa
+  alt voluntario aceita
+    AppVoluntario ->> Backend: aceite
+    Backend -->> AppVoluntario: revela WhatsApp no card
+    AppVoluntario ->> Backend: diario data desc minutos
+    Backend -->> AppCliente: NPS; certificado por sessao
+  else timeout
+    GestorUnidade ->> Backend: vincula um ou varios (UC73)
+  end
+```
+
+| Passo | Momento | Tipo | Quem | Canal | O que NÃO faz |
+| ----- | ------- | ---- | ---- | ----- | ------------- |
+| 1 | Lote | GESTOR | Unidade | Encerramento — `/mentorias` | **≠ extra ≠ visita**; sem PIX no card |
+| 2–4 | Diagnóstico | MANUAL | Empreendedora no lote | App Cliente | Sem slot de gestor |
+| 5–8 | Pool + aceite | MANUAL | Voluntário (treino ok) | App Voluntário | Sem contato antes do aceite |
+| timeout | Fallback | GESTOR | Unidade | Área Voluntários | Skill match fino não é obrigatório |

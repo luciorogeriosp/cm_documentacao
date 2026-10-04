@@ -1,27 +1,26 @@
-import { mapStrapiEdition, fetchStrapiEdicoes, pickDefault } from "@/lib/cms/strapi";
+import { EDITION_EMPREENDE_ZAP, EDITIONS } from "@/lib/cms/edition";
+import { fetchStrapiEdicao, mapStrapiEdition } from "@/lib/cms/strapi";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
+  const id = new URL(request.url).searchParams.get("id");
+  if (!id) {
+    return NextResponse.json({ source: "cms", edition: null }, { status: 400 });
+  }
   try {
-    const id = new URL(request.url).searchParams.get("id");
-    const raw = await fetchStrapiEdicoes();
-    const editions = raw.map(mapStrapiEdition);
-    const edition =
-      editions.find((item) => item.id === id || item.slug === id) ||
-      pickDefault(editions);
-    if (!edition) {
+    const raw = await fetchStrapiEdicao(id);
+    if (!raw) {
       return NextResponse.json({ source: "cms", edition: null }, { status: 404 });
     }
-    return NextResponse.json({ source: "cms", edition, editions });
+    return NextResponse.json({ source: "cms", edition: mapStrapiEdition(raw) });
   } catch (error) {
-    return NextResponse.json(
-      {
-        source: "mock",
-        edition: null,
-        editions: [],
-        error: error instanceof Error ? error.message : "Falha no CMS",
-      },
-      { status: 502 },
-    );
+    const fallback =
+      EDITIONS.find((item) => item.id === id || item.slug === id) ||
+      EDITION_EMPREENDE_ZAP;
+    return NextResponse.json({
+      source: "mock",
+      edition: fallback,
+      error: error instanceof Error ? error.message : "Falha no CMS",
+    });
   }
 }

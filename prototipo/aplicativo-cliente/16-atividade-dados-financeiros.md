@@ -12,7 +12,7 @@
 
 ## Objetivo
 
-**Reporte póstumo** da saúde financeira do mês que já passou (não é fluxo de caixa do dia a dia). Preenchimento **pela empreendedora**. Resultado calculado: **capital de giro**.
+**Reporte póstumo** do mês que já passou. **Não** é fluxo de caixa do dia a dia e **não** existe atividade “Fluxo de caixa” à parte. Resultado **Despesas / capital de giro** é **calculado, só leitura**.
 
 ---
 
@@ -66,6 +66,7 @@
 - Renda/retirada > Faturamento → alerta (não bloqueia)
 - Capital de giro = (Faturamento + Empréstimos) − Despesas − Investimento − Poupança − Dívidas − Renda/retirada (pode ser negativo)
 - Média = meses **aprovados** da edição. Disparidade > 30% → célula âmbar (não em nº clientes/produtos)
-- Em revisão: banner com comentário da educadora
+- Avisos na tela (não trocam a média histórica): saídas > 120% do faturamento; resultado < −30% do faturamento
+- **Requer ajustes** (revisão UC44): banner com o comentário; ela corrige e reenvia — **não** usar “reprovado”
 - Aprovado: grade travada
 - Link mágico WhatsApp (UC54)

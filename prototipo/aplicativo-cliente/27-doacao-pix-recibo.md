@@ -11,7 +11,7 @@
 
 ## Objetivo
 
-Após **doação aprovada** (Unidade, pop-up + digitar **APROVAR**): informar dados, aceites e assinar recibo (conta **725**). A empreendedora **não** vê a sugestão.
+Um só caminho. A gestora **aprova valor e donatários**. Ela **preenche os passos** (isso **não** é solicitar doação — a empreendedora **nunca** pede no Cliente). A gestora **acompanha fez / não fez** e **pode preencher no lugar**. Sem form paralelo de R$ 1.000 e sem tela de geladeira (material = este fluxo).
 
 Canônico: [doacao-processo-unificado.md](../doacao-processo-unificado.md).
 
@@ -33,10 +33,10 @@ Sempre: mensagem **“aguarde”** — **não** mostrar datas de pagamento.
 │  CPF  [ ***.***.***-** ] 🔒    │
 │  ℹ Nome e CPF não editáveis     │
 ├─────────────────────────────────┤
-│  Banco / agência / conta *      │
+│  Banco (busca pelo nome) *      │
 │  [____________________]         │
-│  Chave PIX (se houver)          │
-│  [____________________]         │
+│  Agência / conta *              │
+│  PIX: CPF 🔒 ou telefone/e-mail │
 │  Titular = você (não terceiros) │
 │  [ Salvar ]                     │
 ├─────────────────────────────────┤
@@ -82,9 +82,9 @@ Sempre: mensagem **“aguarde”** — **não** mostrar datas de pagamento.
 │  Doação material aprovada       │
 │  Status: Aguarde a entrega /    │
 │  retirada com sua educadora     │
+│  [ + Foto da nota (opcional) ]  │
 │  [ Confirmar recebimento ]      │
-│    ← só quando já tiver o bem   │
-│  Recibo: 🔒 bloqueado           │
+│  Recibo: 🔒 até confirmar       │
 └─────────────────────────────────┘
 ```
 
@@ -103,24 +103,21 @@ Sempre: mensagem **“aguarde”** — **não** mostrar datas de pagamento.
 
 ## Estados na home
 
-A faixa de **doação** só aparece **depois de aprovada**. Sugerida/recusada: **nada**.
+| Estado | Quando | Mensagem curta |
+| ------ | ------ | -------------- |
+| Aguarde aprovação | Liberada pelo funil (online), ainda sem UC57 | Elegível ≠ ganhou — agora é torcer |
+| Informe os dados | Aprovada | Complete PIX/conta ou endereço |
+| Recibo | Dados ok; dinheiro assina antes; material depois de confirmar | Assine o recibo |
+| Recebeu | Passos dela concluídos | Recebeu doação |
 
-| Estado | Mensagem curta |
-| ------ | -------------- |
-| *(vazio)* | Sem processo, sugerida ou recusada |
-| Doação aprovada | Doação aprovada — aguarde orientações |
-| Informe dados | Complete PIX/conta ou endereço |
-| Material pendente | Confirme quando receber o produto |
-| Recibo liberado | Assine o recibo |
-| Concluído | Recebeu doação |
-
-**Fora desta faixa:** “Liberada para doação” = estado do **funil online** (home/encerramento), **não** em P/H e **não** em `/app/doacao`.
+Sugerida ou recusada: **sem faixa**. Sem datas prometidas. Sem banner de valor fixo.
 
 ---
 
 ## Regras
 
-- Nome/CPF readonly (titularidade)  
-- Conta + PIX opcional mas conta formal obrigatória para dinheiro  
-- Material: NF fica no **Gestor** (1:N); Cliente só confirma recebimento e assina  
-- Elegível/liberada/aprovada ≠ garantia até o fluxo completar  
+- Nome/CPF só leitura; PIX no CPF imutável; telefone e e-mail podem ser chave
+- Banco: busca pelo nome (código do Banco Central)
+- Material: ela confirma, **pode anexar foto da nota**; a gestora também anexa ou revisa as notas e os itens
+- Gestora vê fez / não fez e pode preencher no lugar
+- Elegível / liberada / aprovada ≠ garantia até concluir os passos

@@ -4,3 +4,12 @@ contrato/
 Thumbs.db
 desktop.ini
 *.tmp
+
+# Vídeos de treinamento — não entram no git
+*.mp4
+*.mov
+*.mkv
+*.webm
+*.avi
+treinamento/**/bruto/*
+!treinamento/**/bruto/.gitkeep

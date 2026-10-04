@@ -2,11 +2,25 @@
 
 import { EmailFrame, ViewSwitch, WhatsAppFrame } from "@/components/ChannelViews";
 import { compileEdition } from "@/lib/cms/compile";
-import { auditEdition, auditSummary } from "@/lib/cms/coverage";
+import { auditEdition, auditSummary, happyPath, walkSequence } from "@/lib/cms/coverage";
 import { EDITION_EMPREENDE_ZAP } from "@/lib/cms/edition";
-import { pickDefault } from "@/lib/cms/strapi";
 import { TemplatePick, templateOf } from "@/components/v2/TemplatePick";
-import { FLOWS, type CmsEdition, type CompiledEvent, type FlowId, type TipoAtividade } from "@/lib/cms/types";
+import {
+  FLOWS,
+  type CmsEdition,
+  type CmsEditionSummary,
+  type CompiledEvent,
+  type FlowId,
+  type TipoAtividade,
+} from "@/lib/cms/types";
+import {
+  catalogKeys,
+  defaultYear,
+  editionsInYear,
+  formatRange,
+  journeyLabel,
+  yearsOf,
+} from "@/lib/cms/years";
 import { asMap, type CatalogItem } from "@/lib/gupshup";
 import { EXEMPLO, fill } from "@/lib/placeholders";
 import type { ChannelView, Journey, ThreadItem } from "@/lib/types";
@@ -51,13 +65,12 @@ function toThread(event: CompiledEvent, messageId: string, body: string): Thread
 }
 
 export function SimulatorV2() {
-  const [editions, setEditions] = useState<CmsEdition[]>([]);
+  const [summaries, setSummaries] = useState<CmsEditionSummary[]>([]);
+  const [year, setYear] = useState(EDITION_EMPREENDE_ZAP.anoReferencia);
   const [edition, setEdition] = useState<CmsEdition>(EDITION_EMPREENDE_ZAP);
-  const [journey, setJourney] = useState<Journey>(EDITION_EMPREENDE_ZAP.journey);
-  const live = useMemo(
-    () => ({ ...edition, journey }),
-    [edition, journey],
-  );
+  const [loadingEdition, setLoadingEdition] = useState(false);
+  const journey = edition.journey;
+  const live = edition;
   const events = useMemo(() => compileEdition(live), [live]);
   const [flow, setFlow] = useState<FlowId>("nao_inscrita");
   const [on, setOn] = useState<Record<string, boolean>>({});
@@ -73,18 +86,44 @@ export function SimulatorV2() {
   const queue = useRef<ThreadItem[]>([]);
   const timer = useRef<number | null>(null);
   const running = useRef(false);
+  const auditing = useRef(false);
+
+  function applyEdition(next: CmsEdition) {
+    cancelQueue();
+    setEdition(next);
+    setYear(next.anoReferencia);
+    setPrograma(next.programaNome || next.name);
+    setOn({});
+    setThread([]);
+    setOverrides({});
+    setFlow("nao_inscrita");
+    auditing.current = false;
+  }
+
+  async function loadEdition(id: string) {
+    setLoadingEdition(true);
+    try {
+      const res = await fetch(`/api/edition?id=${encodeURIComponent(id)}`);
+      const data = await res.json();
+      if (data.edition) applyEdition(data.edition as CmsEdition);
+    } finally {
+      setLoadingEdition(false);
+    }
+  }
 
   useEffect(() => {
-    fetch("/api/edition")
+    fetch("/api/editions")
       .then((r) => r.json())
       .then((data) => {
-        const list = (data.editions || []) as CmsEdition[];
-        if (list.length) setEditions(list);
-        if (data.edition) {
-          setEdition(data.edition);
-          setJourney(data.edition.journey);
-          setPrograma(data.edition.programaNome || data.edition.name);
-        }
+        const list = (data.editions || []) as CmsEditionSummary[];
+        if (list.length) setSummaries(list);
+        const startYear = data.defaultYear || defaultYear(list, data.defaultId);
+        setYear(startYear);
+        const startId =
+          data.defaultId ||
+          editionsInYear(list, startYear)[0]?.id ||
+          list[0]?.id;
+        if (startId) return loadEdition(startId);
       })
       .catch(() => undefined);
     fetch("/api/templates")
@@ -98,15 +137,15 @@ export function SimulatorV2() {
   }, []);
 
   function chooseEdition(id: string) {
-    const next = editions.find((item) => item.id === id);
-    if (!next) return;
-    cancelQueue();
-    setEdition(next);
-    setPrograma(next.programaNome || next.name);
-    setOn({});
-    setThread([]);
-    setOverrides({});
-    setFlow("nao_inscrita");
+    if (!id || id === edition.id) return;
+    void loadEdition(id);
+  }
+
+  function chooseYear(nextYear: number) {
+    if (nextYear === year) return;
+    setYear(nextYear);
+    const first = editionsInYear(summaries, nextYear)[0];
+    if (first) void loadEdition(first.id);
   }
 
   useEffect(
@@ -116,17 +155,29 @@ export function SimulatorV2() {
     [],
   );
 
-  const filteredEditions = useMemo(() => {
-    const pool = editions.filter((item) => item.journey === journey);
-    return pool.length ? pool : edition ? [edition] : [];
-  }, [editions, journey, edition]);
+  const years = useMemo(
+    () => (summaries.length ? yearsOf(summaries) : [edition.anoReferencia]),
+    [summaries, edition.anoReferencia],
+  );
+  const yearEditions = useMemo(() => {
+    const pool = editionsInYear(summaries, year);
+    if (edition.anoReferencia === year && !pool.some((item) => item.id === edition.id)) {
+      return [edition, ...pool];
+    }
+    return pool.length ? pool : [edition];
+  }, [summaries, year, edition]);
+  const catalogo = useMemo(() => catalogKeys(edition), [edition]);
 
   const visibleEvents = events.filter((event) => event.flow === flow);
   const audit = useMemo(
-    () => auditEdition(live, events, catalog),
-    [live, events, catalog],
+    () => auditEdition(live, events, catalog, { nome, programa }),
+    [live, events, catalog, nome, programa],
   );
   const summary = useMemo(() => auditSummary(audit), [audit]);
+  const sent = useMemo(
+    () => walkSequence(live, events, catalog, { nome, programa }).sent,
+    [live, events, catalog, nome, programa],
+  );
   const gaps = audit.filter((row) => row.status !== "ok");
 
   function readyAt(index: number): boolean {
@@ -175,6 +226,7 @@ export function SimulatorV2() {
     timer.current = null;
     queue.current = [];
     running.current = false;
+    auditing.current = false;
     setBusy(false);
   }
 
@@ -182,6 +234,7 @@ export function SimulatorV2() {
     const next = queue.current.shift();
     if (!next) {
       running.current = false;
+      auditing.current = false;
       setBusy(false);
       timer.current = null;
       return;
@@ -192,9 +245,11 @@ export function SimulatorV2() {
     });
     setThread((prev) => [...prev, next]);
     if (queue.current.length) {
-      timer.current = window.setTimeout(flush, 2000 + Math.floor(Math.random() * 1000));
+      const wait = auditing.current ? 280 : 2000 + Math.floor(Math.random() * 1000);
+      timer.current = window.setTimeout(flush, wait);
     } else {
       running.current = false;
+      auditing.current = false;
       setBusy(false);
     }
   }
@@ -207,25 +262,6 @@ export function SimulatorV2() {
       setBusy(true);
       flush();
     }
-  }
-
-  function chooseJourney(next: Journey) {
-    if (next === journey) return;
-    cancelQueue();
-    setJourney(next);
-    const pool = editions.filter((item) => item.journey === next);
-    const keep =
-      edition.journey === next
-        ? edition
-        : pickDefault(pool) || pool[0];
-    if (keep) {
-      setEdition(keep);
-      setPrograma(keep.programaNome || keep.name);
-    }
-    setOn({});
-    setThread([]);
-    setOverrides({});
-    setFlow("nao_inscrita");
   }
 
   function sendConfirmacao() {
@@ -304,6 +340,22 @@ export function SimulatorV2() {
     enqueue(items);
   }
 
+  function playAudit() {
+    cancelQueue();
+    setOn({});
+    setThread([]);
+    setView("whatsapp");
+    setFlow("aprovada");
+    auditing.current = true;
+    const items: ThreadItem[] = [];
+    for (const event of happyPath(events)) {
+      for (const message of event.messages) {
+        items.push(toThread(event, message.id, bodyOf(event, message.id)));
+      }
+    }
+    enqueue(items);
+  }
+
   const presented = thread.map((item) => ({
     ...item,
     body: fill(item.body, { journey, nome, programa }),
@@ -313,10 +365,11 @@ export function SimulatorV2() {
     <>
       <div className="topbar">
         <p className="topbar-meta">
-          {edition.name} · {nome} · v2
+          {edition.anoReferencia} · {edition.name} · {journeyLabel(edition)}
+          {loadingEdition ? " · carregando…" : ""}
         </p>
         <div className="topbar-actions">
-          <a className="ghost tiny" href="/">
+          <a className="ghost tiny" href="/v1">
             v1
           </a>
           <button
@@ -340,36 +393,30 @@ export function SimulatorV2() {
               </button>
             </div>
             <div className="row">
-              <fieldset className="radios">
-                <label>
-                  <input
-                    type="radio"
-                    name="cfg-journey"
-                    checked={journey === "online"}
-                    onChange={() => chooseJourney("online")}
-                  />
-                  Online
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="cfg-journey"
-                    checked={journey === "ph"}
-                    onChange={() => chooseJourney("ph")}
-                  />
-                  Presencial / híbrido
-                </label>
-              </fieldset>
+              <label className="field">
+                Ano de referência
+                <select
+                  value={year}
+                  onChange={(e) => chooseYear(Number(e.target.value))}
+                >
+                  {years.map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </label>
               <label className="field">
                 Edição
                 <select
                   value={edition.id}
                   onChange={(e) => chooseEdition(e.target.value)}
+                  disabled={loadingEdition}
                 >
-                  {filteredEditions.map((item) => (
+                  {yearEditions.map((item) => (
                     <option key={item.id} value={item.id}>
                       {item.name}
-                      {item.modules.length ? ` · ${item.modules.length} mód.` : ""}
+                      {item.tipo ? ` · ${item.tipo}` : ""}
                     </option>
                   ))}
                 </select>
@@ -415,40 +462,106 @@ export function SimulatorV2() {
         </section>
 
         <aside className="card side">
-          <fieldset className="radios">
-            <label>
-              <input
-                type="radio"
-                name="journey"
-                checked={journey === "online"}
-                onChange={() => chooseJourney("online")}
-              />
-              Online
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="journey"
-                checked={journey === "ph"}
-                onChange={() => chooseJourney("ph")}
-              />
-              Presencial / híbrido
-            </label>
-          </fieldset>
+          <label className="field">
+            Ano de referência
+            <select
+              value={year}
+              onChange={(e) => chooseYear(Number(e.target.value))}
+            >
+              {years.map((item) => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+          </label>
           <label className="field">
             Edição
             <select
               value={edition.id}
               onChange={(e) => chooseEdition(e.target.value)}
+              disabled={loadingEdition}
             >
-              {filteredEditions.map((item) => (
+              {yearEditions.map((item) => (
                 <option key={item.id} value={item.id}>
                   {item.name}
-                  {item.modules.length ? ` · ${item.modules.length} mód.` : ""}
+                  {item.tipo ? ` · ${item.tipo}` : ""}
                 </option>
               ))}
             </select>
           </label>
+          <div className="cfg">
+            <h2>Configuração da edição</h2>
+            <dl>
+              <div>
+                <dt>Tipo / jornada</dt>
+                <dd>
+                  {journeyLabel(edition)}
+                  {edition.duracao ? ` · ${edition.duracao}` : ""}
+                  {edition.permiteWhatsapp === false ? " · sem WhatsApp" : ""}
+                </dd>
+              </div>
+              <div>
+                <dt>Programa</dt>
+                <dd>{edition.programaNome || edition.name}</dd>
+              </div>
+              <div>
+                <dt>Catálogo de comunicação</dt>
+                <dd>
+                  {edition.catalogoNome ||
+                    (catalogo.length
+                      ? `${catalogo.length} modelos · ${catalogo.slice(0, 3).join(", ")}${catalogo.length > 3 ? "…" : ""}`
+                      : "Tabela default + Gupshup")}
+                </dd>
+              </div>
+              <div>
+                <dt>Pré-inscrição · lembretes</dt>
+                <dd>
+                  {edition.preInscricao?.lembretes.length
+                    ? `${edition.preInscricao.sequencia} · ${edition.preInscricao.template?.elementName || "sem template"}`
+                    : "1D, 3D (padrão)"}
+                  {edition.preInscricao?.template?.variables.length
+                    ? ` · ${edition.preInscricao.template.variables
+                        .map((item) => `{{${item.key}}} ${item.nome}`)
+                        .join(" · ")}`
+                    : ""}
+                </dd>
+              </div>
+              <div>
+                <dt>Inscrição</dt>
+                <dd>
+                  {formatRange(
+                    edition.datas?.aberturaInscricao,
+                    edition.datas?.encerramentoInscricao,
+                  ) || "—"}
+                </dd>
+              </div>
+              <div>
+                <dt>Seleção</dt>
+                <dd>
+                  {formatRange(edition.datas?.inicioSelecao, edition.datas?.terminoSelecao) ||
+                    "—"}
+                </dd>
+              </div>
+              <div>
+                <dt>Programa (datas)</dt>
+                <dd>
+                  {formatRange(
+                    edition.datas?.inicioPrograma,
+                    edition.datas?.terminoPrograma,
+                  ) || "—"}
+                </dd>
+              </div>
+              <div>
+                <dt>Módulos</dt>
+                <dd>
+                  {edition.modules.length
+                    ? `${edition.modules.length} · ${edition.modules.map((mod) => mod.title).join(" · ")}`
+                    : "sem módulos no CMS"}
+                </dd>
+              </div>
+            </dl>
+          </div>
           <fieldset className="radios">
             {FLOWS.map((item) => (
               <label key={item.id}>
@@ -517,14 +630,22 @@ export function SimulatorV2() {
             })}
           </ol>
 
-          <div className={`audit ${summary.falta || summary.reprovado ? "bad" : summary.generico ? "warn" : "ok"}`}>
+          <div
+            className={`audit ${summary.problemas ? "bad" : summary.aviso || summary.generico ? "warn" : "ok"}`}
+          >
             <strong>
-              {summary.falta || summary.reprovado
-                ? `${summary.falta + summary.reprovado} sem cobertura`
-                : summary.generico
-                  ? `${summary.generico} com template genérico`
-                  : "Cobertura ok"}
+              {summary.problemas
+                ? `Edição com ${summary.problemas} problema${summary.problemas === 1 ? "" : "s"}`
+                : summary.aviso || summary.generico
+                  ? "Edição ok, com avisos"
+                  : "Edição ok"}
             </strong>
+            <p>
+              {sent} mensagem{sent === 1 ? "" : "ns"} da sequência conferida
+              {summary.aviso ? ` · ${summary.aviso} aviso${summary.aviso === 1 ? "" : "s"}` : ""}
+              {summary.generico ? ` · ${summary.generico} genérico${summary.generico === 1 ? "" : "s"}` : ""}
+              .
+            </p>
             {gaps.length ? (
               <ul>
                 {gaps.map((row) => (
@@ -534,12 +655,15 @@ export function SimulatorV2() {
                 ))}
               </ul>
             ) : (
-              <p>Toda atividade tem template e as variações desta jornada estão no fluxo.</p>
+              <p>A sequência fecha: lembretes, inscrição, seleção e jornada sem furo de template nem variável vazia.</p>
             )}
           </div>
 
           <div className="actions">
-            <button className="primary" type="button" onClick={playFlow} disabled={busy}>
+            <button className="primary" type="button" onClick={playAudit} disabled={busy}>
+              Auditar edição
+            </button>
+            <button className="ghost" type="button" onClick={playFlow} disabled={busy}>
               Ligar fluxo
             </button>
             <button

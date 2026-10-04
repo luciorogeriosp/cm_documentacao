@@ -44,7 +44,7 @@ Adicionar **conteúdo extra** (encontro / material pontual) sem alterar a estrut
 
 ## Regras
 
-- Fora da enum `TipoAtividade`; não impacta certificação/%/beneficiamento
+- Fora do catálogo de tipos de atividade; não impacta certificação, percentual nem beneficiamento
 - Notificação via WhatsApp opcional (UC50)
 - Aparece no calendário da turma (UC68)
 - **Reagendar:** nova data/local/link + aviso no grupo

@@ -4,7 +4,7 @@
 **Convenções:** [README](README.md)  
 **Fontes:** [Casos de Uso v7](../../Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v7.md) UC30, UC55, UC57, UC79, UC86
 
-Chega-se aqui **depois** da aprovação da Unidade na tela Doação (UC57: pop-up + digitar **APROVAR**). No online, a empreendedora já passou pelo funil (liberada para doação) **e** pela aprovação. No P/H, só a aprovação manual — a sugestão pode ter sido da Turma ou da Unidade.
+Chega-se aqui **depois** da aprovação da Unidade na tela Doação (UC57: pop-up + digitar **APROVAR**). No online, a empreendedora já passou pelo funil (liberada para doação) **e** pela aprovação. No presencial ou híbrido, só a aprovação manual — a sugestão pode ter sido da Turma ou da Unidade.
 
 Índice
 
@@ -178,4 +178,4 @@ sequenceDiagram
 | else UC30 | Registro da gestão | GESTOR | Turma ou Unidade | App Gestor | Data completa fica no log; UI usa mês/ano para frequência |
 | 8–11 | Sair das filas | AUTO | Backend | FilaJornada + FilaAlertas | Não apaga histórico já ocorrido; interrompe o que ainda estava pendente |
 
-No P/H, `FilaJornada` não está ativa; o cancelamento ainda interrompe alertas e tira a participante das liberações/comunicação operacional.
+No presencial ou híbrido, `FilaJornada` não está ativa; o cancelamento ainda interrompe alertas e tira a participante das liberações/comunicação operacional.

@@ -15,8 +15,8 @@
 
 ## Quando o hub e o CTA aparecem
 
-- **P/H:** item Mentoria no menu inferior, durante o programa.
-- **Online:** item Mentoria **só** depois de entrar no **lote** de encerramento.
+- **P/H:** atalho no programa, durante a formação.
+- **Online:** atalho **só** depois de entrar no **lote** de encerramento.
 - **Solicitar** bloqueado até concluir o módulo CMS do Início. Inclusão pelo Gestor **não** exige treino.
 
 ---
@@ -41,8 +41,8 @@
 └─────────────────────────────────┘
 ```
 
-**P/H:** enviar → `aberta` (portal do voluntariado vê em **Em aberto**). Gestor pode alocar lote, recusar ou **Atendido pelo gestor**.  
-**Online:** enviar → demanda `aberta` no pool (`vagas` default 1).
+**P/H:** enviar → aberta (portal do voluntariado vê em **Em aberto**). Gestor pode alocar lote, recusar ou **Atendido pelo gestor**.  
+**Online:** enviar → demanda aberta no pool (vagas da sessão default 1).
 
 Dados bancários **não** entram neste fluxo (UC86).
 

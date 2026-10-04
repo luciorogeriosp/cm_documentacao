@@ -31,4 +31,4 @@ Se o **gestor** já alocou o lote, esta tela não aparece em Em aberto — só e
 
 ## Online
 
-Campo **`vagas`**. Aceite decrementa; pool aberto até completar. Card sem telefone até o aceite; depois `wa.me`. Diário próprio.
+Campo **vagas da sessão**. Aceite decrementa; pool aberto até completar. Card sem telefone até o aceite; depois conversa direta no WhatsApp. Diário próprio.

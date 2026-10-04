@@ -7,7 +7,7 @@
 | **UCs** | UC63, UC70, UC90 |
 | **Prioridade** | Especificado |
 
-Tipos no portal: **Mentoria** e **Ação**. Mentoria: um por pessoa × mentoria (P/H) ou × sessão (online); acompanhante **herda**; libera ao `finalizada`. Ação: genérico de participação para **todas** as pessoas `confirmado` quando a ação **conclui**, independentemente de quem registrou as horas. Sem certificado de **coletiva**. `atendida_gestor` não gera certificado (nem aparece nas abas).
+Tipos no portal: **Mentoria** e **Ação**. Mentoria: um por pessoa × mentoria (P/H) ou × sessão (online); acompanhante **herda**; libera ao encerrada. Ação: genérico de participação para **todas** as pessoas confirmada quando a ação **conclui**, independentemente de quem registrou as horas. Sem certificado de **coletiva**. atendida pelo gestor não gera certificado (nem aparece nas abas).
 
 ```
 ┌──────────────────────────────────────────────────┐

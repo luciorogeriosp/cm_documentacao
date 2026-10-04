@@ -7,7 +7,7 @@
 | **UCs** | UC70, UC73 |
 | **Prioridade** | Especificado |
 
-Área própria no menu inferior. **P/H:** sempre, durante o programa. **Online:** só após lote de encerramento. Sem Mentoria no hambúrguer.
+Entra **pelo programa** (card ou atalho da edição). **Não** fica no rodapé nem no hambúrguer. **P/H:** durante o programa. **Online:** só após lote de encerramento. Sem modal solto na home. Sem “2 horas” no pedido presencial ou híbrido.
 
 Gestor: [08-registrar-mentoria.md](../aplicativo-gestor/gestor-unidade/08-registrar-mentoria.md).  
 Formulário: [28-solicitar-mentoria.md](28-solicitar-mentoria.md).  
@@ -88,7 +88,7 @@ Quando o líder encerra (P/H) ou a sessão encerra (online):
 - NPS da plataforma *
 - NPS do mentor *
 
-`atendida_gestor`: sem NPS de mentor, sem certificado.
+atendida pelo gestor: sem NPS de mentor, sem certificado.
 
 ---
 

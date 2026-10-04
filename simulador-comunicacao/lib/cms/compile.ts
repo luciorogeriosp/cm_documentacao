@@ -1,6 +1,8 @@
+import { catalogBody } from "@/lib/placeholders";
 import type {
   CmsActivity,
   CmsEdition,
+  CmsLembrete,
   CompiledEvent,
   CompiledMessage,
 } from "./types";
@@ -120,43 +122,51 @@ function welcomeFallback(edition: CmsEdition): string {
   return "✨ Seja bem-vinda ao *{programa}*! 🎉\n\nUma jornada para o seu negócio, no seu ritmo 💛";
 }
 
+function fallbackLembretes(): CmsLembrete[] {
+  return [
+    { dias: 1, codigo: "1D" },
+    { dias: 3, codigo: "3D" },
+  ];
+}
+
+function canalLabel(canal?: string): string {
+  if (canal === "whatsapp") return "WhatsApp";
+  if (canal === "email") return "e-mail";
+  return "WhatsApp + e-mail";
+}
+
+function compileLembretes(edition: CmsEdition): CompiledEvent[] {
+  const pre = edition.preInscricao;
+  const clocks = pre?.lembretes.length ? pre.lembretes : fallbackLembretes();
+  const templateKey = pre?.template?.elementName || tpl(edition, "inscription_incomplete");
+  const body =
+    catalogBody(pre?.template) ||
+    "Oi, {nome}. Vimos que você começou a inscrição no {programa}. Falta só terminar a ficha: {link}";
+  return clocks.map((clock, index) => ({
+    id: `d${clock.codigo.toLowerCase()}`,
+    flow: "nao_inscrita" as const,
+    label: `Relógio · ${clock.codigo}`,
+    kind: "relogio" as const,
+    delay: { tempo: clock.dias, medida: clock.dias === 1 ? "dia" : "dias" },
+    canais: canalLabel(pre?.canal),
+    auditId: `pre-${clock.codigo}`,
+    messages: [
+      text(
+        `d${clock.codigo.toLowerCase()}-msg`,
+        index === 0 ? "Ficha incompleta" : `Ficha incompleta — ${clock.codigo}`,
+        templateKey,
+        body,
+      ),
+    ],
+  }));
+}
+
 export function compileEdition(edition: CmsEdition): CompiledEvent[] {
   const welcomeKey =
     edition.mensagemInscricao?.elementName ||
     tpl(edition, "jornada_boas_vindas");
   const events: CompiledEvent[] = [
-    {
-      id: "d1",
-      flow: "nao_inscrita",
-      label: "Relógio · 1 dia",
-      kind: "relogio",
-      delay: { tempo: 1, medida: "dia" },
-      canais: "e-mail · WhatsApp opcional",
-      messages: [
-        text(
-          "d1-msg",
-          "Ficha incompleta",
-          tpl(edition, "inscription_incomplete"),
-          "Oi, {nome}. Vimos que você começou a inscrição no {programa}. Falta só terminar a ficha: {link}",
-        ),
-      ],
-    },
-    {
-      id: "d3",
-      flow: "nao_inscrita",
-      label: "Relógio · 3 dias",
-      kind: "relogio",
-      delay: { tempo: 3, medida: "dias" },
-      canais: "e-mail · WhatsApp opcional",
-      messages: [
-        text(
-          "d3-msg",
-          "Ficha incompleta — reforço",
-          tpl(edition, "inscription_incomplete"),
-          "{nome}, ainda dá tempo de concluir sua ficha no {programa}: {link}",
-        ),
-      ],
-    },
+    ...compileLembretes(edition),
     {
       id: "ela-escreve",
       flow: "inscrita",

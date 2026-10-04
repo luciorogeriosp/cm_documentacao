@@ -67,7 +67,7 @@ Elementos reutilizados em todas as telas autenticadas e no fluxo de inscrição.
 - Logo Consulado da Mulher
 - Nome da edição/programa (truncado em mobile)
 - Menu hambúrguer: Home, Calendário, Meu perfil, Meu histórico, Certificados, Sair — **sem** Mentoria
-- Barra inferior: Home · Mentoria · Calendário · Perfil (P/H sempre; online só após lote)
+- Barra inferior: **Programas · Certificados · Ajuda IA**. Mentoria entra pelo programa. Calendário no menu do header.
 
 ### Barra de progresso (inscrição)
 
@@ -262,7 +262,7 @@ Capturar lead mínimo (nome, telefone, e-mail) e os **aceites obrigatórios** (L
 
 - Grava lead "pré-cadastro concluído" na base de leads
 - Persiste identificador no **localStorage**
-- Se a inscrição **não for concluída**, o Backend pode disparar alerta `inscription_incomplete` (UC87); Mini CRM (UC26) permite reforço **manual** (e-mail prioritário; WhatsApp opcional)
+- Se a inscrição **não for concluída**, o Backend pode disparar alerta ficha incompleta (UC87); Mini CRM (UC26) permite reforço **manual** (e-mail prioritário; WhatsApp opcional)
 - Redireciona para inscrição completa (UC21)
 
 ---
@@ -623,7 +623,7 @@ Confirmar envio da inscrição, mostrar o **ID** gerado, orientar o **1º contat
 │  confirmar sua inscrição:       │
 │  (11) 9xxxx-xxxx                │
 │  [ Falar no WhatsApp agora ]    │
-│       ← wa.me (CTA imperativo)  │
+│       ← conversa direta no WhatsApp (CTA imperativo)  │
 │  Texto sugerido: "Quero         │
 │  confirmar minha inscrição no   │
 │  [nome da edição]"              │
@@ -644,7 +644,7 @@ Confirmar envio da inscrição, mostrar o **ID** gerado, orientar o **1º contat
 ## Regras
 
 - **Número WhatsApp da organização** vem do CMS (Strapi) — global ou por edição
-- CTA **imperativo** abre `wa.me` / deep link com texto pré-preenchido; o **inbound** dispara o **template Meta de inscrição** da edição (**não** inicia a jornada educacional)
+- CTA **imperativo** abre conversa direta no WhatsApp / deep link com texto pré-preenchido; o **inbound** dispara o **template Meta de inscrição** da edição (**não** inicia a jornada educacional)
 - **Prazo estimado** calculado a partir da data de encerramento das inscrições/seleção da edição
 - **Comunicação de aprovação** é disparo manual pelo Gestor de Unidade (UC25) — inicia jornada online / convite ao grupo em P/H
 - Não aprovadas: **CPF anonimizado** após o encerramento, conforme regra LGPD (UC76)
@@ -1275,7 +1275,7 @@ Visualizar e editar dados cadastrais, exceto CPF validado.
 - **Nome social**: editável; usado como nome de exibição no app
 - Unidade: somente **Gestor de Unidade** altera/move (UC17/UC18) — Gestor de Turma não move
 - Vínculos programa/edição/unidade/turma preservados
-- **Mentoria** não fica no perfil — área própria no menu inferior: [29-mentorias-hub.md](aplicativo-cliente/29-mentorias-hub.md).
+- **Mentoria** não fica no perfil nem no rodapé — entra pelo programa: [29-mentorias-hub.md](aplicativo-cliente/29-mentorias-hub.md).
 
 ---
 
@@ -1334,7 +1334,7 @@ Linha do tempo dos programas, edições, status e certificações da própria pa
 
 ## Objetivo
 
-Consultar e baixar certificados: **Programa** (UC13) e **Mentoria** (um por caso ao `finalizada`). Sem certificado se `atendida_gestor`.
+Consultar e baixar certificados: **Programa** (UC13) e **Mentoria** (um por caso ao encerrada). Sem certificado se atendida pelo gestor.
 
 ---
 
@@ -1358,7 +1358,7 @@ Consultar e baixar certificados: **Programa** (UC13) e **Mentoria** (um por caso
 ## Regras
 
 - Filtro **Programa | Mentoria**
-- Mentoria: um certificado por caso ao `finalizada` — **não** se `atendida_gestor`
+- Mentoria: um certificado por caso ao encerrada — **não** se atendida pelo gestor
 - PDF gerado pelo backend (UC55)
 - Disponível após classificação como certificada (Programa)
 - Envio também pode ocorrer via WhatsApp (Gupshup)
@@ -1462,11 +1462,11 @@ Canal de autoatendimento com IA para dúvidas frequentes sobre o programa e uso 
 
 ## Hub Mentoria (UC70)
 
-Área própria `/app/mentorias` no menu inferior. Telas detalhadas: [29-mentorias-hub.md](aplicativo-cliente/29-mentorias-hub.md) e [28-solicitar-mentoria.md](aplicativo-cliente/28-solicitar-mentoria.md).
+Área `/app/mentorias` **pelo programa** (não no rodapé). Telas: [29-mentorias-hub.md](aplicativo-cliente/29-mentorias-hub.md) e [28-solicitar-mentoria.md](aplicativo-cliente/28-solicitar-mentoria.md).
 
 - Início: módulo CMS; **Solicitar** bloqueado até concluir
 - Abas: **Em aberto · Minhas · Encerradas**
-- Encerramento: texto + NPS plataforma + NPS mentor (`atendida_gestor` sem NPS de mentor e sem certificado)
+- Encerramento: texto + NPS plataforma + NPS mentor (atendida pelo gestor sem NPS de mentor e sem certificado)
 - Certificados: filtro Programa | Mentoria
 
 ---

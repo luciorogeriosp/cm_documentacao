@@ -59,4 +59,4 @@ Libera dados pessoais e contato.
 └──────────────────────────────────────────────────┘
 ```
 
-**Online** (pool com `vagas`): nome visível desde o card; telefone/`wa.me` **só após aceite**. Sem faturamento no card online (regra anterior de renda).
+**Online** (pool com vagas da sessão): nome visível desde o card; telefone/conversa direta no WhatsApp **só após aceite**. Sem faturamento no card online (regra anterior de renda).

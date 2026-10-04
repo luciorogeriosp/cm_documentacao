@@ -11,7 +11,7 @@
 
 ## Objetivo
 
-Consultar e baixar certificados emitidos automaticamente: **Programa** (critérios UC13) e **Mentoria** (um por caso ao `finalizada` — UC70). Sem certificado se `atendida_gestor`.
+Consultar e baixar certificados (item **Certificados** do rodapé). **Não há evento de entrega.** Programa (UC13) e Mentoria (um por caso ao encerrada). Sem certificado se atendida pelo gestor.
 
 ---
 
@@ -40,8 +40,8 @@ Consultar e baixar certificados emitidos automaticamente: **Programa** (critéri
 
 ## Regras
 
-- Filtro **Programa | Mentoria**
-- Mentoria: um certificado por caso ao status `finalizada`
-- `atendida_gestor`: **sem** certificado de mentoria
-- PDF gerado pelo backend (UC55)
-- Envio também pode ocorrer via WhatsApp (Gupshup)
+- Item do rodapé; filtro **Programa | Mentoria**
+- Copy: **não há evento de entrega** — o PDF é o certificado
+- Mentoria: um por caso ao status encerrada
+- Atendida pelo gestor: **sem** certificado de mentoria
+- PDF gerado pelo backend (UC55); também pode ir por WhatsApp

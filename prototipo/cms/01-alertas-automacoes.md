@@ -81,12 +81,12 @@ Linguagem: **Quando… / Espere… / Envie… / Pare quando…**
 
 | Tipo | Campos do formulário |
 | ---- | -------------------- |
-| `inscription_incomplete` | delayDays, repeatDays, maxSends |
-| `activity_deadline_soon` | hoursBeforeDeadline |
-| `backlog_liberated` | minLiberatedPending |
-| `edition_ending_pending` | daysBeforeEnd |
-| `risk_short_online` | herda limiares da edição (UC9) |
-| `checkpoint_midcourse` | dayFromStart, windowDays |
+| ficha incompleta | dias até o primeiro aviso; dias entre reforços; número máximo de envios |
+| prazo da atividade se aproximando | horas antes do prazo |
+| várias aulas paradas | mínimo de aulas paradas |
+| fim do programa perto | dias antes do fim |
+| risco no curso curto | herda os prazos da edição (UC9) |
+| meio do curso | dia a contar do início; duração da campanha em dias |
 
 ---
 

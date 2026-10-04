@@ -3,7 +3,7 @@
 | Campo | Valor |
 | ----- | ----- |
 | **Rota** | `/voluntario/mentorias` (Início) — alias `/voluntario/biblioteca` (não é item de menu) |
-| **Perfil** | Voluntário (`ativo`) |
+| **Perfil** | Voluntário (ativo) |
 | **UCs** | UC73, UC70 |
 | **Prioridade** | Especificado |
 

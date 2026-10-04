@@ -9,7 +9,7 @@
 
 Menu **irmão** de Mentorias na edição. **Não** é o CRM da rede. Cadastro único; o `edicaoId` só filtra quem serve para o lote desta edição.
 
-Rede nacional, aprovação `em_analise`, inativos e ações: **Gestor de Voluntariado** — [02-gestao-voluntarios.md](../gestor-voluntariado/02-gestao-voluntarios.md).
+Rede nacional, aprovação em análise, inativos e ações: **Gestor de Voluntariado** — [02-gestao-voluntarios.md](../gestor-voluntariado/02-gestao-voluntarios.md).
 
 Canônico: [UC73](../../../Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v7.md). Portal: [Aplicativo Voluntario.md](../../Aplicativo%20Voluntario.md).
 

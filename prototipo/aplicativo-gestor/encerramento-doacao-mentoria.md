@@ -282,6 +282,6 @@ Ver [12-modulo-encerramento-ph.md](gestor-unidade/12-modulo-encerramento-ph.md).
 
 - Janela comercial WhatsApp / feriados  
 - Check-point / alertas (UC53/UC87)  
-- Pesquisa D+30 (UC82)  
+- Encerramento de cerca de 30 dias (atividade no módulo da edição — UC15/UC82; a gestora **não** dispara)  
 - Multi-KW; saldo orçamentário; datas prometidas de pagamento  
 - Design Blocos+Imersiva (identidade visual)  

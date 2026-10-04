@@ -1,4 +1,14 @@
-import type { CmsActivity, CmsEdition, CmsModule, TipoAtividade } from "./types";
+import type {
+  CmsActivity,
+  CmsEdition,
+  CmsEditionSummary,
+  CmsLembrete,
+  CmsModule,
+  CmsPreInscricao,
+  CmsTemplateVar,
+  CmsWaTemplate,
+  TipoAtividade,
+} from "./types";
 
 const DEFAULT_TEMPLATES: Record<string, string> = {
   inscription_incomplete: "pre_inscricao_lembrete_v2",
@@ -67,6 +77,7 @@ type StrapiModulo = {
 export type StrapiEdicao = {
   id: number;
   documentId: string;
+  ano_referencia?: number;
   edicao: string;
   slug: string;
   Ativo?: boolean;
@@ -82,8 +93,34 @@ export type StrapiEdicao = {
     data?: string;
   } | null;
   gestores?: { grupo_whatsapp?: string | null; rotulo?: string }[];
-  programa?: { nome?: string; slug?: string; tipo?: string } | null;
+  programa?: { nome?: string; slug?: string; tipo?: string; duracao?: string } | null;
   modulos?: StrapiModulo[];
+  mensagens_whatsapp?: StrapiCatalogo | null;
+};
+
+type StrapiTemplateVar = {
+  key?: string;
+  variavelNome?: string;
+  token?: string;
+  manualValue?: string;
+};
+
+type StrapiWaTemplate = {
+  elementName?: string;
+  data?: string;
+  variables?: StrapiTemplateVar[];
+};
+
+type StrapiCatalogo = {
+  id?: number;
+  documentId?: string;
+  nome?: string;
+  slug?: string;
+  pre_inscricao?: {
+    sequencia_lembretes?: string;
+    canal?: string;
+    template?: StrapiWaTemplate | null;
+  } | null;
 };
 
 export function cmsBase(): string {
@@ -98,11 +135,54 @@ async function cmsJson<T>(path: string): Promise<T> {
   return (await res.json()) as T;
 }
 
+const LIST_FIELDS =
+  "fields[0]=ano_referencia&fields[1]=edicao&fields[2]=slug&fields[3]=Ativo&fields[4]=abertura_inscricao&fields[5]=encerramento_inscricao&fields[6]=inicio_selecao&fields[7]=termino_selecao&fields[8]=inicio_programa&fields[9]=termino_programa&fields[10]=permite_envio_whatsapp";
+
+const DETAIL_POPULATE =
+  "populate[modulos][populate][atividades][populate]=*&populate[programa]=true&populate[gestores]=true&populate[mensagens_whatsapp]=true";
+
+export async function fetchStrapiEdicoesList(): Promise<StrapiEdicao[]> {
+  const json = await cmsJson<{ data?: StrapiEdicao[] }>(
+    `/api/edicaos?pagination[pageSize]=100&${LIST_FIELDS}&populate[programa][fields][0]=nome&populate[programa][fields][1]=tipo&populate[programa][fields][2]=duracao`,
+  );
+  return json.data || [];
+}
+
+async function fetchStrapiCatalogo(id: string): Promise<StrapiCatalogo | null> {
+  const json = await cmsJson<{ data?: StrapiCatalogo }>(
+    `/api/mensagens-whatsapps/${encodeURIComponent(id)}?populate=*`,
+  );
+  return json.data ?? null;
+}
+
+async function attachCatalog(raw: StrapiEdicao): Promise<StrapiEdicao> {
+  const id = raw.mensagens_whatsapp?.documentId;
+  if (!id) return raw;
+  const catalog = await fetchStrapiCatalogo(id);
+  return catalog ? { ...raw, mensagens_whatsapp: catalog } : raw;
+}
+
+export async function fetchStrapiEdicao(id: string): Promise<StrapiEdicao | null> {
+  try {
+    const json = await cmsJson<{ data?: StrapiEdicao }>(
+      `/api/edicaos/${encodeURIComponent(id)}?${DETAIL_POPULATE}`,
+    );
+    if (json.data) return attachCatalog(json.data);
+  } catch {
+    /* tenta filtro por documentId / slug */
+  }
+  const json = await cmsJson<{ data?: StrapiEdicao[] }>(
+    `/api/edicaos?filters[$or][0][documentId][$eq]=${encodeURIComponent(id)}&filters[$or][1][slug][$eq]=${encodeURIComponent(id)}&${DETAIL_POPULATE}`,
+  );
+  const found = json.data?.[0];
+  return found ? attachCatalog(found) : null;
+}
+
 export async function fetchStrapiEdicoes(): Promise<StrapiEdicao[]> {
   const [base, deep] = await Promise.all([
-    cmsJson<{ data?: StrapiEdicao[] }>("/api/edicaos?populate=*"),
+    cmsJson<{ data?: StrapiEdicao[] }>("/api/edicaos?pagination[pageSize]=100&populate=*"),
     cmsJson<{ data?: StrapiEdicao[] }>(
-      "/api/edicaos?pagination[pageSize]=100&populate[modulos][populate][atividades][populate]=*&populate[programa]=true",
+      `/api/edicaos?pagination[pageSize]=100&${DETAIL_POPULATE}`,
     ),
   ]);
   const extras = new Map((deep.data || []).map((item) => [item.documentId, item]));
@@ -246,51 +326,115 @@ function mapModule(raw: StrapiModulo): CmsModule {
   };
 }
 
+function yearOf(raw: StrapiEdicao): number {
+  if (raw.ano_referencia) return raw.ano_referencia;
+  const fromDate = (raw.inicio_programa || raw.abertura_inscricao || "").slice(0, 4);
+  const parsed = Number(fromDate);
+  if (parsed) return parsed;
+  return new Date().getFullYear();
+}
+
+function datasOf(raw: StrapiEdicao) {
+  return {
+    aberturaInscricao: raw.abertura_inscricao,
+    encerramentoInscricao: raw.encerramento_inscricao,
+    inicioSelecao: raw.inicio_selecao,
+    terminoSelecao: raw.termino_selecao,
+    inicioPrograma: raw.inicio_programa,
+    terminoPrograma: raw.termino_programa,
+  };
+}
+
+export function mapStrapiEditionSummary(raw: StrapiEdicao): CmsEditionSummary {
+  return {
+    id: raw.documentId,
+    name: raw.edicao,
+    slug: raw.slug,
+    anoReferencia: yearOf(raw),
+    journey: inferJourney(raw),
+    tipo: raw.programa?.tipo,
+    duracao: raw.programa?.duracao,
+    ativo: raw.Ativo !== false,
+    programaNome: raw.programa?.nome,
+    permiteWhatsapp: raw.permite_envio_whatsapp !== false,
+    datas: datasOf(raw),
+  };
+}
+
+export function parseSequenciaLembretes(raw?: string): CmsLembrete[] {
+  if (!raw?.trim()) return [];
+  return [...raw.matchAll(/(\d+)\s*([DdHh])/g)].map((match) => ({
+    dias: Number(match[1]),
+    codigo: `${match[1]}${match[2].toUpperCase()}`,
+  }));
+}
+
+function mapTemplate(raw?: StrapiWaTemplate | null): CmsWaTemplate | undefined {
+  if (!raw?.elementName && !raw?.data) return undefined;
+  const variables: CmsTemplateVar[] = (raw.variables || [])
+    .filter((item) => item.key)
+    .map((item) => ({
+      key: String(item.key),
+      nome: item.variavelNome || `{{${item.key}}}`,
+      token: item.token,
+      manualValue: item.manualValue || undefined,
+    }));
+  return {
+    elementName: raw.elementName || "",
+    data: raw.data || "",
+    variables,
+  };
+}
+
+function mapPreInscricao(raw?: StrapiCatalogo | null): CmsPreInscricao | undefined {
+  const block = raw?.pre_inscricao;
+  if (!block) return undefined;
+  const sequencia = block.sequencia_lembretes?.trim() || "";
+  return {
+    sequencia,
+    lembretes: parseSequenciaLembretes(sequencia),
+    template: mapTemplate(block.template),
+    canal: block.canal,
+  };
+}
+
 export function mapStrapiEdition(raw: StrapiEdicao): CmsEdition {
   const templates = { ...DEFAULT_TEMPLATES };
   const element = raw.mensagem_inscricao?.elementName;
   if (element) {
     templates.jornada_boas_vindas = element;
   }
+  const preInscricao = mapPreInscricao(raw.mensagens_whatsapp);
+  if (preInscricao?.template?.elementName) {
+    templates.inscription_incomplete = preInscricao.template.elementName;
+  }
   const grupo =
     raw.gestores?.find((g) => g.grupo_whatsapp)?.grupo_whatsapp || undefined;
   return {
-    id: raw.documentId,
-    name: raw.edicao,
-    slug: raw.slug,
-    ativo: raw.Ativo !== false,
-    journey: inferJourney(raw),
-    permiteWhatsapp: raw.permite_envio_whatsapp !== false,
-    programaNome: raw.programa?.nome,
+    ...mapStrapiEditionSummary(raw),
     grupoLink: grupo,
+    catalogoNome: raw.mensagens_whatsapp?.nome,
+    preInscricao,
     mensagemInscricao: raw.mensagem_inscricao?.data
       ? {
           elementName: element || "",
           data: raw.mensagem_inscricao.data,
         }
       : undefined,
-    datas: {
-      aberturaInscricao: raw.abertura_inscricao,
-      encerramentoInscricao: raw.encerramento_inscricao,
-      inicioSelecao: raw.inicio_selecao,
-      terminoSelecao: raw.termino_selecao,
-      inicioPrograma: raw.inicio_programa,
-      terminoPrograma: raw.termino_programa,
-    },
     package: {
-      id: `cms-${raw.documentId}`,
-      name: raw.edicao,
+      id: raw.mensagens_whatsapp?.documentId || `cms-${raw.documentId}`,
+      name: raw.mensagens_whatsapp?.nome || raw.edicao,
       templates,
     },
     modules: (raw.modulos || []).map(mapModule),
   };
 }
 
-export function pickDefault(list: CmsEdition[]): CmsEdition | undefined {
+export function pickDefault<T extends CmsEditionSummary>(list: T[]): T | undefined {
   return (
     list.find((e) => e.slug === "empreende-no-zap-janeiro-2027") ||
-    list.find((e) => e.mensagemInscricao && e.ativo) ||
-    list.find((e) => e.ativo) ||
+    list.find((e) => e.anoReferencia === new Date().getFullYear() && e.ativo !== false) ||
+    list.find((e) => e.ativo !== false) ||
     list[0]
   );
 }

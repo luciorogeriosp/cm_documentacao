@@ -100,4 +100,4 @@ Quem chega pelo plantio **não** vê mentoria individual como CTA principal. O C
 └──────────────────────────────────────────────────┘
 ```
 
-Após envio: `em_analise` na rede. Via slug: também `inscrito` na ação. Aprovação do cadastro e confirmação da ação no **Gestor de Voluntariado**. Login (UC89) mostra tela de aguardo até `ativo`. Anonimização segue UC76 (“Prefiro não responder” grava “não informado” e não entra no BI).
+Após envio: em análise na rede. Via slug: também inscrita na ação. Aprovação do cadastro e confirmação da ação no **Gestor de Voluntariado**. Login (UC89) mostra tela de aguardo até ativo. Anonimização segue UC76 (“Prefiro não responder” grava “não informado” e não entra no BI).

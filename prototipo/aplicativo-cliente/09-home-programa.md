@@ -11,27 +11,50 @@
 
 ## Objetivo
 
-Tela principal após autenticação: visão do programa, módulos, progresso geral e atividades liberadas. Inclui atalhos de **doação / recibo** quando aplicável.
+Duas camadas: **lista de programas** (rodapé Programas) e **home da edição** (módulos, Continue daqui, faixas).
 
 ---
 
-## Wireframe
+## Wireframe — lista de programas
 
 ```
 ┌─────────────────────────────────┐
-│  [≡]  Olá, Maria!        [📅]   │
+│  [≡]  Olá, Maria!        [👤]   │
+│  2 em curso · 1 aguardando      │
 ├─────────────────────────────────┤
-│  Programa X — Edição 2027       │
+│  Empreende Mulher               │
+│  Edição 2027 · Centro · Turma A │
+│  4 de 9 atividades              │
+│  Próxima: Videoaula 3           │
+│  [ Continue daqui ]             │
+├─────────────────────────────────┤
+│  Empreende no Zap               │
+│  Edição ago · turma única       │
+│  8 de 8 · [ Continue daqui ]    │
+├─────────────────────────────────┤
+│  🔒 Programa (ex.: Mulheres do  │
+│     Nosso Bairro)               │
+│  Aguardando seleção             │
+│  (sem CTA)                      │
+│ Programas · Certificados · Ajuda│
+└─────────────────────────────────┘
+```
+
+O nome do card bloqueado é **exemplo** de estado, não catálogo.
+
+## Wireframe — home da edição
+
+```
+┌─────────────────────────────────┐
+│  [←]  Programa X — Edição 2027  │
 │  Unidade: Centro | Turma: A     │
 │  Status: Ativa                  │
-│  ████████░░  72% concluído      │
-│  ℹ WhatsApp = canal principal   │
+│  ████████░░  4 de 9             │
 ├─────────────────────────────────┤
-│  ⚠ Doação aprovada — aguarde    │
-│    orientações da educadora     │
-│    [ Dados / recibo → ]         │
+│  ⚠ Doação — informe os dados    │
+│    [ Continuar → ]              │
 ├─────────────────────────────────┤
-│  Próxima atividade              │
+│  Continue daqui                 │
 │  ┌─────────────────────────┐    │
 │  │ 📹 Videoaula 3          │    │
 │  │ Liberada — Iniciar →    │    │
@@ -45,10 +68,9 @@ Tela principal após autenticação: visão do programa, módulos, progresso ger
 │    • Questionário final     🔒  │
 ├─────────────────────────────────┤
 │  ┌─────────────────────────┐    │
-│  │ Mentoria (se online + lote) │
-│  │ Ir à área Mentoria →    │
+│  │ Mentoria                 │
+│  │ Ir ao hub →              │
 │  └─────────────────────────┘    │
-│  [ Calendário ]  [ Meu perfil ] │
 └─────────────────────────────────┘
 ```
 
@@ -61,14 +83,17 @@ Tela principal após autenticação: visão do programa, módulos, progresso ger
 - Cards de atividade com ícone por tipo (UC15)
 - Indicador **em revisão** (não “reprovada”) nas entregas (UC44)
 - Online sequencial; após live: **KW** → **questionário final 100%** ([26](26-presenca-palavra-chave.md), [13b](13b-questionario-final-doacao.md))
-- Faixa doação **só após aprovada**: *aprovada — aguarde* / *informe dados* / *confirme recebimento* / *assine o recibo* → [27-doacao-pix-recibo.md](27-doacao-pix-recibo.md). Sem faixa se só sugerida. “Liberada para doação” = funil **online**, não esta faixa.
+- Faixa doação **só após aprovada**: *aprovada — aguarde* / *informe dados* / *confirme recebimento* / *assine o recibo* → [27-doacao-pix-recibo.md](27-doacao-pix-recibo.md). Sem faixa se só sugerida. “Liberada para doação” = funil **online**, não esta faixa. **Sem** CTA de solicitar doação — ela nunca pede no Cliente.
 - **Sem** datas de pagamento na home
-- **Mentoria (online + lote):** card na home aponta para o hub [29-mentorias-hub.md](29-mentorias-hub.md). P/H: item no menu inferior, sem card obrigatório na home.
+- **Mentoria:** card na home da edição aponta para o hub [29-mentorias-hub.md](29-mentorias-hub.md). **Não** está no rodapé. Online: o card só depois do lote de encerramento.
+- **Continue daqui** = próxima atividade liberada (não “próxima aula” genérica).
+- Após o quiz 100% (online): copy **elegível ≠ ganhou / agora é torcer** — ainda não é a faixa de doação aprovada.
 
 ---
 
 ## Navegação
 
 - Cada atividade → tela específica (11–20, 26–27)
-- Calendário → [10-calendario-atividades.md](10-calendario-atividades.md)
-- Mentoria → [29-mentorias-hub.md](29-mentorias-hub.md) (menu inferior; card na home se online + lote)
+- Calendário → menu do header [10-calendario-atividades.md](10-calendario-atividades.md)
+- Mentoria → [29-mentorias-hub.md](29-mentorias-hub.md) (pelo programa)
+- Rodapé: Programas · Certificados · Ajuda IA

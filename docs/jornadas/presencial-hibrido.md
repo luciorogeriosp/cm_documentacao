@@ -2,7 +2,7 @@
 
 **Modalidade:** presencial e híbrido (mesmo comportamento operacional; a distinção é só no BI)  
 **Convenções:** [README](README.md)  
-**Fontes:** [Casos de Uso v7](../../Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v7.md) UC16–UC17, UC24–UC25, UC34–UC35, UC40–UC44, UC50, UC57, UC70, UC73, UC78, UC84; [módulo encerramento P/H](../../prototipo/aplicativo-gestor/gestor-unidade/12-modulo-encerramento-ph.md); [mentorias P/H](../../prototipo/aplicativo-gestor/gestor-unidade/08-registrar-mentoria.md); [voluntários](../../prototipo/aplicativo-gestor/gestor-unidade/13-voluntarios.md)
+**Fontes:** [Casos de Uso v7](../../Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v7.md) UC16–UC17, UC24–UC25, UC34–UC35, UC40–UC44, UC50, UC57, UC70, UC73, UC78, UC84; [módulo encerramento presencial ou híbrido](../../prototipo/aplicativo-gestor/gestor-unidade/12-modulo-encerramento-ph.md); [mentorias presencial ou híbrido](../../prototipo/aplicativo-gestor/gestor-unidade/08-registrar-mentoria.md); [voluntários](../../prototipo/aplicativo-gestor/gestor-unidade/13-voluntarios.md)
 
 Índice
 
@@ -45,10 +45,10 @@ sequenceDiagram
   AppCliente ->> Backend: cria lead pre_inscrita
 
   opt inscricao incompleta
-    Note over FilaAlertas,SendGrid: AUTO UC87 inscription_incomplete
+    Note over FilaAlertas,SendGrid: AUTO UC87 ficha incompleta
     FilaAlertas -->> Backend: atraso configurado
     Backend -->> SendGrid: lembrete com link magico
-    Note over GestorUnidade: GESTOR Mini CRM UC26 fallback manual
+    Note over GestorUnidade: GESTOR Mini CRM UC26 alternativa manual
   end
 
   Note over Empreendedora,Backend: MANUAL empreendedora UC21
@@ -78,7 +78,7 @@ sequenceDiagram
 | ----- | ------- | ---- | ---- | ----- | ------------- |
 | 1–3 | Pré-cadastro UC19 | MANUAL | Empreendedora | App Cliente | Não dispara jornada |
 | opt | Lead abandonada | AUTO / GESTOR | FilaAlertas / Mini CRM | E-mail | Não classifica |
-| 8–9 | Disponibilidade | MANUAL | Empreendedora | App Cliente | Indisponível = **não cadastra** (P/H) |
+| 8–9 | Disponibilidade | MANUAL | Empreendedora | App Cliente | Indisponível = **não cadastra** (presencial ou híbrido) |
 | 10–14 | Inscrição UC21 | MANUAL | Empreendedora | App Cliente | Não aloca turma se houver várias; não inicia jornada |
 | opt | 1º contato WA | MANUAL + AUTO | Empreendedora → Backend | Gupshup | **Não** é o UC25; **não** convoca entrevista |
 
@@ -114,7 +114,7 @@ Rodadas: o gestor pode voltar a qualificar mais candidatas até a meta da ediç�
 
 ## 3. Seleção — entrevista
 
-Só P/H. Ausente → **não aprovada automaticamente**, salvo realocação imediata para outra sessão. Convite (UC25 faixa 1) só para quem já está **alocada em sessão**.
+Só presencial ou híbrido. Ausente → **não aprovada automaticamente**, salvo realocação imediata para outra sessão. Convite (UC25 faixa 1) só para quem já está **alocada em sessão**.
 
 ```mermaid
 sequenceDiagram
@@ -193,7 +193,7 @@ sequenceDiagram
   GestorUnidade ->> Backend: grava link/codigo do grupo da turma
 
   alt faixa 2 - aprovada + turma + link grupo
-    Note over GestorUnidade,Gupshup: GESTOR UC25 faixa 2 - UNICO inicio da jornada P/H
+    Note over GestorUnidade,Gupshup: GESTOR UC25 faixa 2 - UNICO inicio da jornada presencial ou híbrido
     GestorUnidade ->> Backend: UC25 comunica liberacao
     Backend -->> Backend: bloqueia sem turma ou sem link de grupo
     Backend -->> Gupshup: template boas-vindas + link do grupo
@@ -218,7 +218,7 @@ sequenceDiagram
 | 7–12 | UC25 faixa 2 | GESTOR | Unidade | Gupshup | Bloqueia sem turma ou sem link; **único** envio API pago operacional |
 | 13–16 | UC25 faixa 3 | GESTOR | Unidade | Gupshup | Não liga jornada |
 
-Se a candidata não puder receber template via API: facilitador `wa.me` individual.
+Se a candidata não puder receber template via API: facilitador conversa direta no WhatsApp individual.
 
 ---
 
@@ -251,7 +251,7 @@ sequenceDiagram
 | ----- | ------- | ---- | ---- | ----- | ------------- |
 | 1 | Entrar no grupo | MANUAL | Empreendedora | WhatsApp grupo | Sem API; o sistema não adiciona membros |
 | 2–3 | Confirmar ingresso | GESTOR | Turma | App Gestor | Sem confirmação, não está efetivada |
-| opt | Não entrou | GESTOR | Turma | — | Não dispara lote de conteúdo (não existe lote P/H) |
+| opt | Não entrou | GESTOR | Turma | — | Não dispara lote de conteúdo (não existe lote presencial ou híbrido) |
 
 ---
 
@@ -325,7 +325,7 @@ Prazo padrão D+2 nas atividades assíncronas. Unidade pode operar tudo o que a 
 
 ## 7. Conteúdo extra e visita técnica
 
-Fora do loop feliz da matriz. Extra **não** conta %/carga e **não existe** no online. Visita técnica só P/H.
+Fora do loop feliz da matriz. Extra **não** conta %/carga e **não existe** no online. Visita técnica só presencial ou híbrido.
 
 Três coisas distintas: **conteúdo extra (UC35)** = encontro coletivo pontual da turma, fora da matriz. **Visita técnica (UC78)** = atividade da matriz, 1 a 1, conta %. **Mentoria (UC70)** = sessão individual de **2 horas** sobre o negócio, no programa regular — [seção 8](#8-mentoria-programa-regular).
 
@@ -372,7 +372,7 @@ Caso com **N consultas** (UC70). **Não** é extra nem visita. **Não** fica no 
 
 Formulário canônico: **área** CMS + **4 perguntas Caroline** + períodos. **Sem** data/hora.
 
-Entrada no Cliente: área **Mentoria** no menu inferior (`/app/mentorias`). **Solicitar** bloqueado até o módulo CMS do Início. Inclusão pelo Gestor não exige treino.
+Entrada no Cliente: **Mentoria pelo programa** (hub da empreendedora — não no rodapé). **Solicitar** bloqueado até o módulo CMS do Início. Inclusão pelo Gestor não exige treino.
 
 ```mermaid
 sequenceDiagram
@@ -392,7 +392,7 @@ sequenceDiagram
   else gestor aloca lote
     Gestor ->> Backend: N mentores primeiro lider
   else atendido pelo gestor
-    Gestor ->> Backend: atendida_gestor sem BI
+    Gestor ->> Backend: atendida pelo gestor sem BI
   else recusa
     Gestor ->> Backend: recusa com motivo
   end
@@ -407,7 +407,7 @@ sequenceDiagram
 
 | Passo | Momento | Tipo | Quem | Canal | O que NÃO faz |
 | ----- | ------- | ---- | ---- | ----- | ------------- |
-| app | Pedir no hub Mentoria | MANUAL | Empreendedora | `/app/mentorias` | Sem slot; treino CMS bloqueia Solicitar |
+| app | Pedir no hub Mentoria | MANUAL | Empreendedora | tela de mentorias da empreendedora | Sem slot; treino CMS bloqueia Solicitar |
 | alt pega | Pegar em Em aberto | MANUAL | Voluntário | portal do voluntariado | Vira líder |
 | alt lote | Alocar mentores | GESTOR | Unidade ou Turma | `/mentorias` | Não acrescenta depois |
 | alt gestor | Atendido pelo gestor | GESTOR | Unidade ou Turma | `/mentorias` | Sem BI / certificado |
@@ -416,7 +416,7 @@ sequenceDiagram
 
 ## 9. Risco de evasão — duração longa
 
-Perfil P/H longo (6–12 meses): silêncio ≥ **15 dias** + represamento. **Não** usar o filtro curto do online (10d / 5d do fim). Não há UC53. Cobrança operacional = grupo (UC50). Alertas UC87 só se a regra tiver audiência P/H (ex. e-mail).
+Perfil presencial ou híbrido longo (6–12 meses): silêncio ≥ **15 dias** + represamento. **Não** usar o filtro curto do online (10d / 5d do fim). Não há UC53. Cobrança operacional = grupo (UC50). Alertas UC87 só se a regra tiver audiência presencial ou híbrido (ex. e-mail).
 
 ```mermaid
 sequenceDiagram
@@ -431,7 +431,7 @@ sequenceDiagram
   Note over Backend: AUTO deteccao silencio >= 15 dias + represamento
   Backend -->> Backend: marca risco longo UC56
 
-  opt regra UC87 com audiencia P/H
+  opt regra UC87 com audiencia presencial ou híbrido
     Note over FilaAlertas,SendGrid: AUTO alerta - nao e FilaJornada
     FilaAlertas -->> Backend: dispara regra
     Backend -->> SendGrid: e-mail de resgate
@@ -456,7 +456,7 @@ sequenceDiagram
 
 ## 10. Encerramento
 
-Formatura / integração, se contar carga, é **módulo ou aula obrigatória** na grade de Módulos — tipo **Aula** (presencial ou Meet). **Não** é o funil Live → KW → Quiz. **Não** libera doação. **Mentoria P/H não entra neste módulo** — opera no programa regular ([seção 8](#8-mentoria-programa-regular)).
+Formatura / integração, se contar carga, é **módulo ou aula obrigatória** na grade de Módulos — tipo **Aula** (presencial ou Meet). **Não** é o funil Live → KW → Quiz. **Não** libera doação. **Mentoria presencial ou híbrido não entra neste módulo** — opera no programa regular ([seção 8](#8-mentoria-programa-regular)).
 
 ```mermaid
 sequenceDiagram

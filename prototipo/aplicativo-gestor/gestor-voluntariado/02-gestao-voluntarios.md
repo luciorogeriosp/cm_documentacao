@@ -9,18 +9,18 @@
 
 Visão **nacional** da rede (não “nesta edição”). Unidade, na edição, vê só o recorte para **alocar mentoria** — [13-voluntarios.md](../gestor-unidade/13-voluntarios.md).
 
-Aprovar cadastro `em_analise` mora **aqui**.
+Aprovar cadastro em análise mora **aqui**.
 
 ---
 
 ## Filtros e recortes
 
-Filtros combináveis: tipo **Individual | Coletiva | Ações**; área (interesse ou expertise; chip só expertise); nome; status `em_analise` / `ativo` / `inativo`; módulo CMS.
+Filtros combináveis: tipo **Individual | Coletiva | Ações**; área (interesse ou expertise; chip só expertise); nome; status em análise / ativo / inativo; módulo CMS.
 
 Recortes:
 
-- **Em atividade** — mentoria `aceita`/`em_andamento`, coletiva vinculada ou ação confirmada
-- **Inativos há mais tempo** — `inativo` **ou** sem diário/aceite além do limiar CMS (default **90 dias**)
+- **Em atividade** — mentoria `aceita`/em andamento, coletiva vinculada ou ação confirmada
+- **Inativos há mais tempo** — inativo **ou** sem diário/aceite além do limiar CMS (default **90 dias**)
 - **Atuando em mentorias** — no lote de alguma mentoria aberta/em andamento
 
 ```

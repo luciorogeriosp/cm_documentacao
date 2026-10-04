@@ -13,11 +13,11 @@ Visão **nacional** de status. **Não** substitui a alocação da Unidade/Turma 
 
 ## Abas
 
-- **Abertas** — sem lote (P/H) ou com vaga (online)
+- **Abertas** — sem lote (presencial ou híbrido) ou com vaga (curso pela internet)
 - **Em andamento** — lote alocado / consultas
-- **Finalizadas** — encerrada, NPS, `finalizada`, atendida pelo gestor
+- **Finalizadas** — encerrada, com pesquisas, ou atendida pelo gestor
 
-**Destaque:** filtro **Abertas há muito tempo sem fechar** — `aberta` além de `prazo_match_horas` (CMS) **ou** em andamento sem consulta/encerramento além do limiar CMS (default 90 dias).
+**Destaque:** filtro **Abertas há muito tempo sem fechar** — aberta além do prazo para um voluntário aceitar (padrão 72 horas, configurável no CMS) **ou** em andamento sem consulta nem encerramento além do limiar do CMS (padrão 90 dias).
 
 ```
 ┌──────────────────────────────────────────────────┐
@@ -25,7 +25,7 @@ Visão **nacional** de status. **Não** substitui a alocação da Unidade/Turma 
 │ ☑ Abertas há muito tempo sem fechar              │
 │ [ Abertas ] [ Em andamento ] [ Finalizadas ]     │
 ├──────────────────────────────────────────────────┤
-│ Maria Silva · Finanças · P/H · 14 dias aberta    │
+│ Maria Silva · Finanças · presencial · 14 dias aberta │
 │ Origem: pedido · Unidade Centro · Edição 2027    │
 │ Sem líder                                        │
 │ [ Ver card ]                                     │

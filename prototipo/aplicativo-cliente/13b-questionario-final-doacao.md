@@ -14,7 +14,7 @@
 
 ## Objetivo
 
-Avaliação final do funil: **só 100% de acertos** → status ***liberada para doação***. Não basta nota parcial. Liberada ≠ garantia de receber doação.
+Avaliação final do funil: **só 100% de acertos** → status ***liberada para doação*** (elegível à **seleção**, não ganhou). Não basta nota parcial. **Sem** botão de solicitar doação — o próximo passo é a gestora escolher quem recebe.
 
 ---
 
@@ -39,9 +39,9 @@ Avaliação final do funil: **só 100% de acertos** → status ***liberada para 
 ┌─────────────────────────────────┐
 │  ✓ Questionário concluído       │
 │  Status: Liberada para doação   │
-│  ℹ Isso não garante o           │
-│    recebimento. Aguarde a       │
-│    educadora.                   │
+│  ℹ Elegível ≠ ganhou.           │
+│    Agora é torcer. A gestora    │
+│    ainda escolhe quem recebe.   │
 │  [ Voltar à home ]              │
 └─────────────────────────────────┘
 ```
@@ -74,5 +74,6 @@ Avaliação final do funil: **só 100% de acertos** → status ***liberada para 
 
 - Gate: KW válida + prazo  
 - Liberação doação = **100% certo**  
-- Copy: liberada ≠ garantia  
+- Copy: **elegível ≠ ganhou / agora é torcer**
+- Este quiz é o funil — **não** é o Encerramento de 30 dias
 - Sem datas de pagamento  

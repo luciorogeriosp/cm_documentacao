@@ -15,4 +15,4 @@ Classificar não manda mensagem. Não existe entrevista.
 
 ## Depois de aprovada
 
-OK → 1º lote (tipos de atividade) → pedir OK de novo → relógios e resgates → live → mentoria de encerramento → doação (se marcada) → certificado → programa acabou → pesquisa D+30.
+OK → 1º lote (tipos de atividade) → pedir OK de novo → relógios e resgates → live → mentoria de encerramento → doação (se marcada) → certificado → programa acabou → Encerramento (cerca de 30 dias, programado no módulo).

@@ -38,7 +38,7 @@ Visualizar e reengajar leads que autorizaram comunicação e abandonaram a inscr
 
 ## Regras
 
-- Disparo **manual** (reforço) + histórico do alerta automático `inscription_incomplete` (UC87), se ativo na edição.
+- Disparo **manual** (reforço) + histórico do alerta automático ficha incompleta (UC87), se ativo na edição.
 - E-mail prioritário; WhatsApp opcional (custo).
 - Ao concluir inscrição, Backend cancela pendentes da regra.
 - Apenas leads com **autorização de comunicação** (UC19)

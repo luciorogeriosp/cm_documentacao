@@ -40,7 +40,7 @@ Implementar o form único visível (funil de mentoria).
 
 CTA: **Enviar inscrição**. Um cadastro, não vários formulários.
 
-Após envio: pessoa na rede com `em_analise`. Sem associação a ação.
+Após envio: pessoa na rede com em análise. Sem associação a ação.
 
 ---
 
@@ -83,12 +83,12 @@ Slug inválido / ação encerrada: página de indisponível, sem form.
 
 | Origem | Rede (UC73) | Ação (UC90) |
 | ------ | ----------- | ----------- |
-| `/voluntario/inscricao` | `em_analise` | — |
-| `/voluntario/a/[slug]` | `em_analise` | `inscrito` **imediato** |
+| `/voluntario/inscricao` | em análise | — |
+| `/voluntario/a/[slug]` | em análise | inscrita **imediato** |
 
 Frentes opcionais marcadas no slug viram interesse no cadastro único (não abrem segundo cadastro).
 
-E-mail já na rede que reabre o slug: **não** duplica pessoa; só associa `inscrito` na ação (se ainda não estiver).
+E-mail já na rede que reabre o slug: **não** duplica pessoa; só associa inscrita na ação (se ainda não estiver).
 
 ---
 
@@ -96,9 +96,9 @@ E-mail já na rede que reabre o slug: **não** duplica pessoa; só associa `insc
 
 - Só e-mail. Sem senha. Título: **Portal do voluntariado**.
 - Link “Ainda não sou da rede” → `/voluntario/inscricao`.
-- `em_analise`: entra na **tela de aguardo** (sem menu operacional, sem pool, sem outras ações).
-- `ativo`: shell autenticado.
-- `inativo` (UC74): mensagem genérica, sem sessão.
+- em análise: entra na **tela de aguardo** (sem menu operacional, sem pool, sem outras ações).
+- ativo: shell autenticado.
+- inativo (UC74): mensagem genérica, sem sessão.
 
 Tela de aguardo (mínimo para validar):
 
@@ -107,11 +107,11 @@ Cadastro em análise.
 Você receberá um e-mail quando for aprovado.
 ```
 
-Quem veio pelo slug: na tela de aguardo, mostrar também a ação em que já está `inscrito` (“Mutirão de plantio — inscrito, aguardando confirmação”). Ainda **não** vê o pool nem a lista de outras ações.
+Quem veio pelo slug: na tela de aguardo, mostrar também a ação em que já está inscrita (“Mutirão de plantio — inscrito, aguardando confirmação”). Ainda **não** vê o pool nem a lista de outras ações.
 
 ---
 
-## 5. Depois de `ativo` — bloqueio do módulo CMS
+## 5. Depois de ativo — bloqueio do módulo CMS
 
 Implementar só o **Início** do hub (`/voluntario/mentorias`): lista de atividades do módulo CMS (pode ser 1–3 itens mocados).
 
@@ -136,18 +136,18 @@ Abas: **Em aberto · Minhas · Encerradas**.
 | Aba | O que mostra |
 | --- | ------------ |
 | Em aberto | Ações ativas no período em que ainda **não** está inscrito. CTA **Inscrever-me**. Convite do GV: CTA **Aceitar convite** |
-| Minhas | `inscrito` (“aguardando confirmação”) e `confirmado` (diário) |
-| Encerradas | `recusado` e ação encerrada |
+| Minhas | inscrita (“aguardando confirmação”) e confirmada (diário) |
+| Encerradas | recusada e ação encerrada |
 
-Quem já entrou pelo slug aparece em **Minhas** como `inscrito`, não precisa se inscrever de novo.
+Quem já entrou pelo slug aparece em **Minhas** como inscrita, não precisa se inscrever de novo.
 
-**Diário** (só `confirmado`): data *, minutos *, descrição * + Registrar. Certificado de ação **não** entra nesta fatia de homologação (emana ao concluir a ação — UC63/UC90; tela [09-certificados.md](09-certificados.md)).
+**Diário** (só confirmada): data *, minutos *, descrição * + Registrar. Certificado de ação **não** entra nesta fatia de homologação (emana ao concluir a ação — UC63/UC90; tela [09-certificados.md](09-certificados.md)).
 
 Link do e-mail de convite = `/voluntario/a/[slug]`:
 
 - Visitante → form público (item 2)
-- Já autenticado `ativo` + módulo ok → a ação em Em aberto com **Aceitar convite**
-- `em_analise` → tela de aguardo com a ação associada
+- Já autenticado ativo + módulo ok → a ação em Em aberto com **Aceitar convite**
+- em análise → tela de aguardo com a ação associada
 
 ---
 
@@ -155,14 +155,14 @@ Link do e-mail de convite = `/voluntario/a/[slug]`:
 
 Pré-requisito no GV (já especificado; não faz parte deste arquivo): uma ação de teste com slug, ex. mutirão de plantio, 50 vagas.
 
-1. Abrir `/voluntario/inscricao`. Conferir as 3 modalidades visíveis, regulamento no rodapé, enviar. Conferir `em_analise` e **sem** ação.
+1. Abrir `/voluntario/inscricao`. Conferir as 3 modalidades visíveis, regulamento no rodapé, enviar. Conferir em análise e **sem** ação.
 2. Abrir `/voluntario/a/[slug]` do plantio. Conferir topo da ação, **ausência** de “Como você quer atuar?”, bloco opcional abaixo, regulamento automático. Enviar.
-3. Conferir a mesma pessoa: `em_analise` + `inscrito` na ação.
+3. Conferir a mesma pessoa: em análise + inscrita na ação.
 4. Login com o e-mail do passo 2: tela de aguardo + nome da ação.
 5. (GV aprova cadastro — fora do portal.) Login de novo: Início do módulo; Ações ainda bloqueadas.
-6. Concluir o módulo (mocado). Abrir `/voluntario/acoes` → Minhas com o plantio `inscrito`.
+6. Concluir o módulo (mocado). Abrir `/voluntario/acoes` → Minhas com o plantio inscrita.
 7. Em aberto: outra ação; **Inscrever-me**. Convite: **Aceitar convite**.
-8. Confirmar no portal o diário só depois que o GV marcar `confirmado` (passo no gestor).
+8. Confirmar no portal o diário só depois que o GV marcar confirmada (passo no gestor).
 9. Reabrir o mesmo slug com o mesmo e-mail: não duplica cadastro; não cria segunda inscrição.
 10. Slug inexistente / ação encerrada: sem form.
 
@@ -178,4 +178,4 @@ Dados fictícios só em homologação.
 | Formulário unificado de satisfação mentoria/ação | Heitor / Sandra | Fora desta fatia |
 | Data da sessão de teste | Sandra, Alexandre, Daniele | Roteiro acima |
 
-**Já no v7 (não reabrir aqui):** MVP sem campos extras; períodos/experiência só no geral; `inscrito` imediato + `em_analise` na rede.
+**Já no v7 (não reabrir aqui):** MVP sem campos extras; períodos/experiência só no geral; inscrita imediato + em análise na rede.

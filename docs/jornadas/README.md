@@ -1,7 +1,7 @@
 # Jornadas da empreendedora — diagramas de sequência
 
-**Versão:** ago/2026  
-**Fontes:** [Casos de Uso v7](../../Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v7.md), [ADR jornada online](../adr-jornada-online.md), [Aplicativo Gestor](../../prototipo/Aplicativo%20Gestor.md)
+**Versão:** set/2026 (v10.2)  
+**Fontes:** [Casos de Uso v10.2](../../Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v10.2.md), [comunicacao.md](comunicacao.md), [Aplicativo Gestor](../../prototipo/Aplicativo%20Gestor.md)
 
 Estes diagramas ilustram o caminho da empreendedora **do cadastro ao certificado/doação**, deixando explícito:
 
@@ -14,10 +14,10 @@ Não há um único sequence do início ao fim: cada **fase** tem o seu diagrama.
 | Arquivo | Conteúdo |
 | ------- | -------- |
 | Este README | Convenções, mapa comparativo, tabela-mãe de gatilhos |
-| [online.md](online.md) | Inscrição, seleção, partida UC25, loop OK/lote, consumo, alertas, funil, doação, **mentoria de encerramento (lote + diagnóstico + pool)** |
-| [presencial-hibrido.md](presencial-hibrido.md) | Inscrição, seleção 3 etapas, efetivação, loop UC34/UC50, extra/visita, **mentoria regular (agenda gestor ou pool)**, encerramento, doação |
+| [online.md](online.md) | Inscrição, seleção, partida UC25, loop OK/lote, consumo, alertas, funil, doação, **mentoria de encerramento (lote + diagnóstico + lista de demandas)** |
+| [presencial-hibrido.md](presencial-hibrido.md) | Inscrição, seleção 3 etapas, efetivação, loop UC34/UC50, extra/visita, **mentoria regular (gestor indica ou voluntário pega)**, encerramento, doação |
 | [pos-liberacao.md](pos-liberacao.md) | PIX/recibo/material (comum) + desistência |
-| [Simulador de comunicação](../../simulador-comunicacao/README.md) | Ferramenta à parte: percorre online e P/H com os textos de cada passo |
+| [Simulador de comunicação](../../simulador-comunicacao/README.md) | Ferramenta à parte: percorre online e presencial ou híbrido com os textos de cada passo |
 
 ---
 
@@ -55,7 +55,7 @@ flowchart LR
   PosDoacao --> Cert
 ```
 
-Doação **P/H** pode ocorrer **durante** o loop de encontros (qualquer momento), não só no encerramento. O módulo de encerramento P/H **não** libera doação.
+Doação **presencial ou híbrido** pode ocorrer **durante** o loop de encontros (qualquer momento), não só no encerramento. O módulo de encerramento presencial ou híbrido **não** libera doação.
 
 ---
 
@@ -73,7 +73,7 @@ Usar só os que entram na fase.
 | `AppCliente` | Aplicativo Cliente |
 | `AppVoluntario` | Portal do voluntariado (pool, aceite, diário, ações) |
 | `GestorUnidade` | Seleção, UC25, aprovar doação, binding de alertas, alocar mentoria |
-| `GestorTurma` | Liberar P/H, presença, sugerir doação, grupo WA, alocar mentoria da turma |
+| `GestorTurma` | Liberar presencial ou híbrido, presença, sugerir doação, grupo WA, alocar mentoria da turma |
 | `GestorVoluntariado` | Ações, rede nacional, consulta de mentorias |
 | `Backend` | Regras + persistência |
 | `FilaJornada` | UC33 — liberar / OK / lote — **só online** |
@@ -104,16 +104,17 @@ Duas filas distintas: **jornada** (UC33) ≠ **alertas** (UC87). Mautic não faz
 
 | Tema | Online | Presencial / híbrido |
 | ---- | ------ | -------------------- |
-| **Início da jornada** | Sempre **UC25 faixa 2** (qualificada + vínculos). Nunca UC24, nunca alocar | Sempre **UC25 faixa 2** (aprovada + turma + link do grupo). Nunca UC24, nunca UC84, nunca UC17 |
+| **Início da jornada** | Sempre **UC25 faixa 2** (qualificada + vínculos). Nunca UC24, nunca alocar. Celebração **Você foi aprovada**; próximo passo = OK | Sempre **UC25 faixa 2** (aprovada + turma + link do grupo). Celebração e **Convite ao grupo** (mesmo envio pago). Nunca UC24, nunca UC84, nunca UC17 |
 | **1º contato WhatsApp pós-cadastro** | Obrigatório: usuária escreve no nº da org → template inscrição. **Não** inicia UC33 | Opcional, se a edição usar o mesmo padrão |
 | **Liberação de conteúdo** | Temporizador (FilaJornada). Gestor **só acompanha** | Checkbox do gestor (UC34), encontro a encontro |
 | **Envio WhatsApp de conteúdo** | Resposta **OK** da empreendedora → lote das `liberada` ainda não enviadas | Sem lote Gupshup. Depois do UC25, só grupo (UC50, envio **fora** da API) |
 | **WhatsApp pago (API)** | Contínuo: template inscrição, UC25, OK/lote, **documentos de Download** e vídeos (UC51), UC53 | UC25 (único envio operacional pago) + 1º contato opcional. Depois: grupo |
-| **Papel do Gestor de Turma na execução** | Acompanha; aprova entregas; resgate **manual** UC53 | Libera (UC34), comunica grupo (UC50), presença, aprova entregas, conteúdo extra; **mentoria P/H:** aloca lote da turma |
-| **Papel do Gestor de Unidade** | Classificar, comunicar, aprovar doação, binding de alertas; **mentoria online** (lote, fallback) | Classificar, entrevista, alocar, comunicar (3 faixas), aprovar doação; **mentoria P/H:** aloca lote ou Atendido pelo gestor |
+| **Papel do Gestor de Turma na execução** | Acompanha; aprova entregas; resgate **manual** UC53 | Libera (UC34), comunica grupo (UC50), presença, aprova entregas, conteúdo extra; **mentoria presencial ou híbrido:** aloca lote da turma |
+| **Papel do Gestor de Unidade** | Classificar, comunicar, aprovar doação, binding de alertas; **mentoria online** (lote, fallback) | Classificar, entrevista, alocar, comunicar (3 faixas), aprovar doação; **mentoria presencial ou híbrido:** aloca lote ou Atendido pelo gestor |
 | **Doação** | Funil rígido no **fim**: 100% → live → KW → quiz 100% certo. Só então sugerir/aprovar | Análise **manual** a **qualquer momento** (individual ou massa). Encerramento **não** libera |
-| **Mentoria (UC70)** | Encerramento: lote → diagnóstico no Cliente (hub Mentoria) → **pool**. `vagas` (default 1). Certificado **por pessoa × sessão**. | Programa **regular**. Hub `/app/mentorias`. Unidade/Turma **aloca lote** **ou** voluntário pega. **≠ extra ≠ visita**. GV consulta nacionalmente. |
+| **Mentoria (UC70)** | Encerramento: lote → diagnóstico no aplicativo da empreendedora → lista de demandas. Número de vagas da sessão (padrão 1). Certificado **por pessoa e por sessão**. | Programa **regular**. Tela de mentorias da empreendedora. Unidade ou turma **aloca o lote** **ou** um voluntário pega. **Não é** conteúdo extra nem visita. O Gestor de Voluntariado consulta em todo o país. |
 | **Risco de evasão** | Liberadas sem realização **> 10 dias** **ou** a **5 dias do término** com pendências. Maratona **não** é risco | Silêncio ≥ **15 dias** + represamento (programa longo) |
+| **Escuta do programa** | Chegada e NPS no ciclo. Pesquisa após a formação: **dias no CMS** (padrão cerca de 30); o **backend** dispara. A gestora **não** dispara. | Igual |
 | **Certificado** | Automático (UC55) quando o **empreendimento** atinge o % da edição; PDF em cascata para todas as sócias. Mentoria individual: **um certificado por pessoa × sessão** (mentor + mentorada). Coletiva e campanha: **sem** certificado | Igual |
 
 Regra transversal: **classificar ≠ comunicar ≠ liberar atividades**.

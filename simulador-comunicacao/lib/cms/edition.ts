@@ -3,7 +3,36 @@ import type { CmsEdition } from "./types";
 export const EDITION_EMPREENDE_ZAP: CmsEdition = {
   id: "empreende-zap-2026",
   name: "Empreende no Zap 2026",
+  anoReferencia: 2026,
+  tipo: "online",
   journey: "online",
+  datas: {
+    aberturaInscricao: "2026-01-15",
+    encerramentoInscricao: "2026-02-28",
+    inicioSelecao: "2026-03-01",
+    terminoSelecao: "2026-03-15",
+    inicioPrograma: "2026-03-20",
+    terminoPrograma: "2026-06-30",
+  },
+  catalogoNome: "Catálogo EWTI 2027 — Mensagens WhatsApp",
+  preInscricao: {
+    sequencia: "2D,5D,10D",
+    lembretes: [
+      { dias: 2, codigo: "2D" },
+      { dias: 5, codigo: "5D" },
+      { dias: 10, codigo: "10D" },
+    ],
+    canal: "ambos",
+    template: {
+      elementName: "pre_inscricao_lembrete_v2",
+      data: "Olá, {{1}}! Você iniciou sua inscrição na {{2}} e ainda não concluiu. Continue por aqui: {{3}} para finalizar sua inscrição.",
+      variables: [
+        { key: "1", nome: "Apelido", token: "operacional.tab_usuario.str_apelido" },
+        { key: "2", nome: "Nome da edição", token: "cms.api::edicao.edicao.edicao" },
+        { key: "3", nome: "URL retomar inscrição", token: "manual" },
+      ],
+    },
+  },
   package: {
     id: "pkg-zap-2026",
     name: "Empreende no Zap 2026",

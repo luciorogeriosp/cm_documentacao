@@ -7,11 +7,11 @@
 | **UCs** | UC90 |
 | **Prioridade** | Especificado |
 
-O **Gestor de Voluntariado** **abre** a ação (pode existir **sem** edição). Cada ação tem **`slug`** e landing pública `/voluntario/a/[slug]`. No portal autenticado, o voluntário vê as ativas no período e se inscreve. GV confirma ou recusa. Horas no **diário da ação**. Ao **concluir** a ação, certificado genérico de participação para todas as pessoas `confirmado` (UC63 / UC90) — visível em [09-certificados.md](09-certificados.md).
+O **Gestor de Voluntariado** **abre** a ação (pode existir **sem** edição). Cada ação tem **endereço da página** e landing pública `/voluntario/a/[slug]`. No portal autenticado, o voluntário vê as ativas no período e se inscreve. GV confirma ou recusa. Horas no **diário da ação**. Ao **concluir** a ação, certificado genérico de participação para todas as pessoas confirmada (UC63 / UC90) — visível em [09-certificados.md](09-certificados.md).
 
-Quem chega pelo slug já entra `inscrito` (e `em_analise` na rede). Convite: texto personalizado + mesmo slug.
+Quem chega pelo slug já entra inscrita (e em análise na rede). Convite: texto personalizado + mesmo slug.
 
-Abas sugeridas no portal: **Em aberto · Minhas · Encerradas** (espelho das mentorias): abertas para inscrição; minhas (`inscrito`/`confirmado`); encerradas (`recusado` / ação encerrada).
+Abas sugeridas no portal: **Em aberto · Minhas · Encerradas** (espelho das mentorias): abertas para inscrição; minhas (inscrita/confirmada); encerradas (recusada / ação encerrada).
 
 ```
 ┌──────────────────────────────────────────────────┐
@@ -35,6 +35,6 @@ Abas sugeridas no portal: **Em aberto · Minhas · Encerradas** (espelho das men
 └──────────────────────────────────────────────────┘
 ```
 
-Status: `inscrito` → `confirmado` | `recusado`. Recusado some da lista operacional; confirmado permanece com diário próprio. BI agrupa por **programa/ação**. Inscrição exigem módulo CMS.
+Status: inscrita → confirmada | recusada. Recusado some da lista operacional; confirmado permanece com diário próprio. BI agrupa por **programa/ação**. Inscrição exigem módulo CMS.
 
 Convite recebido do GV (e-mail / lista): a ação aparece em Em aberto com CTA **Aceitar convite**. Link do e-mail = `/voluntario/a/[slug]`.

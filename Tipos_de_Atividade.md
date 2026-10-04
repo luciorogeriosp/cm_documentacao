@@ -11,7 +11,7 @@ Relação com outros documentos:
 - [Casos de Uso - Consulado da Mulher_v8.md](Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v8.md) — casos de uso completos (UC15, UC34, UC13, UC33, UC35, UC44, UC45, UC53, UC78, UC80 etc.).
 - [prototipo/Aplicativo Gestor.md](prototipo/Aplicativo%20Gestor.md) — visão geral das telas e da navegação.
 
-São **11 tipos** de atividade, definidos em `TipoAtividade` (canônico com UC15). A reunião **24/ago.** unificou **Evento Presencial** e **Aula ao Vivo** no tipo **Aula**; a **natureza original** (presencial ou ao vivo) é definida no **CMS** (UC15) e operacionalizada na **liberação** do Gestor (UC34), com possibilidade de alteração até ministrar.
+São **12 tipos** de atividade, definidos no catálogo de tipos de atividade (canônico com UC15). A reunião **24/ago.** unificou **Evento Presencial** e **Aula ao Vivo** no tipo **Aula**; a **natureza original** (presencial ou ao vivo) é definida no **CMS** (UC15) e operacionalizada na **liberação** do Gestor (UC34), com possibilidade de alteração até ministrar. A escuta do **programa** no módulo é o trio **chegada** (Questionário Inicial), **NPS** e **Encerramento** (cerca de 30 dias depois).
 
 **Fora da enum** (não são tipos montáveis no módulo):
 
@@ -32,9 +32,10 @@ São **11 tipos** de atividade, definidos em `TipoAtividade` (canônico com UC15
 | Download de Conteúdo | Todas | Data-prazo | Não | Baixaram / não baixaram |
 | Plano de Ação | Todas | Data-prazo | Não (gestão de metas) | Fizeram / não fizeram |
 | Visita Técnica | Presencial, Híbrido | Agendamento individual (presencial ou online — UC78) | Sim (registro da visita) | Visitas realizadas / participantes |
-| Questionário Inicial | Todas | Data-prazo | Não | Responderam / não responderam |
+| Questionário Inicial | Todas | Prazo no módulo (chegada) | Não | Responderam / não responderam |
 | Questionário Final | Todas | Data-prazo | Não | Responderam / não responderam |
-| NPS | Todas | Data-prazo | Não | Responderam / não responderam |
+| NPS | Todas | Prazo no módulo (fim da formação) | Não | Responderam / não responderam |
+| Encerramento | Todas | Atraso no módulo (cerca de 30 dias depois do fim da formação) | Não | Responderam / não responderam |
 
 Em programas **online** não existem Aula nem Visita Técnica (ver seção 5). A Visita Técnica só existe em edição **presencial/híbrido**; o agendamento 1 a 1 pode ser presencial ou por videoconferência (UC78).
 
@@ -157,31 +158,39 @@ Histórico com canal de comentários entre gestor e empreendedora.
 
 ### 3.9 Questionário Inicial
 
-**Descrição e finalidade.** Diagnóstico de entrada (T0) da empreendedora e do negócio, no início da jornada. Instrumento distinto do tipo **Atividade** (genérico).
+**Descrição e finalidade.** Chegada — diagnóstico de entrada da empreendedora e do negócio, no início da jornada. Primeira das **três escutas do programa** no módulo (chegada, NPS e Encerramento). Instrumento distinto do tipo **Atividade** (genérico) e do Questionário Final da live.
 
-**Configuração pelo gestor.** Data-prazo e comunicação; o instrumento é mantido na plataforma.
+**Configuração no módulo (UC15).** Prazo ou data e o recado do pacote de comunicação da edição — sem texto solto. A automação dispara a partir dessa programação.
 
 **Acompanhamento.** Lista de respondentes e **gráfico de pizza** com a distribuição das respostas e a adesão da turma (UC39).
 
 ### 3.10 Questionário Final
 
-**Descrição e finalidade.** Avaliação de saída (T1), no encerramento; permite comparar com o questionário inicial.
+**Descrição e finalidade.** Instrumento do **funil pela internet** (prova depois da palavra-chave). **Não** é o Encerramento de cerca de 30 dias nem o módulo de encontros de encerramento presencial ou híbrido.
 
-**Configuração e acompanhamento.** Iguais aos do Questionário Inicial.
+**Configuração e acompanhamento.** Data-prazo e comunicação; lista de respondentes e pizza (UC39).
 
-**Regras específicas.** Insumo do processo de encerramento e da consolidação de beneficiamento (UC13).
+**Funil de doação (UC38):** após a live (YouTube + StreamYard, fora da plataforma), o sistema libera a **atividade de presença** para informar a **palavra-chave** (sem diferenciar maiúscula, minúscula ou acento; prazo rígido; marca o instante). **Somente com a palavra válida** o Questionário Final é liberado; **somente 100% de acerto** deixa a empreendedora **liberada para doação**. Regra canônica = **uma palavra-chave** no fim da live (várias palavras = em discussão).
 
-**Encerramento online (funil de doação — UC38):** após a live (YouTube + StreamYard, fora da plataforma), o sistema libera a **atividade de presença** para informar a **palavra-chave** (case/acento-insensitive; prazo rígido; timestamp). **Somente com KW válida** o Questionário Final é liberado; **somente 100% de acerto** deixa a empreendedora **liberada para doação**. Regra canônica = **1 KW** no fim da live (múltiplas KW = em discussão).
-
-**Encerramento P/H:** módulo de encerramento = **obrigatório na carga** (≠ funil online); doação por análise manual a qualquer momento (UC57).
+**Módulo de encerramento presencial ou híbrido:** encontros de **carga obrigatória** (≠ funil pela internet e ≠ esta prova); doação por análise manual a qualquer momento (UC57).
 
 ### 3.11 NPS
 
-**Descrição e finalidade.** Pesquisa de satisfação com o programa, aplicada ao final. Máscara única/global para online, presencial e híbrido.
+**Descrição e finalidade.** Satisfação com o programa no **fim da formação**. Segunda das três escutas do módulo (chegada, NPS e Encerramento). Máscara única para o curso pela internet, presencial e híbrido.
 
-**Configuração pelo gestor.** Data-prazo e comunicação.
+**Configuração no módulo (UC15).** Prazo e o recado do pacote — sem texto solto.
 
 **Acompanhamento.** Lista de respondentes e gráfico por faixa (**promotoras**, **neutras**, **detratoras**).
+
+### 3.12 Encerramento
+
+**Descrição e finalidade.** Questionário de acompanhamento enviado **cerca de 30 dias depois** do fim da formação. Terceira escuta do programa no módulo. A empreendedora responde (UC82); o backend envia no dia combinado; o painel de dados vê as respostas.
+
+**Não é** o Questionário Final da live (prova de 100% certo para doação). **Não é** o módulo de encontros de encerramento presencial ou híbrido (carga obrigatória).
+
+**Configuração no módulo (UC15).** Atraso (ex.: 30 dias após o fim da formação), canal e recado do pacote da edição. O gestor **não dispara** e **não** escolhe edição na hora do envio. Sem formulário paralelo no CMS.
+
+**Acompanhamento.** Lista de respondentes e pizza no detalhe da atividade (UC34); consolidação no painel de dados.
 
 ## 4. Regras transversais
 
@@ -190,7 +199,7 @@ Histórico com canal de comentários entre gestor e empreendedora.
 - **Cancelamento e reativação.** Liberação só pode ser cancelada enquanto **não** houver presença registrada nem entrega submetida. Cancelada, a atividade some para as participantes e **não** conta no beneficiamento; o gestor pode reativá-la.
 - **Aprovação sem reprovação (UC44).** Entregas resolvidas como **aprovada** ou **revisar**, com comentários entre gestor e empreendedora.
 - **Conteúdo extra (UC35).** Em presencial/híbrido, o gestor de turma pode adicionar item pontual além da matriz (presencial ou ao vivo); **não** altera a enum; **não** conta %/carga; enquanto não liberado, pode ser excluído.
-- **Comunicação.** Templates centralizados no **pacote UC88** (CMS): **1 por `TipoAtividade`** (+ Aula presencial/ao_vivo). **P/H:** facilitador UC50 (clipboard) — **mesmo corpo** Meta/Gupshup; **Gestor de Unidade** pode editar antes de enviar. **Online:** envio API (UC33) após UC25; no tipo **Download**, o lote leva o template **e os arquivos** no WhatsApp da usuária, e os mesmos documentos ficam no Cliente. Módulo (UC15) **não** cadastra mensagens. Alertas (evasão, atraso, resgate) na **mesma área CMS** (UC87).
+- **Comunicação.** Textos centralizados no **pacote de comunicação** (UC88). **Um recado por tipo** (aula presencial e aula ao vivo são dois). Chegada, NPS e Encerramento, no módulo, apontam o recado do pacote e o quando (prazo ou atraso) — sem texto solto. No presencial ou híbrido: a gestora cola no grupo (UC50); a gestora de unidade pode ajustar o corpo antes de enviar. No curso pela internet: a automação envia depois da aprovação (UC33); no tipo **Download**, o lote leva o recado **e os arquivos** no WhatsApp, e os mesmos documentos ficam no Cliente. Alertas (evasão, atraso, resgate) na **mesma área CMS** (UC87).
 
 ### Risco de evasão — dois níveis
 
@@ -214,7 +223,7 @@ Na jornada 100% online (ex.: Empreende no Zap):
 
 ## 6. Matriz de módulos
 
-A cada edição, módulos e atividades são planejados de novo: temas podem mudar e, em cada módulo, entram quaisquer dos **11 tipos** permitidos pela modalidade.
+A cada edição, módulos e atividades são planejados de novo: temas podem mudar e, em cada módulo, entram quaisquer dos **12 tipos** permitidos pela modalidade.
 
 ### 6.1 Presencial e híbrido
 

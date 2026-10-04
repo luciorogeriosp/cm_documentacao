@@ -539,7 +539,7 @@ Disparo **manual** (WhatsApp template Gupshup e/ou e-mail). UI com **somente tr�
 | **2 — Liberação / início** | P/H: aprovadas **+ turma** (+ grupo WA). Online: qualificadas + vínculos | **Sim** | Sem turma → bloqueia |
 | **3 — Não qualificada / não aprovada** | Demais (incl. ausentes auto) | Não | — |
 
-P/H sem API: `wa.me` individual. Contador de **jornadas liberadas** + histórico de envios. Anonimiza CPF não aprovadas 1 dia após fim da seleção (UC76).
+P/H sem API: conversa direta no WhatsApp individual. Contador de **jornadas liberadas** + histórico de envios. Anonimiza CPF não aprovadas 1 dia após fim da seleção (UC76).
 
 ### Wireframe
 
@@ -554,7 +554,7 @@ P/H sem API: `wa.me` individual. Contador de **jornadas liberadas** + histórico
 │ Canal: [ WhatsApp API ▼ ] [ E-mail ]             │
 │ Template * [ Boas-vindas + grupo ▼ ]             │
 │ P/H liberar: exige turma + código grupo WA       │
-│ Fallback: [ Abrir wa.me individual ]             │
+│ Fallback: [ Abrir conversa direta no WhatsApp individual ]             │
 ├──────────────────────────────────────────────────┤
 │ [ Enviar individual ] [ Enviar em lote ]         │
 │ Histórico de envios…                             │
@@ -836,7 +836,7 @@ P/H: lista de **empreendimentos**. Online: só *liberadas*.
 
 ### 11.4 Mentorias — só **online** (encerramento)
 
-Etapa **final** da jornada. Lote → diagnóstico no Cliente → pool do portal do voluntariado (`vagas` N); fallback Unidade **vincula vários**; [card visual](comum/card-mentoria.md). **P/H** — [§21a](#21a-mentorias--ph-programa-regular). Recorte: [§21b](#21b-voluntários). GV: [§21c](#21c-gestor-de-voluntariado).
+Etapa **final** da jornada. Lote → diagnóstico no Cliente → pool do portal do voluntariado (vagas da sessão N); fallback Unidade **vincula vários**; [card visual](comum/card-mentoria.md). **P/H** — [§21a](#21a-mentorias--ph-programa-regular). Recorte: [§21b](#21b-voluntários). GV: [§21c](#21c-gestor-de-voluntariado).
 
 ```
 ┌──────────────────────────────────────────────────┐
@@ -1057,7 +1057,7 @@ Selecionar **≥ 2** negócios → **Agrupar** → modal escolhe o sobrevivente;
 
 **Só edição presencial/híbrida.** Fora do Encerramento. Não é visita técnica nem conteúdo extra.
 
-Pedido do app **precisa** de mentor(es) ou **Atendido pelo gestor** (sem BI). Sem agenda/slot de 2h. Unidade/Turma **alocam lote** (1º = líder) | recusam | comunicam `wa.me`. Card: [comum/card-mentoria.md](comum/card-mentoria.md). Tela: [08-registrar-mentoria.md](aplicativo-gestor/gestor-unidade/08-registrar-mentoria.md).
+Pedido do app **precisa** de mentor(es) ou **Atendido pelo gestor** (sem BI). Sem agenda/slot de 2h. Unidade/Turma **alocam lote** (1º = líder) | recusam | comunicam conversa direta no WhatsApp. Card: [comum/card-mentoria.md](comum/card-mentoria.md). Tela: [08-registrar-mentoria.md](aplicativo-gestor/gestor-unidade/08-registrar-mentoria.md).
 
 ```
 ┌──────────────────────────────────────────────────┐
@@ -1621,7 +1621,7 @@ O gestor envia WhatsApp pago a quem **não fez uma atividade** (operacional), es
 | **UCs** | UC26, UC19 |
 | **Prioridade** | MVP |
 
-Inscrições incompletas; exportar; lembrete **automático** via alerta `inscription_incomplete` (UC87) + **disparo manual** (fallback; e-mail prioritário; WhatsApp opcional). Histórico mostra envios auto e manuais. Ver também [10-alertas-automaticos.md](aplicativo-gestor/gestor-unidade/10-alertas-automaticos.md).
+Inscrições incompletas; exportar; lembrete **automático** via alerta ficha incompleta (UC87) + **disparo manual** (fallback; e-mail prioritário; WhatsApp opcional). Histórico mostra envios auto e manuais. Ver também [10-alertas-automaticos.md](aplicativo-gestor/gestor-unidade/10-alertas-automaticos.md).
 
 ---
 

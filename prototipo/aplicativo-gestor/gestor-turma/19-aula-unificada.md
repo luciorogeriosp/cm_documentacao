@@ -32,7 +32,7 @@ O CMS define o conteúdo programático da Aula (**natureza original**, título, 
 
 ## 3. Situação proposta
 
-Um tipo **Aula** na enum `TipoAtividade`. Cada ocorrência na turma tem:
+Um tipo **Aula** no catálogo de atividades. Cada ocorrência na turma tem:
 
 ```
 natureza: presencial | ao_vivo

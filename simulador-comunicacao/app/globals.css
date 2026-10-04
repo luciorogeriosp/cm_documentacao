@@ -335,6 +335,39 @@ h1 {
   background: #fff;
 }
 
+.cfg {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  font-size: 0.82rem;
+}
+
+.cfg h2 {
+  margin: 0 0 8px;
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.cfg dl {
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.cfg dt {
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.cfg dd {
+  margin: 2px 0 0;
+}
+
 .checks {
   display: grid;
   gap: 8px;

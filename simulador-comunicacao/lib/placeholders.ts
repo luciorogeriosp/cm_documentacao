@@ -1,3 +1,5 @@
+import type { CmsTemplateVar, CmsWaTemplate } from "./cms/types";
+
 export const EXEMPLO = {
   nome: "Maria Silva",
   programa: "Empreende no Zap 2026",
@@ -38,6 +40,27 @@ export function fill(text: string, vars: FillVars): string {
     .replaceAll("{prazo}", EXEMPLO.prazo);
   if (nome) out = out.replaceAll("{{1}}", nome);
   if (programa) out = out.replaceAll("{{2}}", programa);
+  out = out.replaceAll("{{3}}", EXEMPLO.linkAcesso);
+  return out;
+}
+
+function slotForVar(variable: CmsTemplateVar): string {
+  const blob = `${variable.nome} ${variable.token || ""}`.toLowerCase();
+  if (/apelido|nome social|str_apelido/.test(blob)) return "nome";
+  if (/url|link|retomar|acesso/.test(blob)) return "link";
+  if (/edicao|edição/.test(blob)) return "programa";
+  if (variable.key === "1") return "nome";
+  if (variable.key === "2") return "programa";
+  if (variable.key === "3") return "link";
+  return "programa";
+}
+
+export function catalogBody(template?: CmsWaTemplate): string {
+  if (!template?.data) return "";
+  let out = template.data;
+  for (const variable of template.variables) {
+    out = out.replaceAll(`{{${variable.key}}}`, `{${slotForVar(variable)}}`);
+  }
   return out;
 }
 

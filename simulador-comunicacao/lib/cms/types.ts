@@ -20,6 +20,31 @@ export type CmsWaMessage = {
   data?: string;
 };
 
+export type CmsTemplateVar = {
+  key: string;
+  nome: string;
+  token?: string;
+  manualValue?: string;
+};
+
+export type CmsWaTemplate = {
+  elementName: string;
+  data: string;
+  variables: CmsTemplateVar[];
+};
+
+export type CmsLembrete = {
+  dias: number;
+  codigo: string;
+};
+
+export type CmsPreInscricao = {
+  sequencia: string;
+  lembretes: CmsLembrete[];
+  template?: CmsWaTemplate;
+  canal?: string;
+};
+
 export type CmsActivity = {
   id: string;
   type: TipoAtividade;
@@ -47,28 +72,38 @@ export type CmsPackage = {
   templates: Record<string, string>;
 };
 
-export type CmsEdition = {
+export type CmsDatas = {
+  aberturaInscricao?: string;
+  encerramentoInscricao?: string;
+  inicioSelecao?: string;
+  terminoSelecao?: string;
+  inicioPrograma?: string;
+  terminoPrograma?: string;
+};
+
+export type CmsEditionSummary = {
   id: string;
   name: string;
+  slug?: string;
+  anoReferencia: number;
   journey: "online" | "ph";
+  tipo?: string;
+  duracao?: string;
+  ativo?: boolean;
+  programaNome?: string;
+  permiteWhatsapp?: boolean;
+  datas?: CmsDatas;
+};
+
+export type CmsEdition = CmsEditionSummary & {
   package: CmsPackage;
   modules: CmsModule[];
-  slug?: string;
-  ativo?: boolean;
-  permiteWhatsapp?: boolean;
-  programaNome?: string;
   grupoLink?: string;
+  catalogoNome?: string;
+  preInscricao?: CmsPreInscricao;
   mensagemInscricao?: {
     elementName: string;
     data: string;
-  };
-  datas?: {
-    aberturaInscricao?: string;
-    encerramentoInscricao?: string;
-    inicioSelecao?: string;
-    terminoSelecao?: string;
-    inicioPrograma?: string;
-    terminoPrograma?: string;
   };
 };
 

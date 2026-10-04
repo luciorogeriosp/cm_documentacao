@@ -55,7 +55,7 @@ Após a live de encerramento, confirmar presença com **palavra-chave**. Valida�
 
 ## Regras
 
-- Só aparece se live liberada e empreendedora na base 100%  
-- Não embutir KW no player YouTube  
-- Timestamp alimenta ranking pós-elegibilidade (não auto-doa)  
-- P/H: esta tela **não existe** para doação  
+- Só aparece **depois que a live termina** (sem botão “já terminei o workshop”)
+- Prazo **da edição**, não duas horas fixas
+- Timestamp alimenta ranking; não auto-doa
+- P/H: esta tela **não existe** para doação

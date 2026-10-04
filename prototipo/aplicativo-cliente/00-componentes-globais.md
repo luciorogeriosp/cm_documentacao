@@ -21,14 +21,15 @@ Elementos reutilizados em todas as telas autenticadas e no fluxo de inscrição.
 
 - Logo Consulado da Mulher
 - Nome da edição/programa (truncado em mobile)
-- Menu hambúrguer: Home, Calendário, Meu perfil, Meu histórico, Certificados, Sair — **sem** Mentoria
+- Menu hambúrguer: Programas, Calendário, Meu perfil, Meu histórico, Certificados, Sair — **sem** Mentoria
+- Ícone de perfil no header (anel de progresso + Sair)
 
 ### Barra inferior autenticada
 
-- Home · Mentoria · Calendário · Perfil
-- **P/H:** Mentoria sempre, durante o programa
-- **Online:** Mentoria **só** após lote de encerramento
-- Hub: [29-mentorias-hub.md](29-mentorias-hub.md)
+- **Programas · Certificados · Ajuda IA**
+- Mentoria **não** fica no rodapé — entra pelo programa: [29-mentorias-hub.md](29-mentorias-hub.md)
+- Calendário fica no menu do header: [10-calendario-atividades.md](10-calendario-atividades.md)
+- Ajuda IA abre [25-chat-duvidas.md](25-chat-duvidas.md)
 
 ### Barra de progresso (inscrição)
 

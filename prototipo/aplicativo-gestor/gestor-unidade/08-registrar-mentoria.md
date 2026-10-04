@@ -18,7 +18,7 @@ A **modalidade da edição** escolhe o layout da mesma rota.
 | - | ---------- | ------- |
 | Menu | Encerramento (etapa **final**) | Programa regular |
 | Origem | Lote → diagnóstico no Cliente | Pedido no Cliente (ou Unidade cria) |
-| Mentor | Voluntário (`vagas` N) | Lote de voluntários (1º = **líder**) |
+| Mentor | Voluntário (vagas da sessão N) | Lote de voluntários (1º = **líder**) |
 | Agenda 2h | — | **Não existe** |
 
 **Área (CMS):** Finanças, Marketing, Vendas, Gestão, Comunicação, Formalização, Saúde e bem-estar, Tecnologia.
@@ -31,15 +31,15 @@ A **modalidade da edição** escolhe o layout da mesma rota.
 
 | Ação | Unidade | Turma |
 | ---- | :-----: | :---: |
-| Alocar lote, recusar, Atendido pelo gestor, `wa.me` | ✓ | ✓ (própria turma) |
+| Alocar lote, recusar, Atendido pelo gestor, conversa direta no WhatsApp | ✓ | ✓ (própria turma) |
 | Consultar lista, ficha e card | ✓ | ✓ (escopo da turma) |
-| Online: lote, vincular `vagas`, timeout | ✓ | consulta |
+| Online: lote, vincular vagas da sessão, timeout | ✓ | consulta |
 
 ---
 
 ## 1. Online — encerramento
 
-Copy: **etapa final da jornada**. Colunas: sem diagnóstico / aberta no pool (`vagas`) / matches aceitos / pendente.
+Copy: **etapa final da jornada**. Colunas: sem diagnóstico / aberta no pool (vagas da sessão) / matches aceitos / pendente.
 
 ```
 ┌──────────────────────────────────────────────────┐
@@ -53,11 +53,11 @@ Copy: **etapa final da jornada**. Colunas: sem diagnóstico / aberta no pool (`v
 └──────────────────────────────────────────────────┘
 ```
 
-Timeout `prazo_match_horas` (padrão 72h). Cada vinculado na base UC73. Educador interno **não** aparece como voluntário.
+Se ninguém aceitar em **72 horas** (prazo configurável no CMS de Administração), a unidade indica um ou mais voluntários da rede. Educador interno **não** aparece como voluntário.
 
 ---
 
-## 2. P/H — programa regular
+## 2. Presencial ou híbrido — programa regular
 
 Abas: **Lista** · **Solicitações** (badge). **Sem** Minha agenda / slots.
 
@@ -82,7 +82,7 @@ Status: aberta · ativa · encerrada / NPS pendente · finalizada · atendida pe
 2. **Atendido pelo gestor** — fecha **sem** BI (sem horas, certificado, pessoa voluntária).
 3. **Recusar** — motivo obrigatório (Cliente vê).
 
-**Comunicar no WhatsApp** (`wa.me`) para cada mentor do lote — antes ou depois da consulta; não é o mecanismo de alocar.
+**Comunicar no WhatsApp** (conversa direta no WhatsApp) para cada mentor do lote — antes ou depois da consulta; não é o mecanismo de alocar.
 
 ```
 ┌──────────────────────────────────────────────────┐

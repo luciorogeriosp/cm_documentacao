@@ -47,13 +47,13 @@ sequenceDiagram
   end
 
   opt inscricao incompleta
-    Note over FilaAlertas,SendGrid: AUTO UC87 inscription_incomplete
+    Note over FilaAlertas,SendGrid: AUTO UC87 ficha incompleta
     FilaAlertas -->> Backend: atraso configurado na edicao
     Backend -->> SendGrid: lembrete email com link magico
     opt WhatsApp opcional
       Backend -->> Gupshup: template lead incompleta
     end
-    Note over GestorUnidade: GESTOR fallback Mini CRM UC26 disparo manual
+    Note over GestorUnidade: GESTOR alternativa Mini CRM UC26 disparo manual
     GestorUnidade ->> Backend: dispara lembrete manual
   end
 
@@ -182,7 +182,7 @@ sequenceDiagram
 | 10–14 | 1º lote | AUTO | Backend | Gupshup + link mágico | Não conclui atividade; **liberada ≠ enviada** |
 | — | Acompanhamento | GESTOR | Turma | App Gestor | Não marca checkbox de liberação |
 
-Envios respeitam janela comercial (seg–sex 8h–20h; sáb 8h–16h; domingo/feriado sem disparo). Falha → retry 48h ou `wa.me`.
+Envios respeitam janela comercial (seg–sex 8h–20h; sáb 8h–16h; domingo/feriado sem disparo). Falha → retry 48h ou conversa direta no WhatsApp.
 
 ---
 
@@ -202,7 +202,7 @@ sequenceDiagram
   participant GestorTurma
 
   loop cada temporizador da sequencia
-    Note over FilaJornada,Backend: AUTO UC33 liberar_por_temporizador
+    Note over FilaJornada,Backend: AUTO UC33 liberar pelo temporizador
     FilaJornada -->> Backend: due jornada_evento
     Backend -->> Backend: marca atividades liberada - NAO envia
     Backend -->> Gupshup: solicitar_ok_conteudo com titulo
@@ -313,13 +313,13 @@ sequenceDiagram
 
   Note over FilaAlertas,Backend: AUTO UC87 - distinto de UC33
   FilaAlertas -->> Backend: avalia metricas da edicao
-  alt activity_deadline_soon / backlog_liberated / checkpoint_midcourse
+  alt prazo da atividade se aproximando / várias aulas paradas / meio do curso
     Backend -->> SendGrid: lembrete ou check-point
     opt canal WhatsApp da regra
       Backend -->> Gupshup: template de alerta
       Gupshup -->> Empreendedora: mensagem de nurturing
     end
-  else risk_short_online / edition_ending_pending
+  else risco no curso curto / fim do programa perto
     Backend -->> Gupshup: template risco curto
     Gupshup -->> Empreendedora: resgate automatico
   end
@@ -339,7 +339,7 @@ sequenceDiagram
 | ----- | ------- | ---- | ---- | ----- | ------------- |
 | 1 | Binding da edição | GESTOR | Unidade | App Gestor | Não cria tipo novo de gatilho (isso é CMS) |
 | 2–8 | Regras UC87 | AUTO | FilaAlertas | E-mail / WA | Não libera nem envia lote de conteúdo (UC33) |
-| 9–13 | UC53 | GESTOR | Turma ou Unidade | Gupshup | Não existe em P/H; não pune maratona |
+| 9–13 | UC53 | GESTOR | Turma ou Unidade | Gupshup | Não existe em presencial ou híbrido; não pune maratona |
 
 ---
 
@@ -442,9 +442,9 @@ sequenceDiagram
 
 ## 9. Mentoria de encerramento
 
-Só no **online**, etapa **final** (UC70): lote de finalistas / doação aprovada → empreendedora preenche o **diagnóstico** no Cliente → demanda `aberta` no **Aplicativo Voluntário** (só edição ativa / datas de aplicação). Pedido da empreendedora = **uma** demanda; campo **`vagas`** (default 1) no lado gestor/voluntário. Voluntário vê o **card visual**, aceita (decrementa vaga, WhatsApp), registra o **diário próprio**. Timeout: Unidade vincula **um ou vários** (cada um na base UC73). Certificado **individual por pessoa × sessão**. NPS no Cliente após `concluida`.
+Só no curso **pela internet**, etapa **final** (UC70): lote de finalistas / doação aprovada → empreendedora preenche o **diagnóstico** no aplicativo → demanda aberta no **portal do voluntariado** (só edição ativa / datas de aplicação). Pedido da empreendedora = **uma** demanda; **número de vagas da sessão** (padrão 1). O voluntário vê o **cartão**, aceita (diminui uma vaga, WhatsApp), registra o **diário próprio**. Se ninguém aceitar em **72 horas** (prazo configurável no CMS), a unidade indica **um ou vários** voluntários da rede. Certificado **individual por pessoa e por sessão**. Pesquisa de satisfação no aplicativo depois de concluída.
 
-No P/H — [presencial-hibrido.md §8](presencial-hibrido.md#8-mentoria-programa-regular).
+No presencial ou híbrido — [presencial-hibrido.md §8](presencial-hibrido.md#8-mentoria-programa-regular).
 
 ```mermaid
 sequenceDiagram
@@ -466,7 +466,7 @@ sequenceDiagram
     Backend -->> AppVoluntario: revela WhatsApp no card
     AppVoluntario ->> Backend: diario data desc minutos
     Backend -->> AppCliente: NPS; certificado por sessao
-  else timeout
+  else prazo esgotado
     GestorUnidade ->> Backend: vincula um ou varios (UC73)
   end
 ```

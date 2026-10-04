@@ -11,7 +11,7 @@
 
 ## Objetivo
 
-Visualizar e editar dados cadastrais, exceto CPF validado.
+Perfil: progresso geral, atalho para Meus dados, desistência e **Sair da conta**. Meus dados edita cadastro, exceto CPF.
 
 ---
 
@@ -20,22 +20,17 @@ Visualizar e editar dados cadastrais, exceto CPF validado.
 ```
 ┌─────────────────────────────────┐
 │  [←]  Meu perfil                │
+│  Progresso geral  4 de 9  44%   │
+│  (anel)                         │
 ├─────────────────────────────────┤
-│  Nome: Maria Silva              │
-│  CPF: ***.***.***-**  🔒        │  ← não editável
-│  E-mail *                       │
-│  [________________________]     │
-│  Telefone (DDD) *               │
-│  [(__) _____-____]              │
-│  Endereço (CEP, rua, etc.)      │
-│  Unidade: Centro (somente leitura│
-│  para empreendedora)            │
+│  [ Meus dados → ]               │
+│  Nome, nome social, e-mail,     │
+│  telefone, endereço             │
+│  CPF 🔒 não edita nem aparece   │
+│  como campo                     │
 ├─────────────────────────────────┤
-│  Programa / Edição / Turma      │
-│  (somente leitura)              │
-├─────────────────────────────────┤
-│  [ Salvar alterações ]          │
-│  [ Solicitar desistência ]      │  → UC30 / UC79
+│  [ Solicitar desistência ]      │
+│  [ Sair da conta ]              │
 └─────────────────────────────────┘
 ```
 
@@ -43,6 +38,7 @@ Visualizar e editar dados cadastrais, exceto CPF validado.
 
 ## Regras
 
-- CPF validado: **bloqueado** para edição pela empreendedora
-- Unidade: somente gestor altera (correção de alocação)
-- **Mentoria** não fica no perfil — área própria no menu inferior: [29-mentorias-hub.md](29-mentorias-hub.md)
+- Meus dados: nome, nome social, e-mail, telefone, endereço. **CPF não edita.**
+- Unidade / turma: somente gestor altera
+- **Sair da conta** encerra a sessão; novo acesso = outro link mágico
+- **Mentoria** não fica no perfil — entra pelo programa: [29-mentorias-hub.md](29-mentorias-hub.md)

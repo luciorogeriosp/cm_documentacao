@@ -11,7 +11,7 @@ Hub: Início (módulo CMS) + **Em aberto · Minhas · Encerradas**. Treino: [03-
 
 **P/H:** solicitações **ainda sem lote**, filtradas pelas áreas de interesse / expertise. Card no **estado A** (só negócio; inclui faturamento). CTA: **Pegar mentoria** → vira **líder** (lote de 1); some de Em aberto para todos. **Pegar** bloqueado até o módulo CMS.
 
-**Online:** demandas `aberta` de edições ativas / datas de aplicação, com `vagas` restantes.
+**Online:** demandas aberta de edições ativas / datas de aplicação, com vagas da sessão restantes.
 
 **Duas origens:** (1) ela pega aqui; (2) o Gestor aloca o lote — some desta aba.
 

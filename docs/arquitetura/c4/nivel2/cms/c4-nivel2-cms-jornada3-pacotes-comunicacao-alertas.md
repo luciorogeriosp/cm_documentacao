@@ -68,6 +68,18 @@ C4Container
 | UC87-A | "Simular audiência" é cálculo em tempo real contra o banco de produção/homologação, ou é uma estimativa? Volume incorreto pode levar a subdimensionar/superdimensionar o envio real | Comparar número simulado com contagem manual |
 | UC87-B | `exitWhen` e cadência (`delayAfterTrigger`, `repeatEvery`, `maxSends`, `cooldown`) — a spec não detalha validação cruzada (ex.: `repeatEvery` maior que `maxSends × cooldown` sem sentido). Validar se o formulário impede configurações inconsistentes | Tentar salvar combinações inválidas |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Strapi admin | Parcial — bundles WhatsApp + regras automação |
+| Backend | OK — automation internal routes; nomes ≠ AlertRule spec (**X-03**) |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - Ainda não vimos as telas reais de UC88 (Pacotes) e UC87 (aba Alertas) — este diagrama está baseado só na spec, como a Jornada 2.

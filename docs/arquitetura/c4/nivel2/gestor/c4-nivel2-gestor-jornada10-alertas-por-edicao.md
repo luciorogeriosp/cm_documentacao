@@ -80,6 +80,18 @@ Não há sistema externo nesta jornada especificamente — o envio de fato (Gups
 | Gestor10-E | O mecanismo de anti-spam "no máximo um alerta prioritário por pessoa por janela configurável" não deixa claro **onde** essa janela é configurada — é um parâmetro global (CMS), ou faz parte do binding desta tela? | Procurar esse parâmetro em ambas as telas (CMS e aqui) |
 | Gestor10-F | **O achado mais relevante desta jornada, e um dos mais relevantes do documento até agora.** O corte de envio por "opt-out" (passo 13) pressupõe que existe uma forma de a pessoa solicitar não receber mais alertas — mas **nenhum dos 88 casos de uso da spec v7 descreve esse mecanismo**. Diferente de "desistência do programa" (UC30/UC79, que tira a pessoa de tudo) ou "aceite de comunicação" (UC20, que é dado uma vez, no início), não há um UC de "cancelar inscrição em comunicações" equivalente a um unsubscribe | Confirmar se esse opt-out existe em algum lugar não documentado, ou se é uma lacuna real de conformidade — isso é relevante para LGPD e para as políticas anti-spam do WhatsApp Business (Meta pode penalizar números com muitas reclamações de spam sem mecanismo de opt-out) |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Backend | Gap — sem EditionAlertBinding API (**X-03**) |
+| Frontend | Gap — menu alertas sem rota; strings estáticas na home |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - Tela real de UC87 (lado Gestor) ainda não vista — diagrama baseado na spec.

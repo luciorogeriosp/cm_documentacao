@@ -65,6 +65,18 @@ Nenhum sistema externo está confirmado — a notificação aos gestores envolvi
 | Gestor7-C | Remanejar uma empreendedora **já aprovada** (status aprovada, possivelmente com participação já efetivada no grupo da turma de origem) para outra turma pode recriar o mesmo problema identificado na Jornada 1 (GestorPH1-A): se a turma de destino ainda não tiver grupo WhatsApp cadastrado, a participante fica num limbo — aprovada, remanejada, mas sem grupo para entrar | Testar remanejar uma participante com participação já efetivada para uma turma sem link de grupo cadastrado ainda |
 | Gestor7-D | Mesmo padrão de risco já visto no UC17 (GestorPH1-D): capacidade **soft**, sem trava rígida, pode ser ignorada repetidamente também aqui — não é um achado novo, mas reforça que esse é um padrão recorrente no sistema (ocupação nunca é um limite real, só um alerta) | Validar se o negócio está confortável com esse padrão sistêmico de capacidade sempre soft, em vez de tratar caso a caso |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Backend | Parcial — PUT .../enrollments/class-assignments |
+| Frontend | Gap — rota `alocar` chama path/body incompatível com BE |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - Tela real do UC18 ainda não vista — diagrama baseado na spec.

@@ -82,6 +82,18 @@ C4Container
 | Empr6-E | Quando o Gestor solicita revisão (UC46), a empreendedora "reavalia e reenvia" — mas não há menção de um canal para ela **contestar** a revisão, caso discorde (ache que preencheu corretamente). O único caminho documentado é reenviar, não discutir | Confirmar se existe algum campo de resposta/comentário da empreendedora na revisão, ou se a única opção é reenviar o formulário do zero |
 | Empr6-F | A própria spec marca a seção de "saúde financeira" (Entradas/Saídas/Renda) como **rascunho**, aguardando uma planilha de referência ainda não entregue — não é uma lacuna de implementação, é um requisito declaradamente incompleto | Confirmar se essa planilha de referência já chegou e se a tela de UC45 deve ser revista antes de validarmos as telas reais |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Backend | Parcial — entregas via complete JSON |
+| Frontend | Parcial — forms UI; sem upload arquivo UC43/45 |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - Telas reais de UC43 e UC45 ainda não vistas — diagrama baseado inteiramente na spec.

@@ -65,6 +65,18 @@ Esta jornada é onde os GAPs de segurança do UC1/UC3 deveriam encontrar sua cau
 | — | 2FA do CMS | Está mesmo pendente de "exigência contratual", ou já deveria estar ativo dado que o Administrador do Sistema tem controle total (criar, editar perfil de outros — UC1-13)? |
 | — | Timeout de sessão do Gestor/Cliente | Qual é o valor hoje? A spec cita "~30 dias" para o Cliente (UC4) como algo fixo no texto, não como parâmetro desta tela — API/config pode ter o valor duplicado em dois lugares (hardcoded E configurável), gerando inconsistência |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Strapi admin | N/A — UC6 tela Strapi |
+| Backend | Parcial — janela de envio; resto não verificado |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - **Tela ainda não vista.** Este diagrama é o mais especulativo até agora, porque a spec descreve UC6 em termos de política ("define expiração, complexidade...") sem ilustrar campos concretos.

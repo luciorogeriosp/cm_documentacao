@@ -72,6 +72,18 @@ A spec não dá elementos suficientes para decidir entre as duas — e a stack c
 | Empr8-E | "Interação registrada" (pós-condição) não especifica propósito nem prazo de retenção. Diferente de outros registros do sistema (que têm regras claras de retenção, como a anonimização de 5 anos do UC76), o histórico de chat pode conter informações sensíveis sem nenhuma política de descarte definida | Confirmar se o histórico de chat está sujeito à mesma política de anonimização/retenção do UC76, ou se é tratado separadamente (e, se sim, com que regra) |
 | Empr8-F | Não há menção de **moderação ou guardrails** contra uso indevido — esta é a única interface de texto livre de todo o sistema, o que a torna estruturalmente diferente de formulários com campos fechados | Confirmar se existe qualquer camada de moderação de conteúdo, tanto para proteger a empreendedora (respostas inadequadas) quanto o sistema (tentativas de manipulação do agente) |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Backend | Gap — sem UC64 API |
+| Frontend | Gap — SupportChatDialog mock |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - **Esta é a jornada com menor respaldo textual de todo o módulo Empreendedor** — a spec dedica a ela um parágrafo, contra páginas inteiras de outros UCs como UC21 ou UC33.

@@ -81,6 +81,18 @@ Não há container novo nesta jornada em relação aos já vistos (Gupshup/SendG
 | GestorPH1-D | Capacidade de turma é **soft** (alerta, sem trava rígida — UC17). Em múltiplas rodadas de qualificação (repescagem), o alerta pode ser ignorado repetidamente até a turma ficar bem acima da capacidade real (física, no caso de encontros presenciais) | Testar alocação sucessiva acima da capacidade em mais de uma rodada e ver se o alerta se torna mais incisivo ou continua igual |
 | GestorPH1-E | Rodadas/repescagem (UC24 permite qualificar novas candidatas após um ciclo já ter avançado) — não está claro se a interface diferencia visualmente "candidatas da rodada 1" das "da rodada 2" nas mesmas listas de classificar/entrevistar/alocar | Verificar se há algum filtro ou agrupamento por rodada, ou se tudo cai na mesma lista sem distinção |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Backend | Parcial — inscritos, entrevistas, POST .../comunicacoes, class-assignments |
+| Frontend | Parcial — `selecao`, `comunicar-selecao`, `alocar`; mocks + **X-04** BFF Gupshup |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - Telas reais de UC24, UC84, UC17 e UC25 ainda não vistas — diagrama baseado inteiramente na spec.

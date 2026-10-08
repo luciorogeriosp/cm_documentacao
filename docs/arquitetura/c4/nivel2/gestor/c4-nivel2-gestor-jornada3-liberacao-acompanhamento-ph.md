@@ -87,6 +87,18 @@ C4Container
 | GestorPH3-D | Retificação de aprovação (desfazer) tem "prazo configurável ou por Gestor de Unidade", sem valor numérico definido na spec. Se não houver configuração, a retificação fica indisponível para sempre, ou disponível para sempre — ambos os extremos são plausíveis e têm implicações diferentes | Confirmar o valor padrão (se houver) e se a ausência de configuração é tratada como "sempre permitido" ou "nunca permitido" |
 | GestorPH3-E | Penalidade de engajamento por entrega atrasada (P/H) — "pontuação menor" — não há fórmula ou valor documentado. Pode ser um campo manual que o gestor preenche subjetivamente, ou um cálculo automático | Confirmar se existe um valor/fórmula visível na tela, ou se é um conceito ainda não implementado |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Backend | OK — liberacoes, chamada, pendencias, visitas, aprovacoes |
+| Frontend | Gap — UI em gestor-atividades-store (mock); UC50 sem template backend na UI |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - Telas reais de UC34, UC50, UC41, UC80, UC44 e UC46 ainda não vistas — diagrama baseado inteiramente na spec.

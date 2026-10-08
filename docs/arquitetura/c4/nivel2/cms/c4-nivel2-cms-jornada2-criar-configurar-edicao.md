@@ -65,6 +65,18 @@ A publicação (passo 10) é o ponto de corte com os outros módulos: a partir d
 | UC9-C | O **snapshot do pacote de comunicação** na publicação (UC88: "jornadas ativas não mudam com edição posterior do pacote") precisa de um registro versionado no banco — se o pacote for só referenciado por ID, editar o pacote depois afetaria edições já publicadas, contrariando a regra | Editar um pacote já usado em edição publicada e checar se a edição antiga muda |
 | UC9-D | Unidade com unidade única aciona alocação automática (regra de negócio no Backend, não no CMS) — não há tela para isso, é regra implícita | Confirmar que o Backend aplica essa regra na inscrição, não no CMS |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Strapi admin | Parcial — authoring não local |
+| Backend | OK — management/editions, loaders CMS |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - Confirmar a dúvida já registrada na Jornada 1: CMS (Strapi) e Backend são containers fisicamente separados, ou o Strapi concentra as duas responsabilidades?

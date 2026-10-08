@@ -68,6 +68,18 @@ Não há sistema externo explícito nesta jornada — a notificação de UC75 ("
 | UC75-B (novo) | Migrar o único Gestor de Turma de uma turma ativa, sem substituto, deixa a turma sem gestor operacional | Testar esse cenário — mesma classe de risco do UC74-A |
 | — | Canal de notificação de UC75 não especificado | Confirmar se é e-mail (SendGrid), notificação in-app, ou nenhum dos dois ainda implementado |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Strapi admin | N/A |
+| Backend | Gap — UC74/75 não mapeado no backend clonado |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - **Telas ainda não vistas** (UC74 e UC75) — diagrama baseado na spec e nos achados já registrados no UC1.

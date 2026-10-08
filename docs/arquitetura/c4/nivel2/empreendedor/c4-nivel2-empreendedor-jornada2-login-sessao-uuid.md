@@ -91,6 +91,18 @@ Na Fase 1 deste projeto (validação do UC1/UC3), levantamos a hipótese: *"o li
 | Empr2-E | A renovação de sessão é "**silenciosa**" — sem qualquer confirmação da pessoa. Combinado com o Empr2-C (encaminhamento), uma sessão obtida indevidamente uma única vez pode se perpetuar silenciosamente por muito tempo, já que a renovação nunca pede confirmação de identidade | Avaliar se, para este produto específico, uma renovação totalmente silenciosa é aceitável, ou se deveria haver algum sinal (ex.: notificação por WhatsApp "sua conta foi acessada em um novo dispositivo") |
 | Empr2-F | Em navegador incompatível (UC72), o sistema permite "continuidade com funcionalidades reduzidas" — mas se localStorage estiver bloqueado, **nunca** há UUID persistente, e cada acesso exige um novo link mágico. Isso é esperado pela spec, mas vale confirmar que a experiência "reduzida" não é tão ruim a ponto de inviabilizar o uso | Testar o fluxo completo em um navegador com localStorage bloqueado, do ponto de vista de usabilidade |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Backend | OK — magic link JWT /auth/entrepreneur/* |
+| Frontend | OK — callback + auth-store; sem API sessão UUID spec |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - Telas reais de UC4 (tela de solicitação de link) e UC72 (alerta de compatibilidade) ainda não vistas — diagrama baseado na spec.

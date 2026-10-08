@@ -75,6 +75,18 @@ Isso sugere que o módulo BI **não tem um único padrão de acesso a dados** �
 | BI2-D | "Distingue visualmente dados atuais vs. pregressos **quando necessário**" é uma frase vaga — não há critério explícito sobre em quais relatórios essa distinção é obrigatória. Risco de inconsistência: alguns relatórios mostram a separação, outros não, sem padrão claro para quem está lendo | Revisar os relatórios reais (quando disponíveis) e confirmar se a distinção aparece de forma consistente em todos os que envolvem comparação com base legada |
 | BI2-E | Conecta com um achado do módulo Empreendedor (Empr7-A, desligamento). Quando uma empreendedora desiste do programa (UC30/UC79), ela sai das automações — mas como isso afeta os totalizadores aqui? Ela deveria sair de "ativas", mas continuar contando em "participantes totais" e, se já certificada antes de desistir, também em "certificadas". A spec do UC71 não confirma esse comportamento explicitamente | Testar o totalizador antes e depois de uma desistência, verificando se cada categoria (ativas, beneficiadas, certificadas, participantes) se comporta como esperado |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Backend | Gap — sem jobs totalizadores dedicados |
+| BI app | Externo — Looker hipótese doc |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - **BI2-A é a pendência mais importante** — ela não é só sobre esta jornada, é sobre o padrão arquitetural de todo o módulo BI, e deveria ser respondida antes de fecharmos as jornadas restantes (3 e 4), já que ambas também dependem de entender como os dados chegam ao Looker.

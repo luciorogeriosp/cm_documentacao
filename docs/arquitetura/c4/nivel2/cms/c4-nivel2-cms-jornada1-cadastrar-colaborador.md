@@ -68,6 +68,18 @@ Estes GAPs (levantados na validação funcional do UC1) têm efeito direto na ar
 | UC1-13 | Rel. Admin → CMS | Alteração de perfil (Turma → Unidade) parece não ter controle de permissão por campo nem trilha de auditoria no Backend. |
 | UC1-15 | Rel. Colaborador → Gestor (token) | Validade e uso único do token não confirmados em teste — afeta diretamente a confiabilidade deste container boundary. |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Strapi admin | Parcial — repo cm_cms_gestao não clonado |
+| Backend | OK — gestor login-link + CMS colaborador read |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - Confirmar se existe um container de **fila/worker** para o envio de e-mail (assíncrono) ou se o Backend chama o SendGrid de forma síncrona durante o cadastro.

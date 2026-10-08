@@ -67,6 +67,18 @@ Se a **Hipótese B** se confirmar, essa jornada na verdade **não introduz conta
 | Gestor9-C | Se a Hipótese B for confirmada, esta jornada depende diretamente de uma pendência aberta desde a Fase 1 (UC1-03): o formulário de colaborador validado não tinha nenhum campo de vínculo de unidade visível — nem simples, nem múltiplo | Esta pendência já estava na nossa lista; resolvê-la responde, de quebra, a maior parte desta jornada |
 | Gestor9-D | A jornada aponta para o módulo **BI** ("consultas BI da sua abrangência") — quando chegarmos a desenhar o módulo BI, esse ator (usuário multi-unidade) precisa ser considerado como um consumidor com escopo diferente do Administrador ou de um Gestor de Unidade comum | Lembrar de incluir esse ator quando iniciarmos o módulo BI |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Backend | Parcial — auth, GET edicoes/me |
+| Frontend | Parcial — dashboard edições; UC83 coordenação incompleto |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - **Nenhuma tela deste UC foi vista** — este é o diagrama mais especulativo do módulo Gestor, no mesmo nível de incerteza da Jornada 5 do CMS (Autenticação e Segurança).

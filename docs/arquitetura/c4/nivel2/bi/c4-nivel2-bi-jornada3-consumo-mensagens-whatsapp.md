@@ -71,6 +71,18 @@ Nenhum outro UC da spec menciona essa integração de novo — UC65 é o único 
 | BI3-D | **Nota de observação, não exatamente um risco.** Esta é a única jornada do módulo BI cuja fonte de dado é externa à operação social do sistema — é, na prática, um relatório de **faturamento/billing** de um fornecedor, não um indicador de impacto. Isso pode justificar um "dono" diferente dentro do Consulado (time financeiro/administrativo, não o time de programas sociais) | Confirmar quem, na prática, usa este relatório e com que finalidade — isso pode influenciar se ele deveria estar no mesmo painel que o Dashboard de Impacto (UC59) ou separado |
 | BI3-E | **Risco de confusão de nomenclatura entre dois "orçamentos" completamente diferentes.** Já documentamos, na Jornada 1 deste módulo (BI1-C), que o **orçamento de doação** (dinheiro para as empreendedoras, configurado em UC9, consumido em UC57) está deliberadamente fora do dashboard operacional. O **custo de mensageria** desta jornada (dinheiro que o Consulado paga à Meta/Gupshup) é uma categoria de despesa totalmente diferente. Um Gestor de Unidade que vê "orçamento" na tela de Doação e "custo"/"consumo" aqui pode, ainda assim, confundir os dois contextos se a nomenclatura das telas não for muito clara | Verificar se a interface diferencia claramente os dois conceitos, especialmente para o Gestor de Unidade, que interage com ambos |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Backend | Parcial — `tab_hub_mensagem`, disparos |
+| BI app | Externo |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - Nenhuma tela foi vista — diagrama inteiramente hipotético, mais ainda que as duas jornadas anteriores deste módulo, dada a escassez de detalhe do próprio UC65 na spec.

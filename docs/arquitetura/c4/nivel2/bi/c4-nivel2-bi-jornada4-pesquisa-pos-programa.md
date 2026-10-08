@@ -87,6 +87,18 @@ Isso não é necessariamente um problema para o propósito deste trabalho (mapea
 | BI4-D | O disparo também pode ser feito pelo perfil **multi-unidade** (UC83) — jornada que deixamos como a mais especulativa de todo o módulo Gestor (duas hipóteses concorrentes, nunca confirmadas). Qualquer teste desta jornada envolvendo esse perfil esbarra na mesma pendência em aberto | Resolver primeiro a pendência do Gestor/Jornada 9 antes de testar esse caminho específico aqui |
 | BI4-E | A consolidação no BI (passo 8) segue o mesmo padrão de incerteza da Jornada 2 deste módulo: é leitura direta das respostas brutas, ou passa por alguma agregação do Backend antes de chegar ao Looker? | Mesma pergunta arquitetural de fundo já levantada (BI2-A), agora aplicada a este UC específico |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Backend | Parcial — tracking/NPS operacional |
+| BI app | Externo |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - **BI4-A (nossa própria cobertura incompleta)** é a pendência mais importante deste documento específico: se o projeto tiver tempo, vale voltar aos módulos CMS e Gestor para detalhar as camadas 1 e 2 do UC82 com o mesmo rigor aplicado ao resto.

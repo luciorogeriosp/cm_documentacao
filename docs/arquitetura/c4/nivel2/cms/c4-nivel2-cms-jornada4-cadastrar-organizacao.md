@@ -57,6 +57,18 @@ Nenhum sistema externo participa desta jornada. A Organização é, pela spec, *
 | UC11-B | Desvincular/remover organização de uma edição: não há menção na spec (UC10/UC11 só cobrem criar e associar). Se não existir exclusão, uma associação errada fica permanente | Procurar ação de remover vínculo na tela de Organizações vinculadas |
 | UC59-pend | Nível 1 já registrou a pendência: se o BI tiver visão restrita para patrocinadores (UC59), a Organização deixa de ser só entidade de domínio e vira ator externo — o que adicionaria um container de acesso (login/app) não previsto aqui | Confirmar com o time se essa visão restrita está confirmada ou ainda é hipótese |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Strapi admin | Parcial |
+| Backend | OK — organizacaos via cmsPrisma |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - Ainda não vimos as telas reais de UC10/UC11 — diagrama baseado só na spec.

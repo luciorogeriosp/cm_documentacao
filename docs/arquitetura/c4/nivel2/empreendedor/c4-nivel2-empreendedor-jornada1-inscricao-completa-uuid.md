@@ -84,6 +84,18 @@ C4Container
 | Empr1-F | O fluxo alternativo "Programa Pílulas: aprovação imediata quando configurado" não deixa claro como ele se encaixa nas etapas de seleção já mapeadas no módulo Gestor (UC23/UC24) — a aprovação imediata pula essas etapas inteiramente, ou é uma qualificação automática que ainda passa pela revisão humana? | Confirmar o funcionamento exato do fluxo Pílulas com o time de produto — pode exigir revisão dos diagramas do módulo Gestor se houver uma trilha paralela não mapeada |
 | Empr1-G | A exceção EC1 ("edição encerrada durante preenchimento") não especifica em qual momento exato o sistema verifica isso — só no envio final (passo 7), ou a qualquer navegação entre blocos? Uma pessoa preenchendo havia 20 minutos pode perder tudo sem aviso prévio se a verificação só acontecer no fim | Testar: começar a inscrição, encerrar a edição no meio do preenchimento (via CMS, em ambiente de teste), e ver em que momento o Cliente avisa |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Backend | OK — POST /users, pre-registration, resume OTP |
+| Frontend | OK — wizard 5 passos; gaps UC62, save parcial servidor (**X-10**) |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - Telas reais do formulário de 4 blocos (UC21) e da tela de histórico legado (UC22) ainda não vistas — diagrama baseado inteiramente na spec.

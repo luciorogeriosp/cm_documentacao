@@ -1,9 +1,18 @@
 # Arquitetura — diagramas C4
 
-**Versão:** out/2026 (v1)  
+**Versão:** out/2026 (v1, revalidada contra stack homolog)  
 **Fontes:** [Casos de Uso v10](../../Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v10.md), jornadas em [docs/jornadas](../jornadas/README.md)
 
 Diagramas **C4** (contexto e containers) por módulo e jornada. Cada arquivo traz objetivo, diagrama, containers, fluxo numerado e pontos de atenção para validação com produto e engenharia.
+
+## Revalidação com os repositórios (out/2026)
+
+| Recurso | Conteúdo |
+| ------- | -------- |
+| [REVALIDACAO-MATRIZ.md](REVALIDACAO-MATRIZ.md) | Matriz **X-01…X-10**, status por módulo/jornada, repos analisados |
+| Seção **Revalidação com a stack** | Em cada `.md` de jornada (e nível 1): **as-is** vs diagrama/spec |
+
+Repos base da revisão: `cm_backend`, `cm_frontend`, `cm_app_gestor`, `cm_hub`, `cm_message_hub` (Trigger.dev). `cm_cms_gestao` e app BI não clonados — inferidos via backend/CMS URL.
 
 ## Nível 1 — Contexto
 

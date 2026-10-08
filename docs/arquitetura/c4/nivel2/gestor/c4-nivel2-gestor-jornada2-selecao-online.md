@@ -69,6 +69,18 @@ C4Container
 | GestorOnline2-B | A spec assume, no caminho online, unidade e turma **únicas** como cenário típico — mas não descarta explicitamente uma edição online com múltiplas turmas. Se isso existir, UC17 (alocação manual) precisaria rodar antes do passo 3, mas a trava da Faixa 2 online (passo 4) não menciona essa possibilidade | Confirmar se o sistema sequer permite criar uma edição online com mais de uma turma, ou se essa combinação é tecnicamente possível e mal coberta pela spec |
 | GestorOnline2-C | **Risco mais relevante desta jornada.** Entre o envio da mensagem (passo 5) e a criação da entrada na fila de jornada (passo 6), a spec não garante que as duas ações sejam atômicas. Se o Backend enviar a mensagem de aprovação e falhar ao criar a entrada na fila logo em seguida, a candidata recebe "você foi aprovada" mas a jornada nunca é agendada — um desencontro entre comunicação e estado real do sistema | Testar cenário de falha entre os passos 5 e 6 (se possível simular) e verificar se existe mecanismo de reconciliação/retry, ou se o dado fica inconsistente sem alerta |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Backend | Parcial — mesmo stack J1; ramo online em `app-gestor.service` |
+| Frontend | Parcial — mesmas telas; KPI online na home sem UC56 dedicado |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - Telas reais de UC24 e UC25 (caminho online) ainda não vistas — diagrama baseado na spec.

@@ -86,6 +86,18 @@ C4Container
 | GestorOnline4-D | `EditionAlertBinding` permite *override* de parâmetros por edição sobre a regra global do CMS. Ao decidir reforçar manualmente (UC53), o Gestor enxerga qual valor está **realmente em vigor** (o global ou o override), ou precisa adivinhar/consultar duas telas diferentes? | Verificar se a tela de Mensagens Direcionadas (UC53) mostra o estado atual da regra automática equivalente, para evitar decisão manual às cegas |
 | GestorOnline4-E | Os indicadores (cobertura, represamento, silêncio) dependem de "consumo oficial na plataforma" — se o cálculo for via job periódico (não em tempo real), pode haver atraso entre a ação da empreendedora e o painel refletir isso, levando o gestor a agir (ou deixar de agir) com base em dado desatualizado | Confirmar a frequência de atualização do painel: tempo real, ou mesmo job de 15–30min citado no UC87? |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Backend | Parcial — estatisticas, operacional, acompanhamento-* |
+| Frontend | Gap — sem engajamento/comunicacao pages; UC87/UC53 ausentes (**X-03**) |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - Telas reais de UC56, UC53 e UC87 (lado Gestor) ainda não vistas — diagrama baseado na spec.

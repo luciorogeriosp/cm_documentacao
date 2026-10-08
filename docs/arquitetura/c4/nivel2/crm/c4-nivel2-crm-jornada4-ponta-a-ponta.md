@@ -83,11 +83,24 @@ C4Container
 - **O Backend é o único ponto de decisão** entre os dois caminhos de resgate (automático e manual) — o que torna o CRM3-B (deduplicação entre os dois) uma correção centralizada e relativamente simples de implementar, se confirmada a lacuna.
 - **A fronteira com o módulo Empreendedor é limpa**: um único ponto de handoff (passo 10), o que facilita manter os diagramas de cada módulo independentes sem redundância.
 
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Frontend (`cm_frontend`) | OK — pré-inscrição + wizard UC21; retomada **localStorage**; sem UC26 |
+| Backend | OK — `pre_registration.*`, automation cron, `sync-alerts`, resume OTP separado |
+| Gestor / UC26 | Gap — sem página de reengajamento manual (**CRM3-IMPL-F**) |
+| Dedupe | Parcial — `tab_disparo_*` + `force: true` no dispatch manual; não cobre lead duplicada pré-CPF |
+
+Matriz consolidada: [REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md). Detalhe por etapa: J1 [captura](c4-nivel2-crm-jornada1-captura-lead-aceites.md), J2 [retomada](c4-nivel2-crm-jornada2-retomada-progresso-dispositivo.md), J3 [reengajamento](c4-nivel2-crm-jornada3-reengajamento-mini-crm.md).
+
+> O mapa de risco abaixo mistura **GAPs de produto/spec** com itens já **confirmados no código** (ex.: CRM2-A — retomada por telefone no servidor ainda não existe; CRM1-B — save parcial só no dispositivo).
+
 ## Pendências para fechar o módulo CRM
 
 Estas pendências já apareciam nas Jornadas 1–3 e seguem abertas; resolvê-las aqui fecha o módulo inteiro:
 
-1. Telas reais de UC19, UC20 (recorte pré-cadastro) e UC26 ainda não vistas — todos os três diagramas estão baseados na spec.
-2. Confirmar a existência (ou ausência confirmada) de deduplicação de lead por telefone/e-mail antes do CPF existir (CRM2-A).
-3. Confirmar se o canal manual (UC26) compartilha o mesmo `dedupeKey`/log do canal automático (UC87) (CRM3-B).
-4. Confirmar a base legal de comunicação por e-mail nesta etapa, já que o aceite obrigatório registrado é especificamente de WhatsApp (CRM3-C).
+1. Telas reais de UC19, UC20 (recorte pré-cadastro) e UC26 — UC26 **ausente** no `cm_app_gestor`; pré-cadastro parcialmente coberto por `tab_pre_inscricao`.
+2. **CRM2-A confirmado:** sem deduplicação server-side por telefone/e-mail antes do CPF; upsert evita duplicar só no mesmo fluxo de pré-registro.
+3. **CRM3-B parcial:** automação e manual compartilham tabelas de disparo; risco de duplo contato permanece sem UI UC26 alinhada a UC87.
+4. **CRM3-C:** aceites no código incluem canal e-mail onde aplicável — validar copy/legal com produto (não só WhatsApp).

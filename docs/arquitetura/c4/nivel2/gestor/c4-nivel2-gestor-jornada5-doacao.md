@@ -107,6 +107,18 @@ Estas três hipóteses foram levantadas **antes** de qualquer diagrama C4, na pr
 | Gestor5-F | O recibo de material só é liberado **após** a empreendedora confirmar recebimento — mas o que acontece se a empreendedora nunca confirmar (material entregue fisicamente, mas ela nunca acessa o app para confirmar)? A doação fica "aprovada" indefinidamente sem fechamento contábil | Testar esse cenário de abandono pós-aprovação, pré-confirmação de recebimento |
 | Gestor5-G | O rito de recusa (UC57) não exige digitação de confirmação (só motivo obrigatório) — assimetria de fricção entre aprovar (alta fricção: digitar "APROVAR") e recusar (baixa fricção: só motivo). Pode ser intencional (não queremos dificultar recusa), mas vale confirmar que não é só uma omissão de rigor | Confirmar se essa assimetria é proposital |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Backend | OK — doacoes, orcamento, desfechos |
+| Frontend | Gap — gestor-encerramento-store mock |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - Telas reais de UC57, UC85 e UC86 ainda não vistas — diagrama baseado inteiramente na spec. Dada a criticidade financeira desta jornada, recomendo priorizar a validação visual dela assim que as telas estiverem disponíveis.

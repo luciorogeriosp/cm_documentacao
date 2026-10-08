@@ -81,6 +81,18 @@ C4Container
 | Empr4-D | Reforça o Empr4-A: a spec nunca menciona nenhuma integração de API com o YouTube em nenhum lugar do documento (ele é descrito só como "ator secundário"). Isso confirma, pela ausência de evidência em contrário, que não há mecanismo técnico de verificação de audiência | Não há o que testar aqui além de confirmar a ausência — é mais uma validação de leitura do que um teste funcional |
 | Empr4-E | O corte de elegibilidade é binário: **100%** das atividades, sem faixa intermediária (diferente do beneficiamento/certificação, que usam 50%/75%). Alguém com 99% fica inteiramente fora do funil daquela edição — não está claro se há uma segunda chamada/rodada para quem completa depois do convite inicial | Verificar se existe algum mecanismo de "segunda chamada" para quem atinge 100% um pouco mais tarde, ou se perder o convite inicial significa perder a doação daquela edição por completo |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Backend | Parcial — online-funnel + donation account APIs |
+| Frontend | Parcial — funnel UI; live invite via hub não no client |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - Telas reais da atividade de KW e do questionário final (dentro do UC38) ainda não vistas — diagrama baseado inteiramente na spec.

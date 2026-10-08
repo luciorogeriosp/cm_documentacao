@@ -85,6 +85,18 @@ Esta é a primeira jornada do módulo Empreendedor onde o **Backend é o protago
 | Empr3-E | A flag de vídeo (`disparo_auto_videoaula`) é por **edição** (UC9), mas nem toda Vídeo Aula necessariamente tem um arquivo compatível com WhatsApp cadastrado no CMS. Se a flag estiver ON mas a atividade específica não tiver arquivo, o comportamento não é especificado — cai silenciosamente para só link, ou gera algum aviso/log? | Testar essa combinação específica (flag ON + atividade sem arquivo cadastrado) |
 | Empr3-F | Retry de 48h após falha de entrega, somado à janela comercial, pode atrasar a chegada de um lote por vários dias em cenários de pico (ex.: falha numa sexta à noite + fim de semana sem disparo). O indicador de **represamento** (liberadas − concluídas) do UC56 não distingue atraso técnico de entrega de atraso comportamental da empreendedora — ela pode estar "represada" só porque a mensagem ainda não chegou, não porque está evitando o conteúdo | Verificar se o indicador de represamento considera a data de **envio efetivo** ou a data de **liberação** — isso muda a interpretação para o Gestor que decide disparar UC53 |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Backend | OK — automation, journey-events, message-hub, inbound OK |
+| Frontend | N/A — consumo via links WhatsApp + /minhas-inscricoes |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - Nenhuma tela está envolvida diretamente nesta jornada (é majoritariamente backend/WhatsApp) — mas vale confirmar com o time técnico os nomes reais das tabelas (`empreendedor_atividade`, `jornada_evento`) e se batem com o que a spec descreve.

@@ -88,6 +88,18 @@ C4Container
 | Empr7-E | O link mágico de resposta à pesquisa (UC82) é enviado para uma edição que, por definição, já **encerrou** (freeze operacional — UC81). Não está claro se a sessão/UUID da empreendedora ainda funciona normalmente para uma edição congelada, ou se há algum comportamento especial | Testar o acesso ao link de pesquisa de uma edição já em freeze |
 | Empr7-F | A spec menciona genericamente que o "Gestor de Turma" trata **exceções** da emissão automática de certificado (UC55), sem especificar quais situações seriam essas (sócia removida depois do cálculo? erro de dado que invalida o PDF gerado?) | Perguntar ao time de produto quais cenários de exceção são esperados aqui, já que isso decide se é preciso uma tela de correção manual |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Backend | Parcial — certificates stub, withdrawal |
+| Frontend | Parcial — portfolio UI; sem UC82/ PDF auto |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - Telas reais de UC55 (do lado do Cliente — a notificação/recebimento), UC63, UC79 e UC82 (resposta) ainda não vistas — diagrama baseado inteiramente na spec.

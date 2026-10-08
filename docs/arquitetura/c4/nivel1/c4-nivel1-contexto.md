@@ -1,50 +1,50 @@
 # C4 — Nível 1: Diagrama de Contexto
 
 **Sistema:** Sistema de Gestão de Programas Sociais — Consulado da Mulher
-**Fonte:** Casos de Uso — Consulado da Mulher v7
+**Fonte (spec):** [Casos de Uso v10](../../Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v10.md) — diagrama original derivado da v7; revalidado contra a stack em out/2026
+**Stack de referência:** `cm_backend`, `cm_frontend`, `cm_app_gestor`, `cm_cms_gestao` (Strapi), BI externo (`bi.menduca.com.br` via `cm_hub`)
 
 ## Objetivo deste nível
 
 Mostrar o sistema como uma caixa única (black box) e suas interações com pessoas (atores) e sistemas externos. É o nível de maior abstração do C4 — não entra em tecnologia nem em estrutura interna (isso é o Nível 2 — Container).
 
-## Diagrama (preview — flowchart Mermaid)
+## Diagrama (preview — flowchart)
 
-Visualização compatível com o preview de Markdown no Cursor/VS Code (sem dialeto C4).
+Visualização para preview de Markdown (sem dialeto C4). Conteúdo equivalente ao bloco **fonte C4** abaixo.
 
 ```mermaid
 flowchart TB
   subgraph Pessoas["Pessoas (atores)"]
-    leadPerson["Pré-inscrita (Lead)<br/>UC19/UC20/UC21"]
-    empreendedora["Empreendedora<br/>Inscrição completa"]
+    leadPerson["Pré-inscrita (Lead)"]
+    empreendedora["Empreendedora"]
     gestorUnidade["Gestor de Unidade"]
     gestorTurma["Gestor de Turma"]
     adminSistema["Administrador do Sistema"]
     adminPrograma["Administrador de Programa"]
   end
 
-  sistema(("Sistema de Gestão de Programas Sociais<br/>(Consulado da Mulher)"))
+  sistema(("Sistema de Gestão de Programas Sociais"))
 
-  subgraph Externos["Sistemas externos"]
-    gupshup["Gupshup<br/>WhatsApp Business API"]
-    sendgrid["SendGrid<br/>E-mail transacional"]
-    youtube["YouTube<br/>Videoaulas e lives"]
+  subgraph Externos["Sistemas externos (produto)"]
+    gupshup["Gupshup"]
+    sendgrid["SendGrid"]
+    youtube["YouTube"]
   end
 
   leadPerson -->|Pré-cadastro e termos| sistema
-  empreendedora -->|Inscrição, conteúdo, entregas, jornada| sistema
-  gestorUnidade -->|Classificar, entrevistar, alocar, comunicar, doação| sistema
-  gestorTurma -->|Liberar atividades, entregas, presença| sistema
-  adminSistema -->|Usuários, programas, unidades, segurança| sistema
-  adminPrograma -->|Conteúdos, edições, critérios do escopo| sistema
+  empreendedora -->|Inscrição, jornada, entregas| sistema
+  gestorUnidade -->|Seleção, turmas, doação| sistema
+  gestorTurma -->|Atividades, entregas, presença| sistema
+  adminSistema -->|Config global| sistema
+  adminPrograma -->|Programas e edições| sistema
 
-  sistema -->|Mensagens WhatsApp| gupshup
-  sistema -->|E-mails transacionais| sendgrid
-  sistema -->|Referência e embed de vídeos| youtube
+  sistema -->|WhatsApp API + webhooks| gupshup
+  sistema -->|E-mail transacional| sendgrid
+  youtube -->|Embed / links de aula| empreendedora
+  sistema -->|URLs de vídeo no conteúdo| youtube
 ```
 
 ## Diagrama (fonte C4)
-
-Notação oficial C4 para editores com suporte a `C4Context` (ex.: [mermaid.live](https://mermaid.live)).
 
 ```mermaid
 C4Context
@@ -67,7 +67,7 @@ C4Context
     Rel(empreendedora, sistema, "Realiza inscrição, consome conteúdo, envia entregas, acompanha jornada")
     Rel(gestorUnidade, sistema, "Classifica, entrevista, aloca, comunica, aprova doação")
     Rel(gestorTurma, sistema, "Libera atividades, aprova entregas, acompanha turma")
-    Rel(adminSistema, sistema, "Configura usuários, programas, unidades, configuração global")
+    Rel(adminSistema, sistema, "Configura usuários, programas, unidades, segurança")
     Rel(adminPrograma, sistema, "Configura conteúdos, edições, critérios do seu escopo")
 
     Rel(sistema, gupshup, "Envia/recebe mensagens WhatsApp", "API/Webhook")
@@ -100,14 +100,61 @@ C4Context
 |---|---|---|
 | Gupshup | WhatsApp Business API (mensagens, links mágicos, templates Meta) | Somente pelo Backend |
 | SendGrid | E-mail transacional (links mágicos, alertas) | Somente pelo Backend |
-| YouTube | Videoaulas e transmissões ao vivo | Aplicativo Cliente (consumo) |
+| YouTube | Videoaulas e transmissões ao vivo | **Empreendedora** consome no Cliente (`youtube-nocookie`); backend/CMS só **referenciam URLs** (sem YouTube API) |
+| AWS S3 (opcional) | Upload de NF/recibo de doação (presigned URL) | Backend gera URL; Cliente envia arquivo **direto ao storage** quando habilitado |
+
+### Fora deste diagrama (nível 1)
+
+| Item | Motivo |
+| --- | --- |
+| ViaCEP / Brasil API | Integração técnica do Cliente (CEP); não é sistema de negócio no C4 |
+| Trigger.dev / filas Redis | Infraestrutura **dentro** do deploy de retaguarda (Message Hub); detalhe no **Nível 2 — Container** |
+| `cm_hub` | Launcher estático de ambientes (dev/homolog); não é superfície do produto para atores |
+| Portal do Voluntariado, POC WhatsApp, protótipos Lovable | Produtos ou POCs paralelos listados no hub; fora do escopo deste sistema |
+
+## Revalidação com a stack implementada (out/2026)
+
+Comparação do diagrama de contexto (caixa única + atores + externos) com os repositórios do workspace EWTI-BR.
+
+### Alinhado
+
+| Tema | Evidência |
+| --- | --- |
+| **Caixa única no L1** | Vários deployables (`cm_frontend` :3001, `cm_app_gestor` :3002, `cm_backend` :3000, Strapi CMS :1337/1338, worker Trigger no mesmo repo do backend) compõem **um** produto; decomposição fica no [Nível 2](../nivel2/). |
+| **Pré-inscrita vs empreendedora** | Cliente: pré-inscrição e wizard em `/[edition]`; sessão em `/minhas-inscricoes`, `/app/*` (`cm_frontend`). |
+| **Gestores unidade/turma** | App Gestor: papéis `unidade` \| `turma` \| `ambos`; API ` /api/v2/app-gestor/*` (`cm_backend` + `cm_app_gestor`). |
+| **Admins** | Configuração de programas/edições/comunicação via **CMS Strapi** (`cm_cms_gestao`), não via apps Cliente/Gestor. |
+| **Gupshup + SendGrid** | Envio e webhooks inbound em `cm_backend` (`/api/v1/comunicacao/webhooks/*`, módulos `communication`, `gupshup`, tasks Trigger). |
+| **Colaborador / mentor como não-atores** | Mentoria voluntária cadastrada no CMS; sem login dedicado no Gestor/Cliente alinhado à spec. |
+
+### Divergências e ressalvas
+
+| ID | Diagrama / texto | Implementação | Ação sugerida |
+| --- | --- | --- | --- |
+| **CTX-01** | Externos acionados **somente pelo Backend** | **App Gestor** expõe rota Next ` /api/gupshup/send` que chama **Gupshup** e lê dados do **CMS** (BFF legado/protótipo) | Manter regra no L1; documentar exceção no L2 Gestor ou remover BFF quando 100% backend |
+| **CTX-02** | BI citado só como pendência (UC59) | **Painel BI** já existe como app separado (`https://bi.menduca.com.br`); **sem API BI** no `cm_backend` | No L2 BI; no L1 manter Organização/BI como pendência de **ator** ou incluir `Person_Ext` leitor BI |
+| **CTX-03** | Um backend transacional | Existe repo legado **`cm_message_hub`**; homolog usa **Message Hub em `cm_backend/src/trigger/`** (processo PM2 separado) | L2 Container: um único “Hub de mensagens”; marcar `cm_message_hub` como legado |
+| **CTX-04** | Gestor “completo” na spec | Gestor v6: **lista/shell** integrada à API; várias telas ainda em **mock local** (`gestor-mock`, stores) | Não altera L1; rastrear no L2 jornadas Gestor |
+| **CTX-05** | Rel `sistema → youtube` | Correto para **cadastro de links**; consumo é **Empreendedora → YouTube** no browser | Flowchart acima explicita seta de consumo; bloco C4 pode manter só rel sistema→youtube |
+| **CTX-06** | Fonte v7 | Spec atual **v10**; UCs de IA, alertas, etc. | Metadado atualizado; revisar UCs citados nos L2 |
+| **CTX-07** | Storage não listado | Doação: presigned **S3** opcional | Tabela de externos opcionais (acima) |
+
+### Mapa rápido ator → app → API
+
+| Ator | App | API principal |
+| --- | --- | --- |
+| Pré-inscrita / Empreendedora | `cm_frontend` | `cm_backend` `/api/v1` (users, pre-registration, auth entrepreneur, progress, account) |
+| Gestor unidade/turma | `cm_app_gestor` | `cm_backend` `/api/v2/app-gestor` |
+| Admin sistema/programa | CMS Strapi admin | CMS DB + chamadas internas ao backend (`x-cms-internal-key`: automation, message-hub, catálogo Gupshup) |
 
 ## Pendências / pontos a confirmar
 
-- **Organização (Patrocinador/Parceiro):** hoje é entidade de domínio, mas a spec cita possível acesso restrito ao BI (UC59). Se confirmado, vira ator secundário neste diagrama.
-- **Agente de IA (UC64):** é uma capacidade do Aplicativo Cliente, não um sistema externo — não entra como caixa própria neste nível.
+- **Organização (Patrocinador/Parceiro):** entidade de domínio; spec (UC59) cita acesso restrito ao **BI** — produto BI já existe; falta definir se vira **ator** neste diagrama.
+- **Agente de IA (UC64):** capacidade do Aplicativo Cliente + backend; não é sistema externo no L1.
+- **CTX-01:** decidir se envio WhatsApp do Gestor permanece via BFF Next ou migra 100% para `cm_backend` (alinhar com “externos só retaguarda”).
+- **Portal do Voluntariado:** produto separado no hub — incluir ou não no mesmo sistema de contexto.
 
 ## Notação
 
-- **Preview local:** Mermaid `flowchart` (seção acima) — funciona no preview embutido de Markdown.
-- **Fonte C4:** Mermaid `C4Context` — use mermaid.live ou extensão com suporte C4 para editar/visualizar o bloco da seção “fonte C4”.
+- **Preview local:** Mermaid `flowchart` (primeira seção).
+- **Fonte C4:** Mermaid `C4Context` — [mermaid.live](https://mermaid.live) ou extensão com suporte C4.

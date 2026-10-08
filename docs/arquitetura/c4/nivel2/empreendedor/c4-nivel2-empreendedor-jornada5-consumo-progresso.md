@@ -92,6 +92,18 @@ C4Container
 | Empr5-D | O calendário (UC68) exibe status "atrasada" para atividades pendentes — mas em edições **online**, a própria spec define que atraso não penaliza e que "maratonar" é um comportamento saudável esperado. Rotular como "atrasada" algo que o sistema trata como normal em outro lugar pode gerar ansiedade desnecessária na empreendedora, contradizendo a filosofia do produto | Confirmar se o rótulo de status muda conforme a modalidade (ex.: "pendente" no online, "atrasada" só no P/H onde realmente há prazo com peso) |
 | Empr5-E | **Conexão nova com a Jornada 4 (funil de doação).** O questionário dá "feedback explicativo imediato após cada resposta" — mas o Questionário Final do funil de doação exige **100% de acerto**. Se o feedback por pergunta já revela acerto/erro em tempo real (mesmo sem nota agregada), a empreendedora pode, na prática, corrigir e tentar de novo pergunta a pergunta até acertar tudo — o que é bem diferente de uma avaliação única no final. Isso se conecta diretamente ao Empr4-C (ambiguidade sobre o que "retentar" significa no funil de doação) | Confirmar se o Questionário Final do UC38 usa o **mesmo** mecanismo de feedback imediato do UC39 genérico, ou se tem um comportamento próprio (só avalia no envio completo, sem dica por pergunta) — isso muda substancialmente a integridade do critério de 100% |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Backend | OK — progress view/complete/presenca |
+| Frontend | OK — atividades; /app/calendario placeholder |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - Telas reais de UC36, UC37, UC39, UC40 e UC68 ainda não vistas — diagrama baseado inteiramente na spec.

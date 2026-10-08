@@ -76,6 +76,18 @@ O **voluntário/mentor** é entidade de domínio — não acessa o sistema, nem 
 | Gestor8-D | A spec cita "critérios de mentoria definidos na edição" como pré-condição, mas não há um UC específico (como UC12/13/14 para seleção/beneficiamento/doação) descrevendo **onde** e **como** esses critérios são configurados | Verificar se existe uma tela de configuração de mentoria no CMS/UC9, ou se isso ainda não foi especificado |
 | Gestor8-E | Como o voluntário/mentor não acessa o sistema, o aviso de que um match foi criado precisa acontecer por fora (telefone, e-mail manual, WhatsApp pessoal do gestor) — não há menção de notificação automatizada para ele | Confirmar se existe algum canal de aviso ao mentor, ou se é inteiramente responsabilidade do gestor avisá-lo manualmente |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Backend | OK — CRUD mentorias |
+| Frontend | Gap — gestor-mentorias-store mock |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - Telas reais de UC70 e UC73 (ambas as origens de cadastro) ainda não vistas — diagrama baseado na spec.

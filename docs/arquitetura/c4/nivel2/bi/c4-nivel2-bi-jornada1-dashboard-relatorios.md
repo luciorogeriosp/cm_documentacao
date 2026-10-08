@@ -69,6 +69,18 @@ A ausência do **Backend** neste diagrama é proposital e é o ponto mais import
 | BI1-E | Comparativos com a base legada (já anonimizada) devem operar em nível de **contagem agregada**, não de cruzamento individual — já que a base legada não tem como ser reidentificada pessoa a pessoa. Vale confirmar que o cálculo realmente respeita essa granularidade e não tenta, por engano, uma lógica de matching individual entre as duas bases | Verificar a lógica de consolidação de totalizadores (ponte com a Jornada 2 deste módulo, que vamos detalhar a seguir) |
 | BI1-F | A pendência levantada já no **Nível 1** (diagrama de Contexto) segue em aberto: se a "visão restrita para organizações patrocinadoras" for confirmada, a Organização deixa de ser só entidade de domínio e passa a ser um ator com acesso próprio a este painel — o que normalmente também passaria pela mesma lacuna de controle de acesso via Google (BI1-A), ampliando ainda mais a superfície de risco | Confirmar o status dessa decisão, já antiga neste projeto |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Backend | Gap — sem API BI |
+| BI app | Externo — `bi.menduca.com.br` (**X-06**) |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - Nenhuma tela foi vista (é um produto SaaS de terceiro, não uma tela própria do sistema) — diagrama baseado inteiramente na spec.

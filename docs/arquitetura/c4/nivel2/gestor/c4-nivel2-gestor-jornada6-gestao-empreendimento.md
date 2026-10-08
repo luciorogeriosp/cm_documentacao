@@ -74,6 +74,18 @@ Nenhum sistema externo participa. É a jornada mais "pura" de regra de negócio 
 | Gestor6-C | O passo 5 do UC31 (apagar linhas órfãs) não menciona preservação de auditoria — diferente de outros UCs da spec que explicitamente garantem histórico (ex.: UC18 remanejar "preserva histórico oficial"; UC30 desistência preserva registro). Não fica claro se há qualquer rastro de que um empreendimento existiu antes de ser apagado no agrupamento | Confirmar se existe log/soft-delete do empreendimento apagado (quem agrupou, quando, qual era o ID), ou se é exclusão física sem rastro — relevante para auditoria e prestação de contas a financiadores |
 | Gestor6-D | A trava de UC31 (bloqueio por registro operacional) é avaliada **por empreendimento a apagar**, não pelo conjunto. Se 3 empreendimentos forem selecionados para agrupar e só 1 tiver registro operacional, o comportamento não está claro: bloqueia o lote inteiro, ou agrupa só os 2 sem registro e avisa sobre o terceiro? | Testar agrupamento com 3+ empreendimentos, sendo apenas um deles com registro operacional |
 
+
+## Revalidação com a stack (out/2026)
+
+| Camada | Status |
+| --- | --- |
+| Backend | Parcial — empreendimentos, agrupar |
+| Frontend | Gap — agrupar local em gestor-negocios-store |
+
+Matriz consolidada e IDs compartilhados (**X-01…X-10**, **CTX-***, **CRM**): [../../../REVALIDACAO-MATRIZ.md](../../../REVALIDACAO-MATRIZ.md)
+
+> Diagrama C4 acima = **spec de produto**; esta seção = **as-is homolog** nos repos EWTI-BR (out/2026).
+
 ## Pendências para fechar este diagrama
 
 - Telas reais de UC31 e UC32 ainda não vistas — diagrama baseado inteiramente na spec.

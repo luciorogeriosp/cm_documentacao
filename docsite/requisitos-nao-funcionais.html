@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Requisitos não funcionais — Consulado da Mulher</title>
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+  <button type="button" class="menu-toggle" aria-label="Abrir menu">Menu</button>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h1>Consulado da Mulher</h1>
+        <p>Especificação da plataforma</p>
+      </div>
+      <nav>
+<div class="nav-group">
+          <div class="nav-group-title">Início</div>
+          <a href="index.html" data-page="index.html">Hub</a>
+          <a href="visao-geral.html" data-page="visao-geral.html">Visão geral</a>
+          <a href="personas.html" data-page="personas.html">Personas</a>
+          <a href="mapa-jornadas.html" data-page="mapa-jornadas.html">Mapa de jornadas</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-title">Requisitos</div>
+          <a href="requisitos-funcionais.html" data-page="requisitos-funcionais.html">Funcionais</a>
+          <a href="requisitos-nao-funcionais.html" data-page="requisitos-nao-funcionais.html">Não funcionais</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-title">Módulos</div>
+          <a href="modulos/portal-empreendedora.html" data-page="portal-empreendedora.html">Portal empreendedora</a>
+          <a href="modulos/portal-gestao.html" data-page="portal-gestao.html">Portal gestão</a>
+          <a href="modulos/dashboard-bi.html" data-page="dashboard-bi.html">Dashboard BI</a>
+          <a href="modulos/app-equipe.html" data-page="app-equipe.html">App equipe</a>
+          <a href="modulos/chat-ia.html" data-page="chat-ia.html">Chat IA</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-title">Programas e dados</div>
+          <a href="programas/catalogo.html" data-page="catalogo.html">Catálogo de programas</a>
+          <a href="dados/cadastro-e-lgpd.html" data-page="cadastro-e-lgpd.html">Cadastro e LGPD</a>
+          <a href="dados/migracao-historico.html" data-page="migracao-historico.html">Migração histórico</a>
+          <a href="dados/selecao-editais.html" data-page="selecao-editais.html">Seleção e editais</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-title">Jornadas — Empreendedora</div>
+          <a href="jornadas/empreendedora-inscricao.html" data-page="empreendedora-inscricao.html">Inscrição e onboarding</a>
+          <a href="jornadas/empreendedora-empreende-mulher.html" data-page="empreendedora-empreende-mulher.html">Empreende Mulher</a>
+          <a href="jornadas/empreendedora-empreende-zap.html" data-page="empreendedora-empreende-zap.html">Empreende no Zap</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-title">Jornadas — Gestor e admin</div>
+          <a href="jornadas/gestor-operacao.html" data-page="gestor-operacao.html">Gestor — operação</a>
+          <a href="jornadas/gestor-presenca-eventos.html" data-page="gestor-presenca-eventos.html">Gestor — presença</a>
+          <a href="jornadas/admin-configuracao.html" data-page="admin-configuracao.html">Admin — configuração</a>
+          <a href="jornadas/admin-bi-impacto.html" data-page="admin-bi-impacto.html">Admin — BI e impacto</a>
+        </div>
+      
+      </nav>
+    </aside>
+    <main class="main">
+
+      <header class="page-header">
+        <h1>Requisitos não funcionais</h1>
+        <p class="lead">Qualidades do sistema alinhadas ao perfil do público e à operação do Consulado.</p>
+      </header>
+      <section>
+        <table class="req-table">
+          <thead><tr><th>ID</th><th>Requisito</th><th>Detalhe</th></tr></thead>
+          <tbody>
+            <tr><td>RNF-01</td><td>Usabilidade</td><td>Interface simples, direta, mobile-first; textos curtos; botões grandes; sem jargão técnico.</td></tr>
+            <tr><td>RNF-02</td><td>Acessibilidade</td><td>Contraste adequado; suporte a leitores de tela em telas críticas; vídeos com legibilidade (sem letras pequenas).</td></tr>
+            <tr><td>RNF-03</td><td>Performance</td><td>Páginas leves para celulares de baixa memória; lazy load de mídia.</td></tr>
+            <tr><td>RNF-04</td><td>LGPD</td><td>Formulários juridicamente aprovados; retenção máx. 5 anos importação; consentimento explícito.</td></tr>
+            <tr><td>RNF-05</td><td>Disponibilidade app equipe</td><td>Registro de presença offline com sincronização posterior.</td></tr>
+            <tr><td>RNF-06</td><td>Segurança</td><td>Autenticação segura WhatsApp; perfis de acesso (empreendedora, gestor, admin); usuários teste isolados.</td></tr>
+            <tr><td>RNF-07</td><td>Escalabilidade</td><td>Suporte a turmas de 700–1000 vagas (Empreende no Zap) sem degradação.</td></tr>
+            <tr><td>RNF-08</td><td>Observabilidade</td><td>Métricas de vídeo, atividades e presença para operação diária e BI.</td></tr>
+            <tr><td>RNF-09</td><td>Identidade visual</td><td>Aplicar manual do Consulado quando disponível (placeholder roxo/rosa na documentação).</td></tr>
+            <tr><td>RNF-10</td><td>Adoção / mudança cultural</td><td>Guias in-app, comunicação da equipe, persistência na migração do WhatsApp para entregas.</td></tr>
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <h2>Decisões e trade-offs</h2>
+        <table class="req-table">
+          <thead><tr><th>Tema</th><th>Decisão</th></tr></thead>
+          <tbody>
+            <tr><td>Cadastro único vs progressivo</td><td>Hoje: todos os dados na inscrição (quem quer participar preenche). Avaliar micro-etapas no futuro.</td></tr>
+            <tr><td>WhatsApp corporativo</td><td>Bloqueado na equipe — reforçar plataforma como canal de arquivos.</td></tr>
+            <tr><td>Critérios de seleção</td><td>Automáticos + decisão humana; não bloquear rigidamente recorrentes.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+    </main>
+  </div>
+  <script src="assets/js/nav.js"></script>
+</body>
+</html>

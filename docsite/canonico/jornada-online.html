@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jornada online — Consulado da Mulher</title>
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../assets/js/mermaid-init.js"></script>
+</head>
+<body>
+  <button type="button" class="menu-toggle" aria-label="Abrir menu">Menu</button>
+  <div class="layout">
+    <aside class="sidebar"></aside>
+    <main class="main">
+      <p class="canon-source">Canônico v10.2 · gerado a partir do Markdown-fonte</p>
+      <article class="prose">
+<h1>Jornada online — diagramas de sequência</h1>
+<p><strong>Modalidade:</strong> online (ex.: Empreende no Zap)<br><strong>Convenções:</strong> <a href="jornadas.html">README</a><br><strong>Fontes:</strong> <a href="../../Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v7.md">Casos de Uso v7</a> UC19–UC25, UC33, UC38, UC51, UC53, UC57, UC70, UC73, UC89, UC87; <a href="../adr-jornada-online.md">ADR jornada online</a></p>
+<p>Índice</p>
+<ol>
+<li><a href="#1-inscricao">Inscrição</a></li>
+<li><a href="#2-selecao">Seleção</a></li>
+<li><a href="#3-partida-da-jornada">Partida da jornada</a></li>
+<li><a href="#4-loop-de-conteudo">Loop de conteúdo</a></li>
+<li><a href="#5-consumo-no-cliente">Consumo no Cliente</a></li>
+<li><a href="#6-alertas-e-resgate">Alertas e resgate</a></li>
+<li><a href="#7-funil-de-encerramento">Funil de encerramento</a></li>
+<li><a href="#8-doacao">Doação</a></li>
+<li><a href="#9-mentoria-de-encerramento">Mentoria de encerramento</a></li>
+</ol>
+<p>Pós-liberação (PIX/recibo) e desistência: <a href="pos-liberacao.html">pos-liberacao.md</a>.</p>
+<hr>
+<h2>1. Inscrição</h2>
+<p>Landing da edição → pré-cadastro (lead) → inscrição completa (4 blocos) → CTA do número WhatsApp da organização → a empreendedora <strong>escreve</strong> nesse número → template Meta de inscrição.</p>
+<p>O template de inscrição <strong>abre a janela de 24h / opt-in</strong>. <strong>Não</strong> inicia a jornada educacional (UC33).</p>
+<div class="mermaid-wrap"><pre class="mermaid">sequenceDiagram
+  autonumber
+  participant Empreendedora
+  participant AppCliente
+  participant Backend
+  participant FilaAlertas
+  participant Gupshup
+  participant GestorUnidade
+  participant SendGrid
+
+  Note over Empreendedora,AppCliente: MANUAL empreendedora
+  Empreendedora ->> AppCliente: abre landing /e/slug
+  AppCliente ->> Backend: valida UUID do dispositivo
+  alt novo dispositivo
+    Empreendedora ->> AppCliente: UC19 pre-cadastro nome telefone email aceites
+    AppCliente ->> Backend: cria lead pre_inscrita
+    Note over Backend: sem WhatsApp automatico de inscricao
+  end
+
+  opt inscricao incompleta
+    Note over FilaAlertas,SendGrid: AUTO UC87 ficha incompleta
+    FilaAlertas -->> Backend: atraso configurado na edicao
+    Backend -->> SendGrid: lembrete email com link magico
+    opt WhatsApp opcional
+      Backend -->> Gupshup: template lead incompleta
+    end
+    Note over GestorUnidade: GESTOR alternativa Mini CRM UC26 disparo manual
+    GestorUnidade ->> Backend: dispara lembrete manual
+  end
+
+  Note over Empreendedora,AppCliente: MANUAL empreendedora
+  Empreendedora ->> AppCliente: UC21 quatro blocos e aceites finais
+  AppCliente ->> Backend: persiste inscricao + empreendedora + empreendimento
+  Backend -->> Backend: gera ID, hash CPF, em_selecao
+  opt unidade e turma unicas
+    Backend -->> Backend: aloca automaticamente
+  end
+  Backend -->> FilaAlertas: cancela lembretes de inscricao incompleta
+  AppCliente -->> Empreendedora: confirma ID, prazo, CTA + numero WhatsApp org
+
+  Note over Empreendedora,Gupshup: MANUAL empreendedora - 1o contato
+  Empreendedora ->> Gupshup: escreve no numero da organizacao
+  Gupshup -->> Backend: webhook inbound
+  Note over Backend,Gupshup: AUTO template inscricao - NAO inicia UC33
+  Backend -->> Gupshup: template Meta confirmacao de inscricao
+  Gupshup -->> Empreendedora: confirmacao + janela 24h
+</pre></div>
+<table>
+<thead>
+<tr>
+<th>Passo</th>
+<th>Momento</th>
+<th>Tipo</th>
+<th>Quem</th>
+<th>Canal</th>
+<th>O que NÃO faz</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1–2</td>
+<td>Landing</td>
+<td>MANUAL</td>
+<td>Empreendedora</td>
+<td>App Cliente</td>
+<td>Não cria jornada</td>
+</tr>
+<tr>
+<td>3–5</td>
+<td>Pré-cadastro UC19</td>
+<td>MANUAL</td>
+<td>Empreendedora</td>
+<td>App Cliente</td>
+<td>Não dispara WhatsApp de inscrição</td>
+</tr>
+<tr>
+<td>opt</td>
+<td>Lead abandonada</td>
+<td>AUTO</td>
+<td>FilaAlertas UC87</td>
+<td>E-mail (WA opcional)</td>
+<td>Não inicia módulo</td>
+</tr>
+<tr>
+<td>opt</td>
+<td>Mini CRM UC26</td>
+<td>GESTOR</td>
+<td>Unidade/Turma</td>
+<td>E-mail / WA</td>
+<td>Fallback; não substitui o alerta</td>
+</tr>
+<tr>
+<td>13–17</td>
+<td>Inscrição UC21</td>
+<td>MANUAL</td>
+<td>Empreendedora</td>
+<td>App Cliente</td>
+<td>Não classifica nem comunica</td>
+</tr>
+<tr>
+<td>20–23</td>
+<td>1º contato WA</td>
+<td>MANUAL + AUTO</td>
+<td>Empreendedora → Backend</td>
+<td>Gupshup</td>
+<td><strong>Não inicia UC33</strong></td>
+</tr>
+</tbody></table>
+<p>Bloqueio de cadastro: idade &lt; 18. Internet e WhatsApp <strong>pontuam</strong> na régua; <strong>não</strong> impedem inscrição.</p>
+<hr>
+<h2>2. Seleção</h2>
+<p>Online <strong>não</strong> tem entrevista de seleção. Unidade classifica (UC24) e, em seguida, comunica (UC25). Turma única = vínculo automático. Classificar <strong>não</strong> envia WhatsApp e <strong>não</strong> liga a jornada.</p>
+<div class="mermaid-wrap"><pre class="mermaid">sequenceDiagram
+  autonumber
+  participant GestorUnidade
+  participant Backend
+  participant Gupshup
+  participant SendGrid
+  participant Empreendedora
+  participant FilaJornada
+
+  Note over GestorUnidade,Backend: GESTOR etapa 1 - classificar UC24
+  GestorUnidade ->> Backend: classifica qualificada / em analise / nao qualificada
+  Backend -->> Backend: grava status e score X/Y
+  Note over Backend: NAO envia WhatsApp. NAO inicia jornada. NAO aloca turma.
+
+  alt nao qualificada
+    Note over GestorUnidade: GESTOR UC25 faixa 3
+    GestorUnidade ->> Backend: UC25 comunica nao qualificacao
+    Backend -->> Gupshup: template nao qualificada
+    Gupshup -->> Empreendedora: resultado negativo
+    opt email
+      Backend -->> SendGrid: mesmo aviso
+    end
+    Note over Backend: 1 dia apos fim da selecao anonimiza CPF UC76
+  else qualificada
+    Note over GestorUnidade,FilaJornada: GESTOR UC25 faixa 2 - unico inicio da jornada
+    GestorUnidade ->> Backend: UC25 comunica aprovacao
+    Backend -->> Backend: trava - exige unidade/turma vinculadas
+    Backend -->> FilaJornada: evento comunicar_aprovacao - liga UC33
+    Note over FilaJornada: segue diagrama 3 - partida
+  end
+</pre></div>
+<table>
+<thead>
+<tr>
+<th>Passo</th>
+<th>Momento</th>
+<th>Tipo</th>
+<th>Quem</th>
+<th>Canal</th>
+<th>O que NÃO faz</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1–3</td>
+<td>Classificar UC24</td>
+<td>GESTOR</td>
+<td>Unidade</td>
+<td>App Gestor</td>
+<td>Não envia WA; não inicia UC33; não aloca</td>
+</tr>
+<tr>
+<td>alt</td>
+<td>UC25 faixa 3</td>
+<td>GESTOR</td>
+<td>Unidade</td>
+<td>Gupshup / e-mail</td>
+<td>Não liga jornada</td>
+</tr>
+<tr>
+<td>else</td>
+<td>UC25 faixa 2</td>
+<td>GESTOR</td>
+<td>Unidade</td>
+<td>—</td>
+<td><strong>Único</strong> gatilho que liga UC33. Sem entrevista (faixa 1 não existe no online)</td>
+</tr>
+</tbody></table>
+<p>Faixa 1 (convite à entrevista) <strong>não se aplica</strong> ao online.</p>
+<hr>
+<h2>3. Partida da jornada</h2>
+<p>UC25 faixa 2 liga a orquestração. O backend envia o 1º template (pede <strong>OK</strong>). Só depois do OK a empreendedora recebe o 1º lote. <strong>Liberada ≠ enviada.</strong></p>
+<div class="mermaid-wrap"><pre class="mermaid">sequenceDiagram
+  autonumber
+  participant GestorUnidade
+  participant Backend
+  participant FilaJornada
+  participant Gupshup
+  participant Empreendedora
+  participant GestorTurma
+
+  Note over GestorUnidade,FilaJornada: GESTOR UC25 faixa 2 - 1o gatilho do modulo
+  GestorUnidade ->> Backend: comunica aprovacao
+  Backend -->> FilaJornada: cria jornada_evento e marca atividades iniciais
+  FilaJornada -->> Backend: dispara 1o template do modulo
+
+  Note over Backend,Empreendedora: AUTO template aprovacao - pede OK
+  Backend -->> Gupshup: template aprovacao / boas-vindas
+  Gupshup -->> Empreendedora: mensagem com pedido de OK
+  Backend -->> Backend: fase aguardando_ok_participacao
+
+  Note over Empreendedora,Gupshup: MANUAL empreendedora
+  Empreendedora ->> Gupshup: responde OK
+  Gupshup -->> Backend: webhook inbound OK
+  Backend -->> FilaJornada: enviar_lote_apos_ok
+
+  Note over FilaJornada,Empreendedora: AUTO 1o lote - so o que ja esta liberada
+  FilaJornada -->> Backend: montar lote pendente
+  Backend -->> Gupshup: itens do lote com login magico UC54
+  Gupshup -->> Empreendedora: boas-vindas, comunidade, materiais, links
+  Backend -->> Backend: status enviada nas itens do lote
+  Backend -->> Backend: fase jornada ativa, agenda temporizadores
+
+  Note over GestorTurma: GESTOR so acompanha. Nao libera atividade. Nao edita temporizador.
+</pre></div>
+<table>
+<thead>
+<tr>
+<th>Passo</th>
+<th>Momento</th>
+<th>Tipo</th>
+<th>Quem</th>
+<th>Canal</th>
+<th>O que NÃO faz</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1–3</td>
+<td>UC25 liga UC33</td>
+<td>GESTOR</td>
+<td>Unidade</td>
+<td>App Gestor</td>
+<td>Não envia o lote de conteúdo ainda</td>
+</tr>
+<tr>
+<td>4–6</td>
+<td>1º template</td>
+<td>AUTO</td>
+<td>FilaJornada</td>
+<td>Gupshup</td>
+<td>Não marca consumo; só pede OK</td>
+</tr>
+<tr>
+<td>7–9</td>
+<td>OK de participação</td>
+<td>MANUAL</td>
+<td>Empreendedora</td>
+<td>WhatsApp</td>
+<td>Sem OK não há envio</td>
+</tr>
+<tr>
+<td>10–14</td>
+<td>1º lote</td>
+<td>AUTO</td>
+<td>Backend</td>
+<td>Gupshup + link mágico</td>
+<td>Não conclui atividade; <strong>liberada ≠ enviada</strong></td>
+</tr>
+<tr>
+<td>—</td>
+<td>Acompanhamento</td>
+<td>GESTOR</td>
+<td>Turma</td>
+<td>App Gestor</td>
+<td>Não marca checkbox de liberação</td>
+</tr>
+</tbody></table>
+<p>Envios respeitam janela comercial (seg–sex 8h–20h; sáb 8h–16h; domingo/feriado sem disparo). Falha → retry 48h ou conversa direta no WhatsApp.</p>
+<hr>
+<h2>4. Loop de conteúdo</h2>
+<p>Depois da partida, cada temporizador <strong>libera</strong> atividades <strong>independente</strong> de a anterior ter sido concluída. O envio continua sendo <strong>OK</strong> → lote de todas as <code>liberada</code> ainda não enviadas.</p>
+<p>Maratona (acumular e fazer o lote depois) é <strong>comportamento esperado</strong>, não risco.</p>
+<div class="mermaid-wrap"><pre class="mermaid">sequenceDiagram
+  autonumber
+  participant FilaJornada
+  participant Backend
+  participant Gupshup
+  participant Empreendedora
+  participant GestorTurma
+
+  loop cada temporizador da sequencia
+    Note over FilaJornada,Backend: AUTO UC33 liberar pelo temporizador
+    FilaJornada -->> Backend: due jornada_evento
+    Backend -->> Backend: marca atividades liberada - NAO envia
+    Backend -->> Gupshup: solicitar_ok_conteudo com titulo
+    Gupshup -->> Empreendedora: Ja disponivel. Envie OK para receber.
+
+    Note over Empreendedora,Backend: MANUAL empreendedora
+    Empreendedora ->> Gupshup: OK
+    Gupshup -->> Backend: webhook inbound
+    Backend -->> FilaJornada: enviar_lote_apos_ok
+
+    Note over FilaJornada,Gupshup: AUTO lote de todas liberadas nao enviadas
+    FilaJornada -->> Backend: montar lote pendente
+    Backend -->> Gupshup: templates por tipo + links magicos
+    opt itens Download
+      Backend -->> Gupshup: arquivos do material no WhatsApp UC51
+    end
+    opt disparo_auto_videoaula ON
+      Backend -->> Gupshup: arquivo video WhatsApp UC51
+    end
+    Gupshup -->> Empreendedora: lote
+    Backend -->> Backend: status enviada
+  end
+
+  Note over GestorTurma: GESTOR nao libera. Resgate pontual = UC53. Ver diagrama 6.
+</pre></div>
+<table>
+<thead>
+<tr>
+<th>Passo</th>
+<th>Momento</th>
+<th>Tipo</th>
+<th>Quem</th>
+<th>Canal</th>
+<th>O que NÃO faz</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1–2</td>
+<td>Temporizador</td>
+<td>AUTO</td>
+<td>FilaJornada</td>
+<td>—</td>
+<td>Só marca <code>liberada</code>; <strong>não envia</strong></td>
+</tr>
+<tr>
+<td>3–4</td>
+<td>Pedir OK</td>
+<td>AUTO</td>
+<td>Backend</td>
+<td>Gupshup</td>
+<td>Não entrega material</td>
+</tr>
+<tr>
+<td>5–7</td>
+<td>OK de conteúdo</td>
+<td>MANUAL</td>
+<td>Empreendedora</td>
+<td>WhatsApp</td>
+<td>Sem OK o lote não sai</td>
+</tr>
+<tr>
+<td>8–12</td>
+<td>Lote</td>
+<td>AUTO</td>
+<td>Backend</td>
+<td>Gupshup</td>
+<td>Não conclui atividade; conclusão é no Cliente</td>
+</tr>
+<tr>
+<td>opt</td>
+<td>Itens <strong>Download</strong></td>
+<td>AUTO</td>
+<td>Backend</td>
+<td>Gupshup</td>
+<td>Template + <strong>arquivos</strong> no WhatsApp; os mesmos docs no Cliente</td>
+</tr>
+<tr>
+<td>—</td>
+<td>Flag videoaula OFF</td>
+<td>Config edição UC9</td>
+<td>—</td>
+<td>—</td>
+<td>Lote <strong>sem</strong> arquivo de vídeo; <strong>Download</strong> continua no lote</td>
+</tr>
+</tbody></table>
+<p>Texto aberto WhatsApp = mensagem de jornada, <strong>não</strong> aula pedagógica da matriz de tipos.</p>
+<hr>
+<h2>5. Consumo no Cliente</h2>
+<p>O lote entrega <strong>links mágicos</strong> e, no tipo <strong>Download</strong>, <strong>os arquivos</strong> no WhatsApp da empreendedora. O consumo oficial (conclusão) é no Aplicativo Cliente — os mesmos documentos de Download ficam nessa tela. Questionários são <strong>por pessoa</strong>; presença, planos, faturamento, download e plano de ação são do <strong>empreendimento</strong>. Percentuais 50% / 75% (variáveis na edição) calculam sobre o negócio; o certificado cai em cascata nas sócias.</p>
+<div class="mermaid-wrap"><pre class="mermaid">sequenceDiagram
+  autonumber
+  participant Empreendedora
+  participant AppCliente
+  participant Backend
+  participant GestorTurma
+  participant Gupshup
+
+  Note over Empreendedora,AppCliente: MANUAL empreendedora
+  Empreendedora ->> AppCliente: abre link magico UC54
+  AppCliente ->> Backend: sessao sem senha
+
+  alt questionario - escopo empreendedora
+    Empreendedora ->> AppCliente: responde
+    AppCliente ->> Backend: inscricao_atividade concluida
+  else videoaula / download / plano / faturamento - escopo empreendimento
+    Empreendedora ->> AppCliente: assiste 80pct / baixa arquivo / envia entrega / registra indicadores
+    AppCliente ->> Backend: empreendimento_atividade atualizada
+    opt entrega que exige aprovacao
+      Note over GestorTurma: GESTOR UC44 aprova ou Revisar
+      GestorTurma ->> Backend: avalia entrega / faturamento
+      Backend -->> Backend: concluida ou devolvida
+    end
+  end
+
+  Note over Backend: AUTO UC13 / UC55
+  Backend -->> Backend: recalcula pct do empreendimento
+  opt atinge beneficiamento ou certificacao
+    Backend -->> Backend: classifica negocio e todas as socias
+    Backend -->> Gupshup: PDF certificado por socia
+    Gupshup -->> Empreendedora: certificado
+  end
+</pre></div>
+<table>
+<thead>
+<tr>
+<th>Passo</th>
+<th>Momento</th>
+<th>Tipo</th>
+<th>Quem</th>
+<th>Canal</th>
+<th>O que NÃO faz</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1–2</td>
+<td>Login mágico</td>
+<td>MANUAL</td>
+<td>Empreendedora</td>
+<td>App Cliente</td>
+<td>Sem senha</td>
+</tr>
+<tr>
+<td>3–4</td>
+<td>Questionário</td>
+<td>MANUAL</td>
+<td>Empreendedora</td>
+<td>App Cliente</td>
+<td>Não conta 1× para o negócio até cada sócia responder</td>
+</tr>
+<tr>
+<td>5–6</td>
+<td>Atividade compartilhada</td>
+<td>MANUAL</td>
+<td>Qualquer sócia</td>
+<td>App Cliente</td>
+<td>1 registro no empreendimento</td>
+</tr>
+<tr>
+<td>opt</td>
+<td>Aprovação UC44</td>
+<td>GESTOR</td>
+<td>Turma</td>
+<td>App Gestor</td>
+<td>Não libera próxima atividade no online</td>
+</tr>
+<tr>
+<td>10–13</td>
+<td>Certificado UC55</td>
+<td>AUTO</td>
+<td>Backend</td>
+<td>Gupshup</td>
+<td>Não concede doação</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>6. Alertas e resgate</h2>
+<p>Fila de alertas (UC87) <strong>corre em paralelo</strong> à FilaJornada. Não substitui o OK/lote. O gestor ainda pode disparar <strong>UC53</strong> (manual, só online).</p>
+<p>Risco curto online: liberadas sem realização <strong>há mais de 10 dias</strong> <strong>ou</strong> a <strong>5 dias do término</strong> com pendências. Quem está <strong>represada ativa</strong> (acesso recente + fila grande) <strong>não</strong> entra no filtro de risco. Maratona é saudável.</p>
+<div class="mermaid-wrap"><pre class="mermaid">sequenceDiagram
+  autonumber
+  participant FilaAlertas
+  participant Backend
+  participant Gupshup
+  participant SendGrid
+  participant Empreendedora
+  participant GestorTurma
+  participant GestorUnidade
+
+  Note over GestorUnidade: GESTOR binding UC87 - liga/pausa regras da edicao
+  GestorUnidade ->> Backend: EditionAlertBinding ativo
+
+  Note over FilaAlertas,Backend: AUTO UC87 - distinto de UC33
+  FilaAlertas -->> Backend: avalia metricas da edicao
+  alt prazo da atividade se aproximando / várias aulas paradas / meio do curso
+    Backend -->> SendGrid: lembrete ou check-point
+    opt canal WhatsApp da regra
+      Backend -->> Gupshup: template de alerta
+      Gupshup -->> Empreendedora: mensagem de nurturing
+    end
+  else risco no curso curto / fim do programa perto
+    Backend -->> Gupshup: template risco curto
+    Gupshup -->> Empreendedora: resgate automatico
+  end
+
+  Note over GestorTurma,Gupshup: GESTOR UC53 reforco MANUAL
+  GestorTurma ->> Backend: filtra quem nao fez / risco / check-point
+  Backend -->> GestorTurma: lista + historico de alertas ja enviados
+  GestorTurma ->> Backend: confirma disparo direcionado
+  Backend -->> Gupshup: template UC53
+  Gupshup -->> Empreendedora: reforco pago
+  opt check-point concluido
+    Backend -->> Backend: libera material extra Download
+  end
+</pre></div>
+<table>
+<thead>
+<tr>
+<th>Passo</th>
+<th>Momento</th>
+<th>Tipo</th>
+<th>Quem</th>
+<th>Canal</th>
+<th>O que NÃO faz</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Binding da edição</td>
+<td>GESTOR</td>
+<td>Unidade</td>
+<td>App Gestor</td>
+<td>Não cria tipo novo de gatilho (isso é CMS)</td>
+</tr>
+<tr>
+<td>2–8</td>
+<td>Regras UC87</td>
+<td>AUTO</td>
+<td>FilaAlertas</td>
+<td>E-mail / WA</td>
+<td>Não libera nem envia lote de conteúdo (UC33)</td>
+</tr>
+<tr>
+<td>9–13</td>
+<td>UC53</td>
+<td>GESTOR</td>
+<td>Turma ou Unidade</td>
+<td>Gupshup</td>
+<td>Não existe em presencial ou híbrido; não pune maratona</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>7. Funil de encerramento</h2>
+<p>Gatilho de <strong>liberação para doação</strong> no online. Transmissão <strong>fora</strong> da plataforma (YouTube + StreamYard). Sistema <strong>não</strong> aprova doação.</p>
+<div class="mermaid-wrap"><pre class="mermaid">sequenceDiagram
+  autonumber
+  participant Backend
+  participant GestorUnidade
+  participant SendGrid
+  participant Empreendedora
+  participant YouTube
+  participant AppCliente
+  participant GestorTurma
+
+  Note over Backend: AUTO pre-requisito
+  Backend -->> Backend: empreendimento com 100pct das atividades
+
+  Note over GestorUnidade,SendGrid: GESTOR convite live - so quem fez 100pct
+  GestorUnidade ->> Backend: dispara convite live UC38
+  Backend -->> SendGrid: e-mail com link da live
+  SendGrid -->> Empreendedora: convite
+  Note over Empreendedora,YouTube: MANUAL empreendedora - transmissao externa
+  Empreendedora ->> YouTube: assiste live YouTube + StreamYard
+
+  Note over Backend,AppCliente: AUTO apos o termino - libera atividade de presenca
+  Backend -->> AppCliente: atividade presenca / palavra-chave
+  Note over Empreendedora,AppCliente: MANUAL empreendedora - prazo rigido
+  Empreendedora ->> AppCliente: informa KW
+  AppCliente ->> Backend: valida caixa/acento, grava timestamp
+  alt KW invalida ou fora do prazo
+    Backend -->> AppCliente: nao libera questionario
+  else KW valida
+    Note over Empreendedora,AppCliente: MANUAL questionario final
+    Empreendedora ->> AppCliente: responde questionario
+    AppCliente ->> Backend: corrige
+    alt 100pct certo
+      Backend -->> Backend: status liberada para doacao
+      Note over GestorTurma,GestorUnidade: GESTOR ainda precisa sugerir/aprovar UC57
+    else erro ou incompleto
+      Backend -->> AppCliente: nao libera doacao - retenta no prazo da edicao
+    end
+  end
+</pre></div>
+<table>
+<thead>
+<tr>
+<th>Passo</th>
+<th>Momento</th>
+<th>Tipo</th>
+<th>Quem</th>
+<th>Canal</th>
+<th>O que NÃO faz</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>100% atividades</td>
+<td>AUTO</td>
+<td>Backend</td>
+<td>—</td>
+<td>Quem não fez 100% <strong>não</strong> entra na live</td>
+</tr>
+<tr>
+<td>2–4</td>
+<td>Convite</td>
+<td>GESTOR</td>
+<td>Unidade</td>
+<td>E-mail (preferência)</td>
+<td>Live não é na plataforma</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Assistir</td>
+<td>MANUAL</td>
+<td>Empreendedora</td>
+<td>YouTube</td>
+<td>Assistir sozinho não libera doação</td>
+</tr>
+<tr>
+<td>6–8</td>
+<td>Presença/KW</td>
+<td>MANUAL</td>
+<td>Empreendedora</td>
+<td>App Cliente</td>
+<td>Fora do prazo ou KW inválida → sem quiz</td>
+</tr>
+<tr>
+<td>11–14</td>
+<td>Quiz 100% certo</td>
+<td>MANUAL</td>
+<td>Empreendedora</td>
+<td>App Cliente</td>
+<td>Libera <strong>para</strong> doação; <strong>não aprova</strong> doação</td>
+</tr>
+<tr>
+<td>—</td>
+<td>Ranking</td>
+<td>GESTOR</td>
+<td>Consulado</td>
+<td>—</td>
+<td>Só se o orçamento não cobrir todas as liberadas</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>8. Doação</h2>
+<p>Só empreendimentos <strong>liberados pelo funil</strong>. Turma e Unidade <strong>sugerem no empreendimento</strong>; Unidade <strong>aprova só na tela Doação</strong> (pop-up + digitar <strong>APROVAR</strong>). Não há doação automática. Depois: <a href="pos-liberacao.html">pos-liberacao.md</a>. Mentoria de encerramento (UC70) abre em lote a partir das finalistas / doação aprovada — <a href="#9-mentoria-de-encerramento">seção 9</a>.</p>
+<div class="mermaid-wrap"><pre class="mermaid">sequenceDiagram
+  autonumber
+  participant GestorTurma
+  participant GestorUnidade
+  participant Backend
+  participant AppCliente
+  participant Empreendedora
+
+  Note over GestorTurma,Backend: GESTOR sugerir no empreendimento - so liberadas
+  GestorTurma ->> Backend: sugere doacao UC57
+  Backend -->> Backend: bloqueia se nao estiver liberada para doacao
+  Backend -->> Backend: registra sugerido_por
+
+  Note over GestorUnidade,Backend: GESTOR aprovar so em /doacao
+  GestorUnidade ->> Backend: inicia aprovacao
+  Backend -->> GestorUnidade: popup resumo
+  GestorUnidade ->> Backend: digita APROVAR
+  alt cancela ou texto invalido
+    Backend -->> Backend: nenhum status novo
+  else confirma
+    Backend -->> Backend: doacao aprovada, aprovado_por
+    Backend -->> AppCliente: status aguarde - sem datas de pagamento
+    AppCliente -->> Empreendedora: aguarde orientacoes da educadora
+    Note over Backend: segue pos-liberacao UC86
+  end
+</pre></div>
+<table>
+<thead>
+<tr>
+<th>Passo</th>
+<th>Momento</th>
+<th>Tipo</th>
+<th>Quem</th>
+<th>Canal</th>
+<th>O que NÃO faz</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1–3</td>
+<td>Sugerir UC57</td>
+<td>GESTOR</td>
+<td>Turma (Unidade também pode)</td>
+<td>App Gestor — negócio</td>
+<td>Bloqueado sem funil UC38; <strong>não</strong> aprova</td>
+</tr>
+<tr>
+<td>4–8</td>
+<td>Aprovar</td>
+<td>GESTOR</td>
+<td>Unidade</td>
+<td>App Gestor — <code>/doacao</code></td>
+<td>Sem APROVAR digitado = nenhum status novo</td>
+</tr>
+<tr>
+<td>9–10</td>
+<td>Aviso Cliente</td>
+<td>AUTO</td>
+<td>Backend</td>
+<td>App Cliente</td>
+<td>Sem data de pagamento; <strong>≠ garantia</strong></td>
+</tr>
+<tr>
+<td>—</td>
+<td>Filtros A–D / lote UC14</td>
+<td>GESTOR</td>
+<td>Unidade</td>
+<td>App Gestor</td>
+<td>Auxiliares; não substituem o funil</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>9. Mentoria de encerramento</h2>
+<p>Só no curso <strong>pela internet</strong>, etapa <strong>final</strong> (UC70): lote de finalistas / doação aprovada → empreendedora preenche o <strong>diagnóstico</strong> no aplicativo → demanda aberta no <strong>portal do voluntariado</strong> (só edição ativa / datas de aplicação). Pedido da empreendedora = <strong>uma</strong> demanda; <strong>número de vagas da sessão</strong> (padrão 1). O voluntário vê o <strong>cartão</strong>, aceita (diminui uma vaga, WhatsApp), registra o <strong>diário próprio</strong>. Se ninguém aceitar em <strong>72 horas</strong> (prazo configurável no CMS), a unidade indica <strong>um ou vários</strong> voluntários da rede. Certificado <strong>individual por pessoa e por sessão</strong>. Pesquisa de satisfação no aplicativo depois de concluída.</p>
+<p>No presencial ou híbrido — <a href="jornada-ph.html#8-mentoria-programa-regular">presencial-hibrido.md §8</a>.</p>
+<div class="mermaid-wrap"><pre class="mermaid">sequenceDiagram
+  autonumber
+  participant GestorUnidade
+  participant Backend
+  participant AppCliente
+  participant Empreendedora
+  participant AppVoluntario
+
+  Note over GestorUnidade: GESTOR Encerramento - lote
+  GestorUnidade ->> Backend: abre lote finalistas / doacao aprovada
+  Backend -->> AppCliente: botao Mentoria no perfil
+  Empreendedora ->> AppCliente: diagnostico area + Caroline + periodos
+  AppCliente ->> Backend: demanda aberta
+  Backend -->> AppVoluntario: pool da edicao ativa
+  alt voluntario aceita
+    AppVoluntario ->> Backend: aceite
+    Backend -->> AppVoluntario: revela WhatsApp no card
+    AppVoluntario ->> Backend: diario data desc minutos
+    Backend -->> AppCliente: NPS, certificado por sessao
+  else prazo esgotado
+    GestorUnidade ->> Backend: vincula um ou varios (UC73)
+  end
+</pre></div>
+<table>
+<thead>
+<tr>
+<th>Passo</th>
+<th>Momento</th>
+<th>Tipo</th>
+<th>Quem</th>
+<th>Canal</th>
+<th>O que NÃO faz</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Lote</td>
+<td>GESTOR</td>
+<td>Unidade</td>
+<td>Encerramento — <code>/mentorias</code></td>
+<td><strong>≠ extra ≠ visita</strong>; sem PIX no card</td>
+</tr>
+<tr>
+<td>2–4</td>
+<td>Diagnóstico</td>
+<td>MANUAL</td>
+<td>Empreendedora no lote</td>
+<td>App Cliente</td>
+<td>Sem slot de gestor</td>
+</tr>
+<tr>
+<td>5–8</td>
+<td>Pool + aceite</td>
+<td>MANUAL</td>
+<td>Voluntário (treino ok)</td>
+<td>App Voluntário</td>
+<td>Sem contato antes do aceite</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>Fallback</td>
+<td>GESTOR</td>
+<td>Unidade</td>
+<td>Área Voluntários</td>
+<td>Skill match fino não é obrigatório</td>
+</tr>
+</tbody></table>
+
+      </article>
+    </main>
+  </div>
+  <script src="../assets/js/nav.js"></script>
+</body>
+</html>

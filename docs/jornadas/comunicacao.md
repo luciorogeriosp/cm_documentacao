@@ -4,7 +4,7 @@ Este texto é para a equipe do Consulado da Mulher (comunicação, metodologia e
 
 Fonte canônica: [Casos de Uso v10.2 — UC88](../../Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v10.2.md). Este arquivo é a leitura operacional (quando / para quem / variáveis / o que a mensagem **não** faz). Os parágrafos oficiais ainda estão *a revisar* — os textos moram na **Gupshup**, não aqui.
 
-Para **jogar** as duas jornadas (online e presencial ou híbrido, com desfechos) numa ferramenta à parte: [simulador-comunicacao/](../../simulador-comunicacao/README.md).
+Para **jogar e auditar** a jornada da empreendedora numa ferramenta à parte: [simulador-comunicacao/](../../simulador-comunicacao/README.md). Percorre **fase a fase** — pré-inscrição, inscrição, seleção, entrevista (só P/H), aprovação ou reprovação, módulos da edição em homologação e, no online, a **finalização** (convite da live / palavra-chave no app / questionário final). Confere modelo, variável, entrega e resposta. Não mistura finalização com a pesquisa pós-curso.
 
 Quem nunca abriu o sistema deve conseguir ler daqui até o fim sem precisar de outro documento.
 

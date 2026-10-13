@@ -182,7 +182,7 @@ sequenceDiagram
     Note over GestorUnidade,Backend: GESTOR UC17 - NAO inicia jornada
     GestorUnidade ->> Backend: aloca aprovadas nas turmas
     opt distribuir automaticamente
-      Backend -->> Backend: equilibra vagas; prioriza manha/tarde se o nome indicar
+      Backend -->> Backend: equilibra vagas, prioriza manha/tarde se o nome indicar
     end
   else turma unica
     Backend -->> Backend: vinculo automatico
@@ -201,7 +201,7 @@ sequenceDiagram
     opt email
       Backend -->> SendGrid: mesmo aviso
     end
-    Backend -->> Backend: jornada_iniciada_em; participacao efetivavel
+    Backend -->> Backend: jornada_iniciada_em, participacao efetivavel
   else faixa 3 - nao qualificada / nao aprovada / faltosa
     Note over GestorUnidade: GESTOR UC25 faixa 3 - NAO libera jornada
     GestorUnidade ->> Backend: comunica resultado negativo
@@ -509,7 +509,7 @@ sequenceDiagram
   alt cancela ou texto invalido
     Backend -->> Backend: nenhum status novo
   else confirma
-    Backend -->> Backend: doacao aprovada; aprovado_por
+    Backend -->> Backend: doacao aprovada, aprovado_por
     Backend -->> AppCliente: status aguarde - sem datas
     AppCliente -->> Empreendedora: aguarde orientacoes da educadora
     Note over Backend: segue pos-liberacao UC86

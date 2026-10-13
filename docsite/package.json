@@ -1,0 +1,10 @@
+{
+  "name": "docsite-consulado",
+  "private": true,
+  "scripts": {
+    "sync": "node sync-canonico.mjs"
+  },
+  "devDependencies": {
+    "marked": "^15.0.12"
+  }
+}

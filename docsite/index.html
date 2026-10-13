@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plataforma Consulado da Mulher — Documentação</title>
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="assets/js/mermaid-init.js"></script>
+</head>
+<body>
+  <button type="button" class="menu-toggle" aria-label="Abrir menu">Menu</button>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h1>Consulado da Mulher</h1>
+        <p>Especificação da plataforma</p>
+      </div>
+      <nav>
+        <div class="nav-group">
+          <div class="nav-group-title">Início</div>
+          <a href="index.html" data-page="index.html">Hub</a>
+          <a href="visao-geral.html" data-page="visao-geral.html">Visão geral</a>
+          <a href="personas.html" data-page="personas.html">Personas</a>
+          <a href="mapa-jornadas.html" data-page="mapa-jornadas.html">Mapa de jornadas</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-title">Requisitos</div>
+          <a href="requisitos-funcionais.html" data-page="requisitos-funcionais.html">Funcionais</a>
+          <a href="requisitos-nao-funcionais.html" data-page="requisitos-nao-funcionais.html">Não funcionais</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-title">Módulos</div>
+          <a href="modulos/portal-empreendedora.html" data-page="portal-empreendedora.html">Portal empreendedora</a>
+          <a href="modulos/portal-gestao.html" data-page="portal-gestao.html">Portal gestão</a>
+          <a href="modulos/dashboard-bi.html" data-page="dashboard-bi.html">Dashboard BI</a>
+          <a href="modulos/app-equipe.html" data-page="app-equipe.html">App equipe</a>
+          <a href="modulos/chat-ia.html" data-page="chat-ia.html">Chat IA</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-title">Programas e dados</div>
+          <a href="programas/catalogo.html" data-page="catalogo.html">Catálogo de programas</a>
+          <a href="dados/cadastro-e-lgpd.html" data-page="cadastro-e-lgpd.html">Cadastro e LGPD</a>
+          <a href="dados/migracao-historico.html" data-page="migracao-historico.html">Migração histórico</a>
+          <a href="dados/selecao-editais.html" data-page="selecao-editais.html">Seleção e editais</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-title">Jornadas — Empreendedora</div>
+          <a href="jornadas/empreendedora-inscricao.html" data-page="empreendedora-inscricao.html">Inscrição e onboarding</a>
+          <a href="jornadas/empreendedora-empreende-mulher.html" data-page="empreendedora-empreende-mulher.html">Empreende Mulher</a>
+          <a href="jornadas/empreendedora-empreende-zap.html" data-page="empreendedora-empreende-zap.html">Empreende no Zap</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-title">Jornadas — Gestor e admin</div>
+          <a href="jornadas/gestor-operacao.html" data-page="gestor-operacao.html">Gestor — operação</a>
+          <a href="jornadas/gestor-presenca-eventos.html" data-page="gestor-presenca-eventos.html">Gestor — presença</a>
+          <a href="jornadas/admin-configuracao.html" data-page="admin-configuracao.html">Admin — configuração</a>
+          <a href="jornadas/admin-bi-impacto.html" data-page="admin-bi-impacto.html">Admin — BI e impacto</a>
+        </div>
+      </nav>
+    </aside>
+    <main class="main">
+      <header class="page-header">
+        <h1>Plataforma Consulado da Mulher</h1>
+        <p class="lead">Canônico atual: casos de uso <strong>v10.2</strong>, tipos de atividade, jornadas de comunicação e o simulador. As demais páginas deste site são rascunho da fase de prototipação.</p>
+      </header>
+
+      <section>
+        <h2>Resumo executivo</h2>
+        <p>O novo sistema centraliza a jornada das empreendedoras — inscrição, conteúdo, atividades, fluxo de caixa, presença e indicadores de impacto — substituindo fluxos manuais via WhatsApp, e-mail e planilhas. O WhatsApp permanece como canal de comunicação e login; a plataforma é o repositório oficial. A solução contempla portal da empreendedora, portal de gestão, dashboards BI em tempo real, aplicativo de equipe (QR Code de presença) e chat de IA restrito aos dados internos. Público-alvo: mulheres empreendedoras, em média 36–46 anos, com familiaridade limitada à tecnologia além do celular.</p>
+      </section>
+
+      <section>
+        <h2>Arquitetura em alto nível</h2>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart TB
+  subgraph canais [Canais]
+    WA[WhatsApp comunicacao e login]
+    Web[Portal Empreendedora]
+    Admin[Portal Gestao]
+    BI[Dashboard BI]
+    App[App Equipe QR presenca]
+  end
+  subgraph core [Nucleo]
+    Cadastro[Cadastro unificado LGPD]
+    Edital[Programas e Edicoes]
+    Conteudo[Trilhas modulos atividades]
+    Entregas[Entregas e evidencias]
+    Fin[Fluxo de caixa mensal]
+    Gamif[Gamificacao ranking premios]
+    IA[Chat IA dados internos]
+  end
+  WA -->|redireciona| Web
+  Web --> core
+  Admin --> core
+  BI --> core
+  App --> Edital
+  IA --> core
+          </pre>
+        </div>
+      </section>
+
+      <section>
+        <h2>Canônico v10.2</h2>
+        <div class="card-grid">
+          <article class="card">
+            <h3>Casos de uso</h3>
+            <p>Spec funcional canônica (UC1–UC95).</p>
+            <p><a class="stretched" href="canonico/casos-de-uso.html">Abrir v10.2 →</a></p>
+          </article>
+          <article class="card">
+            <h3>Tipos de atividade</h3>
+            <p>Catálogo da matriz do módulo, agrupador e marcador Encerramento.</p>
+            <p><a class="stretched" href="canonico/tipos-de-atividade.html">Abrir tipos →</a></p>
+          </article>
+          <article class="card">
+            <h3>Comunicação</h3>
+            <p>Quando / para quem / variáveis / o que a mensagem não faz.</p>
+            <p><a class="stretched" href="canonico/comunicacao.html">Abrir fichas →</a></p>
+          </article>
+          <article class="card">
+            <h3>Jornadas</h3>
+            <p>Online, presencial/híbrido e pós-liberação.</p>
+            <p><a class="stretched" href="canonico/jornadas.html">Mapa →</a> · <a href="canonico/jornada-online.html">Online →</a> · <a href="canonico/jornada-ph.html">P/H →</a></p>
+          </article>
+          <article class="card">
+            <h3>Simulador</h3>
+            <p>Jogar e auditar a jornada como a empreendedora.</p>
+            <p><a class="stretched" href="canonico/simulador.html">README →</a> · <a href="https://simulador-comunicacao.vercel.app">Abrir o app →</a></p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>Glossário</h2>
+        <dl class="glossary">
+          <dt>Programa</dt>
+          <dd>Linha de formação (ex.: Empreende Mulher, Empreende no Zap, Multiplica por Elas).</dd>
+          <dt>Edição</dt>
+          <dd>Ciclo específico de um programa (ex.: 2ª edição Empreende no Zap 2026).</dd>
+          <dt>Beneficiária</dt>
+          <dd>Participante que atinge marco de impacto (ex.: 50% do programa ou participação até determinado mês).</dd>
+          <dt>Certificada</dt>
+          <dd>Participante com conclusão integral (ex.: 100% do programa; 75% de presença onde aplicável).</dd>
+          <dt>Turma inicial</dt>
+          <dd>Conjunto de inscritas após o edital, antes da seleção.</dd>
+          <dt>Turma de execução</dt>
+          <dd>Grupo efetivamente matriculado após critérios automáticos e decisão do gestor.</dd>
+        </dl>
+      </section>
+
+      <section>
+        <h2>Fontes</h2>
+        <p>Canônico: <a href="canonico/casos-de-uso.html">Casos de Uso v10.2</a>, <a href="canonico/tipos-de-atividade.html">Tipos de atividade</a>, <a href="canonico/comunicacao.html">comunicação</a> e jornadas. Depois de alterar esses Markdown, rode <code>npm run sync</code> em <code>docsite/</code>.</p>
+        <p class="lead">As páginas de requisitos, módulos e jornadas do menu “Rascunho de prototipação” vêm das atas de abril/maio 2026 e <strong>não</strong> substituem a v10.2.</p>
+      </section>
+    </main>
+  </div>
+  <script src="assets/js/nav.js"></script>
+</body>
+</html>

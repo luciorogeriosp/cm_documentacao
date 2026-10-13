@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tipos de atividade — Consulado da Mulher</title>
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../assets/js/mermaid-init.js"></script>
+</head>
+<body>
+  <button type="button" class="menu-toggle" aria-label="Abrir menu">Menu</button>
+  <div class="layout">
+    <aside class="sidebar"></aside>
+    <main class="main">
+      <p class="canon-source">Canônico v10.2 · gerado a partir do Markdown-fonte</p>
+      <article class="prose">
+<h1>Tipos de Atividade dos Módulos</h1>
+<h2>1. Introdução</h2>
+<p>Este documento descreve, em detalhe, cada tipo de atividade que pode compor os módulos dos programas do Consulado da Mulher. O <strong>Administrador</strong> monta a matriz no CMS; o <strong>Gestor</strong> libera e acompanha no <strong>Aplicativo Gestor</strong>; a <strong>empreendedora</strong> realiza no <strong>Aplicativo Cliente</strong>.</p>
+<p>Escopo: o que o gestor configura antes de liberar, como a atividade é comunicada às participantes, como o gestor acompanha a realização e quais regras se aplicam a cada tipo.</p>
+<p>Relação com outros documentos:</p>
+<ul>
+<li><a href="casos-de-uso.html">Casos de Uso - Consulado da Mulher_v10.2.md</a> — spec canônica (UC15, UC33, UC34, UC36, UC82 etc.).</li>
+<li><a href="prototipo/Aplicativo%20Gestor.md">prototipo/Aplicativo Gestor.md</a> — visão geral das telas e da navegação.</li>
+</ul>
+<p><strong>Hierarquia.</strong> <strong>Edição → Módulo → Aula (agrupador) → Atividade.</strong> O <strong>módulo lista N atividades</strong>, não N aulas. Progresso, % e “completou N de M” são <strong>por atividade</strong>. O backend pode gravar a aula de origem; isso <strong>não</strong> muda o cálculo. Módulos antigos: atividades numa aula só, <strong>&quot;Aula 1&quot;</strong>.</p>
+<p><strong>Os dois “Aula”:</strong></p>
+<ul>
+<li><strong>Aula (agrupador)</strong> — só organiza. <strong>Título</strong> + quais atividades pertencem a ela, na ordem do CMS. Sem regra própria de liberação. <strong>Não</strong> é item de lista nem unidade de progresso. <strong>Não</strong> entra na enum <code>TipoAtividade</code>.</li>
+<li><strong>Aula (tipo)</strong> — encontro síncrono <strong>presencial</strong> ou <strong>online</strong> (P/H). Uma natureza, nunca as duas na mesma atividade. Natureza no <strong>CMS</strong> (UC15); data/hora/local ou canal/link na <strong>liberação</strong> (UC34).</li>
+</ul>
+<p>São <strong>11 tipos</strong> na enum (canônico com UC15). <strong>Encerramento</strong> é <strong>marcador</strong> invisível à empreendedora — não é o 12º tipo de questionário. Tudo <strong>depois</strong> dele = <strong>pós-curso</strong> (bloco separado no App Gestor e no App Cliente — UC82). Exemplo: agrupador “Pesquisa depois do curso”, gatilho ~30 dias, atividade <strong>NPS</strong>. Modelo de perguntas <strong>não inventar</strong>.</p>
+<p>No online, o agrupador do exemplo começa com duas atividades <strong>escondidas</strong> — gatilho de X dias e mensagem WhatsApp (“aula disponível”) — montadas <strong>à mão</strong>, aula por aula. A aula <strong>não</strong> libera sozinha.</p>
+<p><strong>Fora da enum</strong> (não são tipos montáveis como <code>TipoAtividade</code>):</p>
+<ul>
+<li><strong>Aula (agrupador)</strong> — só organiza as atividades do módulo.</li>
+<li><strong>Encerramento (marcador)</strong> — corta o módulo; o que vem depois é pós-curso (UC82).</li>
+<li><strong>Gatilho</strong> (temporizador) e <strong>mensagem</strong> WhatsApp — no online entram <strong>dentro do agrupador</strong>, em geral escondidos; montar à mão (UC33).</li>
+<li><strong>Certificado</strong> — emissão/consulta (UC55/UC63).</li>
+<li><strong>Conteúdo extra</strong> (UC35) — item pontual além da matriz; <strong>não</strong> conta %/carga/beneficiamento.</li>
+<li><strong>Atividade de presença (palavra-chave)</strong> pós-live de encerramento online — mecânica do funil UC38 (libera o Questionário Final); <strong>não</strong> é um tipo na matriz do módulo.</li>
+</ul>
+<h2>2. Tabela-resumo</h2>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Modalidades</th>
+<th>Agenda exigida</th>
+<th>Entrega/aprovação</th>
+<th>Progresso medido por</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Aula (tipo)</td>
+<td>Presencial, Híbrido</td>
+<td><strong>Presencial:</strong> data, hora e local · <strong>Online:</strong> data, hora e link</td>
+<td>Não</td>
+<td>Presentes ou compareceram / total</td>
+</tr>
+<tr>
+<td>Vídeo Aula</td>
+<td>Todas</td>
+<td>Data-prazo</td>
+<td>Não</td>
+<td>Assistiram / não assistiram</td>
+</tr>
+<tr>
+<td>Atividade</td>
+<td>Todas</td>
+<td>Data-prazo</td>
+<td>Não</td>
+<td>Fizeram / não fizeram</td>
+</tr>
+<tr>
+<td>Tarefa de Casa</td>
+<td>Todas</td>
+<td>Data-prazo</td>
+<td>Sim</td>
+<td>Aprovadas ou em revisão / total</td>
+</tr>
+<tr>
+<td>Registro de Faturamento</td>
+<td>Todas</td>
+<td>Data-prazo</td>
+<td>Sim</td>
+<td>Registros aprovados / total</td>
+</tr>
+<tr>
+<td>Download de Conteúdo</td>
+<td>Todas</td>
+<td>Data-prazo</td>
+<td>Não</td>
+<td>Baixaram / não baixaram</td>
+</tr>
+<tr>
+<td>Plano de Ação</td>
+<td>Todas</td>
+<td>Data-prazo</td>
+<td>Não (gestão de metas)</td>
+<td>Fizeram / não fizeram</td>
+</tr>
+<tr>
+<td>Visita Técnica</td>
+<td>Presencial, Híbrido</td>
+<td><strong>Presencial:</strong> data, hora e endereço · <strong>Online:</strong> data, hora e link/canal (1 a 1 — UC78)</td>
+<td>Sim (registro da visita)</td>
+<td>Visitas realizadas / participantes</td>
+</tr>
+<tr>
+<td>Questionário Inicial</td>
+<td>Todas</td>
+<td>Prazo no módulo (chegada)</td>
+<td>Não</td>
+<td>Responderam / não responderam</td>
+</tr>
+<tr>
+<td>Questionário Final</td>
+<td>Todas</td>
+<td>Data-prazo</td>
+<td>Não</td>
+<td>Responderam / não responderam</td>
+</tr>
+<tr>
+<td>NPS</td>
+<td>Todas</td>
+<td>Prazo no módulo (fim da formação ou pós-curso)</td>
+<td>Não</td>
+<td>Responderam / não responderam</td>
+</tr>
+<tr>
+<td>Encerramento (marcador)</td>
+<td>Todas</td>
+<td>—</td>
+<td>Não</td>
+<td>A empreendedora <strong>não vê</strong>; <strong>não</strong> conta %</td>
+</tr>
+</tbody></table>
+<p>Em programas <strong>online</strong> (edição 100% online) não existem <strong>Aula (tipo)</strong> nem Visita Técnica (ver seção 5). Em edição <strong>presencial/híbrido</strong>, cada Visita Técnica é <strong>presencial</strong> ou <strong>online</strong> (1 a 1 — UC78). <strong>Aula (agrupador)</strong> existe em qualquer modalidade — só organiza.</p>
+<h2>3. Ficha por tipo</h2>
+<h3>3.1 Aula (tipo)</h3>
+<p><strong>Descrição e finalidade.</strong> Encontro síncrono da turma — distinto da <strong>Aula (agrupador)</strong> (seção 1). Cada atividade deste tipo é <strong>presencial</strong> <strong>ou</strong> <strong>online</strong> — uma natureza, não as duas. <strong>Presencial:</strong> local físico. <strong>Online:</strong> transmissão ao vivo (Google Meet ou YouTube + StreamYard). É o principal momento de vínculo do programa presencial/híbrido (boas-vindas, oficinas temáticas; encontros de encerramento P/H são <strong>carga obrigatória</strong>, distintos do <strong>marcador</strong> Encerramento). Não existe <strong>Aula (tipo)</strong> na edição 100% online (seção 5).</p>
+<p><strong>Configuração CMS (UC15).</strong> <strong>Natureza</strong> (<code>presencial</code> ou <code>online</code>); <strong>título</strong>; <strong>descrição</strong> (e dica/anexos metodológicos, quando previstos). <strong>Sem</strong> data, hora, local ou link — campos operacionais ficam no Gestor.</p>
+<p><strong>Configuração Gestor (UC34 — liberação).</strong> Conforme a natureza escolhida: data, hora e <strong>endereço</strong> (presencial) <strong>ou</strong> data, hora, <strong>canal</strong> e <strong>link</strong> (online). Natureza <strong>pré-preenchida</strong> do CMS, <strong>editável</strong> até ministrar — continua sendo <strong>uma</strong> das duas.</p>
+<table>
+<thead>
+<tr>
+<th>Natureza</th>
+<th>Obrigatório na liberação</th>
+<th>Presença</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Presencial</strong></td>
+<td>Data, hora e <strong>endereço</strong> (não retroativos); anexos</td>
+<td>QR Code + registro manual (UC40/UC41); relato “Como foi o encontro” (UC80)</td>
+</tr>
+<tr>
+<td><strong>Online</strong></td>
+<td>Data, hora; <strong>canal</strong> (Google Meet ou YouTube + StreamYard) e <strong>link</strong></td>
+<td>Compareceram / não; <strong>sem</strong> QR físico; replay opcional <strong>não</strong> conta nova presença (UC38)</td>
+</tr>
+</tbody></table>
+<p><strong>Comunicação.</strong> Template do <strong>pacote UC88</strong> conforme a natureza: <strong><code>Aula_presencial</code></strong> (<code>{data}</code>, <code>{hora}</code>, <code>{local}</code>) ou <strong><code>Aula_ao_vivo</code></strong> (<code>{data}</code>, <code>{hora}</code>, <code>{link}</code>) — o recado da aula online. Mesmo texto Meta/Gupshup usado no facilitador de grupo (UC50). <strong>Gestor de Unidade</strong> pode editar corpo antes de copiar (P/H).</p>
+<p><strong>Acompanhamento.</strong> Após a liberação, no mesmo acordeão:</p>
+<ul>
+<li><strong>Presencial:</strong> campo <strong>&quot;Como foi o encontro&quot;</strong>; <strong>QR Code</strong>; <strong>registro manual</strong> com busca por nome ou CPF; indicador <strong>presentes / total</strong>.</li>
+<li><strong>Online:</strong> listas <strong>compareceram / não compareceram</strong>, com percentual de adesão; pós-evento, link de replay.</li>
+</ul>
+<p><strong>Regras específicas.</strong> Uma vez registrada a chamada ou marcada qualquer presença (presencial), a liberação <strong>não</strong> pode mais ser cancelada. Conteúdo pontual além da matriz = <strong>conteúdo extra</strong> (UC35), <strong>não</strong> este tipo.</p>
+<p><strong>Status no Gestor:</strong> não liberada (cadeado); liberada com os dados da sessão; após realizada (presencial), exibe &quot;Como foi o encontro&quot;.</p>
+<h3>3.2 Vídeo Aula</h3>
+<p><strong>Descrição e finalidade.</strong> Conteúdo gravado, hospedado na plataforma educacional, que a participante assiste no seu tempo. Em programas online pode existir também <strong>arquivo compatível com WhatsApp</strong> (UC51); o consumo oficial para conclusão permanece na plataforma (UC37).</p>
+<p><strong>Configuração pelo gestor.</strong> Título, descrição, dica de realização e <strong>data-prazo</strong> (sugestão padrão <strong>D+2</strong>). O link na plataforma é gerado automaticamente.</p>
+<p><strong>Comunicação.</strong> Template <strong>Vídeo Aula</strong> do pacote UC88 — prazo e link (<code>{data_limite}</code>, <code>{link_atividade}</code>). Online: envio API (UC33/UC51); P/H: UC50.</p>
+<p><strong>Acompanhamento.</strong> Lista binária: <strong>assistiram / não assistiram</strong>, com contador e percentual.</p>
+<p><strong>Regras específicas.</strong> Não gera entrega nem fila de aprovação. Conclusão com <strong>80%</strong> assistido (padrão configurável). O vídeo pode ser visto a qualquer momento após a liberação.</p>
+<p>Em <strong>P/H</strong>, concluir <strong>dentro do prazo</strong> favorece o indicador de engajamento (desempate em doação e mentorias — UC56/UC85). Em <strong>online</strong>, a jornada não penaliza por “atraso de calendário” (maratona esperada); o prazo serve sobretudo à operação presencial/híbrida.</p>
+<p><strong>Status no Gestor:</strong> não liberada (cadeado); liberada → vídeo no Cliente.</p>
+<h3>3.3 Atividade</h3>
+<p><strong>Descrição e finalidade.</strong> Questionário <strong>genérico</strong> (perguntas de resposta simples, múltipla ou aberta), criado e configurado no <strong>Administrador</strong>, distinto de <strong>Questionário Inicial</strong>, <strong>Questionário Final</strong> e <strong>NPS</strong>. Liberado pelo gestor com data-prazo; comunicado com link para a plataforma. No Gestor: quem respondeu / quem não respondeu; consolidado (pizza) das questões objetivas; respostas abertas por empreendedora.</p>
+<p><strong>Configuração pelo gestor.</strong> Data-prazo (conteúdo do instrumento vem do Admin/CMS).</p>
+<p><strong>Comunicação.</strong> Mensagem com prazo e link do questionário.</p>
+<p><strong>Acompanhamento.</strong> Lista <strong>fizeram / não fizeram</strong>; nas que fizeram, acesso às respostas abertas. <strong>Sem</strong> fila de aprovação.</p>
+<h3>3.4 Tarefa de Casa</h3>
+<p><strong>Descrição e finalidade.</strong> Exercício prático aplicado ao próprio negócio e/ou ao conteúdo, realizado entre encontros (presencial ou online), com entrega obrigatória na plataforma. Escopo tipicamente de <strong>empreendimento</strong>.</p>
+<p><strong>Configuração.</strong> Título, descrição, dica e arquivos de referência vêm <strong>pré-carregados do CMS</strong> (somente leitura para o gestor). O gestor define <strong>apenas</strong> a data-prazo (padrão D+2) e a comunicação com a turma.</p>
+<p><strong>Comunicação.</strong> Mensagem com prazo e link para enviar a tarefa. No online, o envio WhatsApp segue o OK da empreendedora para o bloco de conteúdos (UC33).</p>
+<p><strong>Acompanhamento (fila de aprovação).</strong> A entrega entra na fila do gestor. Opções:</p>
+<ul>
+<li><strong>Aprovada</strong> — concluída com sucesso;</li>
+<li><strong>Revisar</strong> — solicita ajustes com orientação (UC44).</li>
+</ul>
+<p>Histórico com canal de comentários entre gestor e empreendedora.</p>
+<p><strong>Regras específicas.</strong> Entrega <strong>nunca é reprovada</strong>. Em <strong>P/H</strong>, entrega após o prazo continua válida para beneficiamento, com <strong>engajamento menor</strong>. Em <strong>online</strong>, registra <strong>realizado / não realizado</strong> sem penalidade de prazo da jornada.</p>
+<h3>3.5 Registro de Faturamento</h3>
+<p><strong>Descrição e finalidade.</strong> Reporte periódico ao programa da evolução econômica do negócio (UC45) — <strong>não</strong> é fluxo de caixa pessoal da empreendedora. Preenchimento <strong>pela empreendedora</strong> no Aplicativo Cliente. <strong>Um registro por competência e empreendimento.</strong></p>
+<p><strong>Campos mensais:</strong> faturamento; renda pessoal; despesas fixas; número de clientes; número de produtos vendidos; investimento; poupança. <strong>Anexo obrigatório</strong> (planilha, foto ou print — reunião 24/ago.). <strong>Seletor de dificuldade</strong> obrigatório (5 níveis com rostos).</p>
+<p><strong>Configuração pelo gestor.</strong> Mês de referência, data-prazo e comunicação.</p>
+<p><strong>Comunicação.</strong> Mensagem com prazo e link do formulário.</p>
+<p><strong>Acompanhamento.</strong> Fila <strong>aprovar</strong> ou <strong>revisar</strong>; consulta a meses anteriores; <strong>gráfico evolutivo</strong> da turma e por participante.</p>
+<p><strong>Regras específicas.</strong> O progresso considera apenas registros <strong>aprovados</strong> — pendentes ou em revisão não contam. Valor <strong>0</strong> em faturamento ou renda exige <strong>observação/justificativa obrigatória</strong> (reunião 20/ago.). Sem anexo o envio é bloqueado.</p>
+<h3>3.6 Download de Conteúdo</h3>
+<p><strong>Descrição e finalidade.</strong> Material de apoio para uso autônomo (caderno, planilha, checklist, kit de artes etc.).</p>
+<p><strong>Configuração pelo gestor.</strong> Título, descrição, anexos e data-prazo sugerida.</p>
+<p><strong>Comunicação.</strong> Template <strong>Download</strong> do pacote UC88 (<code>{titulo}</code>, <code>{data_limite}</code>, <code>{link_atividade}</code>). <strong>Online:</strong> após o <strong>OK</strong> da empreendedora, o backend envia o template <strong>e os arquivos do material</strong> no WhatsApp dela (UC33/UC51) — não é só o link. Os <strong>mesmos documentos</strong> ficam disponíveis no Aplicativo Cliente. <strong>P/H:</strong> o mesmo template vai para o clipboard do grupo (UC50); os arquivos permanecem no Cliente. O envio dos documentos no WhatsApp da online <strong>não</strong> depende do checkbox de videoaula (UC9).</p>
+<p><strong>Acompanhamento.</strong> Lista <strong>baixaram / não baixaram</strong>.</p>
+<p><strong>Regras específicas.</strong> Não gera entrega nem fila de aprovação. Conclusão oficial = baixou / marcou no <strong>Aplicativo Cliente</strong>. Receber o arquivo no WhatsApp <strong>não</strong> conclui a atividade por si só.</p>
+<h3>3.7 Plano de Ação</h3>
+<p><strong>Descrição e finalidade.</strong> Definição das metas do empreendimento para o período (plano inicial, metas de 90 dias, formalização etc.).</p>
+<p><strong>Configuração pelo gestor.</strong> Título, orientação e data-prazo.</p>
+<p><strong>Comunicação.</strong> Mensagem com prazo e link do plano na plataforma.</p>
+<p><strong>Acompanhamento.</strong> Lista <strong>fizeram / não fizeram</strong>. Ao abrir o plano, o gestor pode <strong>criar metas</strong>, <strong>Revisar</strong> (com observação) e <strong>alterar o status</strong> de cada meta. <strong>Histórico de edições preservado</strong>; <strong>sem exclusão destrutiva</strong> de metas (reunião 20/ago.). Status pode ir para análise das gestoras.</p>
+<h3>3.8 Visita Técnica</h3>
+<p><strong>Descrição e finalidade.</strong> Atendimento do gestor à empreendedora (diagnóstico ou acompanhamento), <strong>individual</strong>, não coletivo. Cada visita é <strong>presencial</strong> <strong>ou</strong> <strong>online</strong> — uma modalidade, não as duas (UC78). <strong>Presencial:</strong> no local do negócio ou residência. <strong>Online:</strong> videoconferência. Não é mentoria (UC70): visita técnica é atividade da matriz (conta %). Não existe Visita Técnica na edição 100% online (seção 5).</p>
+<p><strong>Configuração pelo gestor.</strong> A liberação abre a <strong>agenda de visitas técnicas</strong>, com calendário e agendamento <strong>uma visita por vez</strong>. O gestor registra a <strong>modalidade</strong> (<code>presencial</code> | <code>online</code>), a <strong>data e hora</strong> e o <strong>endereço</strong> (presencial) <strong>ou</strong> o <strong>link/canal</strong> (online).</p>
+<table>
+<thead>
+<tr>
+<th>Modalidade</th>
+<th>Obrigatório no agendamento</th>
+<th>Logística</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Presencial</strong></td>
+<td>Data, hora e <strong>endereço</strong></td>
+<td>Agrupa endereços próximos (~<strong>2 km</strong>); detecta conflitos de horário</td>
+</tr>
+<tr>
+<td><strong>Online</strong></td>
+<td>Data, hora e <strong>link/canal</strong></td>
+<td>Detecta conflitos de horário; sem agrupamento por endereço</td>
+</tr>
+</tbody></table>
+<p><strong>Acompanhamento.</strong> Painel de visitas pendentes por turma e registro do que foi observado na visita.</p>
+<p><strong>Regras específicas.</strong> <strong>Não existe</strong> em programas online (edição 100% online).</p>
+<h3>3.9 Questionário Inicial</h3>
+<p><strong>Descrição e finalidade.</strong> Chegada — diagnóstico de entrada da empreendedora e do negócio, no início da jornada. Instrumento distinto do tipo <strong>Atividade</strong> (genérico) e do Questionário Final da live. <strong>Não</strong> é o marcador Encerramento nem a pesquisa pós-curso (UC82).</p>
+<p><strong>Configuração no módulo (UC15).</strong> Prazo ou data e o recado do pacote de comunicação da edição — sem texto solto. A automação dispara a partir dessa programação.</p>
+<p><strong>Acompanhamento.</strong> Lista de respondentes e <strong>gráfico de pizza</strong> com a distribuição das respostas e a adesão da turma (UC39).</p>
+<h3>3.10 Questionário Final</h3>
+<p><strong>Descrição e finalidade.</strong> Instrumento do <strong>funil pela internet</strong> (prova depois da palavra-chave). <strong>Não</strong> é o marcador Encerramento nem a pesquisa pós-curso (UC82). <strong>Não</strong> é o módulo de encontros de encerramento presencial ou híbrido (carga).</p>
+<p><strong>Configuração e acompanhamento.</strong> Data-prazo e comunicação; lista de respondentes e pizza (UC39).</p>
+<p><strong>Funil de doação (UC38):</strong> após a live (YouTube + StreamYard, fora da plataforma), o sistema libera a <strong>atividade de presença</strong> para informar a <strong>palavra-chave</strong> (sem diferenciar maiúscula, minúscula ou acento; prazo rígido; marca o instante). <strong>Somente com a palavra válida</strong> o Questionário Final é liberado; <strong>somente 100% de acerto</strong> deixa a empreendedora <strong>liberada para doação</strong>. Regra canônica = <strong>uma palavra-chave</strong> no fim da live (várias palavras = em discussão).</p>
+<p><strong>Módulo de encerramento presencial ou híbrido:</strong> encontros de <strong>carga obrigatória</strong> (≠ funil pela internet e ≠ esta prova); doação por análise manual a qualquer momento (UC57).</p>
+<h3>3.11 NPS</h3>
+<p><strong>Descrição e finalidade.</strong> Satisfação com o programa. Pode ficar no <strong>fim da formação</strong> ou <strong>depois</strong> do marcador Encerramento (bloco pós-curso — UC82; exemplo: agrupador “Pesquisa depois do curso” + gatilho ~30 dias). Máscara única para o curso pela internet, presencial e híbrido. <strong>[A CONFIRMAR]</strong> o modelo das perguntas — não inventar.</p>
+<p><strong>Configuração no módulo (UC15).</strong> Prazo e o recado do pacote — sem texto solto.</p>
+<p><strong>Acompanhamento.</strong> Lista de respondentes e gráfico por faixa (<strong>promotoras</strong>, <strong>neutras</strong>, <strong>detratoras</strong>).</p>
+<h3>3.12 Encerramento (marcador)</h3>
+<p><strong>Descrição e finalidade.</strong> <strong>Marcador</strong> que a empreendedora <strong>não vê</strong>. Tudo <strong>depois</strong> dele no módulo é <strong>pós-curso</strong> e aparece em bloco separado no App Gestor e no App Cliente (UC82). <strong>Não</strong> é questionário. <strong>Não</strong> conta progresso.</p>
+<p><strong>Não é</strong> o Questionário Final da live (prova de 100% certo para doação). <strong>Não é</strong> o módulo de encontros de encerramento presencial ou híbrido (carga obrigatória). <strong>Não</strong> é o 12º tipo da enum.</p>
+<p><strong>Configuração no módulo (UC15).</strong> Posição do marcador na sequência. As atividades pós-curso (ex.: agrupador “Pesquisa depois do curso”, gatilho ~30 dias, <strong>NPS</strong>) vêm <strong>depois</strong>. O disparo é o <strong>gatilho</strong> da atividade, não o marcador. A gestora <strong>não</strong> tem tela de disparo. Modelo de perguntas <strong>não inventar</strong>.</p>
+<p><strong>Acompanhamento.</strong> No bloco <strong>pós-curso</strong> (UC34/UC36/UC82), não no fluxo da formação.</p>
+<h2>4. Regras transversais</h2>
+<ul>
+<li><strong>Beneficiamento.</strong> Toda atividade <strong>da matriz</strong> liberada conta para classificar a empreendedora como beneficiada (UC13). <strong>Conteúdo extra</strong> (UC35) <strong>não</strong> conta %/carga/beneficiamento.</li>
+<li><strong>Validação da liberação.</strong> A data é obrigatória e não pode ser retroativa. <strong>Aula (tipo) presencial</strong> exige horário e endereço. <strong>Aula (tipo) online</strong> exige horário, canal e link. <strong>Aula (agrupador)</strong> não tem regra de liberação própria.</li>
+<li><strong>Cancelamento e reativação.</strong> Liberação só pode ser cancelada enquanto <strong>não</strong> houver presença registrada nem entrega submetida. Cancelada, a atividade some para as participantes e <strong>não</strong> conta no beneficiamento; o gestor pode reativá-la.</li>
+<li><strong>Aprovação sem reprovação (UC44).</strong> Entregas resolvidas como <strong>aprovada</strong> ou <strong>revisar</strong>, com comentários entre gestor e empreendedora.</li>
+<li><strong>Conteúdo extra (UC35).</strong> Em presencial/híbrido, o gestor de turma pode adicionar item pontual além da matriz (presencial ou online); <strong>não</strong> altera a enum; <strong>não</strong> conta %/carga; enquanto não liberado, pode ser excluído.</li>
+<li><strong>Comunicação.</strong> Textos centralizados no <strong>pacote de comunicação</strong> (UC88). <strong>Um recado por tipo</strong> (aula presencial e aula online são dois). Chegada e NPS apontam o recado do pacote e o quando — sem texto solto. No presencial ou híbrido: a gestora cola no grupo (UC50); a gestora de unidade pode ajustar o corpo antes de enviar. No curso pela internet: a automação envia depois da aprovação (UC33); gatilho + mensagem do agrupador são montados <strong>à mão</strong> (escondidos). No tipo <strong>Download</strong>, o lote leva o recado <strong>e os arquivos</strong> no WhatsApp, e os mesmos documentos ficam no Cliente. Alertas (evasão, atraso, resgate) na <strong>mesma área CMS</strong> (UC87).</li>
+</ul>
+<h3>Risco de evasão — dois níveis</h3>
+<table>
+<thead>
+<tr>
+<th>Perfil</th>
+<th>Modalidade típica</th>
+<th>Duração</th>
+<th>Regra de risco</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Longa duração</strong></td>
+<td>Presencial / híbrido</td>
+<td><strong>6–12 meses</strong></td>
+<td>Silêncio ≥ <strong>15 dias</strong> sem feedback/participação relevante <strong>e</strong> represamento alto (faltas a encontros / atividades liberadas pendentes). Acompanhamento no Gestor (UC56); sem a mesma automação WhatsApp do online.</td>
+</tr>
+<tr>
+<td><strong>Curta duração</strong></td>
+<td>Online</td>
+<td><strong>~1 mês</strong></td>
+<td>Atividades liberadas <strong>não realizadas há mais de 10 dias</strong> <strong>ou</strong> a <strong>5 dias do término</strong> ainda há pendências → mensagens de alerta/incentivo (UC53). Maratona com acesso recente (<strong>represada ativa</strong>) <strong>não</strong> é risco.</td>
+</tr>
+</tbody></table>
+<h2>5. Modalidade online</h2>
+<p>Na jornada 100% online (ex.: Empreende no Zap):</p>
+<ul>
+<li>Não existem <strong>Aula (tipo)</strong> nem <strong>Visita Técnica</strong>; também não há controle de presença de encontro físico (exceto a <strong>atividade de presença/KW</strong> do funil de encerramento — UC38). <strong>Aula (agrupador)</strong> existe: só organiza as atividades na tela.</li>
+<li>O módulo <strong>lista N atividades</strong>. Progresso e % são <strong>por atividade</strong>.</li>
+<li>O gestor <strong>não libera</strong> atividades manualmente. Após <strong>Comunicar aprovação</strong> (UC25), a <strong>automação</strong> (UC33) libera <strong>por atividade</strong> (gatilho / temporizador). A aula <strong>não</strong> libera sozinha. No curso de exemplo, o agrupador começa com duas atividades <strong>escondidas</strong> — gatilho de X dias e mensagem WhatsApp — montadas <strong>à mão</strong>.</li>
+<li>Tipicamente <strong>um módulo por vez</strong>, duração de cerca de <strong>1 mês</strong>.</li>
+<li>Cada atividade exibe o passo da régua e a data prevista (“agendada”) ou o status “liberada pela automação”.</li>
+<li>O conteúdo é entregue pelo <strong>WhatsApp</strong>: a participante responde <strong>&quot;OK&quot;</strong> para receber o próximo lote. No tipo <strong>Download</strong>, o lote inclui o template <strong>e os arquivos</strong>; os mesmos documentos ficam no Aplicativo Cliente. Não há grupo de turma para comunicação em massa.</li>
+<li>Unidade e turma são únicas; não há seleção de turma nas telas.</li>
+<li>No Aplicativo Cliente: atividades ainda não liberadas aparecem com <strong>cadeado</strong>; ao serem liberadas, ficam disponíveis. <strong>Pós-curso</strong> (depois do marcador Encerramento) em <strong>bloco separado</strong>. Se a empreendedora concluir na plataforma uma atividade já liberada, a automação <strong>não</strong> precisa reenviar essa atividade pelo WhatsApp.</li>
+<li><strong>Funil de doação:</strong> 100% das atividades → live YouTube+StreamYard → presença/KW → Questionário Final 100% certo → liberada para doação (UC38/UC57). Distinto do <strong>marcador</strong> Encerramento / bloco pós-curso (UC82).</li>
+</ul>
+<h2>6. Matriz de módulos</h2>
+<p>A cada edição, módulos e atividades são planejados de novo: temas podem mudar e, em cada módulo, entram quaisquer dos <strong>11 tipos</strong> permitidos pela modalidade. O módulo <strong>lista atividades</strong>; <strong>Aula (agrupador)</strong> só agrupa.</p>
+<h3>6.1 Presencial e híbrido</h3>
+<p>Edições costumam ter <strong>vários módulos</strong> e duração <strong>mais longa</strong> (tipicamente <strong>6–12 meses</strong>). Risco de evasão = perfil <strong>longo</strong> (seção 4). Encontros de encerramento = <strong>módulo obrigatório de carga</strong> (≠ funil online e ≠ marcador Encerramento).</p>
+<h3>6.2 Online</h3>
+<p>Edições costumam ter <strong>um módulo</strong> por vez e duração de cerca de <strong>1 mês</strong>. Risco de evasão = perfil <strong>curto</strong> (seção 4). Depois do marcador Encerramento: bloco <strong>pós-curso</strong> (UC82).</p>
+
+      </article>
+    </main>
+  </div>
+  <script src="../assets/js/nav.js"></script>
+</body>
+</html>

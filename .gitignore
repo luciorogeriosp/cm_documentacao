@@ -5,6 +5,8 @@ Thumbs.db
 desktop.ini
 *.tmp
 
+docsite/node_modules/
+
 # Vídeos de treinamento — não entram no git
 *.mp4
 *.mov

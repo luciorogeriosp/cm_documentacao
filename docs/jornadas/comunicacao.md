@@ -10,6 +10,72 @@ Quem nunca abriu o sistema deve conseguir ler daqui até o fim sem precisar de o
 
 ---
 
+## Visão geral — esqueleto da jornada
+
+Antes do detalhe de cada ficha, este desenho mostra **a ordem lógica** dos momentos em que a plataforma **pode** falar com a empreendedora. Nem todo passo tem **data fixa no calendário**: alguns usam **T+N** (ex.: 1 dia, 3 dias), outros dependem de **ação da gestora** (UC25) ou da **resposta dela** (OK no WhatsApp). As três famílias de gatilho (§2) aparecem no diagrama como **Relógio (A)**, **OK/lote (B)** e **Gestora (C)**.
+
+No **presencial ou híbrido**, o ramo **OK/lote** não existe: depois da aprovação entram **convite ao grupo** e textos no **grupo da turma** (manual). A **entrevista de seleção** só existe no P/H. Voluntárias (§10) e link da gestora (§11) são **outras linhas** — não entram neste esqueleto.
+
+```mermaid
+flowchart TB
+  subgraph calendario [Âncoras de calendário da edição]
+    T0[Abertura / encerramento inscrição]
+    Tprog[Início e término do programa]
+  end
+
+  subgraph pre [Pré-inscrição — Gatilho A]
+    T0 --> R1[T+1d ficha incompleta]
+    R1 --> R3[T+3d reforço até limite]
+  end
+
+  subgraph insc [Inscrição]
+    FimFicha[Ficha enviada] --> Inbound[Ela escreve no WA do programa]
+    Inbound --> Conf[Recebemos a inscrição]
+  end
+
+  subgraph sel [Seleção — Gatilho C]
+    Class[Classificar — sem mensagem] --> UC25[Comunicar resultado UC25]
+    UC25 --> Aprov[Aprovada]
+    UC25 --> Reprov[Não segue — fim]
+  end
+
+  subgraph ph [Só P/H após aprovação]
+    Aprov --> Grupo[Convite ao grupo da turma]
+  end
+
+  subgraph curso [Curso pela internet — A + B]
+    Aprov --> RelA[Relógio libera aula / pede OK]
+    RelA --> OK[Resposta OK — Gatilho B]
+    OK --> Lote[Lote acumulado]
+    Lote --> RelA
+  end
+
+  subgraph pos [Pós-formação — Gatilho A]
+    Tprog --> Alertas[Alertas UC87 se ligados]
+    Tprog --> Pos[T+N dias pesquisa pós-curso CMS]
+  end
+
+  pre --> insc
+  insc --> sel
+  Aprov --> ph
+  Aprov --> curso
+  curso --> pos
+```
+
+| Trecho do esqueleto | Tipo de gatilho | Onde ler no doc |
+| ------------------- | --------------- | --------------- |
+| Lembretes de ficha | A — Relógio | §5 |
+| Recebemos inscrição | Inbound + automático | §5 |
+| UC25 aprovação / reprovação | C — Gestora | §5 |
+| OK e lote | B — Resposta dela | §6 |
+| Resgate e campanhas da gestora | C — Gestora | §7 |
+| Seis alertas + prazos | A — Relógio | §8 |
+| Live, doação, certificado, fim | Misto | §9 |
+
+Para **simular e auditar** modelo e variável por fase: [simulador-comunicacao/](../../simulador-comunicacao/README.md).
+
+---
+
 ## Palavras que usamos aqui
 
 - **CMS de Administração** — o lugar onde a equipe monta programas, edições e a **relação evento → mensagem**. O CMS **não** é editor de copy.

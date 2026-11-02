@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simulador de comunicação — Consulado da Mulher</title>
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../assets/js/mermaid-init.js"></script>
+</head>
+<body>
+  <button type="button" class="menu-toggle" aria-label="Abrir menu">Menu</button>
+  <div class="layout">
+    <aside class="sidebar"></aside>
+    <main class="main">
+      <p class="canon-source">Canônico v10.2 · gerado a partir do Markdown-fonte</p>
+      <article class="prose">
+<h1>Simulador da jornada de comunicação</h1>
+<p>Ferramenta <strong>à parte</strong> para a equipe <strong>ver e validar</strong> a jornada que está montando no CMS, como se fosse a empreendedora. Não é tela do CMS, do Aplicativo Cliente nem do Gestor. Não altera o UC88. Não dispara WhatsApp.</p>
+<p>Serve para:</p>
+<ul>
+<li><strong>Mostrar a jornada</strong> de forma simples, <strong>fase a fase</strong> (online ou P/H).</li>
+<li><strong>Validar comunicação:</strong> nenhuma atividade/passo de envio sem modelo; template ausente, genérico, reprovado na Meta ou corpo vazio = problema.</li>
+<li><strong>Validar variáveis:</strong> <code>{{1}}</code> / <code>{nome}</code> sem valor não passam.</li>
+<li><strong>Validar passos, entregas e respostas:</strong> o que o sistema manda (texto, vídeo, PDF do lote); o que ela responde no WhatsApp (“Oi, me inscrevi”, OK); e o que ela <strong>faria no app</strong> (assistiu, baixou, respondeu NPS, digitou a palavra-chave) — sem abrir o app de verdade, só o passo e a entrega.</li>
+</ul>
+<p>As fichas canônicas continuam em <a href="comunicacao.html"><code>docs/jornadas/comunicacao.md</code></a>. Esta pasta só as percorre. Os <strong>módulos</strong> vêm da <strong>edição real em homologação</strong>, não de um roteiro inventado.</p>
+<p>O app ainda <strong>não</strong> simula o passo no aplicativo (assistiu / baixou / respondeu / digitou a KW). A ideia já fica escrita aqui.</p>
+<h2>Fases (capítulos separados)</h2>
+<p>Online e P/H compartilham as mesmas até a seleção. A entrevista só existe no P/H. A <strong>finalização online</strong> (workshop / palavra-chave / questionário) é capítulo próprio — não misturar com módulos nem com a pesquisa pós-curso (~30 dias, NPS).</p>
+<ol>
+<li><strong>Pré-inscrição</strong> — ficha incompleta; relógios de lembrete (ex. 1D / 3D). Nenhuma mensagem no ato de começar.</li>
+<li><strong>Inscrição</strong> — ficha pronta. Online: ela escreve e recebe “recebemos — aguarde”. P/H: o aguarde entra ao finalizar. <strong>Ainda não</strong> começa o curso.</li>
+<li><strong>Seleção</strong> — classificação. <strong>Não</strong> manda mensagem. Online: sem entrevista.</li>
+<li><strong>Entrevista (só P/H)</strong> — convite, presença, ausência/realocação (UC84).</li>
+<li><strong>Aprovação / reprovação</strong> — UC25. Aprovada: boas-vindas (online pede OK; P/H leva o link do grupo). Reprovada / não segue: recado negativo e <strong>fim</strong>.</li>
+<li><strong>Módulos (homolog)</strong> — sequência da edição no CMS. Gatilho, mensagem, lote, OK, entregas.</li>
+<li><strong>Finalização</strong> — depois de 100% das atividades (ou exceção registrada). Distinta do marcador Encerramento / bloco pós-curso.</li>
+</ol>
+<p>A v2 de hoje junta isso em quatro rádios (não se inscreveu / se inscreveu / não segue / aprovada) e ainda <strong>não</strong> tem entrevista nem finalização à parte.</p>
+<h3>Finalização: mensagem vs app</h3>
+<p><strong>P/H não tem esse funil</strong> — doação é análise manual; encontros de encerramento são <strong>Aula (tipo)</strong> no grupo.</p>
+<table>
+<thead>
+<tr>
+<th>Passo</th>
+<th>É mensagem?</th>
+<th>O que acontece</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Workshop / live</strong></td>
+<td>Sim. Gestora dispara o convite (e-mail típico; WhatsApp com o mesmo texto se a edição ligar). Modelo <code>convite_live</code>.</td>
+<td>Data, hora, link (Meet ou YouTube), prazo da KW, link de acesso. Assistir <strong>não</strong> libera doação.</td>
+</tr>
+<tr>
+<td><strong>Palavra-chave</strong></td>
+<td>Não. Sem modelo próprio na Gupshup.</td>
+<td>Depois da live o <strong>app</strong> abre a presença. O convite (ou um recado com link) só lembra o prazo. Ela responde <strong>no app</strong>.</td>
+</tr>
+<tr>
+<td><strong>Questionário final</strong></td>
+<td>Sim — mensagem de atividade, <strong>depois</strong> da KW válida.</td>
+<td>Link de acesso. Ela responde <strong>no app</strong>. 100% certo = degrau para a equipe <strong>poder</strong> doar; ela <strong>não pede</strong> doação.</td>
+</tr>
+</tbody></table>
+<p>Auditar neste capítulo: convite sem modelo/variável; questionário final sem template; KW sem prazo.</p>
+<h2>Como rodar</h2>
+<pre><code class="language-bash">cd simulador-comunicacao
+npm install
+npm run dev
+</code></pre>
+<p>Abre em <code>http://localhost:3017</code> (publicado: <a href="https://simulador-comunicacao.vercel.app">simulador-comunicacao.vercel.app</a>). Escolhe o <strong>ano de referência</strong>, depois a <strong>edição</strong>. Tipo, jornada, catálogo, datas e módulos vêm do CMS (homolog). A v1 (roteiro fixo) fica em <code>/v1</code>.</p>
+<p>Copie <code>.env.example</code> para <code>.env.local</code> se quiser puxar templates aprovados na Meta via Gupshup (somente leitura). Sem credencial, o app usa as <strong>intenções</strong> das fichas.</p>
+<p>Não commite <code>.env</code> / <code>.env.local</code>.</p>
+<h2>Como se joga</h2>
+<p>Percorre as fases, nesta ordem:</p>
+<ol>
+<li>Escolhe o <strong>ano</strong> e a <strong>edição</strong> de homologação. O simulador <strong>audita</strong> a sequência (template, variável, datas, módulos).</li>
+<li>Escolhe a vista (WhatsApp ou e-mail).</li>
+<li><strong>Pré-inscrição</strong> — nenhuma mensagem. Opcional: lembretes de ficha incompleta.</li>
+<li><strong>Inscrição</strong> — finalizou. Online: ela escreve no número e recebe o aguarde. P/H: o aguarde entra ao finalizar.</li>
+<li><strong>Seleção</strong> — sem mensagem. <strong>P/H:</strong> entrevista (convite / presença / ausência) antes da decisão.</li>
+<li><strong>Aprovação / reprovação</strong> — aprovada segue; não segue encerra.</li>
+<li><strong>Módulos</strong> — Avançar / OK / lotes da edição real.</li>
+<li><strong>Finalização (online)</strong> — convite da live; passo da KW no app; recado + passo do questionário final.</li>
+</ol>
+<p>Roteiros escritos: <a href="roteiro-online.md">roteiro-online.md</a> · <a href="roteiro-ph.md">roteiro-ph.md</a>.</p>
+<h2>O que isto não é</h2>
+<ul>
+<li>Produto do Consulado para empreendedoras</li>
+<li>Aba do CMS <code>/admin/comunicacao</code></li>
+<li>Envio real Gupshup / SendGrid</li>
+<li>Jornada da voluntária ou da gestora (seções 10–11 de <code>comunicacao.md</code>)</li>
+</ul>
+
+      </article>
+    </main>
+  </div>
+  <script src="../assets/js/nav.js"></script>
+</body>
+</html>

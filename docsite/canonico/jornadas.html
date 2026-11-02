@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jornadas — Consulado da Mulher</title>
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../assets/js/mermaid-init.js"></script>
+</head>
+<body>
+  <button type="button" class="menu-toggle" aria-label="Abrir menu">Menu</button>
+  <div class="layout">
+    <aside class="sidebar"></aside>
+    <main class="main">
+      <p class="canon-source">Canônico v10.2 · gerado a partir do Markdown-fonte</p>
+      <article class="prose">
+<h1>Jornadas da empreendedora — diagramas de sequência</h1>
+<p><strong>Versão:</strong> set/2026 (v10.2)<br><strong>Fontes:</strong> <a href="casos-de-uso.html">Casos de Uso v10.2</a>, <a href="comunicacao.html">comunicacao.md</a>, <a href="../../prototipo/Aplicativo%20Gestor.md">Aplicativo Gestor</a></p>
+<p>Estes diagramas ilustram o caminho da empreendedora <strong>do cadastro ao certificado/doação</strong>, deixando explícito:</p>
+<ul>
+<li>o <strong>passo</strong> (numeração <code>autonumber</code>);</li>
+<li>se o disparo é <strong>automático</strong>, <strong>manual da empreendedora</strong> ou <strong>ação do gestor</strong>;</li>
+<li>o que cada ação <strong>não</strong> faz (classificar ≠ comunicar ≠ liberar).</li>
+</ul>
+<p>Não há um único sequence do início ao fim: cada <strong>fase</strong> tem o seu diagrama. Presencial e híbrido têm <strong>o mesmo comportamento</strong> no sistema; a modalidade só separa o BI.</p>
+<table>
+<thead>
+<tr>
+<th>Arquivo</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Este README</td>
+<td>Convenções, mapa comparativo, tabela-mãe de gatilhos</td>
+</tr>
+<tr>
+<td><a href="jornada-online.html">online.md</a></td>
+<td>Inscrição, seleção, partida UC25, loop OK/lote, consumo, alertas, funil, doação, <strong>mentoria de encerramento (lote + diagnóstico + lista de demandas)</strong></td>
+</tr>
+<tr>
+<td><a href="jornada-ph.html">presencial-hibrido.md</a></td>
+<td>Inscrição, seleção 3 etapas, efetivação, loop UC34/UC50, extra/visita, <strong>mentoria regular (gestor indica ou voluntário pega)</strong>, encerramento, doação</td>
+</tr>
+<tr>
+<td><a href="pos-liberacao.html">pos-liberacao.md</a></td>
+<td>PIX/recibo/material (comum) + desistência</td>
+</tr>
+<tr>
+<td><a href="simulador.html">Simulador de comunicação</a></td>
+<td>Ferramenta à parte: percorre online e presencial ou híbrido com os textos de cada passo</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Mapa de fases</h2>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart LR
+  subgraph comum [Comum]
+    Inscricao[Inscricao]
+    PosDoacao[PosLiberacao_PIX_recibo]
+    Cert[Certificado]
+  end
+  subgraph online [Online]
+    SelOn[Classificar_UC25]
+    LoopOn[Temporizador_OK_lote]
+    Funil[Funil_100_Live_KW_Quiz]
+    MentOn[Mentoria_encerramento_UC70]
+  end
+  subgraph ph [PH]
+    SelPH[Classificar_entrevista_alocar_UC25]
+    LoopPH[Liberar_UC34_grupo_UC50]
+    MentPH[Mentoria_regular_UC70]
+    EncPH[Modulo_encerramento]
+    DoaPH[Doacao_manual]
+  end
+  Inscricao --> SelOn
+  Inscricao --> SelPH
+  SelOn --> LoopOn --> Funil --> PosDoacao
+  Funil --> MentOn
+  SelPH --> LoopPH --> EncPH
+  LoopPH --> MentPH
+  LoopPH --> DoaPH
+  EncPH --> PosDoacao
+  DoaPH --> PosDoacao
+  PosDoacao --> Cert
+</pre></div>
+<p>Doação <strong>presencial ou híbrido</strong> pode ocorrer <strong>durante</strong> o loop de encontros (qualquer momento), não só no encerramento. O módulo de encerramento presencial ou híbrido <strong>não</strong> libera doação.</p>
+<hr>
+<h2>Convenções visuais</h2>
+<p>Todo sequence usa o mesmo vocabulário.</p>
+<h3>Participantes</h3>
+<p>Usar só os que entram na fase.</p>
+<table>
+<thead>
+<tr>
+<th>Alias</th>
+<th>Quem</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Empreendedora</code></td>
+<td>Pessoa no WhatsApp / App Cliente</td>
+</tr>
+<tr>
+<td><code>AppCliente</code></td>
+<td>Aplicativo Cliente</td>
+</tr>
+<tr>
+<td><code>AppVoluntario</code></td>
+<td>Portal do voluntariado (pool, aceite, diário, ações)</td>
+</tr>
+<tr>
+<td><code>GestorUnidade</code></td>
+<td>Seleção, UC25, aprovar doação, binding de alertas, alocar mentoria</td>
+</tr>
+<tr>
+<td><code>GestorTurma</code></td>
+<td>Liberar presencial ou híbrido, presença, sugerir doação, grupo WA, alocar mentoria da turma</td>
+</tr>
+<tr>
+<td><code>GestorVoluntariado</code></td>
+<td>Ações, rede nacional, consulta de mentorias</td>
+</tr>
+<tr>
+<td><code>Backend</code></td>
+<td>Regras + persistência</td>
+</tr>
+<tr>
+<td><code>FilaJornada</code></td>
+<td>UC33 — liberar / OK / lote — <strong>só online</strong></td>
+</tr>
+<tr>
+<td><code>FilaAlertas</code></td>
+<td>UC87 — nurturing / risco</td>
+</tr>
+<tr>
+<td><code>Gupshup</code></td>
+<td>WhatsApp API</td>
+</tr>
+<tr>
+<td><code>SendGrid</code></td>
+<td>E-mail</td>
+</tr>
+</tbody></table>
+<h3>Setas e anotações</h3>
+<table>
+<thead>
+<tr>
+<th>Recurso</th>
+<th>Significado</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>autonumber</code></td>
+<td>Passo visível 1, 2, 3…</td>
+</tr>
+<tr>
+<td>Seta sólida <code>-&gt;&gt;</code></td>
+<td>Ação síncrona / humana</td>
+</tr>
+<tr>
+<td>Seta pontilhada <code>--&gt;&gt;</code></td>
+<td>Fila, webhook ou temporizador</td>
+</tr>
+<tr>
+<td><code>Note</code> <code>[MANUAL]</code></td>
+<td>Clique da empreendedora ou do gestor</td>
+</tr>
+<tr>
+<td><code>Note</code> <code>[AUTO]</code></td>
+<td>Temporizador, webhook, fila</td>
+</tr>
+<tr>
+<td><code>Note</code> <code>[GESTOR]</code></td>
+<td>Decisão humana no Aplicativo Gestor</td>
+</tr>
+<tr>
+<td><code>alt</code> / <code>opt</code> / <code>loop</code></td>
+<td>Ramificação, opcional, repetição</td>
+</tr>
+<tr>
+<td>Texto da mensagem</td>
+<td>Cita o <strong>UC</strong> (<code>UC25 comunica aprovacao</code>)</td>
+</tr>
+</tbody></table>
+<p>Abaixo de cada diagrama há uma <strong>tabela de gatilhos</strong> com a coluna <strong>O que NÃO faz</strong>.</p>
+<p>Duas filas distintas: <strong>jornada</strong> (UC33) ≠ <strong>alertas</strong> (UC87). Mautic não faz parte do projeto.</p>
+<hr>
+<h2>Tabela-mãe de gatilhos</h2>
+<table>
+<thead>
+<tr>
+<th>Tema</th>
+<th>Online</th>
+<th>Presencial / híbrido</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Início da jornada</strong></td>
+<td>Sempre <strong>UC25 faixa 2</strong> (qualificada + vínculos). Nunca UC24, nunca alocar. Celebração <strong>Você foi aprovada</strong>; próximo passo = OK</td>
+<td>Sempre <strong>UC25 faixa 2</strong> (aprovada + turma + link do grupo). Celebração e <strong>Convite ao grupo</strong> (mesmo envio pago). Nunca UC24, nunca UC84, nunca UC17</td>
+</tr>
+<tr>
+<td><strong>1º contato WhatsApp pós-cadastro</strong></td>
+<td>Obrigatório: usuária escreve no nº da org → template inscrição. <strong>Não</strong> inicia UC33</td>
+<td>Opcional, se a edição usar o mesmo padrão</td>
+</tr>
+<tr>
+<td><strong>Liberação de conteúdo</strong></td>
+<td>Temporizador (FilaJornada). Gestor <strong>só acompanha</strong></td>
+<td>Checkbox do gestor (UC34), encontro a encontro</td>
+</tr>
+<tr>
+<td><strong>Envio WhatsApp de conteúdo</strong></td>
+<td>Resposta <strong>OK</strong> da empreendedora → lote das <code>liberada</code> ainda não enviadas</td>
+<td>Sem lote Gupshup. Depois do UC25, só grupo (UC50, envio <strong>fora</strong> da API)</td>
+</tr>
+<tr>
+<td><strong>WhatsApp pago (API)</strong></td>
+<td>Contínuo: template inscrição, UC25, OK/lote, <strong>documentos de Download</strong> e vídeos (UC51), UC53</td>
+<td>UC25 (único envio operacional pago) + 1º contato opcional. Depois: grupo</td>
+</tr>
+<tr>
+<td><strong>Papel do Gestor de Turma na execução</strong></td>
+<td>Acompanha; aprova entregas; resgate <strong>manual</strong> UC53</td>
+<td>Libera (UC34), comunica grupo (UC50), presença, aprova entregas, conteúdo extra; <strong>mentoria presencial ou híbrido:</strong> aloca lote da turma</td>
+</tr>
+<tr>
+<td><strong>Papel do Gestor de Unidade</strong></td>
+<td>Classificar, comunicar, aprovar doação, binding de alertas; <strong>mentoria online</strong> (lote, fallback)</td>
+<td>Classificar, entrevista, alocar, comunicar (3 faixas), aprovar doação; <strong>mentoria presencial ou híbrido:</strong> aloca lote ou Atendido pelo gestor</td>
+</tr>
+<tr>
+<td><strong>Doação</strong></td>
+<td>Funil rígido no <strong>fim</strong>: 100% → live → KW → quiz 100% certo. Só então sugerir/aprovar</td>
+<td>Análise <strong>manual</strong> a <strong>qualquer momento</strong> (individual ou massa). Encerramento <strong>não</strong> libera</td>
+</tr>
+<tr>
+<td><strong>Mentoria (UC70)</strong></td>
+<td>Encerramento: lote → diagnóstico no aplicativo da empreendedora → lista de demandas. Número de vagas da sessão (padrão 1). Certificado <strong>por pessoa e por sessão</strong>.</td>
+<td>Programa <strong>regular</strong>. Tela de mentorias da empreendedora. Unidade ou turma <strong>aloca o lote</strong> <strong>ou</strong> um voluntário pega. <strong>Não é</strong> conteúdo extra nem visita. O Gestor de Voluntariado consulta em todo o país.</td>
+</tr>
+<tr>
+<td><strong>Risco de evasão</strong></td>
+<td>Liberadas sem realização <strong>&gt; 10 dias</strong> <strong>ou</strong> a <strong>5 dias do término</strong> com pendências. Maratona <strong>não</strong> é risco</td>
+<td>Silêncio ≥ <strong>15 dias</strong> + represamento (programa longo)</td>
+</tr>
+<tr>
+<td><strong>Escuta do programa</strong></td>
+<td>Chegada e NPS no ciclo. Pesquisa após a formação: <strong>dias no CMS</strong> (padrão cerca de 30); o <strong>backend</strong> dispara. A gestora <strong>não</strong> dispara.</td>
+<td>Igual</td>
+</tr>
+<tr>
+<td><strong>Certificado</strong></td>
+<td>Automático (UC55) quando o <strong>empreendimento</strong> atinge o % da edição; PDF em cascata para todas as sócias. Mentoria individual: <strong>um certificado por pessoa × sessão</strong> (mentor + mentorada). Coletiva e campanha: <strong>sem</strong> certificado</td>
+<td>Igual</td>
+</tr>
+</tbody></table>
+<p>Regra transversal: <strong>classificar ≠ comunicar ≠ liberar atividades</strong>.</p>
+<hr>
+<h2>Desistência (atalho)</h2>
+<p>Cancelamento pelo gestor (UC30) ou solicitação no Cliente (UC79) <strong>remove a participante das automações</strong> (FilaJornada e FilaAlertas) nas duas modalidades. Sequence completo em <a href="pos-liberacao.html#4-desistencia-uc30--uc79">pos-liberacao.md — Desistência</a>.</p>
+
+      </article>
+    </main>
+  </div>
+  <script src="../assets/js/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pós-liberação — Consulado da Mulher</title>
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../assets/js/mermaid-init.js"></script>
+</head>
+<body>
+  <button type="button" class="menu-toggle" aria-label="Abrir menu">Menu</button>
+  <div class="layout">
+    <aside class="sidebar"></aside>
+    <main class="main">
+      <p class="canon-source">Canônico v10.2 · gerado a partir do Markdown-fonte</p>
+      <article class="prose">
+<h1>Pós-liberação da doação e desistência</h1>
+<p><strong>Comum</strong> às jornadas <a href="jornada-online.html">online</a> e <a href="jornada-ph.html">presencial/híbrido</a>.<br><strong>Convenções:</strong> <a href="jornadas.html">README</a><br><strong>Fontes:</strong> <a href="../../Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v7.md">Casos de Uso v7</a> UC30, UC55, UC57, UC79, UC86</p>
+<p>Chega-se aqui <strong>depois</strong> da aprovação da Unidade na tela Doação (UC57: pop-up + digitar <strong>APROVAR</strong>). No online, a empreendedora já passou pelo funil (liberada para doação) <strong>e</strong> pela aprovação. No presencial ou híbrido, só a aprovação manual — a sugestão pode ter sido da Turma ou da Unidade.</p>
+<p>Índice</p>
+<ol>
+<li><a href="#1-dinheiro--pix--conta-e-recibo-725">Dinheiro — PIX / conta e recibo 725</a></li>
+<li><a href="#2-material--nf-1n-confirmacao-e-recibo">Material — NF 1:N, confirmação e recibo</a></li>
+<li><a href="#3-certificado-em-cascata">Certificado em cascata</a></li>
+<li><a href="#4-desistencia-uc30--uc79">Desistência UC30 / UC79</a></li>
+</ol>
+<p>O Cliente mostra <strong>aguarde</strong> — sem datas prometidas de pagamento ou entrega.</p>
+<hr>
+<h2>1. Dinheiro — PIX / conta e recibo 725</h2>
+<p>Nome e CPF são <strong>readonly</strong> (cadastro). Recibo da conta <strong>725</strong> é assinado <strong>antes</strong> do pagamento.</p>
+<div class="mermaid-wrap"><pre class="mermaid">sequenceDiagram
+  autonumber
+  participant Backend
+  participant AppCliente
+  participant Empreendedora
+  participant GestorUnidade
+
+  Note over Backend,AppCliente: AUTO apos aprovacao UC57 - modalidade dinheiro
+  Backend -->> AppCliente: solicita dados bancarios / PIX e aceites
+  AppCliente -->> Empreendedora: nome e CPF readonly, conta/PIX editaveis
+  AppCliente -->> Empreendedora: status aguarde - sem datas
+
+  Note over Empreendedora,AppCliente: MANUAL empreendedora UC86
+  Empreendedora ->> AppCliente: informa banco agencia conta ou chave PIX
+  Empreendedora ->> AppCliente: conclui aceites da edicao
+  AppCliente ->> Backend: persiste dados
+
+  Note over GestorUnidade: GESTOR confere
+  GestorUnidade ->> Backend: valida dados bancarios
+
+  Note over Empreendedora,AppCliente: MANUAL assinar recibo ANTES do pagamento
+  Backend -->> AppCliente: libera recibo conta 725
+  Empreendedora ->> AppCliente: assina recibo
+  AppCliente ->> Backend: recibo assinado
+  Note over GestorUnidade: GESTOR opera pagamento fora do app - sem data na tela da empreendedora
+</pre></div>
+<table>
+<thead>
+<tr>
+<th>Passo</th>
+<th>Momento</th>
+<th>Tipo</th>
+<th>Quem</th>
+<th>Canal</th>
+<th>O que NÃO faz</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1–3</td>
+<td>Pedir dados</td>
+<td>AUTO</td>
+<td>Backend</td>
+<td>App Cliente</td>
+<td>Não promete data de crédito</td>
+</tr>
+<tr>
+<td>4–6</td>
+<td>Informar PIX/conta</td>
+<td>MANUAL</td>
+<td>Empreendedora</td>
+<td>App Cliente</td>
+<td>Não altera nome/CPF</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Conferir</td>
+<td>GESTOR</td>
+<td>Unidade</td>
+<td>App Gestor</td>
+<td>Não é aprovação da doação (já ocorreu)</td>
+</tr>
+<tr>
+<td>8–10</td>
+<td>Recibo 725</td>
+<td>MANUAL</td>
+<td>Empreendedora</td>
+<td>App Cliente</td>
+<td>Dinheiro: assinatura <strong>antes</strong> do pagamento</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>2. Material — NF 1:N, confirmação e recibo</h2>
+<p>Uma nota fiscal pode cobrir <strong>N</strong> doações. O recibo só libera <strong>depois</strong> que a empreendedora confirma o recebimento. Endereço de entrega: número, complemento e <strong>ponto de referência</strong>.</p>
+<div class="mermaid-wrap"><pre class="mermaid">sequenceDiagram
+  autonumber
+  participant Backend
+  participant AppCliente
+  participant Empreendedora
+  participant GestorUnidade
+
+  Note over Backend,AppCliente: AUTO apos aprovacao UC57 - modalidade material
+  Backend -->> AppCliente: solicita endereco com ponto de referencia e aceites
+  AppCliente -->> Empreendedora: status aguarde - sem datas de entrega
+
+  Note over Empreendedora,AppCliente: MANUAL empreendedora
+  Empreendedora ->> AppCliente: numero complemento ponto de referencia
+  Empreendedora ->> AppCliente: aceites
+  AppCliente ->> Backend: persiste endereco
+
+  Note over GestorUnidade: GESTOR NF 1:N
+  GestorUnidade ->> Backend: anexa NF e vincula N doacoes
+  GestorUnidade ->> Backend: registra entrega operacional
+
+  Note over Empreendedora,AppCliente: MANUAL confirma recebimento
+  Empreendedora ->> AppCliente: confirma que recebeu o material
+  AppCliente ->> Backend: recebimento confirmado
+  Backend -->> AppCliente: libera recibo 725
+
+  Note over Empreendedora: MANUAL assinar recibo APOS a entrega
+  Empreendedora ->> AppCliente: assina recibo
+  AppCliente ->> Backend: recibo assinado
+</pre></div>
+<table>
+<thead>
+<tr>
+<th>Passo</th>
+<th>Momento</th>
+<th>Tipo</th>
+<th>Quem</th>
+<th>Canal</th>
+<th>O que NÃO faz</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1–5</td>
+<td>Endereço + aceites</td>
+<td>AUTO + MANUAL</td>
+<td>Backend / Empreendedora</td>
+<td>App Cliente</td>
+<td>Sem data de entrega na tela</td>
+</tr>
+<tr>
+<td>6–7</td>
+<td>NF 1:N</td>
+<td>GESTOR</td>
+<td>Unidade</td>
+<td>App Gestor</td>
+<td>Uma NF → várias doações; não substitui a confirmação da empreendedora</td>
+</tr>
+<tr>
+<td>8–10</td>
+<td>Confirmar recebimento</td>
+<td>MANUAL</td>
+<td>Empreendedora</td>
+<td>App Cliente</td>
+<td>Sem confirmação o recibo <strong>permanece bloqueado</strong></td>
+</tr>
+<tr>
+<td>11–12</td>
+<td>Recibo 725</td>
+<td>MANUAL</td>
+<td>Empreendedora</td>
+<td>App Cliente</td>
+<td>Material: assinatura <strong>depois</strong> da entrega</td>
+</tr>
+</tbody></table>
+<p>Estados materiais: aprovada → NF vinculada → confirma recebimento → recibo liberado → assinado.</p>
+<hr>
+<h2>3. Certificado em cascata</h2>
+<p>Independente da doação. Quando o <strong>empreendimento</strong> atinge o % de beneficiamento / certificação da edição (em geral 50% / 75% — UC13), o backend emite PDF para <strong>cada sócia</strong>.</p>
+<p>Pode ocorrer durante a formação (ao cruzar o limiar) ou no encerramento — o gatilho é o percentual, não a doação.</p>
+<div class="mermaid-wrap"><pre class="mermaid">sequenceDiagram
+  autonumber
+  participant Backend
+  participant Gupshup
+  participant Empreendedora
+  participant GestorTurma
+
+  Note over Backend: AUTO UC55 - calculo no empreendimento
+  Backend -->> Backend: pct de atividades que contam no negocio
+  alt atinge beneficiamento e/ou certificacao
+    Backend -->> Backend: classifica empreendimento
+    Backend -->> Backend: atualiza status de cada socia da edicao
+    Backend -->> Gupshup: PDF certificado por socia
+    Gupshup -->> Empreendedora: certificado no WhatsApp
+  else ainda abaixo do limiar
+    Note over GestorTurma: GESTOR acompanha - sem certificado
+  end
+</pre></div>
+<table>
+<thead>
+<tr>
+<th>Passo</th>
+<th>Momento</th>
+<th>Tipo</th>
+<th>Quem</th>
+<th>Canal</th>
+<th>O que NÃO faz</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1–5</td>
+<td>Emitir certificado</td>
+<td>AUTO</td>
+<td>Backend</td>
+<td>Gupshup</td>
+<td>Não concede doação; BI conta N pessoas e 1 empreendimento</td>
+</tr>
+<tr>
+<td>else</td>
+<td>Abaixo do %</td>
+<td>GESTOR</td>
+<td>Turma</td>
+<td>App Gestor</td>
+<td>Exceções pontuais; não altera o cálculo padrão</td>
+</tr>
+</tbody></table>
+<p>Doação = <strong>1 por empreendimento</strong>, mesmo com N sócias certificadas.</p>
+<hr>
+<h2>4. Desistência UC30 / UC79</h2>
+<p>Pode ocorrer em <strong>qualquer fase</strong> das duas jornadas. Remove a participante das automações: FilaJornada (online), FilaAlertas, e liberações futuras.</p>
+<div class="mermaid-wrap"><pre class="mermaid">sequenceDiagram
+  autonumber
+  participant Empreendedora
+  participant AppCliente
+  participant GestorTurma
+  participant GestorUnidade
+  participant Backend
+  participant FilaJornada
+  participant FilaAlertas
+
+  alt solicitacao da empreendedora UC79
+    Note over Empreendedora,AppCliente: MANUAL empreendedora
+    Empreendedora ->> AppCliente: pede desligamento
+    Empreendedora ->> AppCliente: questionario + razao do abandono
+    AppCliente ->> Backend: registra solicitacao
+  else cancelamento pela gestao UC30
+    Note over GestorTurma,GestorUnidade: GESTOR
+    GestorTurma ->> Backend: registra cancelamento ou desistencia
+    GestorTurma ->> Backend: motivo padronizado + observacao + mes/ano
+  end
+
+  Note over Backend,FilaAlertas: AUTO remove das jornadas
+  Backend -->> Backend: status descontinuada / desistente
+  Backend -->> FilaJornada: cancela eventos pendentes
+  Backend -->> FilaAlertas: cancela disparos pendentes
+  Backend -->> GestorTurma: notifica turma
+</pre></div>
+<table>
+<thead>
+<tr>
+<th>Passo</th>
+<th>Momento</th>
+<th>Tipo</th>
+<th>Quem</th>
+<th>Canal</th>
+<th>O que NÃO faz</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>alt UC79</td>
+<td>Pedido no Cliente</td>
+<td>MANUAL</td>
+<td>Empreendedora</td>
+<td>App Cliente</td>
+<td>Formalização completa segue UC30</td>
+</tr>
+<tr>
+<td>else UC30</td>
+<td>Registro da gestão</td>
+<td>GESTOR</td>
+<td>Turma ou Unidade</td>
+<td>App Gestor</td>
+<td>Data completa fica no log; UI usa mês/ano para frequência</td>
+</tr>
+<tr>
+<td>8–11</td>
+<td>Sair das filas</td>
+<td>AUTO</td>
+<td>Backend</td>
+<td>FilaJornada + FilaAlertas</td>
+<td>Não apaga histórico já ocorrido; interrompe o que ainda estava pendente</td>
+</tr>
+</tbody></table>
+<p>No presencial ou híbrido, <code>FilaJornada</code> não está ativa; o cancelamento ainda interrompe alertas e tira a participante das liberações/comunicação operacional.</p>
+
+      </article>
+    </main>
+  </div>
+  <script src="../assets/js/nav.js"></script>
+</body>
+</html>

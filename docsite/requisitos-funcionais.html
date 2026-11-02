@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Requisitos funcionais — Consulado da Mulher</title>
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+  <button type="button" class="menu-toggle" aria-label="Abrir menu">Menu</button>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h1>Consulado da Mulher</h1>
+        <p>Especificação da plataforma</p>
+      </div>
+      <nav>
+<div class="nav-group">
+          <div class="nav-group-title">Início</div>
+          <a href="index.html" data-page="index.html">Hub</a>
+          <a href="visao-geral.html" data-page="visao-geral.html">Visão geral</a>
+          <a href="personas.html" data-page="personas.html">Personas</a>
+          <a href="mapa-jornadas.html" data-page="mapa-jornadas.html">Mapa de jornadas</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-title">Requisitos</div>
+          <a href="requisitos-funcionais.html" data-page="requisitos-funcionais.html">Funcionais</a>
+          <a href="requisitos-nao-funcionais.html" data-page="requisitos-nao-funcionais.html">Não funcionais</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-title">Módulos</div>
+          <a href="modulos/portal-empreendedora.html" data-page="portal-empreendedora.html">Portal empreendedora</a>
+          <a href="modulos/portal-gestao.html" data-page="portal-gestao.html">Portal gestão</a>
+          <a href="modulos/dashboard-bi.html" data-page="dashboard-bi.html">Dashboard BI</a>
+          <a href="modulos/app-equipe.html" data-page="app-equipe.html">App equipe</a>
+          <a href="modulos/chat-ia.html" data-page="chat-ia.html">Chat IA</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-title">Programas e dados</div>
+          <a href="programas/catalogo.html" data-page="catalogo.html">Catálogo de programas</a>
+          <a href="dados/cadastro-e-lgpd.html" data-page="cadastro-e-lgpd.html">Cadastro e LGPD</a>
+          <a href="dados/migracao-historico.html" data-page="migracao-historico.html">Migração histórico</a>
+          <a href="dados/selecao-editais.html" data-page="selecao-editais.html">Seleção e editais</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-title">Jornadas — Empreendedora</div>
+          <a href="jornadas/empreendedora-inscricao.html" data-page="empreendedora-inscricao.html">Inscrição e onboarding</a>
+          <a href="jornadas/empreendedora-empreende-mulher.html" data-page="empreendedora-empreende-mulher.html">Empreende Mulher</a>
+          <a href="jornadas/empreendedora-empreende-zap.html" data-page="empreendedora-empreende-zap.html">Empreende no Zap</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-title">Jornadas — Gestor e admin</div>
+          <a href="jornadas/gestor-operacao.html" data-page="gestor-operacao.html">Gestor — operação</a>
+          <a href="jornadas/gestor-presenca-eventos.html" data-page="gestor-presenca-eventos.html">Gestor — presença</a>
+          <a href="jornadas/admin-configuracao.html" data-page="admin-configuracao.html">Admin — configuração</a>
+          <a href="jornadas/admin-bi-impacto.html" data-page="admin-bi-impacto.html">Admin — BI e impacto</a>
+        </div>
+      
+      </nav>
+    </aside>
+    <main class="main">
+
+      <header class="page-header">
+        <h1>Requisitos funcionais</h1>
+        <p class="lead">RF agrupados por domínio. P0 = crítico para MVP; P1 = importante; P2 = desejável.</p>
+      </header>
+      <section>
+        <h2>1. Identidade e acesso</h2>
+        <table class="req-table">
+          <thead><tr><th>ID</th><th>Requisito</th><th>Prioridade</th></tr></thead>
+          <tbody>
+            <tr><td>RF-01</td><td>Login via WhatsApp (OTP ou deep link) sem dependência de e-mail/senha</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr><td>RF-02</td><td>Usuária recorrente valida/atualiza cadastro sem recadastro completo</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr><td>RF-03</td><td>Empreendimento coletivo: cadastro individual de cada participante (mesmo CNPJ/nome)</td><td><span class="badge badge-p1">P1</span></td></tr>
+            <tr><td>RF-04</td><td>Aceite de termos LGPD e regulamento (PDF) por edição</td><td><span class="badge badge-p0">P0</span></td></tr>
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <h2>2. Inscrição e seleção</h2>
+        <table class="req-table">
+          <thead><tr><th>ID</th><th>Requisito</th><th>Prioridade</th></tr></thead>
+          <tbody>
+            <tr><td>RF-10</td><td>Criar edital/edição com turma inicial de inscritas</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr><td>RF-11</td><td>Travas automáticas (idade, faixa salarial) na inscrição</td><td><span class="badge badge-p1">P1</span></td></tr>
+            <tr><td>RF-12</td><td>Filtros automáticos + override manual do gestor (histórico, premiações)</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr><td>RF-13</td><td>Mensagem automática de agradecimento para não selecionadas</td><td><span class="badge badge-p1">P1</span></td></tr>
+            <tr><td>RF-14</td><td>Comunicação clara de critérios na LP (além do PDF regulamento)</td><td><span class="badge badge-p1">P1</span></td></tr>
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <h2>3. Aprendizagem e conteúdo</h2>
+        <table class="req-table">
+          <thead><tr><th>ID</th><th>Requisito</th><th>Prioridade</th></tr></thead>
+          <tbody>
+            <tr><td>RF-20</td><td>Trilhas, módulos e liberação progressiva (cadeado / desbloqueio)</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr><td>RF-21</td><td>Vídeos via YouTube com métrica de % assistido e bloqueio de avanço</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr><td>RF-22</td><td>Distribuição de PDFs, guias e e-books (Empreende Mulher)</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr><td>RF-23</td><td>Barra de progresso visível da jornada</td><td><span class="badge badge-p0">P0</span></td></tr>
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <h2>4. Atividades e entregas</h2>
+        <table class="req-table">
+          <thead><tr><th>ID</th><th>Requisito</th><th>Prioridade</th></tr></thead>
+          <tbody>
+            <tr><td>RF-30</td><td>Atividades: múltipla escolha, resposta aberta, planilha embutida</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr><td>RF-31</td><td>Upload de evidências (foto, arquivo digital)</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr><td>RF-32</td><td>Estados: pendente, aceito, rejeitado, melhorias solicitadas</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr><td>RF-33</td><td>Feedback imediato em atividades gamificadas (mensagem não punitiva)</td><td><span class="badge badge-p1">P1</span></td></tr>
+            <tr><td>RF-34</td><td>Comentários do educador vinculados à entrega</td><td><span class="badge badge-p0">P0</span></td></tr>
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <h2>5. Financeiro</h2>
+        <table class="req-table">
+          <thead><tr><th>ID</th><th>Requisito</th><th>Prioridade</th></tr></thead>
+          <tbody>
+            <tr><td>RF-40</td><td>Fluxo de caixa mensal inserido pela empreendedora</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr><td>RF-41</td><td>Workflow de aprovação/validação pelo gestor</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr><td>RF-42</td><td>Campos opcionais: poupança, investimento, fundo de reserva</td><td><span class="badge badge-p2">P2</span></td></tr>
+            <tr><td>RF-43</td><td>Visualização da evolução financeira pela usuária</td><td><span class="badge badge-p1">P1</span></td></tr>
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <h2>6–10. Demais domínios</h2>
+        <table class="req-table">
+          <thead><tr><th>ID</th><th>Requisito</th><th>Prioridade</th></tr></thead>
+          <tbody>
+            <tr><td>RF-50</td><td>Presença via QR (app equipe), offline; integração 75% certificação</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr><td>RF-51</td><td>Certificação: 75% presença; conclusão 100% para certificado final</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr><td>RF-60</td><td>Pontuação, ranking, medalhas e benefícios (Empreende no Zap)</td><td><span class="badge badge-p1">P1</span></td></tr>
+            <tr><td>RF-70</td><td>Dashboards BI: beneficiárias 50%, certificadas 100%, renda, questionários</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr><td>RF-80</td><td>Chat IA apenas com dados internos (certificado, FAQs)</td><td><span class="badge badge-p1">P1</span></td></tr>
+            <tr><td>RF-90</td><td>Importação histórico 2022+ com retrocompatibilidade máscara cadastro</td><td><span class="badge badge-p0">P0</span></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+    </main>
+  </div>
+  <script src="assets/js/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Comunicação — Consulado da Mulher</title>
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="../assets/js/mermaid-init.js"></script>
+</head>
+<body>
+  <button type="button" class="menu-toggle" aria-label="Abrir menu">Menu</button>
+  <div class="layout">
+    <aside class="sidebar"></aside>
+    <main class="main">
+      <p class="canon-source">Canônico v10.2 · gerado a partir do Markdown-fonte</p>
+      <article class="prose">
+<h1>Como a plataforma conversa com as empreendedoras</h1>
+<p>Este texto é para a equipe do Consulado da Mulher (comunicação, metodologia e voluntariado). Serve para entender <strong>quando</strong> cada pessoa recebe <strong>o quê</strong>, <strong>por quê</strong> e <strong>por qual caminho</strong> — e para revisar tom e materiais.</p>
+<p>Fonte canônica: <a href="casos-de-uso.html">Casos de Uso v10.2 — UC88</a>. Este arquivo é a leitura operacional (quando / para quem / variáveis / o que a mensagem <strong>não</strong> faz). Os parágrafos oficiais ainda estão <em>a revisar</em> — os textos moram na <strong>Gupshup</strong>, não aqui.</p>
+<p>Para <strong>jogar e auditar</strong> a jornada da empreendedora numa ferramenta à parte: <a href="simulador.html">simulador-comunicacao/</a>. Percorre <strong>fase a fase</strong> — pré-inscrição, inscrição, seleção, entrevista (só P/H), aprovação ou reprovação, módulos da edição em homologação e, no online, a <strong>finalização</strong> (convite da live / palavra-chave no app / questionário final). Confere modelo, variável, entrega e resposta. Não mistura finalização com a pesquisa pós-curso.</p>
+<p>Quem nunca abriu o sistema deve conseguir ler daqui até o fim sem precisar de outro documento.</p>
+<hr>
+<h2>Palavras que usamos aqui</h2>
+<ul>
+<li><strong>CMS de Administração</strong> — o lugar onde a equipe monta programas, edições e a <strong>relação evento → mensagem</strong>. O CMS <strong>não</strong> é editor de copy.</li>
+<li><strong>Gupshup</strong> — repositório dos textos aprovados (modelos Meta). Cada evento aponta para <strong>um</strong> modelo.</li>
+<li><strong>Tabela default</strong> — inventário obrigatório: todo evento de envio já nasce com um modelo padrão. Pacote ou edição só <strong>troca o ponteiro</strong>.</li>
+<li><strong>Edição</strong> — a turma daquele ano de um programa, por exemplo “Empreende no Zap 2026” ou “Empreende Mulher 2026”.</li>
+<li><strong>Pela internet</strong> — o curso acontece no WhatsApp e no aplicativo, no ritmo das aulas que o sistema libera.</li>
+<li><strong>Presencial ou híbrido</strong> — há encontros ao vivo (sala ou tela). Depois da aprovação, o dia a dia da turma vai no <strong>grupo da turma</strong>.</li>
+<li><strong>Grupo da turma</strong> — grupo de WhatsApp da turma (link cadastrado). O <strong>convite ao grupo</strong> é um evento próprio da jornada (depois de “você foi aprovada”). No presencial ou híbrido, o único disparo pago individual pode levar os dois eventos no mesmo envio.</li>
+<li><strong>Nome social</strong> — é assim que chamamos a pessoa em <strong>todo recado</strong> e no aplicativo. Não existe variável “primeiro nome”. Se o nome social estiver vazio, o sistema preenche esse mesmo campo com o tratamento do cadastro (hoje: o primeiro nome do nome completo).</li>
+<li><strong>Nome completo</strong> — só em <strong>documento oficial</strong>: certificado do programa, certificado da voluntária, recibo da doação.</li>
+<li><strong>OK</strong> — a palavra (ou o botão) que a empreendedora manda no WhatsApp para <strong>receber</strong> o que já está pronto. Não significa que ela já fez a aula.</li>
+<li><strong>Lote</strong> — o conjunto de recados e materiais que sai de uma vez depois do OK: tudo que já estava pronto e ela ainda não tinha recebido.</li>
+<li><strong>Link de acesso</strong> — um endereço no WhatsApp ou no e-mail que abre o aplicativo <strong>já autenticada</strong>. Não existe senha. Não existe código de verificação por SMS.</li>
+<li><strong>Pré-inscrição</strong> — ela deixou nome, telefone, e-mail e os aceites, mas <strong>ainda não</strong> terminou a ficha completa.</li>
+<li><strong>Gestora</strong> — quem opera o programa na unidade ou na turma.</li>
+</ul>
+<hr>
+<h2>1. Como a conversa funciona</h2>
+<h3>Como o catálogo funciona</h3>
+<p>Os textos oficiais moram na <strong>Gupshup</strong>. O CMS <strong>só liga o evento à mensagem</strong>: escolhe qual modelo da Gupshup aquele momento usa.</p>
+<p>Existe uma <strong>tabela default</strong> obrigatória. Todo evento de envio (inscrição, jornada, tipo de atividade, alerta, benefício, voluntariado, operação — inclusive o <strong>convite ao grupo</strong>) já nasce com um modelo padrão. Pacote ou edição só <strong>troca o ponteiro</strong>. Um texto por evento.</p>
+<p>O e-mail (SendGrid) entrega o <strong>mesmo</strong> recado dos eventos oficiais. Não há segundo banco de copy para inscrição, seleção, alertas e benefícios.</p>
+<p>No <strong>módulo</strong> dá para escrever texto direto — apoio ao vídeo, recado customizado daquela atividade — <strong>ou</strong> apontar um modelo da Gupshup no meio do módulo. Isso não substitui a tabela default dos eventos da jornada.</p>
+<p>No presencial ou híbrido, a gestora da <strong>unidade</strong> ou da <strong>turma</strong> recebe o template sugerido e <strong>pode editar na hora</strong> do envio (vale só aquele disparo). O modelo na Gupshup <strong>só envia</strong> se as variáveis <strong>obrigatórias</strong> daquele evento estiverem preenchidas. Trecho com variável <strong>opcional</strong> vazia some do texto.</p>
+<h3>Por onde a mensagem chega</h3>
+<ul>
+<li><strong>WhatsApp automático</strong> — o número do programa envia para a pessoa, no curso pela internet (e em alguns avisos de inscrição e seleção das duas modalidades).</li>
+<li><strong>Grupo da turma</strong> — presencial ou híbrido, depois da aprovação. A gestora envia na mão.</li>
+<li><strong>E-mail</strong> — o mesmo texto da Gupshup, quando o momento pede e-mail ou os dois caminhos.</li>
+<li><strong>Conversa um a um no WhatsApp</strong> — a gestora ou a mentora abre o chat da pessoa. Esse papo <strong>não</strong> é texto da Gupshup.</li>
+</ul>
+<h3>Horário dos envios automáticos</h3>
+<p>Segunda a sexta, das 8h às 20h. Sábado, das 8h às 16h. Domingo e feriado nacional <strong>não</strong> disparam. Se o horário passou, a mensagem espera o próximo período permitido. Se a entrega no WhatsApp falhar, o sistema tenta de novo <strong>depois de 2 dias</strong>.</p>
+<h3>Quem sai da conversa automática</h3>
+<p>Quem desiste ou é desligada <strong>sai</strong> das mensagens automáticas e dos disparos manuais da jornada.</p>
+<h3>O que a gestora <strong>não</strong> recebe</h3>
+<p>A gestora <strong>não</strong> recebe e-mail de “pendência do dia”. Ela só recebe e-mail quando <strong>pede o link de acesso</strong> ao sistema.</p>
+<p>No curso pela internet, ela <strong>pode ela mesma</strong> mandar WhatsApp para quem está em risco de evasão. Isso é ação humana, não relógio.</p>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart LR
+  Gupshup[Gupshup_repo_dos_textos]
+  Default[Tabela_default_evento_e_mensagem]
+  Edicao[Override_do_pacote_ou_edicao]
+  Backend[Backend_resolve_e_envia]
+  Gupshup --> Default
+  Default --> Edicao
+  Edicao --> Backend
+</pre></div>
+<hr>
+<h2>2. Três tipos de gatilho</h2>
+<p>Um <strong>gatilho</strong> é o que faz a mensagem sair. São três famílias.</p>
+<h3>A. Relógio</h3>
+<p>O tempo passa e, se a condição ainda for verdade, a plataforma manda o recado. Cada relógio <strong>para sozinho</strong> quando a pessoa faz o que faltava (termina a ficha, conclui a atividade, sai do risco).</p>
+<p>A unidade pode <strong>ligar, desligar ou ajustar</strong> os prazos dos <strong>seis alertas</strong> daquela edição. Os números abaixo são o combinado típico. A pesquisa após a formação <strong>não</strong> entra nesta lista: os dias ficam no CMS (padrão cerca de 30); a automação executa.</p>
+<table>
+<thead>
+<tr>
+<th>Relógio</th>
+<th>O que espera</th>
+<th>Quando manda</th>
+<th>Quando para</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ficha incompleta — 1º toque</td>
+<td>Ela fez a pré-inscrição e não terminou a ficha</td>
+<td><strong>1 dia</strong> depois</td>
+<td>Ela conclui a inscrição</td>
+</tr>
+<tr>
+<td>Ficha incompleta — reforço</td>
+<td>A mesma situação continua</td>
+<td><strong>A cada 3 dias</strong>, até o limite da edição</td>
+<td>Ela conclui a inscrição</td>
+</tr>
+<tr>
+<td>Prazo da atividade</td>
+<td>Aula liberada, ainda não feita, com data limite</td>
+<td>Algumas <strong>horas antes</strong> do prazo</td>
+<td>Ela conclui, ou o prazo passa sem reenvio</td>
+</tr>
+<tr>
+<td>Várias aulas paradas (backlog)</td>
+<td>Muitos conteúdos já liberados e não feitos</td>
+<td>Quando passa o limiar da edição</td>
+<td>As pendências baixam do limiar</td>
+</tr>
+<tr>
+<td>Fim do programa perto</td>
+<td>Curso pela internet, ainda há pendência</td>
+<td><strong>5 dias</strong> antes do fim</td>
+<td>Sem pendência, ou o programa acaba</td>
+</tr>
+<tr>
+<td>Risco no curso curto</td>
+<td>Aula já liberada e não feita</td>
+<td><strong>10 dias</strong> sem fazer</td>
+<td>Ela faz a aula ou sai do estado de risco</td>
+</tr>
+<tr>
+<td>Meio do curso</td>
+<td>Formação curta (~um mês)</td>
+<td>Por volta do <strong>15º dia</strong>, campanha de <strong>3 a 5 dias</strong></td>
+<td>Ela retoma, ou a janela fecha</td>
+</tr>
+</tbody></table>
+<p>No presencial ou híbrido de vários meses, o sinal de <strong>15 dias</strong> de silêncio com atraso fica no acompanhamento da gestora e no <strong>grupo da turma</strong> — não é o sexto alerta automático do número do programa.</p>
+<p>O relógio da aula nova (só internet) <strong>não envia o conteúdo</strong>. Só deixa a aula pronta e dispara o pedido de OK (item B). Não é um dos seis alertas.</p>
+<p>A <strong>pesquisa após a formação</strong> usa os dias definidos no CMS (padrão cerca de 30). O backend dispara. A gestora <strong>não</strong> tem tela de disparo como caminho principal.</p>
+<p>Cada aula pela internet tem o <strong>próprio</strong> relógio. Ele não espera ela terminar a aula anterior.</p>
+<h3>B. Resposta dela: OK e o lote</h3>
+<p>Só no curso <strong>pela internet</strong>.</p>
+<p>Quando a aula fica pronta, a plataforma <strong>não</strong> manda vídeo, exercício nem arquivo. Manda um recado: já está disponível; envie <strong>OK</strong> para receber.</p>
+<p>O <strong>OK</strong> dela é o gatilho. Só então sai o <strong>lote</strong>: tudo que já estava pronto e ela ainda não tinha recebido — inclusive o que acumulou se ela demorou a responder.</p>
+<p>Pedir OK <strong>não</strong> marca a aula como feita. Feito é no aplicativo, quando ela assiste, responde ou envia.</p>
+<p>Juntar várias aulas e fazer depois (“maratonar”) é <strong>esperado</strong>. Não é atraso e <strong>não</strong> é, sozinho, risco de evasão.</p>
+<p>No presencial ou híbrido <strong>não existe</strong> esse OK/lote: a gestora libera o encontro e cola o texto no grupo.</p>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart TD
+  Relogio[Relogio_libera_aula]
+  PedidoOK[Mensagem_pede_OK]
+  Espera[Aguarda_resposta]
+  Lote[Envia_lote_acumulado]
+  Relogio --> PedidoOK --> Espera
+  Espera -->|ela_responde_OK| Lote
+  Relogio -->|outra_aula_fica_pronta| PedidoOK
+</pre></div>
+<h3>C. Ação manual da gestora</h3>
+<p>Só no curso <strong>pela internet</strong>.</p>
+<p>Os relógios de risco <strong>mostram</strong> quem está em risco (10 dias sem fazer aula já liberada, ou 5 dias do fim ainda com pendência). A gestora da unidade ou da turma abre a lista, escolhe as pessoas e <strong>confirma</strong> o envio. Sem o clique dela, essa mensagem de resgate <strong>não sai</strong>.</p>
+<p>Não substitui o pedido de OK. Não manda o lote. Não marca a aula como feita. Quem está juntando aulas e <strong>ainda entra no aplicativo</strong> não entra nessa lista de risco.</p>
+<p>No mesmo gesto ela também pode mandar, cada um com texto próprio na Gupshup:</p>
+<ol>
+<li>recado para quem <strong>não fez uma atividade</strong> que ela escolheu;</li>
+<li>campanha curta no meio do curso (por volta do 15º dia).</li>
+</ol>
+<p>No presencial ou híbrido <strong>não existe</strong> esse disparo do número do programa: a gestora escreve no grupo da turma.</p>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart LR
+  Lista[Lista_risco_evasao]
+  Gestora[Gestora_confirma]
+  WhatsApp[WhatsApp_para_elas]
+  Lista --> Gestora --> WhatsApp
+</pre></div>
+<hr>
+<h2>3. Os dois caminhos, em ordem</h2>
+<h3>Pela internet</h3>
+<p>Ela encontra a página do programa e faz a pré-inscrição. Se parar no meio, o relógio de <strong>1 dia</strong> (e depois o de <strong>3 dias</strong>) pede que termine a ficha.</p>
+<p>Quando termina, o aplicativo mostra o <strong>número WhatsApp do programa</strong>. Ela <strong>escreve</strong> nesse número. Só então chega a confirmação: recebemos sua inscrição; agora é aguardar a seleção. Isso <strong>ainda não</strong> começa o curso.</p>
+<p>A gestora comunica o resultado. Se ela segue, chega o pedido do <strong>primeiro OK</strong> (confirmar participação). Ela responde OK e recebe o primeiro lote (boas-vindas, salvar o número, materiais). A cada relógio de aula, de novo o pedido de OK; ela responde e recebe o lote acumulado.</p>
+<p>Se a unidade ligou os relógios, chegam lembretes de prazo, de várias aulas paradas, de fim perto ou de risco. Quando a gestora decide, sai também a mensagem manual de resgate.</p>
+<p>Quem fez tudo entra no convite da live (Meet <strong>ou</strong> YouTube + StreamYard, no canal que a gestora escolheu) e nos últimos passos. Pode haver mentoria, doação e certificado. Ela <strong>não pede</strong> doação: o aviso só sai <strong>depois</strong> da aprovação (dinheiro, insumo ou equipamento). Ao fim, o aviso de que o programa acabou. Os <strong>dias</strong> da pesquisa após a formação ficam no CMS (padrão cerca de 30); o backend dispara.</p>
+<h3>Presencial ou híbrido</h3>
+<p>A inscrição é a mesma. A confirmação no WhatsApp do programa é <strong>opcional</strong> na edição: se a edição usar, ela também escreve no número e recebe o “recebemos sua inscrição”. O relógio da ficha incompleta é o mesmo.</p>
+<p>Pode haver <strong>entrevista de seleção</strong>. A gestora só convida quem já está marcada numa sessão.</p>
+<p>Quem é aprovada recebe a celebração <strong>Você foi aprovada</strong> (sem o link do grupo). Em seguida — ou no <strong>mesmo envio pago</strong>, se a turma já tiver o link — sai o <strong>convite ao grupo da turma</strong>. Quem não entra no grupo <strong>ainda não</strong> está com a participação efetivada. Quem não segue recebe o recado de não aprovação. Classificar no sistema <strong>não</strong> manda mensagem: só <strong>comunicar o resultado</strong> manda.</p>
+<p>Dali em diante o dia a dia é o <strong>grupo da turma</strong>. A cada encontro a gestora cola o texto daquele tipo de atividade. Mentoria acontece <strong>durante</strong> o programa. Doação quando a equipe decidir — ela <strong>não pede</strong>; o aviso só depois da aprovação. A pesquisa após a formação usa os <strong>dias do CMS</strong>; o backend dispara, não um botão da gestora.</p>
+<hr>
+<h2>4. Como ler cada ficha</h2>
+<p>Todas as comunicações abaixo usam o mesmo bloco:</p>
+<ul>
+<li><strong>Quando</strong> — o ponto da história e o gatilho</li>
+<li><strong>Para quem</strong></li>
+<li><strong>Por que enviamos</strong></li>
+<li><strong>Como chega</strong></li>
+<li><strong>O que esta mensagem não faz</strong></li>
+<li><strong>Variáveis obrigatórias</strong> — sem elas o modelo na Gupshup <strong>não envia</strong></li>
+<li><strong>Variáveis opcionais</strong> — se vazias, o texto omite o trecho</li>
+<li><strong>Texto</strong> — espaço para o Consulado fechar o parágrafo na Gupshup. Onde ainda não há texto oficial, há <strong>intenção</strong>. Não é o texto final.</li>
+</ul>
+<p>Nomes das variáveis em português, iguais aos placeholders da Gupshup.</p>
+<h3>Bloco comum (quase todo recado à empreendedora)</h3>
+<ul>
+<li><strong>Obrigatórias em geral:</strong> <strong>nome social</strong>; <strong>nome do programa</strong>.</li>
+<li><strong>Obrigatória quando o recado abre o app:</strong> <strong>link de acesso</strong>.</li>
+<li><strong>Obrigatória em documento oficial</strong> (certificado do programa, certificado da voluntária, recibo da doação): <strong>nome completo</strong>.</li>
+<li><strong>Opcionais em geral:</strong> edição; unidade; turma.</li>
+<li><strong>Não usar:</strong> variável “primeiro nome”.</li>
+</ul>
+<p>O recado que <strong>avisa</strong> o certificado chama pelo <strong>nome social</strong>. O PDF do certificado (e o recibo) usam <strong>nome completo</strong>.</p>
+<hr>
+<h2>5. Inscrição e seleção</h2>
+<h3>Recebemos sua inscrição</h3>
+<p><strong>Quando:</strong> ela escreveu a primeira mensagem no número WhatsApp do programa, depois de terminar (ou quase terminar) a ficha.</p>
+<p><strong>Para quem:</strong> quem acabou de se apresentar nesse número.</p>
+<p><strong>Por que enviamos:</strong> confirmar que o Consulado viu o interesse e que a seleção ainda vai acontecer.</p>
+<p><strong>Como chega:</strong> WhatsApp automático. E-mail com o mesmo texto, se a edição ligar os dois.</p>
+<p><strong>O que esta mensagem não faz:</strong> não começa o curso. Não pede OK. Não envia aula.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; nome do programa.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma; quando a equipe volta a falar.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<p>Intenção: alegria pelo interesse; “recebemos e agora é aguardar”; a próxima fala será por aqui, na época da seleção.</p>
+<hr>
+<h3>Relógio: 1 dia sem terminar a ficha</h3>
+<p><strong>Quando:</strong> <strong>1 dia</strong> depois da pré-inscrição, se a ficha completa ainda não foi enviada.</p>
+<p><strong>Para quem:</strong> quem parou no meio.</p>
+<p><strong>Por que enviamos:</strong> muita gente desiste no formulário longo; um toque cedo recupera o interesse.</p>
+<p><strong>Como chega:</strong> preferência por <strong>e-mail</strong> com link de acesso para retomar a ficha. WhatsApp automático é opcional na edição (custa mais). A gestora também pode mandar na mão, se quiser reforçar.</p>
+<p><strong>O que esta mensagem não faz:</strong> não a coloca em seleção. Não começa o curso.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; nome do programa; link de acesso (para retomar a ficha).</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<p>Intenção: “vimos que você começou”; um passo só — terminar a ficha; tom de convite, não de cobrança.</p>
+<hr>
+<h3>Relógio: reforço a cada 3 dias</h3>
+<p><strong>Quando:</strong> a ficha continua incompleta. <strong>A cada 3 dias</strong>, até o número máximo combinado na edição.</p>
+<p><strong>Para quem:</strong> a mesma pessoa do toque de 1 dia.</p>
+<p><strong>Por que enviamos:</strong> um único lembrete às vezes não basta; o relógio para no instante em que ela conclui.</p>
+<p><strong>Como chega:</strong> o mesmo caminho do toque de 1 dia (mesmo texto-base da Gupshup, ou variante de reforço se o Consulado quiser duas peças).</p>
+<p><strong>O que esta mensagem não faz:</strong> não acumula cobrança depois que ela termina. Não inicia o curso.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; nome do programa; link de acesso.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<p>Intenção: reforço curto; o prazo de inscrição, se ainda houver; o mesmo próximo passo.</p>
+<hr>
+<h3>Convite à conversa de seleção</h3>
+<p><strong>Quando:</strong> a gestora da unidade <strong>escolhe e dispara</strong>, só no presencial ou híbrido, para quem já está marcada numa sessão de entrevista.</p>
+<p><strong>Para quem:</strong> candidatas qualificadas com data, hora e local definidos.</p>
+<p><strong>Por que enviamos:</strong> marcar presença na entrevista. Sem essa conversa a aprovação presencial não acontece.</p>
+<p><strong>Como chega:</strong> WhatsApp automático e/ou e-mail, mesmo texto. Se o automático não chegar, a gestora pode abrir o chat da pessoa.</p>
+<p><strong>O que esta mensagem não faz:</strong> não aprova. Não cria o grupo da turma. Não começa o curso.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; nome do programa; data; hora; <strong>um de:</strong> local <strong>ou</strong> link do encontro.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<p>Intenção: convite claro, com data e o que levar / como chegar.</p>
+<hr>
+<h3>Você foi aprovada — boas-vindas</h3>
+<p><strong>Quando:</strong> a gestora da unidade <strong>comunica o resultado</strong> de quem segue. Este recado <strong>celebra</strong> a entrada.</p>
+<p><strong>Para quem:</strong> aprovadas (presencial/híbrido: já na turma; pela internet: já vinculadas à unidade/turma).</p>
+<p><strong>Por que enviamos:</strong> dizer que ela entrou e o que acontece agora.</p>
+<p><strong>Como chega:</strong> WhatsApp automático e/ou e-mail, mesmo texto.</p>
+<p>No curso pela internet, o próximo passo é o <strong>OK</strong>. No presencial ou híbrido, o <strong>convite ao grupo</strong> é o evento seguinte (pode ir no mesmo envio pago). Este recado <strong>não</strong> carrega o link do grupo.</p>
+<p><strong>O que esta mensagem não faz:</strong> não envia o link do grupo. Na internet, não envia vídeo nem exercício. Classificar no sistema, sozinho, <strong>não</strong> dispara esta mensagem.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; nome do programa.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<p>Intenção: celebração curta; o próximo passo (responder OK <strong>ou</strong> esperar o convite ao grupo).</p>
+<hr>
+<h3>Convite ao grupo da turma</h3>
+<p><strong>Quando:</strong> presencial ou híbrido, <strong>depois</strong> de “você foi aprovada”, quando a turma já tem o link do grupo. Pode sair no <strong>mesmo envio pago</strong> que a celebração.</p>
+<p><strong>Para quem:</strong> aprovada já alocada numa turma com link cadastrado.</p>
+<p><strong>Por que enviamos:</strong> efetivar a participação. Quem não entra no grupo <strong>ainda não</strong> está com a participação efetivada.</p>
+<p><strong>Como chega:</strong> WhatsApp automático (e o mesmo texto no e-mail, se a edição ligar). Depois, o dia a dia é o grupo; a gestora cola os textos dos encontros.</p>
+<p><strong>O que esta mensagem não faz:</strong> não substitui a celebração. Não começa o conteúdo. Não existe no curso pela internet (lá o próximo passo é o OK).</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; nome do programa; <strong>link do grupo</strong>; <strong>turma</strong>.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; nome da gestora.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<p>Intenção: “entre no grupo da turma”; um toque no link; a gestora confirma o ingresso.</p>
+<hr>
+<h3>Desta vez não foi possível seguir</h3>
+<p><strong>Quando:</strong> a gestora comunica quem <strong>não</strong> segue (não qualificada, não aprovada, ausente à entrevista, e situações parecidas).</p>
+<p><strong>Para quem:</strong> quem não entra nesta edição.</p>
+<p><strong>Por que enviamos:</strong> fechar o ciclo com respeito e deixar a porta aberta para outra edição, se o Consulado quiser.</p>
+<p><strong>Como chega:</strong> WhatsApp automático e/ou e-mail, mesmo texto.</p>
+<p><strong>O que esta mensagem não faz:</strong> não liga o curso. Não cria grupo.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; nome do programa.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<p>Intenção: agradecer o interesse; recado humano, sem jargão de “reprovada”; convite futuro só se a equipe quiser.</p>
+<hr>
+<h2>6. Durante o curso pela internet — OK e lote</h2>
+<h3>Já está disponível: envie OK</h3>
+<p><strong>Quando:</strong> o relógio daquela aula chegou (ou, no primeiro dia, logo após a aprovação). A aula está <strong>pronta</strong>, ainda <strong>não enviada</strong>.</p>
+<p><strong>Para quem:</strong> empreendedora ativa no curso pela internet.</p>
+<p><strong>Por que enviamos:</strong> ela escolhe quando receber. Assim o conteúdo não chega no meio do expediente sem combinado.</p>
+<p><strong>Como chega:</strong> WhatsApp automático.</p>
+<p><strong>O que esta mensagem não faz:</strong> não entrega o material. Não marca a aula como feita.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; nome do programa; <strong>título da atividade</strong>.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<p>Intenção: “Já está disponível sua aula sobre [título]. Envie agora um OK para receber.”</p>
+<hr>
+<h3>Ela respondeu OK — o lote sai</h3>
+<p><strong>Quando:</strong> ela manda OK (ou toca o botão).</p>
+<p><strong>Para quem:</strong> quem acabou de responder.</p>
+<p><strong>Por que enviamos:</strong> entregar de uma vez tudo que já estava pronto e ela ainda não tinha recebido.</p>
+<p><strong>Como chega:</strong> WhatsApp automático. Cada item do lote usa o texto do <strong>tipo</strong> daquela atividade (fichas abaixo). Material para baixar traz o texto <strong>e os arquivos</strong>. Vídeo no WhatsApp só se a edição ligar essa opção; o mesmo conteúdo continua no aplicativo.</p>
+<p><strong>O que esta mensagem não faz:</strong> não conclui a atividade. Conclusão é no aplicativo.</p>
+<p><strong>Variáveis obrigatórias:</strong> as do tipo da atividade (abaixo). Sempre: nome social; título da atividade; link de acesso da atividade.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma; o que levar; canal (Meet ou YouTube).</p>
+<p><strong>Texto:</strong> cada tipo tem o próprio texto na Gupshup (abaixo).</p>
+<hr>
+<h3>Primeiro lote — boas-vindas da jornada</h3>
+<p><strong>Quando:</strong> o primeiro OK depois da aprovação.</p>
+<p><strong>Para quem:</strong> quem acabou de confirmar participação.</p>
+<p><strong>Por que enviamos:</strong> situar a jornada, pedir para salvar o número, apresentar a comunidade (se a edição tiver) e entregar os materiais de apoio iniciais.</p>
+<p><strong>Como chega:</strong> WhatsApp automático, em sequência, como parte do lote. E-mail com o mesmo texto, se a edição ligar.</p>
+<p><strong>O que esta mensagem não faz:</strong> não substitui o aplicativo. Não marca módulo como concluído.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; nome do programa; link de acesso.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma; link da comunidade.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<p>Intenção: acolher; “salve este número”; materiais para consultar sempre; um primeiro passo concreto no aplicativo.</p>
+<hr>
+<h3>Textos por tipo de atividade (o lote escolhe o tipo)</h3>
+<p>Cada tipo abaixo é <strong>um</strong> texto na Gupshup. Pela internet, sai no lote depois do OK. No presencial ou híbrido, a gestora cola <strong>o mesmo</strong> texto no grupo quando libera aquele encontro.</p>
+<p>Variáveis comuns de todo tipo: <strong>obrigatórias</strong> — nome social; <strong>título</strong>; <strong>link de acesso da atividade</strong>. Se for encontro: também <strong>data</strong> e <strong>hora</strong>, e <strong>um de:</strong> local <strong>ou</strong> link do encontro. Se tiver prazo: também <strong>data limite</strong>. <strong>Opcionais</strong> — edição; unidade; turma; o que levar; canal (Meet ou YouTube).</p>
+<p><strong>O que nenhum desses textos faz:</strong> marcar a atividade como feita.</p>
+<h4>Encontro presencial</h4>
+<p><strong>Quando:</strong> encontro em sala, na data combinada.</p>
+<p><strong>Como chega:</strong> internet = lote após OK. Presencial/híbrido = grupo da turma.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; título; data; hora; <strong>um de:</strong> local <strong>ou</strong> link do encontro; link de acesso da atividade. Se houver prazo: data limite.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma; o que levar.</p>
+<p><strong>Texto:</strong> a revisar. Intenção: data, hora, endereço; o que levar; presença conta.</p>
+<h4>Encontro ao vivo</h4>
+<p><strong>Quando:</strong> encontro na mesma hora, pela tela (não confundir com o curso inteiro pela internet). Canal: <strong>Meet</strong> ou <strong>YouTube + StreamYard</strong>, o que a gestora escolheu.</p>
+<p><strong>Como chega:</strong> igual ao encontro presencial.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; título; data; hora; <strong>um de:</strong> local <strong>ou</strong> link do encontro; link de acesso da atividade. Se houver prazo: data limite.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma; canal (Meet ou YouTube).</p>
+<p><strong>Texto:</strong> a revisar. Intenção: data, hora, link da sala; como entrar.</p>
+<h4>Videoaula</h4>
+<p><strong>Quando:</strong> vídeo liberado, com prazo típico de uns dois dias (a edição pode mudar).</p>
+<p><strong>Como chega:</strong> lote após OK; no grupo, se for presencial/híbrido. Arquivo de vídeo no WhatsApp só se a edição ligar.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; título; link de acesso da atividade. Se houver prazo: data limite.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma.</p>
+<p><strong>Texto:</strong> a revisar. Intenção: do que a aula trata; prazo; link de acesso para assistir no aplicativo (a conclusão oficial é lá, com boa parte do vídeo vista).</p>
+<h4>Exercício</h4>
+<p><strong>Quando:</strong> atividade prática no aplicativo.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; título; link de acesso da atividade. Se houver prazo: data limite.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma.</p>
+<p><strong>Texto:</strong> a revisar. Intenção: o desafio em uma frase; link de acesso.</p>
+<h4>Tarefa de casa</h4>
+<p><strong>Quando:</strong> tarefa para fazer no negócio e devolver no aplicativo.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; título; link de acesso da atividade. Se houver prazo: data limite.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma.</p>
+<p><strong>Texto:</strong> a revisar. Intenção: o pedido concreto; prazo; link de acesso.</p>
+<h4>Saúde financeira</h4>
+<p><strong>Quando:</strong> hora de registrar números do negócio (preço, faturamento, etc.).</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; título; link de acesso da atividade. Se houver prazo: data limite.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma.</p>
+<p><strong>Texto:</strong> a revisar. Intenção: por que aquele número importa; link de acesso; sem tom de auditoria.</p>
+<h4>Material para baixar</h4>
+<p><strong>Quando:</strong> PDF, guia ou anexo de apoio.</p>
+<p><strong>Como chega:</strong> texto <strong>e os arquivos</strong> no WhatsApp (internet, após OK). Os mesmos arquivos ficam no aplicativo. No grupo, a gestora manda o texto; os arquivos podem ir anexos na mão.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; título; link de acesso da atividade.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma.</p>
+<p><strong>Texto:</strong> a revisar. Intenção: o que é cada arquivo; “salve para consultar”.</p>
+<h4>Plano de ação</h4>
+<p><strong>Quando:</strong> ela escreve o plano do negócio.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; título; link de acesso da atividade. Se houver prazo: data limite.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma.</p>
+<p><strong>Texto:</strong> a revisar. Intenção: o que o plano precisa ter; link de acesso.</p>
+<h4>Visita técnica</h4>
+<p><strong>Quando:</strong> visita um a um, combinada pela equipe.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; título; data; hora; <strong>um de:</strong> local <strong>ou</strong> link do encontro; link de acesso da atividade.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma.</p>
+<p><strong>Texto:</strong> a revisar. Intenção: data, o que esperar; não confundir com mentoria.</p>
+<h4>Questionário de chegada</h4>
+<p><strong>Quando:</strong> no começo do programa, para conhecer o ponto de partida.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; título; link de acesso da atividade.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma.</p>
+<p><strong>Texto:</strong> a revisar. Intenção: “queremos te conhecer”; link de acesso; respostas são dela, não do negócio inteiro.</p>
+<h4>Questionário final</h4>
+<p><strong>Quando:</strong> no encerramento (pela internet, depois da live e da palavra-chave, quando a edição usar esse funil).</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; título; link de acesso da atividade.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma.</p>
+<p><strong>Texto:</strong> a revisar. Intenção: fechar o aprendizado; pela internet, acertar o questionário é um dos passos para a equipe <strong>poder</strong> doar — ela <strong>não pede</strong> doação; a equipe ainda sugere e aprova.</p>
+<h4>Pesquisa de satisfação</h4>
+<p><strong>Quando:</strong> ao final do ciclo de formação, no aplicativo.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; título; link de acesso da atividade.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma.</p>
+<p><strong>Texto:</strong> a revisar. Intenção: opinião sincera; poucos minutos; link de acesso.</p>
+<hr>
+<h2>7. Ação manual da gestora (só pela internet)</h2>
+<h3>Risco de evasão</h3>
+<p><strong>Quando:</strong> a lista mostra quem está em risco — <strong>10 dias</strong> sem fazer aula já liberada <strong>ou</strong> <strong>5 dias</strong> do fim ainda com pendência — e a gestora <strong>confirma</strong> o envio.</p>
+<p><strong>Para quem:</strong> só as pessoas que ela selecionou nessa lista.</p>
+<p><strong>Por que enviamos:</strong> resgate humano. O relógio sozinho não manda este texto.</p>
+<p><strong>Como chega:</strong> WhatsApp automático, depois do clique. E-mail com o mesmo texto, se a edição ligar.</p>
+<p><strong>O que esta mensagem não faz:</strong> não envia o lote. Não pede OK no lugar da aula. Não inclui quem está juntando conteúdo e ainda usa o aplicativo.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; nome do programa; link de acesso.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma; prazo ou título da atividade; quantidade pendente; data de encerramento.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<p>Intenção: preocupação, não bronca; um próximo passo único e leve.</p>
+<hr>
+<h3>Quem não fez uma atividade escolhida</h3>
+<p><strong>Quando:</strong> a gestora escolhe uma atividade e dispara para quem ainda não concluiu.</p>
+<p><strong>Para quem:</strong> a lista operacional daquela atividade.</p>
+<p><strong>Por que enviamos:</strong> lembrar sem tratar o atraso como evasão (ela pode estar juntando para fazer depois).</p>
+<p><strong>Como chega:</strong> WhatsApp automático após o clique. Mesmo texto no e-mail, se ligado.</p>
+<p><strong>O que esta mensagem não faz:</strong> não marca risco. Não envia o lote.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; nome do programa; título da atividade; link de acesso.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma; data limite.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<p>Intenção: “essa atividade ainda está com você”; prazo; link.</p>
+<hr>
+<h3>Campanha de meio de curso</h3>
+<p><strong>Quando:</strong> a gestora dispara a campanha curta (por volta do <strong>15º dia</strong>, por <strong>3 a 5 dias</strong>), para quem desacelerou.</p>
+<p><strong>Para quem:</strong> o recorte que ela escolher nessa campanha.</p>
+<p><strong>Por que enviamos:</strong> um empurrão no meio da formação curta, diferente do risco de 10 dias ou dos 5 dias do fim.</p>
+<p><strong>Como chega:</strong> WhatsApp automático após o clique. Mesmo texto no e-mail, se ligado.</p>
+<p><strong>O que esta mensagem não faz:</strong> não substitui o OK do conteúdo.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; nome do programa; link de acesso.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<p>Intenção: incentivo; o que ainda dá tempo de fazer; tom de parceria.</p>
+<hr>
+<h2>8. Relógios de lembrete (se a unidade ligar na edição)</h2>
+<p>Estes textos são <strong>outros</strong> eventos da tabela default. Podem coexistir com o disparo manual da gestora: o relógio manda sozinho; o manual só sai com o clique.</p>
+<h3>Horas antes do prazo</h3>
+<p><strong>Quando:</strong> a atividade tem data limite, ainda não foi feita, e faltam as horas combinadas na edição.</p>
+<p><strong>Para quem:</strong> quem ainda não concluiu aquela atividade.</p>
+<p><strong>Por que enviamos:</strong> o prazo está perto.</p>
+<p><strong>Como chega:</strong> WhatsApp automático e/ou e-mail, mesmo texto.</p>
+<p><strong>O que esta mensagem não faz:</strong> não prorroga o prazo. Não envia o lote.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; nome do programa; link de acesso; título da atividade; data limite.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<hr>
+<h3>Várias aulas já liberadas e não feitas</h3>
+<p><strong>Quando:</strong> a quantidade de conteúdos prontos e não feitos passa o limiar da edição.</p>
+<p><strong>Para quem:</strong> quem está com a fila grande.</p>
+<p><strong>Por que enviamos:</strong> lembrar que o acúmulo é normal, mas o programa tem fim.</p>
+<p><strong>Como chega:</strong> WhatsApp automático e/ou e-mail, mesmo texto.</p>
+<p><strong>O que esta mensagem não faz:</strong> não classifica como evasão. Maratonar continua saudável.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; nome do programa; link de acesso.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma; quantidade pendente.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<hr>
+<h3>5 dias do fim, ainda com pendência</h3>
+<p><strong>Quando:</strong> curso pela internet; faltam <strong>5 dias</strong> para o término e ainda há atividade não feita.</p>
+<p><strong>Para quem:</strong> quem tem pendência.</p>
+<p><strong>Por que enviamos:</strong> o calendário está acabando.</p>
+<p><strong>Como chega:</strong> WhatsApp automático e/ou e-mail, mesmo texto.</p>
+<p><strong>O que esta mensagem não faz:</strong> não abre prazo extra.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; nome do programa; link de acesso.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma; data de encerramento.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<hr>
+<h3>10 dias sem fazer aula já liberada</h3>
+<p><strong>Quando:</strong> curso curto pela internet; uma aula pronta está sem conclusão há <strong>10 dias</strong>.</p>
+<p><strong>Para quem:</strong> quem entrou no estado de risco. Quem acessou o aplicativo há pouco e só está juntando <strong>não</strong> entra.</p>
+<p><strong>Por que enviamos:</strong> sinal de que ela pode estar saindo do curso — o relógio avisa; o resgate mais falado ainda pode ser o <strong>manual</strong> da gestora (ficha da seção 7).</p>
+<p><strong>Como chega:</strong> WhatsApp automático e/ou e-mail, mesmo texto, se este relógio estiver ligado.</p>
+<p><strong>O que esta mensagem não faz:</strong> não é o mesmo que 15 dias de silêncio do programa longo presencial.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; nome do programa; link de acesso.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma; título da atividade parada.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<hr>
+<h3>Por volta do 15º dia de curso</h3>
+<p><strong>Quando:</strong> janela automática de <strong>3 a 5 dias</strong> no meio da formação curta, se a unidade ligou este relógio.</p>
+<p><strong>Para quem:</strong> quem desacelerou nessa janela.</p>
+<p><strong>Por que enviamos:</strong> o mesmo espírito da campanha manual de meio de curso, sem esperar o clique da gestora.</p>
+<p><strong>Como chega:</strong> WhatsApp automático e/ou e-mail, mesmo texto.</p>
+<p><strong>O que esta mensagem não faz:</strong> não mistura com o filtro de 10 dias / 5 dias do fim.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; nome do programa; link de acesso.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<hr>
+<h3>Programa longo: 15 dias de silêncio</h3>
+<p><strong>Quando:</strong> presencial ou híbrido (formação de vários meses); <strong>15 dias</strong> sem participação relevante <strong>e</strong> muita coisa atrasada (faltas, tarefas paradas).</p>
+<p><strong>Para quem:</strong> a gestora vê o sinal no acompanhamento.</p>
+<p><strong>Por que enviamos:</strong> o programa longo não usa o WhatsApp automático de risco do curso curto. A cobrança é no <strong>grupo da turma</strong>, com o texto que a equipe escolher na Gupshup (ou um recado humano no grupo).</p>
+<p><strong>Como chega:</strong> grupo da turma (mão da gestora). Não é o número do programa disparando sozinho.</p>
+<p><strong>O que esta mensagem não faz:</strong> não envia lote. Não usa a regra de 10 dias do curso pela internet. Não é um dos seis alertas automáticos.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social (se o recado for individual); nome do programa.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<hr>
+<h2>9. Depois da formação</h2>
+<h3>Convite da live e últimos passos</h3>
+<p><strong>Quando:</strong> pela internet, o negócio fez <strong>todas</strong> as atividades. A gestora dispara o convite da live. Canal: <strong>Meet</strong> ou <strong>YouTube + StreamYard</strong>, o que ela escolheu.</p>
+<p><strong>Para quem:</strong> só quem chegou a 100%.</p>
+<p><strong>Por que enviamos:</strong> a live, a palavra-chave de presença e o questionário final são os últimos degraus antes da equipe <strong>poder</strong> doar.</p>
+<p><strong>Como chega:</strong> e-mail é o caminho típico; WhatsApp com o mesmo texto, se a edição ligar. Depois da live, o aplicativo pede a palavra-chave e o questionário — isso pode ir também num recado da Gupshup com link de acesso.</p>
+<p><strong>O que esta mensagem não faz:</strong> assistir à live, sozinha, não libera doação. Ela <strong>não pede</strong> doação. Doação <strong>nunca</strong> é automática: a equipe ainda sugere e aprova.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; nome do programa; data; hora; link da transmissão; prazo da palavra-chave; link de acesso.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma; canal (Meet ou YouTube).</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<hr>
+<h3>Mentoria disponível</h3>
+<p><strong>Quando:</strong></p>
+<ul>
+<li>Pela internet: no encerramento, quando a equipe abre a mentoria para quem chegou ao fim / teve doação aprovada. Ela preenche um diagnóstico no aplicativo.</li>
+<li>Presencial ou híbrido: durante o programa, quando ela pede ou a gestora inclui.</li>
+</ul>
+<p><strong>Para quem:</strong> quem está nesse recorte.</p>
+<p><strong>Por que enviamos:</strong> avisar que a conversa de mentoria existe e qual o próximo passo (preencher o diagnóstico, esperar combinação, ou ver o horário).</p>
+<p><strong>Como chega:</strong> WhatsApp automático e/ou e-mail, mesmo texto, quando for aviso da plataforma. O combinado fino com a mentora pode ser conversa um a um — <strong>fora</strong> da Gupshup.</p>
+<p><strong>O que esta mensagem não faz:</strong> não marca a sessão como feita. Não substitui o treino da voluntária.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; nome do programa; link de acesso.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<hr>
+<h3>Doação aprovada — dados de recebimento</h3>
+<p><strong>Quando:</strong> a gestora da unidade <strong>aprovou</strong> a doação. Este é o <strong>único</strong> aviso de doação: ela <strong>não pede</strong>. Três tipos: dinheiro, insumo ou equipamento.</p>
+<p><strong>Para quem:</strong> a empreendedora (e sócias do mesmo negócio, quando for o caso).</p>
+<p><strong>Por que enviamos:</strong> pedir conta ou PIX (dinheiro) ou endereço com ponto de referência (insumo/equipamento), e os aceites. A tela do aplicativo mostra <strong>aguarde</strong> — sem data prometida de pagamento ou entrega.</p>
+<p><strong>Como chega:</strong> WhatsApp automático e/ou e-mail, mesmo texto, com link de acesso. O preenchimento é no aplicativo.</p>
+<p><strong>O que esta mensagem não faz:</strong> não promete dia de crédito. Não é o comprovante final. Não existe pedido dela no aplicativo.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; nome do programa; tipo da doação; link de acesso. No dinheiro, <strong>valor real</strong> se o aviso mostrar valor.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma; itens (sem valor estimado).</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<p>Intenção: alegria contida; o tipo (dinheiro, insumo ou equipamento); o que ela precisa informar; “aguarde a educadora”; sem data.</p>
+<hr>
+<h3>Recibo da doação</h3>
+<p><strong>Quando:</strong> o aplicativo libera o recibo — <strong>antes</strong> do pagamento, se for dinheiro; <strong>depois</strong> que ela confirma o recebimento, se for produto.</p>
+<p><strong>Para quem:</strong> quem tem recibo para assinar.</p>
+<p><strong>Por que enviamos:</strong> formalizar o recebimento.</p>
+<p><strong>Como chega:</strong> WhatsApp automático e/ou e-mail, mesmo texto, com link de acesso para assinar.</p>
+<p><strong>O que esta mensagem não faz:</strong> não substitui a conferência da equipe.</p>
+<p><strong>Variáveis obrigatórias:</strong> <strong>nome completo</strong>; tipo da doação; link de acesso (assinatura no app).</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma. O recado que avisa o recibo chama pelo <strong>nome social</strong>.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<hr>
+<h3>Certificado do programa</h3>
+<p><strong>Quando:</strong> o <strong>negócio</strong> atinge o percentual da edição (em geral, boa parte das atividades feitas). Todas as sócias daquela edição recebem.</p>
+<p><strong>Para quem:</strong> cada sócia vinculada.</p>
+<p><strong>Por que enviamos:</strong> reconhecer a conclusão.</p>
+<p><strong>Como chega:</strong> WhatsApp automático (PDF). E-mail com o mesmo texto, se a edição ligar. O certificado também fica no aplicativo.</p>
+<p><strong>O que esta mensagem não faz:</strong> não é o certificado da mentoria (esse é outro, por sessão). Não é o certificado da voluntária.</p>
+<p><strong>Variáveis obrigatórias do PDF:</strong> <strong>nome completo</strong>; tipo; carga horária, se houver.</p>
+<p><strong>Variáveis obrigatórias do recado que avisa:</strong> nome social; nome do programa; link de acesso.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<p>Intenção: parabéns; o PDF; guardar e compartilhar se quiser.</p>
+<hr>
+<h3>O programa acabou</h3>
+<p><strong>Quando:</strong> a edição encerra o ciclo de formação.</p>
+<p><strong>Para quem:</strong> quem participou e não desistiu.</p>
+<p><strong>Por que enviamos:</strong> fechar a conversa automática da jornada e avisar o que ainda pode acontecer (pesquisa, mentoria em andamento).</p>
+<p><strong>Como chega:</strong> WhatsApp automático e/ou e-mail, mesmo texto.</p>
+<p><strong>O que esta mensagem não faz:</strong> não apaga o acesso ao aplicativo. Não dispara a pesquisa após a formação (isso são os dias do CMS).</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; nome do programa.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<hr>
+<h3>Pesquisa após a formação (dias no CMS)</h3>
+<p><strong>Quando:</strong> passaram os <strong>dias definidos no CMS</strong> depois do fim da formação (padrão cerca de 30). O backend dispara. A gestora <strong>não</strong> tem tela de disparo como caminho principal.</p>
+<p><strong>Para quem:</strong> as participantes da edição.</p>
+<p><strong>Por que enviamos:</strong> acompanhar o negócio depois da formação. É o terceiro momento de escuta: chegada, NPS no fim da formação, e esta pesquisa.</p>
+<p><strong>Como chega:</strong> WhatsApp automático e/ou e-mail, mesmo texto, com link de acesso. Ela responde no aplicativo (UC82).</p>
+<p><strong>O que esta mensagem não faz:</strong> não reabre o curso. Não é o Questionário Final da live. Não é o módulo de encontros de encerramento presencial ou híbrido. Não é um dos seis alertas.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; nome do programa; link de acesso.</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<p>Intenção: “e o seu negócio agora?”; poucos minutos; tom de cuidado, não de prova.</p>
+<hr>
+<h3>Novo link de acesso</h3>
+<p><strong>Quando:</strong> ela pede para entrar de novo no aplicativo (empreendedora), ou o recado da jornada já traz um link para uma atividade específica.</p>
+<p><strong>Para quem:</strong> a pessoa que pediu ou o destino daquele recado.</p>
+<p><strong>Por que enviamos:</strong> não existe senha. O link é a chave.</p>
+<p><strong>Como chega:</strong> WhatsApp ou e-mail, mesmo texto da Gupshup para “seu acesso”.</p>
+<p><strong>O que esta mensagem não faz:</strong> não é código de verificação. Link vencido pede um novo.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; <strong>link de acesso</strong> (às vezes já apontando para a aula certa).</p>
+<p><strong>Variáveis opcionais:</strong> edição; unidade; turma; nome do programa.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<p>Intenção: “é só tocar para entrar”; validade curta; se não funcionar, peça de novo.</p>
+<hr>
+<h2>10. Voluntárias</h2>
+<p>Mesmo formato. Os textos desta rede também entram na tabela default (Gupshup), ligados às ações e ao portal. O CMS só aponta o evento para o modelo.</p>
+<h3>Cadastro recebido</h3>
+<p><strong>Quando:</strong> ela envia a inscrição no portal (pelo programa geral ou por uma ação pontual).</p>
+<p><strong>Para quem:</strong> a recém-inscrita.</p>
+<p><strong>Por que enviamos:</strong> confirmar que o pedido chegou e que a equipe ainda analisa.</p>
+<p><strong>Como chega:</strong> e-mail (caminho típico). WhatsApp só se o Consulado ligar para a rede.</p>
+<p><strong>O que esta mensagem não faz:</strong> não libera o pool de mentorias. Não substitui a aprovação.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social.</p>
+<p><strong>Variáveis opcionais:</strong> título da ação (se veio de uma ação); período.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<hr>
+<h3>Cadastro aprovado e convite ao treino</h3>
+<p><strong>Quando:</strong> a gestora de voluntariado aprova o cadastro.</p>
+<p><strong>Para quem:</strong> voluntária agora ativa na rede, ainda com o módulo de treino pela frente.</p>
+<p><strong>Por que enviamos:</strong> abrir o portal e pedir o treino. Sem o treino ela não vê demandas nem outras ações.</p>
+<p><strong>Como chega:</strong> e-mail, com link de acesso.</p>
+<p><strong>O que esta mensagem não faz:</strong> não a coloca numa mentoria.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; link de acesso.</p>
+<p><strong>Variáveis opcionais:</strong> título da ação; período.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<hr>
+<h3>Link de acesso da voluntária</h3>
+<p><strong>Quando:</strong> ela pede para entrar no portal (informa o e-mail cadastrado).</p>
+<p><strong>Para quem:</strong> cadastro existente (mesmo em análise: o link abre a tela de aguardo).</p>
+<p><strong>Como chega:</strong> <strong>só e-mail</strong>.</p>
+<p><strong>O que esta mensagem não faz:</strong> não confirma senha — não há senha.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; <strong>link de acesso</strong>.</p>
+<p><strong>Variáveis opcionais:</strong> nenhuma.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<hr>
+<h3>Convite para uma ação pontual</h3>
+<p><strong>Quando:</strong> a gestora de voluntariado convida alguém da rede — ou uma pessoa nova — para uma palestra, gravação ou oficina.</p>
+<p><strong>Para quem:</strong> o recorte que ela escolheu.</p>
+<p><strong>Por que enviamos:</strong> a ação pode existir até sem um programa de empreendedoras.</p>
+<p><strong>Como chega:</strong> <strong>e-mail</strong> (não há WhatsApp automático pago nesta rede). O texto-modelo da ação está na Gupshup; cada disparo pode ganhar um parágrafo personalizado, com o link daquela iniciativa.</p>
+<p><strong>O que esta mensagem não faz:</strong> não confirma a vaga. A gestora ainda confirma ou recusa a inscrição.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; título da ação; período.</p>
+<p><strong>Variáveis opcionais:</strong> link da página da ação.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<hr>
+<h3>Ação confirmada ou recusada</h3>
+<p><strong>Quando:</strong> a gestora de voluntariado decide sobre a inscrição.</p>
+<p><strong>Para quem:</strong> quem se inscreveu naquela ação.</p>
+<p><strong>Como chega:</strong> e-mail, mesmo modelo da Gupshup, com dois textos (sim / não).</p>
+<p><strong>O que esta mensagem não faz:</strong> a confirmação ainda não emite certificado (o certificado sai quando a ação <strong>termina</strong>, para todo o grupo confirmado).</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; título da ação.</p>
+<p><strong>Variáveis opcionais:</strong> período.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<hr>
+<h3>Mentoria combinada</h3>
+<p><strong>Quando:</strong> a sessão foi alocada ou aceita.</p>
+<p><strong>Para quem:</strong> a voluntária (e, se a equipe quiser um eco na Gupshup, a empreendedora — ver ficha “Mentoria disponível”).</p>
+<p><strong>Como chega:</strong> e-mail opcional da Gupshup. O WhatsApp um a um entre mentora e mentorada <strong>não</strong> é texto da Gupshup.</p>
+<p><strong>O que esta mensagem não faz:</strong> não registra horas. Não emite certificado da sessão.</p>
+<p><strong>Variáveis obrigatórias:</strong> nome social; link de acesso.</p>
+<p><strong>Variáveis opcionais:</strong> título da ação; período.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<hr>
+<h3>Certificado da voluntária</h3>
+<p><strong>Quando:</strong> a mentoria individual termina (um certificado por pessoa e por sessão) <strong>ou</strong> a ação pontual se encerra (certificado de participação para todas as confirmadas). Mentoria coletiva <strong>não</strong> gera este certificado.</p>
+<p><strong>Para quem:</strong> quem concluiu aquele papel.</p>
+<p><strong>Como chega:</strong> e-mail; o PDF também fica no portal.</p>
+<p><strong>Variáveis obrigatórias do PDF:</strong> <strong>nome completo</strong>; tipo (mentoria ou ação); carga horária, se houver.</p>
+<p><strong>Variáveis obrigatórias do recado que avisa:</strong> nome social.</p>
+<p><strong>Variáveis opcionais:</strong> período; data.</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<hr>
+<h2>11. Quem opera o sistema</h2>
+<h3>Link de acesso da gestora</h3>
+<p><strong>Quando:</strong> ela pede para entrar no aplicativo de gestão.</p>
+<p><strong>Para quem:</strong> gestora de unidade, de turma ou de voluntariado.</p>
+<p><strong>Como chega:</strong> <strong>só e-mail</strong>.</p>
+<p><strong>O que esta mensagem não faz:</strong> não é mala direta de operação. Não avisa pendência de empreendedora.</p>
+<p><strong>Variáveis obrigatórias:</strong> <strong>link de acesso</strong>.</p>
+<p><strong>Variáveis opcionais:</strong> nome social (se a gestora tiver cadastro com esse campo).</p>
+<p><strong>Texto:</strong> a revisar.</p>
+<p>Intenção: “toque para entrar”; sem relatório junto.</p>
+<hr>
+<h2>12. O que este documento pede à equipe</h2>
+<p>Para cada ficha em <strong>texto: a revisar</strong>, o Consulado fecha o parágrafo <strong>na Gupshup</strong> (e o assunto do e-mail, se quiser — o <strong>corpo</strong> é o mesmo).</p>
+<p>A tabela default da UC88 já lista todos os eventos com as mesmas colunas (obrigatórias / opcionais). No CMS, conferir se <strong>todo evento</strong> aponta para um modelo. Pacote ou edição só troca o ponteiro — e só então mudar o modelo na Gupshup para o ano seguinte.</p>
+
+      </article>
+    </main>
+  </div>
+  <script src="../assets/js/nav.js"></script>
+</body>
+</html>

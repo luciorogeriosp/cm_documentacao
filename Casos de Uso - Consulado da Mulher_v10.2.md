@@ -1,199 +1,19 @@
 **Casos de Uso — Sistema de Gestão de Programas Sociais (Consulado da Mulher) — v10.2**
 
-Especificação funcional canônica do sistema. Versionamento de **29/set/2026** a partir da [v10.1](Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v10.1.md): **Gupshup** como repositório dos textos; o CMS só liga **evento → mensagem** (tabela default obrigatória); **convite ao grupo** como evento da jornada; pesquisa após a formação com **dias programáveis no CMS**; recados chamam pelo **nome social**, documentos pelo **nome completo**. Base da v10.1 (25/set/2026): incorporação do **rascunho de doações v10** (doações múltiplas por tipo — dinheiro, insumo e equipamento, com N itens e N doações por empreendedora; valor real × estimado; nota fiscal por item; recibo só com valores reais; carência como destaque entre edições; UC93 absorvida pelas UC57/UC86/UC94; UC94 como aviso de qualquer doação aprovada), das **decisões de 25/09/2026 (Alexandre)** — duração fixa da mentoria sem CMS e canal da live/workshop escolhido pelo gestor — e das **correções da revisão da v9.1** (`revisao_v9.1.md`); a automação de cancelada (AC-30) continua pendente (ver *Histórico de versões* e *Pendências*). v9.1: versionamento de **24/set/2026** a partir da [v8](Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v8.md): incorporação do **protótipo cliente v5** (relatório `gap_prototipo_cliente_vs_v8.md`) — **5 UCs novos** (UC91–UC95, Aplicativo Cliente) e 20 UCs complementados — e aplicação das **decisões de 24/09/2026 (Alexandre)** sobre os 19 conflitos protótipo × v8 e, na mesma data, das **7 decisões sobre o app gestor** (G1–G7, relatório `gap_app_gestor_lovable_vs_v9.md`: doação P/H, grupo WhatsApp, mentorias, acesso de gestor, Saúde Financeira, workshop de encerramento e cancelamento/desistência); com as **confirmações de 25/09/2026** (C1–C7); permanecem abertos 1 **[DECISÃO PENDENTE]** (rótulos da dificuldade), 1 **[DECISÃO PENDENTE – reunião com Daniele]** e itens **[A CONFIRMAR]** (ver *Histórico de versões* e *Pendências*). v8: versionamento de **23/set/2026** a partir da [v7](Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v7.md): inventário UC88 (jornada + rede de voluntariado) e alinhamento do cadastro via slug. Sem UC novo. Arquitetura em **seis grupos**:
+Especificação funcional canônica do sistema. Arquitetura em **seis grupos**:
 
-1. **CMS de Administração** — modelagem de programas, edições, módulos, unidades, organizações, colaboradores, pacotes de comunicação (UC88) e alertas (UC87); catálogo de áreas de mentoria (a **duração da sessão** é **fixa** — de 30 min a 2h por encontro, em passos de 30 min, P/H e online — e **não** é configurada no CMS por enquanto: decisão de 25/09/2026, que substitui os parâmetros da G3), **tipos de Ação**, textos e **módulo de treino** do portal do voluntariado.
-2. **Aplicativo Gestor** — operação de seleção, turma, doação, Mini CRM (UC26), **mentorias** (Unidade/Turma fazem o match, agendam e registram, com auditoria); perfil **Gestor de Voluntariado** com menu nacional de ações, voluntários e mentorias; autenticação por link mágico.
+1. **CMS de Administração** — modelagem de programas, edições, módulos, unidades, organizações, colaboradores, pacotes de comunicação (UC88) e o alerta automático de ficha incompleta (UC87); catálogo de áreas de mentoria (duração da sessão **fixa**: 30 min a 2h por encontro, em passos de 30 min, P/H e online — **não** configurada no CMS); **tipos de Ação**, textos e **módulo de treino** do portal do voluntariado. **Não** cadastra tipos de doação nem catálogo de itens de insumo ou equipamento. Biblioteca de mídias no S3.
+2. **Aplicativo Gestor** — operação de seleção, turma, doação, Mini CRM (UC26), **mentorias** (Unidade/Turma fazem o match, agendam e registram, com auditoria); Ranking e Engajamento (UC56); perfil **Gestor de Voluntariado** com menu nacional de ações, voluntários e mentorias; autenticação por link mágico.
 3. **Aplicativo Cliente** — jornada da empreendedora; autenticação por link mágico; Agente de IA (UC64); pedido/diagnóstico de mentoria (UC70).
 4. **Portal do voluntariado** — cadastro, módulo CMS, pool de demandas, ações, aceite e diário (UC73/UC70/UC89/UC90); autenticação por link mágico (e-mail).
 5. **Painel de Dados (BI)** — dashboards e relatórios (Looker Studio).
 6. **Sistemas de Retaguarda (Backend)** — APIs, regras, fila de jornada (UC33) e fila de alertas (UC87/UC52); integrações Gupshup e SendGrid.
 
-**Documentos relacionados:** [Tipos_de_Atividade.md](Tipos_de_Atividade.md) · [docs/jornadas/comunicacao.md](docs/jornadas/comunicacao.md) (leitura operacional dos slots UC88) · [prototipo/](prototipo/) · histórico de decisões em [reunioes/](reunioes/)
+**Documentos relacionados:** [Tipos_de_Atividade.md](Tipos_de_Atividade.md) · [docs/jornadas/comunicacao.md](docs/jornadas/comunicacao.md) (leitura operacional dos slots UC88) · [prototipo/](prototipo/) · atas em [reunioes/](reunioes/)
 
 Stack: Next.js, Node.js, Express, Prisma, MySQL; hospedagem AWS.
 
 ---
-
-
-
-## Histórico de versões
-
-### v10.1 → v10.2 (29/set/2026)
-
-**Origem:** decisões de comunicação desta conversa (29/09/2026). Sem UC novo e sem renumerar.
-
-| # | Tema | O que ficou | UCs |
-| - | ---- | ----------- | --- |
-| V10.2-1 | Repositório | Textos oficiais moram na **Gupshup**. O CMS **não** edita copy: só a relação **evento → mensagem**. Pacote/edição pode trocar o ponteiro. E-mail (SendGrid) entrega o **mesmo** recado | UC88, UC87, UC25 |
-| V10.2-2 | Tabela default | Todo evento de envio nasce com um modelo padrão e com **variáveis obrigatórias e opcionais**. Sem obrigatória, o envio não sai | UC88, [comunicacao.md](docs/jornadas/comunicacao.md) |
-| V10.2-3 | Convite ao grupo | Evento próprio da jornada (P/H, após UC25, turma com link). **Você foi aprovada** é só a celebração. O único disparo pago individual do P/H pode levar os dois eventos no mesmo envio | UC25, UC16, UC88 |
-| V10.2-4 | Pesquisa após a formação | **Dias após o fim** programáveis no CMS (padrão cerca de 30). Backend dispara. Gestora **não** tem tela de disparo como caminho principal | UC82, UC9, UC88 |
-| V10.2-5 | Nome | Recados e o app chamam pelo **nome social**. Certificado, recibo e documentos usam o **nome completo**. Não existe variável “primeiro nome” | UC27, UC88, UC63, UC86 |
-
-### Decisão de 28/09/2026 — a empreendedora nunca solicita doação
-
-**Origem:** regra operacional confirmada em 28/09/2026. A empreendedora **nunca** pede doação no Aplicativo Cliente (sem botão, banner ou formulário de pedido). No **online**, a doação é o resultado de participar, responder corretamente as atividades e ficar elegível aos procedimentos de encerramento (workshop, palavra-chave, questionário) e à **seleção** no Gestor. No **P/H**, o Gestor de Turma **sugere** e o Gestor de Unidade **aprova** (o Unidade pode fazer os dois passos). Depois da aprovação ela só preenche dados e recibo (UC86/UC94) — isso **não** é solicitar.
-
-| Seção | O que mudou |
-| ----- | ----------- |
-| Conceitos (Doação), atores | Proibição explícita no Cliente; caminhos online (funil → seleção) e P/H (Turma sugere / Unidade aprova) |
-| UC57 | Título **Sugerir e Aprovar Doação** (sai *Solicitar*); índices e matriz |
-| UC38 | 100% no questionário = elegível à **seleção**; o funil não abre formulário |
-| UC86, UC91, UC94 | Aviso e “Enviar dados” só depois da aprovação; histórico UC93/UC94 deixa de se chamar *Solicitar* |
-
-### Decisão de 25/09/2026 — UC31: o gestor só gerencia empreendimentos
-
-**Origem:** decisão do Alexandre em 25/09/2026: *"o gestor não cadastra empreendimentos. Ele só gerencia os empreendimentos cadastrados pelas empreendedoras no cadastro ou na sua área no aplicativo cliente"*. Texto proposto no rascunho `consulado-rascunho-v10-doacoes.md` (parte 4). Backup do arquivo anterior: `v10_backup/`.
-
-| Seção | O que mudou |
-| ----- | ----------- |
-| UC31 | Descrição, Atores, Pré-condições e Fluxo Principal: saem "Cadastra empreendimento" e "Cria empreendimento (...) ou localiza existente". A **empreendedora** cadastra o empreendimento (UC21) e o vê e edita na área dela no Aplicativo Cliente (**[A CONFIRMAR] (viii)**); o **gestor** localiza, visualiza, agrupa, move (UC32) e corrige dados com justificativa e auditoria (**[A CONFIRMAR] (ix)**). |
-| UC32 | O destino é escolhido **entre os empreendimentos já cadastrados** (sai "ou cria novo"). |
-| UC21 | Bloco 3 com **nome do empreendimento**, preenchido pela empreendedora. |
-| UC69, Regra geral, Atores, Conceitos, Matriz | Exceção à regra "o gestor pode fazer tudo o que a empreendedora faz": o gestor **não cria empreendimento**, nem em nome dela (**[A CONFIRMAR] (vii)**). |
-| Pendências | Novos **[A CONFIRMAR] (vii)**, **(viii)** e **(ix)**. |
-
-### v9.1 → v10 (25/set/2026)
-
-**Base:** v9.1 = v9 de 24/09/2026 com as confirmações C1–C7 (sha256 `d58f01fc…9160`, 4.715 linhas). Backup da base: `build/v10_base_v9.1.md`. Mudanças por UC e origem: `changelog_v9.1_v10.md`. Achados da revisão: `revisao_v9.1.md`.
-
-**Doações — rascunho v10 incorporado (decisão do Alexandre: o rascunho `consulado-rascunho-v10-doacoes.md`, 25/09/2026 00:36, vale para doações):**
-
-| # | Decisão | O que ficou | UCs |
-| - | ------- | ----------- | --- |
-| D-24/09 (noite) | Doações múltiplas por tipo | Uma empreendedora pode ser donatária em qualquer programa de que participe e receber **N doações**. Três tipos: **dinheiro (capital semente)**, **insumo** e **equipamento**, cada doação com **N itens**. Sai a regra "1 doação por empreendimento". A **geladeira** vira **doação de equipamento** (revoga a decisão 4); a UC93 é absorvida; a UC94 passa a ser o aviso de **qualquer** doação aprovada | Conceitos, UC57, UC86, UC93, UC94, UC31, UC29, UC71, UC38, UC91, Matriz |
-| D-25/09 parte 1 | Valor por tipo | Valor informado pelo gestor: **real** no dinheiro; **estimado** em insumo e equipamento (rótulo "valor estimado") | UC57, UC86, UC94 |
-| D-25/09 parte 2 | Nota fiscal e recibo | **NF por item** (número, data, valor, anexo) cadastrada pelo **gestor** no App Gestor, tela Doação; ao cadastrar, o valor do item passa de estimado a **real** (o estimado original fica no histórico). A foto da NF pode vir da empreendedora (retoma a decisão 19 só para a foto; revê em parte a G1). **Recibo só com todos os valores reais.** Orçamento da unidade soma real + estimado. A empreendedora só vê o valor em dinheiro e, no recibo, o valor real. **BI** com totais aproximados (ex.: "≈ R$ 210 mi") | UC9, UC57, UC86, UC94, UC59, UC62, UC71 |
-| D-25/09 parte 3 | Carência | Dentro da edição, **N doações sem carência**. Entre edições, quem já foi contemplada continua elegível e aparece **em destaque** para a equipe ("Já contemplada na edição X", com histórico). Sai o bloqueio "3 anos → inelegível" | UC14, UC57, UC85, UC28, UC62, Conceitos |
-
-**Decisões de 25/09/2026 (Alexandre, 13:52):**
-
-| # | Tema | Decisão | UCs |
-| - | ---- | ------- | --- |
-| V10-1 | Doações | Incorporar o rascunho v10 inteiro nos UCs afetados; UC93 mantida com a marcação "absorvido" (sem renumerar) | ver tabela acima |
-| V10-2 | Duração da mentoria | **Fixa:** de 30 min a 2h por encontro, em passos de 30 min (30 min, 1h, 1h30, 2h), **sem configuração no CMS** por enquanto. Substitui os "parâmetros configuráveis no CMS (desejável)" da G3 | Cabeçalho (CMS), UC70, UC35, UC73 |
-| V10-3 | Canal da live e do workshop | Quem escolhe o canal — **Google Meet** (encontros pequenos) ou **YouTube + StreamYard** (lives grandes) — é o **Gestor de Unidade ou de Turma**, ao aplicar a atividade (UC34) e ao configurar o workshop de encerramento do online. A presença continua pela palavra-chave. Detalha a C6 | UC38, UC34, UC15, UC35, Atores externos, Conceitos |
-| V10-4 | Automação de cancelada (AC-30) | **Continua pendente:** se é configurável no CMS ou fixa no backend, e qual é o conteúdo (canais e cadência) | UC30, UC87, UC88, Pendências |
-
-**Correções da revisão da v9.1** (detalhe em `revisao_v9.1.md`): título da UC45 nos índices; linha "Aula" do catálogo da UC15 (rótulo e coluna quebrada); "faturamento" e "fluxo de caixa" como nome da atividade (UC44, UC31, UC34, Conceitos, UC58); separadores perdidos na UC88; espaços antes de dois-pontos; ponto faltando na UC78; "atividade extra só presencial" (Atores e índice da UC35); ordem UC57 → UC86 no pós-funil da UC38; pré-condição online da UC57 ("ou filtro auxiliar") alinhada ao funil.
-
-### Confirmações de 25/09/2026
-
-**Origem:** respostas do Alexandre, em 25/09/2026, às confirmações levantadas depois das decisões G1–G7 (itens [A CONFIRMAR] AC-27, AC-29 e AC-30, interpretações IV-1, IV-2 e IV-3 e pendência da ferramenta do workshop). Backup da v9 anterior: `build/v9_antes_conf_2509.md`.
-
-| # | Tema | Confirmação | UCs e seções alteradas |
-| - | ---- | ----------- | ---------------------- |
-| C1 | Anexo e dificuldade na Saúde Financeira | Continuam **obrigatórios**, como na v8 (confirmado) | UC45 |
-| C2 | Base dos alertas de 120% e −30% (AC-27) | Segue o **código do protótipo v5**: a base é a soma das **entradas** (faturamento + empréstimo + saldo do período anterior). **AC-27 fechado** | UC45, Pendências |
-| C3 | Troca de mentor (IV-1) | O gestor controla tudo, mas **trocar de mentor não é editar a equipe**. A equipe não muda dentro da mesma mentoria: o gestor **encerra** a mentoria mal-sucedida como **`cancelada`** ou **`encerrada_sem_resultado`** e **abre uma nova oportunidade já com o novo mentor**, tudo na auditoria. Os dois status foram acrescentados às listas de status (P/H e online). Revê a leitura anterior da G3 ("ajustar a equipe depois do match") | UC70 (regras G3, troca de mentor, status, match, ciclo de consultas, permissões, fluxo P/H), histórico (G3) |
-| C4 | Mensagem de grupo (IV-2) | Confirmado: o gestor altera só o que vai enviar; o template continua sendo alterado no CMS | UC50, UC88 |
-| C5 | Exceção do workshop (IV-3 e AC-29) | Quem libera é o **gestor**, **sem exigir motivo** (flexibilidade sem burocracia, porque às vezes é preciso gente para completar o programa). O sistema registra **quem liberou e quando** (auditoria). **AC-29 fechado** | UC38 (item 1, fluxos alternativos), Pendências |
-| C6 | Ferramenta do workshop e das lives (pendência G6) | **Usar as duas:** **Google Meet** para encontros pequenos, com perfil de reunião, e **YouTube + StreamYard** para lives maiores. A **edição ou a atividade** define a ferramenta *(v10: quem escolhe é o Gestor de Unidade ou de Turma, ao aplicar a atividade e no workshop de encerramento — decisão de 25/09/2026)*. A presença continua registrada pela **palavra-chave na plataforma**. Sai a marcação [DECISÃO PENDENTE] | UC38 (título, descrição, item 2, protótipo, atores, fluxo), índices (UC38), Conceitos (funil online), Atores — Sistemas Externos (Google Meet acrescentado), UC68 (calendário), Matriz (UC38), Pendências |
-| C7 | Cancelamento (parte do AC-30) | Quem cancela são os **gestores**, **no fim do programa**, quando a participante deixou muitas atividades sem realizar, não pode mais cumpri-las e não atingiu **nenhum** dos mínimos de certificação e beneficiamento. A automação não cancela: o sistema só mostra, como apoio, o cálculo dos mínimos que já existe (UC55). O gestor também registra o cancelamento ao processar um pedido de desligamento (UC79). A **desistência** continua sendo uma classificação do término. O AC-30 fica aberto só quanto ao conteúdo e aos canais da automação de cancelada | UC30, UC79, UC29, UC87, UC88, UC53 (fluxo alternativo de risco), Pendências |
-
-**Pendências depois das confirmações:** continuam abertas a **decisão 11** (rótulos da dificuldade), a **decisão 18** (quem recebe em empreendimento de duas pessoas, reunião com a Daniele), o **AC-28** (match automático pelo Aplicativo Cliente), o **AC-30** (só conteúdo, canais e cadência da automação de cancelada), a **UC77** (observações de acompanhamento) e as dúvidas do **Bloco B** (funcionalidades do app gestor que não estão na v9). Resolvidos: pendência da ferramenta do workshop (G6), AC-27, AC-29, IV-1, IV-2 e IV-3.
-
-### Decisões de 24/09/2026 sobre o app gestor
-
-**Origem:** relatório `gap_app_gestor_lovable_vs_v9.md` (app gestor no Lovable × v9) e decisões do Alexandre de 24/09/2026, numeradas aqui **G1–G7** para não confundir com as 19 decisões da incorporação do protótipo cliente. O protótipo cliente v5 é a referência final (telas de demonstração e dados simulados não viram requisito). Nada foi alterado no Lovable nem no Drive; a v9 anterior a estas decisões está em `build/v9_antes_dec_gestor.md`.
-
-| # | Tema | O que mudou | UCs e seções alteradas |
-| - | ---- | ----------- | ---------------------- |
-| G1 | Doação depois da aprovação | Em **presencial e híbrido** valem os **mesmos passos do online**: a empreendedora informa os dados de conta, o PIX vai para o **CPF da beneficiária** e ela assina o recibo. Na doação de **material**, o **gestor sobe a NF** e a empreendedora assina o recibo **depois de receber** o produto *(v10: o gestor cadastra a NF de cada item, e a foto da nota pode vir da empreendedora — decisão de 25/09/2026, parte 2)*. Revê a decisão 19 (NF pela empreendedora ou pelo gestor). Quem recebe em empreendimento de duas pessoas continua pendente (decisão 18, reunião com a Daniele) | UC86 (descrição, estados da faixa, atores, fluxo), UC57 (gatilhos e encaminhamento à UC86), Atores (regra geral), Matriz (UC86), tabela de decisões (dec. 19) |
-| G2 | Grupo de WhatsApp e mensagem da turma | O link do grupo e os demais dados vêm **dinamicamente** dos cadastros de **edição, unidade e turma**, quando necessário. A mensagem padrão vem do template (UC88) e pode ser **alterada pelo Gestor de Unidade e pelo Gestor de Turma** na prévia; a alteração vale para o envio e fica no log. Revoga a restrição que reservava a edição à Unidade | UC16, UC50, UC34, UC88, UC66 (links dos grupos da unidade), Atores (Gestor de Unidade e Gestor de Turma) |
-| G3 | Mentorias | Em P/H o gestor (Unidade ou Turma) também **agenda** e faz o **match**; no online também vincula e agenda a qualquer momento. O match também acontece **automaticamente** pelo Aplicativo Cliente e pelo portal do voluntariado. O gestor tem **controle completo** do caso (~~inclusive ajustar a equipe depois do match~~ — revisto na C3 de 25/09/2026: a equipe não muda dentro da mentoria; a troca de mentor é feita encerrando a mentoria e abrindo nova oportunidade), com **auditoria** de quem fez cada atividade. O mentor registra cada sessão com **mínimo de 30 min, em intervalos de 30 min, até 2h por encontro**; ~~parâmetros configuráveis no CMS (desejável)~~ *(v10: duração fixa, sem configuração no CMS por enquanto — decisão de 25/09/2026)*. Substitui a mentoria online com 2h fixas e revê a decisão 17 | UC70 (descrição, regras, online, P/H, papéis, ciclo, permissões, pedido, fluxos, pós-condições), UC35, UC73, UC78, cabeçalho (CMS e Aplicativo Gestor), Atores (Unidade, Turma, Voluntário), Matriz (UC70), tabela de decisões (dec. 17) |
-| G4 | Acesso do gestor à conta da empreendedora | O antigo "acesso mocado" passa a ser **acesso de gestor**: o gestor acessa a conta da empreendedora com acesso de gestor e **todas as alterações** ficam registradas para auditoria (**quem, quando, o quê**, com valor anterior e novo) | UC69, UC27, UC45 (atores e dificuldade), Atores (regra geral, Unidade, Turma), Matriz (UC69) |
-| G5 | Saúde Financeira | Segue o **protótipo v5**: layout em **três colunas** (Entradas · Saídas · Retirada) mais o bloco Resultado; campos do v5 (saldo do período anterior sugerido pelo saldo do mês anterior, faturamento, empréstimo, nº de clientes, nº de produtos; **Despesas / Capital de giro informada**, investimento, poupança, dívidas, total de saídas; renda/retirada; **Saldo do período** calculado); referência do mês anterior sob cada campo; gráfico; upload; observações; dificuldade. Alertas do v5: 120% / −30% / 2× / 0,4×, âmbar/azul, só o mês vigente, sem bloquear. Justificativa de zero, por enquanto, só para faturamento e renda/retirada. Revê a decisão 8, resolve o AC-16 (layout) e a pendência de nomenclatura capital de giro × saldo do período; abriu o AC-27 (base da margem — fechado na C2 de 25/09/2026: base = entradas) | UC45, UC46, UC34 (tabela de tipos na liberação), UC15 (tabela de tipos), UC44 (termo "registro de saúde financeira"), Pendências, tabela de decisões (dec. 8) |
-| G6 | Workshop / live de encerramento | O requisito continua sendo **100% das atividades**, mas quem não cumpre **também pode seguir no funil** por **exceção permitida e registrada** (quem liberou, quando e para quem — sem exigir motivo, conforme a C5 de 25/09/2026); KW e questionário 100% certo continuam obrigatórios. A escolha da ferramenta ficou pendente em 24/09 e foi **resolvida na C6 de 25/09/2026**: Google Meet para encontros pequenos e YouTube + StreamYard para lives maiores, conforme a edição ou a atividade. Abriu o AC-29 (quem autoriza a exceção — fechado na C5: o gestor, sem motivo) | UC38 (descrição, itens 1–3, protótipo, atores, pré-condições, fluxos alternativos), Conceitos (funil online e gatilho de doação), UC57, UC85, UC88 (`live_convite`), Pendências |
-| G7 | Cancelamento / desistência | O cancelamento tem motivo e **pode ter a desistência como motivo**. **Desistência** é uma **classificação**, dada pelo gestor ou pela automação, do término de uma inscrição **aceita na edição**, para registro do resultado final. Assim que a inscrição é cancelada, a pessoa **entra na automação de cancelada** e **sai das automações do programa**. Abriu o AC-30 (conteúdo da automação de cancelada e regras automáticas de desistência — na C7 de 25/09/2026 ficou definido que quem cancela é o gestor, no fim do programa; segue aberto só o conteúdo da automação) | UC30, UC79, UC29, UC87, UC88, Atores (Gestor de Turma) |
-
-**As três escolhas que aguardavam ok (revistas com o v5 e as decisões G3 e G5):**
-
-1. **Retirar o alerta "renda maior que faturamento"** — **fica a retirada.** A tela de Saúde Financeira do v5 não tem esse alerta; a renda/retirada é monitorada pela comparação com a média (2× / 0,4×). O script do v5 tem um aviso "retirada acima do resultado", mas só numa variante com IA que não é a tela adotada.
-2. **Média dos alertas só com os meses aprovados** — **muda para o v5:** a média usa **todos os meses anteriores** da edição com registro, sem filtrar por aprovação. A aprovação continua valendo para o progresso e o beneficiamento. Pelo mesmo motivo, o saldo do período anterior passa a vir do saldo do mês anterior (antes: "resultado aprovado do mês anterior").
-3. **Mentoria online com 2h fixas** — **substituída pela G3:** cada sessão é registrada de 30 min a 2h por encontro, em intervalos de 30 min, no online e no P/H, com parâmetros configuráveis no CMS (desejável) *(v10: fixo, sem CMS — decisão de 25/09/2026)*.
-
-**Pendências depois destas decisões (situação em 24/09; ver as Confirmações de 25/09/2026):** abriu-se a pendência da ferramenta de transmissão do workshop (G6 — resolvida na C6); continuam abertas a **decisão 11** (rótulos da dificuldade) e a **decisão 18** (quem recebe em empreendimento de duas pessoas, reunião com a Daniele). Novos [A CONFIRMAR]: **AC-27** (UC45, base da margem), **AC-28** (UC70, match automático pelo Cliente), **AC-29** (UC38, quem autoriza a exceção), **AC-30** (UC30/UC87/UC88, automação de cancelada e regras automáticas de desistência). Resolvido: **AC-16** (layout da Saúde Financeira).
-
-### v8 → v9 (24/set/2026)
-
-**Origem:** relatório `gap_prototipo_cliente_vs_v8.md` (protótipo cliente **v5**: 31 telas HTML + JS de `prototipo/prototipo_cliente/v5`), com releitura das telas e scripts, e **decisões do Alexandre de 24/09/2026** sobre os 19 conflitos levantados no rascunho 1 da v9. A v8 foi preservada (nenhum UC removido ou renumerado); regras da v8 só foram reescritas onde a decisão adotou o comportamento do protótipo ou combinou os dois. Trechos acrescentados vêm identificados com "(protótipo v5 — v9)", "(v9)" ou "(decisão 24/09/2026)".
-
-**Critério de demonstração (orientação do Alexandre, 24/09/2026):** o protótipo cliente tem telas com dados simulados e botões que existem só para avançar a sequência da apresentação. Botões de avanço manual, contadores e valores fixos de demonstração **não são requisito**, salvo decisão explícita; quando citados, aparecem como "dado/artefato de demonstração".
-
-**UCs novos (Aplicativo Cliente — Empreendedora)**
-
-| UC | Nome | Origem no protótipo v5 | Itens do gap |
-| -- | ---- | ---------------------- | ------------ |
-| UC91 | Visualizar Home de Programas (Aplicativo Cliente) | `index.html` | (a)2, (a)3, (b)1, (b)2 |
-| UC92 | Navegar pelo Menu Global e Perfil (Aplicativo Cliente) | `perfil.html`; `footer-nav` de todas as telas | (a)4, (a)7, (a)8 |
-| UC93 | Premiação geladeira *(origem do protótipo; absorvido — a empreendedora **não** solicita doação)* | `empreende-mulher-premio.html`, `atividades/premio-geladeira.html`, `js/premio-geladeira.js` | (a)1 |
-| UC94 | Aviso de benefício na home *(origem do protótipo: banner de capital semente; só após aprovação — ela **não** solicita)* | `js/zap-funnel.js`, `empreende-no-zap-capital.html`, `atividades/capital-semente.html`, `js/capital-semente.js` | (a)10 |
-| UC95 | Falar com a Mentora via WhatsApp a partir da Atividade | card "Dúvidas? / Iniciar WhatsApp" em `atividades/*.html` | (a)5 |
-
-**Itens não cobertos encaixados em UC existente (sem UC novo) — justificativa**
-
-- **(a)6 "Abrir no Maps" / mapa** → **UC36** (aula presencial) e **UC78** (visita técnica): é detalhe de como o local de uma atividade já especificada é exibido; não é objetivo próprio da usuária.
-- **(a)9 chips, imagem e voz no chat** → **UC64**: mesmo objetivo (tirar dúvida com o Agente de IA); só amplia a entrada do chat.
-- **(a)11 copy "elegível ≠ ganhou"** → **UC38**: é a mensagem de resultado do questionário final do funil, passo que já está na UC38 (e confirma a regra v8 "liberada ≠ concedida").
-- **(a)12 visita técnica no Cliente (Agendado/Realizada, impressão da mentora)** → **UC78**: mesma entidade (visita agendada e marcada como realizada pelo gestor); acrescentada a "visão no Aplicativo Cliente".
-- **(a)13 "Requer ajustes" / reenvio** → **UC45** (fluxo alternativo) e **UC46** (efeito no Cliente): a UC45 já previa "revisão pelo gestor → reenvia"; faltava só a tela.
-- **(a)14 `js/mentoria.js` órfão** → **sem UC** (não é funcionalidade entregue na v5). Observação sobre o protótipo: o hub existe só em código e aponta para `mentorias.html` / `calendario.html`, inexistentes; pela decisão 2/15 o hub Mentoria é requisito (UC70/UC92), então o protótipo precisa dessas telas.
-
-**Decisões de 24/09/2026 (Alexandre) aplicadas**
-
-| # | Tema | Decisão | Onde |
-| - | ---- | ------- | ---- |
-| 1 | Selo "Matriculada" | **v8** — selo sai; rótulos humanizados da v8 ("aguardando seleção" etc.) | UC91, UC29 |
-| 2 | Menu global | **Combinação** — Programas · Mentoria · Certificados · Ajuda IA | UC92, Atores, UC70 |
-| 3 | Calendário | **v8** — UC68 mantida (sem item no menu global) | UC68, UC92 |
-| 4 | Geladeira | ~~**v5** — premiação própria com o formulário do protótipo, fora da doação~~ → **substituída pela decisão de doações de 24/09/2026 (noite), incorporada na v10:** a geladeira é uma **doação do tipo equipamento** (UC57/UC86/UC94); a UC93 foi absorvida | UC93, UC57, UC94 |
-| 5 | Capital semente R$ 1.000 | Banner/formulário só aparece após aprovação/liberação no Gestor (UC57); dados conforme UC86 | UC94, UC57, UC38 |
-| 6 | "Já terminei o workshop" | **v8** — sem botão; o sistema libera a presença após a live | UC38 |
-| 7 | Prazo da palavra-chave | **v8** — configurável na edição | UC38 |
-| 8 | Despesas / capital de giro | ~~**v8** — despesas informada; capital de giro calculado~~ → **revista pela decisão G5 (app gestor):** vale o v5 — Despesas / Capital de giro **informada** (saída) e resultado **Saldo do período** calculado | UC45 |
-| 9 | Alertas da Saúde Financeira | **v5** — 120%, −30%, 2×, 0,4×, âmbar/azul e pontos de calibragem do protótipo | UC45 (regra v8 dos 30% substituída) |
-| 10 | Justificativa de zero | **v8** — só faturamento e renda/retirada | UC45 |
-| 11 | Rótulos da dificuldade | **Sem decisão** — v8 mantida, segue [DECISÃO PENDENTE] | UC45 |
-| 12 | Fluxo de Caixa / Fechamento Financeiro | Deixam de existir separadas; viram a Saúde Financeira do protótipo v5 | UC45, UC15 |
-| 13 | Reprovação × revisão | Usar **revisão** | UC45, UC46 |
-| 14 | Excluir meta | Exclusão **lógica**: oculta para a empreendedora, permanece no sistema, visível à gestora | UC31 (regra v8 reescrita) |
-| 15 | Entrada do pedido de mentoria | **Combinação** — home do programa (modal) **e** hub `/app/mentorias` | UC70, Atores, índice |
-| 16 | Áreas de mentoria | **v8** — catálogo do CMS | UC70 |
-| 17 | Duração da sessão P/H | ~~Não fixa em 2h; cadastrada no CMS de Administração~~ → **revista pela decisão G3 (app gestor):** sessão registrada de 30 min a 2h por encontro, em intervalos de 30 min, P/H e online; parâmetros configuráveis no CMS (desejável) → **v10 (25/09/2026):** duração fixa, sem configuração no CMS por enquanto | UC70, UC35, UC73, UC78, cabeçalho (CMS) |
-| 18 | PIX | Chave = **CPF da participante**; aberta para reunião com a Daniele a questão do empreendimento com duas pessoas | UC86, UC94 |
-| 19 | NF no material | ~~Empreendedora **ou** gestor enviam foto/anexo da NF~~ → **revista pela decisão G1 (app gestor):** o **gestor sobe a NF** e a empreendedora assina o recibo depois de receber o produto; segue a regra geral: o gestor pode realizar tudo que a empreendedora realiza → **v10 (25/09/2026, parte 2):** a **foto** da NF pode vir da empreendedora ou do gestor; quem **cadastra** a nota de cada item (número, data, valor) é o gestor, e é isso que torna o valor real | UC86, UC57, UC94, Atores |
-
-**UCs alterados**
-
-| UC | Resumo da mudança | Origem no protótipo v5 | Itens do gap |
-| -- | ----------------- | ---------------------- | ------------ |
-| UC15 | Rótulos de tipo exibidos no Cliente; Fluxo de Caixa unificado na Saúde financeira (dec. 12); "Teste de Conhecimento" [A CONFIRMAR] | `empreende-mulher.html` | (b)19, (b)20 |
-| UC27 | Campos da tela "Meus dados" (identificação + endereço), regra do nome social, CPF fora da tela; verificação de telefone/e-mail e CEP [A CONFIRMAR] | `meus-dados.html`, `js/meus-dados.js` | (b)3 |
-| UC29 | Rótulos da v8 no Cliente, sem "Matriculada" (dec. 1) | `index.html` | (b)1 |
-| UC31 | Plano de Ação no Cliente (5W2H, Pendente → Concluída); Excluir meta = exclusão lógica (dec. 14; regra v8 reescrita); Revisar/histórico [A CONFIRMAR] | `atividades/definicao-metas.html`, `js/action-plan.js` | (b)20 |
-| UC35 | Referência à duração da mentoria (dec. 17) *(revisto em 24/09 pelas decisões do app gestor — G3)* | — | — |
-| UC36 | Home do programa e detalhe da aula presencial (local + Abrir no Maps, observações) | `empreende-mulher.html`, `atividades/encontro.html` | (b)22, (a)6 |
-| UC38 | Funil em ordem; live bloqueada sem 100%; prazo configurável e liberação pelo sistema (dec. 6 e 7); retentativa da KW; copy elegível ≠ ganhou; capital semente só após aprovação (dec. 5); fluxos alternativos *(revisto em 24/09 pelas decisões do app gestor — G6)* | `zap-funnel.js`, `workshop-encerramento*.html/js`, `presenca-palavra-chave.*`, `questionario-final.*` | (b)13, (b)14, (b)15, (a)11 |
-| UC39 | Teste de Conhecimento (70% / 15 min = demonstração) e tela NPS 0–10 | `atividades/quiz.html`, `js/quiz.js`, `atividades/nps.html` | (b)15 |
-| UC45 | Saúde financeira única (dec. 12); campos com nomenclatura v8 (dec. 8); justificativa de zero v8 (dec. 10); **critérios de alerta do protótipo** (dec. 9; regra v8 reescrita); dificuldade [DECISÃO PENDENTE]; fluxo "Requer ajustes" com revisão (dec. 13); layout [A CONFIRMAR] *(revisto em 24/09 pelas decisões do app gestor — G5)* | `atividades/saude-financeira.html`, `js/saude-financeira.js`, `atividades/fluxo-caixa*.html` | (b)16–(b)19, (a)13 |
-| UC46 | Efeito da revisão no Cliente; termo "revisão" (dec. 13) | `atividades/fluxo-caixa2.html` | (a)13 |
-| UC55 | Banner "Certificado liberado", download no app, "não há evento de entrega"; percentual da edição | `empreende-mulher.html`, `js/cert-progress.js` | (b)4 |
-| UC57 | O que a empreendedora vê antes/depois da aprovação; capital semente (UC94) só após aprovação; geladeira fora do fluxo | `js/doacao.js` | (b)12 |
-| UC63 | Tela Certificados (lista, estados, Baixar); filtro Programa/Mentoria [A CONFIRMAR] | `certificados.html`, `js/certificado.js` | (b)4 |
-| UC64 | Chat "Suporte online" (mensagem inicial, chips, imagem/voz [A CONFIRMAR]) | `js/chat-modal.js` | (a)9 |
-| UC68 | Mantida a v8; sem item no menu global (dec. 3) | `footer-nav` | (a)4 |
-| UC70 | Pedido pela home **e** pelo hub (dec. 15; regra v8 reescrita); áreas do CMS (dec. 16); duração P/H cadastrada no CMS (dec. 17; regra v8 reescrita); períodos múltiplos e confirmação; bloqueio por módulo na home e ordem das perguntas [A CONFIRMAR] *(revisto em 24/09 pelas decisões do app gestor — G3)* | `empreende-mulher.html`, `js/mentoria-modal.js` | (b)6, (b)7, (b)8 |
-| UC73 | Referência à duração da mentoria individual (dec. 17) *(revisto em 24/09 pelas decisões do app gestor — G3)* | — | — |
-| UC78 | Visão no Cliente (modalidade, mapa/link, instruções, registro, impressão da mentora [A CONFIRMAR]); referência à duração da mentoria (dec. 17) *(revisto em 24/09 pelas decisões do app gestor — G3)* | `atividades/visita-tecnica.html`, `js/visita-tecnica-*.js` | (b)21, (a)12, (a)6 |
-| UC79 | Modal com 7 motivos + detalhe obrigatórios; aviso de irreversibilidade | `js/withdraw-modal.js` | (b)5 |
-| UC86 | Estados da faixa de doação; PIX = CPF da participante (dec. 18; regra v8 reescrita) + [DECISÃO PENDENTE – reunião com Daniele]; NF pela empreendedora ou pelo gestor (dec. 19; regra v8 reescrita); valor/prazo do recibo = demonstração *(revisto em 24/09 pelas decisões do app gestor — G1)* | `doacao.html`, `js/doacao.js`, `js/bancos-bacen.js` | (b)9–(b)12 |
-
-**Outras seções atualizadas:** cabeçalho (v9, 24/set/2026; CMS com duração da sessão de mentoria) e parágrafo de versionamento; *Atores* (menu global na linha da Empreendedora + **regra geral: o gestor pode realizar tudo que a empreendedora realiza**); *Índice numérico* e índice *Aplicativo Cliente — Empreendedora* (UC91–UC95; UC70 com os dois pontos de entrada); *Matriz Resumo* (4 linhas novas); *Pendências de especificação* (somente o que continua aberto da incorporação: decisão 11, decisão 18 e os [A CONFIRMAR]); rodapé (92 UCs ativos).
-
----
-
 
 
 
@@ -207,17 +27,17 @@ Atores são apenas quem **interage** com o sistema. Cadastros gerenciados pelo s
 | Ator                                                 | Descrição                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Pré-inscrita (Lead)**                              | Pessoa que iniciou o processo de inscrição mas **ainda não concluiu** a inscrição completa (UC19/UC20/UC21). Objeto do mini CRM (UC26) e dos lembretes de inscrição incompleta (alerta automático UC87 + disparo manual). Torna-se **Empreendedora** ao concluir a inscrição completa (UC21).                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| **Empreendedora**                                    | Mulher empreendedora em situação de vulnerabilidade social, com **inscrição completa** registrada. Acessa o **Aplicativo Cliente** exclusivamente por **link mágico** (WhatsApp ou e-mail) — **não há senha** de autenticação. **Não solicita doação** no Aplicativo Cliente (sem botão, banner ou formulário de pedido — UC38/UC57). Realiza atualização cadastral, módulos, conteúdos, questionários, uploads, **saúde financeira** mensal (UC45), solicitação de desligamento (UC79) e **mentoria (UC70)** na área **Mentoria** do menu global (Programas · Mentoria · Certificados · Ajuda IA — UC92; `/app/mentorias`: Início = módulo CMS; abas **Em aberto · Minhas · Encerradas**). **Solicitar** bloqueado até concluir o módulo. O pedido também pode ser feito pelo botão **Solicitar mentoria** na home do programa (UC70 — decisão 24/09/2026). Inclusão pelo Gestor **não** exige treino. No **P/H**, o pedido vai a **Em aberto** do portal do voluntariado; Unidade/Turma aloca lote **ou** um voluntário pega; ou **Atendido pelo gestor** sem BI. No **online**, diagnóstico só após entrar no lote de encerramento. Encerramento: texto + NPS da plataforma + NPS do mentor (`atendida_gestor`: sem NPS de mentor, sem certificado). Certificados: filtro **Programa \| Mentoria**. Todo registro operacional vincula-se a **programa**, **edição**, **unidade** e **turma**. A **qualificação** na seleção (UC24) classifica o perfil; a **Comunicar aprovação** (UC25) é o que **inicia a jornada educacional** (online → UC33; P/H → convite ao grupo). Unidade/turma podem vir da inscrição (automático se únicas) ou da distribuição na tela de seleção. |
+| **Empreendedora**                                    | Mulher empreendedora em situação de vulnerabilidade social, com **inscrição completa** registrada. Acessa o **Aplicativo Cliente** exclusivamente por **link mágico** (WhatsApp ou e-mail) — **não há senha** de autenticação. **Não solicita doação** no Aplicativo Cliente (sem botão, banner ou formulário de pedido — UC38/UC57). Realiza atualização cadastral, módulos, conteúdos, questionários, uploads, **saúde financeira** mensal (UC45), solicitação de desligamento (UC79) e **mentoria (UC70)** na área **Mentoria** do menu global (Programas · Mentoria · Certificados · Ajuda IA — UC92; `/app/mentorias`: Início = módulo CMS; abas **Em aberto · Minhas · Encerradas**). **Solicitar** bloqueado até concluir o módulo. O pedido também pode ser feito pelo botão **Solicitar mentoria** na home do programa (UC70). Inclusão pelo Gestor **não** exige treino. No **P/H**, o pedido vai a **Em aberto** do portal do voluntariado; Unidade/Turma aloca lote **ou** um voluntário pega; ou **Atendido pelo gestor** sem BI. No **online**, diagnóstico só após entrar no lote de encerramento. Encerramento: texto + NPS da plataforma + NPS do mentor (`atendida_gestor`: sem NPS de mentor, sem certificado). Certificados: filtro **Programa \| Mentoria**. Todo registro operacional vincula-se a **programa**, **edição**, **unidade** e **turma**. A **qualificação** na seleção (UC24) classifica o perfil; a **Comunicar aprovação** (UC25) é o que **inicia a jornada educacional** (online → UC33; P/H → convite ao grupo). Unidade/turma podem vir da inscrição (automático se únicas) ou da distribuição na tela de seleção. |
 | **Administrador do Sistema (CMS de Administração)**  | Perfil **master** com controle total: usuários, programas, unidades, associação de gestores e configuração global.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | **Administrador de Programa (CMS de Administração)** | Usuário do CMS com escopo restrito a programas/edições. Gerencia conteúdos, programas, edições (incluindo módulos associados), organizações, colaboradores e unidades do seu escopo.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| **Gestor de Unidade (Aplicativo Gestor)**            | Usa o **mesmo Aplicativo Gestor**, autenticado por **link mágico**. Visão sobre **todas as turmas da unidade** na edição. **Inclui funções do Gestor de Turma** mais: **seleção em etapas** — classificar (UC24), **entrevista de seleção** P/H (UC84), alocar turma (UC17), **comunicar** (UC25); remanejar (UC18); doação sugerir/aprovar (UC57); inscrever (UC21/UC69); **gerenciar** os empreendimentos cadastrados pelas empreendedoras — agrupar (UC31) e mover (UC32) —, **sem cadastrar empreendimento** (decisão de 25/09/2026); **ativar/ajustar alertas automáticos** da edição (UC87); **mentorias (UC70)** — faz o **match** (aloca mentores; 1º = líder; cadastro UC73), **agenda** e registra sessões, com **controle completo** do caso e **auditoria** de quem fez cada atividade, ou **Atendido pelo gestor** (sem BI); recorte de voluntários da edição só para **escolher mentor**; **não** opera ações (UC90). Pode **alterar a mensagem padrão** do grupo WhatsApp (UC50). **Acesso de gestor** à conta da empreendedora, com auditoria (UC69). |
-| **Gestor de Turma (Aplicativo Gestor)**              | Usa o **mesmo Aplicativo Gestor**, autenticado por **link mágico**. **Age apenas sobre a própria turma** na edição selecionada. Responsabilidades: **visão por módulo** e **liberação de atividades** escolhidas pelo gestor (UC34), data/local de presenciais, **aprova saúde financeira e entregas** (UC44), analisa questionários, cria conteúdo extra **só em edições presenciais/híbridas** (UC35), relato de oficina (UC80), uploads, cancelamento/desistência (UC30) e **sugere doação** (aprovação Unidade — UC57). Comunicação de grupo WhatsApp manual (UC50), podendo **alterar a mensagem padrão** do template (decisão G2); edita e-mail/telefone. **Não** move entre turmas/unidades e **não altera** temporizadores online (UC33). Pode inserir dados em nome da empreendedora ou **acessar a conta dela com acesso de gestor** (UC69), com auditoria de quem, quando e o quê. Em **mentorias (UC70)** faz o **match** (aloca mentores; cadastro UC73; 1º = líder), **agenda** e registra sessões com controle completo e auditoria, comunica via `wa.me`, **Atendido pelo gestor** (sem BI) ou recusa. Consulta voluntários da edição para alocar. **Não** opera ações (UC90). Parceiro **Multiplica por Elas** usa as **mesmas telas de Turma**. Horas de educador interno **não** entram na métrica de voluntários. |
+| **Gestor de Unidade (Aplicativo Gestor)**            | Usa o **mesmo Aplicativo Gestor**, autenticado por **link mágico**. Visão sobre **todas as turmas da unidade** na edição. **Inclui funções do Gestor de Turma** mais: **seleção em etapas** — classificar (UC24), **entrevista de seleção** P/H (UC84), alocar turma (UC17), **comunicar** (UC25); remanejar (UC18); doação sugerir/aprovar (UC57); inscrever (UC21/UC69); **gerenciar** os empreendimentos cadastrados pelas empreendedoras — agrupar (UC31) e mover (UC32) —, **sem cadastrar empreendimento**; **dispara** WhatsApp e/ou e-mail do Ranking e Engajamento (UC56) e pode cadastrar **Download extra** no módulo online (UC35); **mentorias (UC70)** — faz o **match** (aloca mentores; 1º = líder; cadastro UC73), **agenda** e registra sessões, com **controle completo** do caso e **auditoria** de quem fez cada atividade, ou **Atendido pelo gestor** (sem BI); recorte de voluntários da edição só para **escolher mentor**; **não** opera ações (UC90). Pode **alterar a mensagem padrão** do grupo WhatsApp (UC50). **Acesso de gestor** à conta da empreendedora, com auditoria (UC69). |
+| **Gestor de Turma (Aplicativo Gestor)**              | Usa o **mesmo Aplicativo Gestor**, autenticado por **link mágico**. **Age apenas sobre a própria turma** na edição selecionada. Responsabilidades: **visão por módulo** e **liberação de atividades** escolhidas pelo gestor (UC34), data/local de presenciais, **aprova saúde financeira e entregas** (UC44), analisa questionários, cria conteúdo extra **só em edições presenciais/híbridas** (UC35), consulta o Ranking e Engajamento **sem disparar** (UC56), relato de oficina (UC80), uploads, cancelamento/desistência (UC30) e **sugere doação** (aprovação Unidade — UC57). Comunicação de grupo WhatsApp manual (UC50), podendo **alterar a mensagem padrão** do template; edita e-mail/telefone. **Não** move entre turmas/unidades e **não altera** temporizadores online (UC33). Pode inserir dados em nome da empreendedora ou **acessar a conta dela com acesso de gestor** (UC69), com auditoria de quem, quando e o quê. Em **mentorias (UC70)** faz o **match** (aloca mentores; cadastro UC73; 1º = líder), **agenda** e registra sessões com controle completo e auditoria, comunica via `wa.me`, **Atendido pelo gestor** (sem BI) ou recusa. Consulta voluntários da edição para alocar. **Não** opera ações (UC90). Parceiro **Multiplica por Elas** usa as **mesmas telas de Turma**. Horas de educador interno **não** entram na métrica de voluntários. |
 | **Gestor de Voluntariado (Aplicativo Gestor)**       | Perfil **CMS** (UC1/UC5) no **mesmo Aplicativo Gestor** (link mágico). **Não tem** Dashboard de edições: o login abre **direto** `/gestor/voluntariado` com o **menu contextual** (Home, Gestão de ações, Gestão de voluntários, Gestão de mentorias). Opera ações (criar, ativas, convites, inscrições, resultados — UC90) em **todas as edições** (ação pode existir sem edição). Aprova cadastros da rede (UC73). Consulta mentorias (abertas / em andamento / finalizadas e as abertas há muito tempo); **não** aloca lote (isso fica na Unidade/Turma). Pode acumular papéis com Unidade/Turma (cada perfil tem o próprio shell). |
 | **Voluntário / Mentor (portal do voluntariado)**     | Pessoa da **rede de voluntariado** (cerne; mentoria é uma ação). Cadastro **único** e **individual** mesmo em grupo (UC73): modalidades **individual**, **coletiva** e/ou **Ações**; áreas de interesse e expertise; dados sensíveis no padrão das empreendedoras. Auth **link mágico no e-mail** (UC89). **P/H:** abas **Em aberto · Minhas · Encerradas**; pega demanda (vira líder — match automático pelo portal) ou entra em lote alocado; entre os voluntários, só o líder agenda/registra/encerra (o gestor também pode — UC70); registra cada sessão de 30 min a 2h, em intervalos de 30 min; todos preenchem texto+NPS; horas e certificado herdados. Treino = **módulo CMS** (bloqueia Pegar). **Online:** pool com `vagas` N e diário por pessoa. Inscreve-se em **ações** (UC90; confirmação do Gestor de Voluntariado). “Em atividade numa edição” é derivado. |
 
-> **Regra geral (decisões de 24/09/2026):** em regra, o **gestor** pode realizar, no Aplicativo Gestor, **tudo o que a empreendedora realiza** no Aplicativo Cliente (em nome dela — ver UC69), inclusive **acessando a conta dela com acesso de gestor** (decisão G4). **Todas as alterações** feitas pelo gestor ficam registradas para **auditoria** (quem, quando, o quê). **Exceção (decisão de 25/09/2026):** o gestor **não cria empreendimento** — quem cadastra é a empreendedora, no cadastro inicial (UC21) ou na área dela no Aplicativo Cliente (UC31); o gestor só gerencia e corrige dados, com auditoria. Se o gestor pode cadastrar o empreendimento em nome dela pela UC69: **[A CONFIRMAR] (vii)** (padrão até decisão: não). Na doação de insumo ou equipamento, quem **cadastra a NF de cada item** é o gestor; a foto da nota pode vir da empreendedora (UC57/UC86 — decisão G1, revista em parte em 25/09/2026).
+> **Regra geral:** em regra, o **gestor** pode realizar, no Aplicativo Gestor, **tudo o que a empreendedora realiza** no Aplicativo Cliente (em nome dela — ver UC69), inclusive **acessando a conta dela com acesso de gestor**. **Todas as alterações** feitas pelo gestor ficam registradas para **auditoria** (quem, quando, o quê). **Exceção:** o gestor **não cria empreendimento** — quem cadastra é a empreendedora, no cadastro inicial (UC21) ou na área dela no Aplicativo Cliente (UC31); o gestor só gerencia e corrige dados, com auditoria. Se o gestor pode cadastrar o empreendimento em nome dela pela UC69: **[A CONFIRMAR] (vii)** (padrão até decisão: não). Na doação de insumo ou equipamento, quem **cadastra a NF de cada item** é o gestor; a foto da nota pode vir da empreendedora (UC57/UC86).
 
-> **Menu global da empreendedora (decisão 24/09/2026):** **Programas · Mentoria · Certificados · Ajuda IA** (UC92). O calendário (UC68) permanece sem item próprio no menu; o pedido de mentoria pode ser feito pelo hub Mentoria ou pela home do programa (UC70).
+> **Menu global da empreendedora:** **Programas · Mentoria · Certificados · Ajuda IA** (UC92). O calendário (UC68) permanece sem item próprio no menu; o pedido de mentoria pode ser feito pelo hub Mentoria ou pela home do programa (UC70).
 
 
 
@@ -230,7 +50,7 @@ Atores são apenas quem **interage** com o sistema. Cadastros gerenciados pelo s
 | **Gupshup (WhatsApp Business API)** | Provedor de envio de mensagens WhatsApp: texto, links com login mágico, solicitações e envio de videoaulas. Acionado **somente pelo Backend**.                                                           |
 | **SendGrid (E-mail)**               | Provedor de envio de e-mails transacionais: links mágicos da **empreendedora** (UC4/UC54), do **gestor** (UC3) e do **voluntário** (UC89), lembretes/alertas (UC26/UC87) e comunicações gerais. Acionado **somente pelo Backend**. |
 | **YouTube**                         | Ator secundário para videoaulas gravadas e transmissões ao vivo (lives maiores com **StreamYard** — UC38).                                                                                               |
-| **Google Meet**                     | Ator secundário para encontros ao vivo **pequenos**, com perfil de reunião (aula ao vivo e workshop/live de encerramento, quando o **Gestor de Unidade ou de Turma** escolhe esse canal ao aplicar a atividade ou configurar o workshop — UC34/UC38, decisão de 25/09/2026). Fora da plataforma; no workshop, a presença é registrada pela palavra-chave. |
+| **Google Meet**                     | Ator secundário para encontros ao vivo **pequenos**, com perfil de reunião (aula ao vivo e workshop/live de encerramento, quando o **Gestor de Unidade ou de Turma** escolhe esse canal ao aplicar a atividade ou configurar o workshop — UC34/UC38). Fora da plataforma; no workshop, a presença é registrada pela palavra-chave. |
 
 
 
@@ -250,8 +70,8 @@ Cadastros **gerenciados pelo sistema**, sem interação própria (sem login/inte
 
 O sistema é organizado em **seis grupos** (plataformas/camadas):
 
-1. **CMS de Administração** — modelagem de programas, edições, módulos, unidades, organizações e colaboradores (implementado com Strapi); **cria/configura** pesquisa pós-programa (UC82), **pacotes de comunicação** (UC88) e **alertas automáticos** (UC87 — mesma área Comunicação); catálogo de **áreas de mentoria**, **tipos de Ação** (palestra, gravação, oficina pontual — **sem** doação de sangue), textos das modalidades, **módulo de treino** (mesmos tipos de atividade), materiais, `prazo_match_horas` e limiares de inatividade / mentoria aberta há muito tempo.
-2. **Aplicativo Gestor** — app **único** para **Gestor de Unidade**, **Gestor de Turma** e **Gestor de Voluntariado**; autenticação por **link mágico**. Unidade/Turma: home = **Dashboard de edições**. Gestor de Voluntariado: **não tem** página de edições — login abre direto `/gestor/voluntariado` com o menu contextual. Inclui **Mini CRM** (UC26); Unidade **ativa/ajusta** alertas da edição (UC87). **Não dispara** a pesquisa após a formação (UC82 — backend).
+1. **CMS de Administração** — modelagem de programas, edições, módulos, unidades, organizações e colaboradores (implementado com Strapi); **cria/configura** pesquisa pós-programa (UC82), **pacotes de comunicação** (UC88) e o alerta automático de **ficha incompleta** (UC87 — mesma área Comunicação); catálogo de **áreas de mentoria**, **tipos de Ação** (palestra, gravação, oficina pontual — **sem** doação de sangue), textos das modalidades, **módulo de treino** (mesmos tipos de atividade), materiais, `prazo_match_horas` e limiares de inatividade / mentoria aberta há muito tempo. Biblioteca de mídias no S3. **Não** cadastra tipos de doação nem um catálogo de itens de insumo ou equipamento.
+2. **Aplicativo Gestor** — app **único** para **Gestor de Unidade**, **Gestor de Turma** e **Gestor de Voluntariado**; autenticação por **link mágico**. Unidade/Turma: home = **Dashboard de edições**. Gestor de Voluntariado: **não tem** página de edições — login abre direto `/gestor/voluntariado` com o menu contextual. Inclui **Mini CRM** (UC26). Unidade **dispara** recados do Ranking (UC56) e pode cadastrar **Download extra** no online (UC35). **Não dispara** a pesquisa após a formação (UC82 — backend).
 3. **Aplicativo Cliente** — interface da empreendedora (inscrição, atividades, uploads, dados financeiros); autenticação exclusiva por **link mágico**; inclui **Agente de IA** / chat de dúvidas (UC64); diagnóstico/pedido de mentoria (UC70).
 4. **Portal do voluntariado** — portal da rede: cadastro único, módulo CMS, pool, ações, aceite, card, diário, certificados; auth **link mágico por e-mail** (UC89).
 5. **Painel de Dados (BI)** — dashboards, indicadores e relatórios em **Looker Studio / Data Studio** ligado ao banco (fora do app operacional); acessos Google geridos pelo Consulado; **visualiza** resultados da pesquisa pós-programa (UC82). **Orçamento não entra** no dashboard operacional.
@@ -260,8 +80,8 @@ O sistema é organizado em **seis grupos** (plataformas/camadas):
 
 | Camada                   | Responsabilidade principal                                                                                                 |
 | ------------------------ | -------------------------------------------------------------------------------------------------------------------------- |
-| **CMS de Administração** | Configuração, cadastros, critérios, conteúdo; pesquisa pós-programa; **pacotes de comunicação** (UC88); **alertas** (UC87); áreas/módulo treino; perfil Gestor de Voluntariado |
-| **Aplicativo Gestor**    | Operação de seleção/turma/doação; Mini CRM; Unidade/Turma **alocam mentorias**; Gestor de Voluntariado opera ações/rede; binding de alertas              |
+| **CMS de Administração** | Configuração, cadastros, critérios, conteúdo; pesquisa pós-programa; **pacotes de comunicação** (UC88); alerta de ficha incompleta (UC87); áreas/módulo treino; perfil Gestor de Voluntariado; biblioteca de mídias (S3). **Sem** cadastro de tipos de doação nem catálogo de itens |
+| **Aplicativo Gestor**    | Operação de seleção/turma/doação; Mini CRM; Unidade/Turma **alocam mentorias**; Unidade dispara o Ranking (UC56); Gestor de Voluntariado opera ações/rede |
 | **Aplicativo Cliente**   | Jornada da empreendedora; Agente de IA (UC64); diagnóstico/pedido UC70                                                     |
 | **Portal do voluntariado**| Cadastro, módulo CMS, pool, ações, aceite, diário, certificados (UC73/UC70/UC89/UC90)                                                 |
 | **Painel de Dados (BI)** | Indicadores; UC82; sessões/área; **pessoas voluntárias únicas**/ano; horas voluntário ≠ equipe                         |
@@ -270,7 +90,7 @@ O sistema é organizado em **seis grupos** (plataformas/camadas):
 
 Stack contratual: Next.js, Node.js, Express, Prisma, MySQL; hospedagem AWS.
 
-### Conceitos de Domínio (v4)
+### Conceitos de Domínio
 
 **Programa** — metodologia principal: **modalidade** (**online**, **presencial** ou **híbrido**), **descrição** e classificação de **duração** (**Longa / Média / Curta**) no Admin para agrupamento no **BI** e alinhamento de metas/risco. Não contém módulos diretamente; é lançado em **edições**. **Presencial e híbrido são idênticos em comportamento** no sistema; a modalidade separa os dados no **Painel de Dados (BI)** e na prestação de contas (ex.: BNDES). **Online** tem jornada e disparos pagos contínuos via API.
 
@@ -330,7 +150,7 @@ Stack contratual: Next.js, Node.js, Express, Prisma, MySQL; hospedagem AWS.
 
 **Identificador automático (ID)** — o sistema **gera automaticamente um ID único** para cada empreendedora/registro, eliminando o controle manual por planilhas.
 
-**Doação** — benefício concedido à empreendedora participante, com **tipo**: **dinheiro (capital semente)**, **insumo** (ex.: farinha, açúcar) ou **equipamento** (ex.: forno, geladeira); cada doação tem **N itens**, e uma empreendedora pode receber **N doações** — no mesmo programa, em programas diferentes e ao longo do histórico (decisões de 24/09/2026 à noite e de 25/09/2026, v10). Titularidade **pessoa × empreendimento**: **[A CONFIRMAR] (iii)**, ligada à [DECISÃO PENDENTE – reunião com Daniele] (UC86). Valor: **real** no dinheiro; **estimado** em insumo e equipamento até a nota fiscal do item ser cadastrada (UC57). **A empreendedora nunca inicia doação no Aplicativo Cliente** — sem botão, banner ou formulário de pedido (decisão de 28/09/2026). **Dois caminhos por modalidade**:
+**Doação** — benefício concedido à empreendedora participante, com **tipo**: **dinheiro (capital semente)**, **insumo** (ex.: farinha, açúcar) ou **equipamento** (ex.: forno, geladeira). Os três tipos são **fixos** no sistema: o **CMS de Administração não cadastra** tipos de doação nem um catálogo de itens. Cada item é uma linha **digitada** na doação, no Aplicativo Gestor (descrição, quantidade e valor); farinha, açúcar, forno e geladeira são **exemplos**, não lista administrável. Cada doação tem **N itens**, e uma empreendedora pode receber **N doações** — no mesmo programa, em programas diferentes e ao longo do histórico. Titularidade **pessoa × empreendimento**: **[A CONFIRMAR] (iii)**, ligada à [DECISÃO PENDENTE – reunião com Daniele] (UC86). Valor: **real** no dinheiro; **estimado** em insumo e equipamento até a nota fiscal do item ser cadastrada (UC57). **A empreendedora nunca inicia doação no Aplicativo Cliente** — sem botão, banner ou formulário de pedido. **Dois caminhos por modalidade**:
 
 
 | Modalidade               | Gatilho de liberação para doação                                                                                                                                                                                                                                                                                  | Quando                           |
@@ -345,9 +165,11 @@ Stack contratual: Next.js, Node.js, Express, Prisma, MySQL; hospedagem AWS.
 
 **Grupos WhatsApp (dois níveis)** — a aplicação prevê **dois níveis** de grupo WhatsApp: (1) grupo entre **gestores de unidade e gestores de turma** (coordenação interna — o Gestor de Unidade administra o grupo dos gestores de turma); (2) grupo entre **gestores de turma e empreendedoras** (comunicação operacional da turma). O grupo da turma é criado **somente após a aprovação** (UC25) — não antes, para evitar remoções manuais. A gestora cria o grupo no WhatsApp, adiciona o **número corporativo/sistema como administrador** (redundância se a gestora sair) e cadastra o **link de convite** na turma (UC16). O sistema **não** cria grupos via API (limitação Meta). Ambos os gestores enviam mensagens por **ferramenta de facilitação** (copiar mensagem pré-formatada para a área de transferência + link de acesso direto ao grupo — UC50); o envio efetivo é manual, no WhatsApp (celulares corporativos — WhatsApp Web bloqueado em PCs). **Comunidade** WhatsApp (relacionamento de longo prazo, distinta dos grupos de turma) é evolução — ver Observações de Escopo.
 
-**Módulo** — conjunto ordenado de **atividades educacionais** da edição (UC15). Temas de referência (CMS): Encontros de Chegada, Planejamento Estratégico, Finanças, Marketing, Pessoas, Formalização, Sustentabilidade. No **presencial/híbrido**, o gestor libera por checkbox (UC34). No **online**, a sequência/temporizadores do módulo rodam **após UC25**; o gestor **acompanha** (não libera manualmente cada atividade).
+**Módulo** — conjunto ordenado de **N atividades** da edição (UC15). A lista e o progresso (**N de M**, %) são **por atividade**. **Aula (agrupador)** só organiza: título + quais atividades pertencem a ela, na ordem do CMS. Sem regra própria de liberação; **não** é item da lista nem unidade de progresso. O backend pode gravar a aula de origem da atividade; isso **não** muda o cálculo. Agrupamento: **Edição → Módulo → Aula (agrupador) → Atividade**. Distinto de **Aula (tipo)** — encontro presencial ou online (P/H). Módulos antigos: atividades numa aula só, **"Aula 1"**. Temas de referência (CMS): Encontros de Chegada, Planejamento Estratégico, Finanças, Marketing, Pessoas, Formalização, Sustentabilidade. No **presencial/híbrido**, o gestor libera por checkbox (UC34). No **online**, a sequência/temporizadores das **atividades** rodam **após UC25**; o gestor **acompanha** (não libera manualmente cada atividade).
 
-**Empreendimento (Negócio)** — entidade central da **operacionalização**, em **tabela distinta** da empreendedora. Cada inscrição completa (UC21) cria **1 empreendedora** e **1 empreendimento** vinculados. O empreendimento é **cadastrado pela empreendedora** — na inscrição (UC21) ou na área dela no Aplicativo Cliente (UC31) — e **não** pelo gestor, que só o gerencia (decisão de 25/09/2026). Informal **não** tem CNPJ; o sistema **não** une automaticamente pelo nome fantasia (homônimos). Duas sócias do mesmo negócio informal ficam em **dois** estabelecimentos até o gestor **agrupar** (UC31). Relação canônica: **N empreendedoras → 1 empreendimento**. A **qualificação na seleção é do empreendimento como um todo**. **Doação:** N doações por empreendedora, de qualquer tipo (v10 — sai a regra "1 doação por empreendimento"); titularidade pessoa × empreendimento **[A CONFIRMAR] (iii)**.
+**Encerramento (marcador)** — atividade que a empreendedora **não vê**. Tudo **depois** dele no módulo é **pós-curso** e aparece em bloco separado no App Gestor e no App Cliente (UC82).
+
+**Empreendimento (Negócio)** — entidade central da **operacionalização**, em **tabela distinta** da empreendedora. Cada inscrição completa (UC21) cria **1 empreendedora** e **1 empreendimento** vinculados. O empreendimento é **cadastrado pela empreendedora** — na inscrição (UC21) ou na área dela no Aplicativo Cliente (UC31) — e **não** pelo gestor, que só o gerencia. Informal **não** tem CNPJ; o sistema **não** une automaticamente pelo nome fantasia (homônimos). Duas sócias do mesmo negócio informal ficam em **dois** estabelecimentos até o gestor **agrupar** (UC31). Relação canônica: **N empreendedoras → 1 empreendimento**. A **qualificação na seleção é do empreendimento como um todo**. **Doação:** N doações por empreendedora, de qualquer tipo; titularidade pessoa × empreendimento **[A CONFIRMAR] (iii)**.
 
 **Propriedade operacional — Empreendimento × Empreendedora** (regra canônica — ago/2026):
 
@@ -400,31 +222,26 @@ Regra: **hábito de maratona é saudável** (online); **risco online ≠ silênc
 
 **Comunicação (templates)** — textos oficiais da jornada moram na **Gupshup**. O CMS (UC88) só liga **evento → mensagem** (tabela default obrigatória). **PacoteComunicacao:** troca o ponteiro por tipo + momentos (inscrição, UC25, **convite ao grupo**, UC33…). A edição seleciona o pacote (UC9). **Mesmo corpo** vai no e-mail (SendGrid) e na API (online). No **módulo (UC15)** a atividade pode ter **texto próprio** (apoio ao vídeo, recado customizado) **ou** apontar um modelo da Gupshup. No P/H, Unidade e Turma **editam o template sugerido na hora** do envio (UC50). Recado = **nome social**; certificado e recibo = **nome completo**.
 
-**Alerta automático (engajamento / resgate)** — regra tipada na **mesma área Comunicação (UC88 — aba Alertas)** e orquestrada pelo **Backend** (UC87). Não confundir com a **fila de jornada** (UC33). Modelo:
+**Alerta (engajamento / resgate)** — dois modos. Não confundir com a **fila de jornada** (UC33). Sem workflow builder livre. Sem motor externo (Mautic removido).
 
+1. **Automático — só ficha incompleta** (`inscription_incomplete`). O CMS (UC88 — aba Alertas) liga o evento ao modelo na Gupshup. O backend (UC87/UC52) dispara sozinho e **para** ao concluir a inscrição (UC21). Mini CRM (UC26) é fallback.
+2. **Manual — Ranking e Engajamento (UC56).** O backend **só classifica** a audiência. O **Gestor de Unidade** filtra, seleciona e envia WhatsApp e/ou e-mail. O template é escolhido **na hora**, entre **todos os modelos aprovados na Gupshup**. O CMS **não** liga esses eventos a template. Recado **sem anexo**. Turma vê a lista e **não** dispara.
 
-| Entidade                | O quê                                                                                                    |
-| ----------------------- | -------------------------------------------------------------------------------------------------------- |
-| **PacoteComunicacao**   | Nome, modalidade, versão; ponteiros evento → modelo Gupshup (tabela default); e-mail = mesmo corpo |
-| **AlertRule**           | Nome, `triggerKind`, parâmetros, `exitWhen`, canais, **templates UC88**, cadência, audiência             |
-| **EditionAlertBinding** | Por edição: liga/desliga a regra, override de parâmetros/cadência, pausa                                 |
-| **AlertDispatchLog**    | Log idempotente (`dedupeKey`); cancela pendentes quando `exitWhen` dispara                               |
+| triggerKind              | Modo       | Quando                                        | Sai da lista quando               |
+| ------------------------ | ---------- | --------------------------------------------- | --------------------------------- |
+| `inscription_incomplete` | Automático | Lead parou sem inscrição completa (UC19→UC21) | Inscrição completa                |
+| `activity_deadline_soon` | Ranking    | Atividade liberada com prazo; ainda não feita | Concluída / prazo sem reenvio     |
+| `backlog_liberated`      | Ranking    | N conteúdos liberados e não feitos (online)   | Pendências abaixo do limiar       |
+| `edition_ending_pending` | Ranking    | Perto do fim + pendências                     | Sem pendências / edição encerrada |
+| `risk_short_online`      | Ranking    | Estado risco curto (UC9/UC56)                 | Sai do estado risco               |
+| `checkpoint_midcourse`   | Ranking    | ~15º dia do curso online; janela 3–5 dias     | Janela fechou                     |
 
+**Check-point** é incentivo no meio do curso, não risco. WhatsApp só manda o recado. Bônus opcional: **Download extra** no módulo (UC35), arquivo da biblioteca CMS (S3), sem contar % e sem entrar no lote da jornada. O card fica visível à turma; o Ranking só avisa quem a Unidade selecionar (link mágico, se houver extra). Pode disparar o check-point sem ter criado o Download.
 
-**Catálogo inicial de** `triggerKind`**:**
-
-
-| triggerKind              | Quando                                        | Params típicos                        | Cancela quando                    |
-| ------------------------ | --------------------------------------------- | ------------------------------------- | --------------------------------- |
-| `inscription_incomplete` | Lead parou sem inscrição completa (UC19→UC21) | `delayDays`, `repeatDays`, `maxSends` | Inscrição completa                |
-| `activity_deadline_soon` | Atividade liberada com prazo; ainda não feita | `hoursBeforeDeadline`                 | Concluída / prazo sem reenvio     |
-| `backlog_liberated`      | N conteúdos liberados e não feitos (online)   | `minLiberatedPending`                 | Pendências abaixo do limiar       |
-| `edition_ending_pending` | Perto do fim + pendências                     | `daysBeforeEnd`                       | Sem pendências / edição encerrada |
-| `risk_short_online`      | Estado risco curto (UC9/UC53)                 | herda limiares da edição              | Sai do estado risco               |
-| `checkpoint_midcourse`   | ~15 dias de curso                             | `dayFromStart`, `windowDays`          | Concluiu alvo / janela fechou     |
-
-
-Admin **cria** pacotes e regras de alerta na **Comunicação (UC88)**; Unidade **instancia** alertas na edição. Sem workflow builder livre (AND/OR arbitrários). Sem motor externo (Mautic removido).
+| Entidade              | O quê                                                                                          |
+| --------------------- | ---------------------------------------------------------------------------------------------- |
+| **PacoteComunicacao** | Ponteiros evento → modelo Gupshup da **jornada** e da ficha incompleta; e-mail = mesmo corpo   |
+| **AlertDispatchLog**  | Log de cada envio (automático ou do Ranking): quem, quando, canal, template                    |
 
 **Vínculo obrigatório** — toda inscrição associa-se a **programa**, **edição**, **unidade**, **turma** (turma pode ser automática se única) e, após agrupamento, a um **empreendimento**. No lead/pré-inscrição (UC19) vinculam-se **programa** e **edição**; **unidade** na inscrição (ou automática); **turma** automática se única, ou via **UC17** após aprovação na entrevista de seleção (P/H). A jornada educacional só começa com **Comunicar resultado (UC25)** das aptas.
 
@@ -435,7 +252,7 @@ Admin **cria** pacotes e regras de alerta na **Comunicação (UC88)**; Unidade *
 - **CPF**: armazenado com técnica **HMAC-SHA256 + pepper** ([referência](https://ogeradordecpf.com.br/armazenar-cpf/)); usado como chave de identificação sem armazenamento em texto claro. A busca por participantes passados ou não aprovados é feita pelo **hash do CPF** (UC62).
 - **Autenticação empreendedora**: somente **link mágico** — sem senha (UC4).
 - **Autenticação Aplicativo Gestor**: somente **link mágico** por e-mail — sem senha (UC3). Unidade/Turma: primeira tela = Dashboard de edições. **Gestor de Voluntariado:** primeira tela = `/gestor/voluntariado` (sem página de edições).
-- **Autenticação CMS de Administração**: e-mail e senha; políticas de complexidade e expiração (UC6). **2FA**: previsto no Anexo LGPD do contrato — implementação conforme exigência contratual, .
+- **Autenticação CMS de Administração**: e-mail e senha segundo a política **fixa** da UC6 (16–40 caracteres; sem reutilizar as 24 anteriores; 1º caractere letra; número + maiúscula + minúscula + especial do conjunto; expiração máxima **90 dias**). **2FA**: previsto no Anexo LGPD do contrato — implementação conforme exigência contratual.
 - **UUID de dispositivo (UC67)**: emitido após inscrição completa; localStorage; deep links com `turma_id`, `atividade_id`, `acao` — presença automática (UC40).
 - **Base de consentimentos (LGPD)**: o sistema mantém **registro dos aceites** (LGPD geral, dados sensíveis, cookies/armazenamento local, comunicação/WhatsApp, uso de imagem, regulamento), com **versão do termo, data/hora e dispositivo**, além do **controle de datas de anonimização**. Essa base é a referência para o processo automático de anonimização e revalidação (UC20, UC76).
 - **Anonimização automática LGPD (5 anos após o aceite)**: os dados pessoais são **anonimizados automaticamente 5 anos após a data em que a empreendedora deu o aceite** (não a partir do fim da edição). Se, após esse prazo, a empreendedora **acessar ou continuar utilizando** o sistema, é solicitado **novo aceite**, que **revalida** o consentimento e reinicia o prazo. A anonimização de **CPF, e-mail e telefone** usa técnica de **consulta reversível** por hash — preserva **histórico de participação** e aceites, sem perda analítica (UC76).
@@ -546,7 +363,7 @@ UC49 — Disparar Mensagem Individual via WhatsApp
 UC50 — Comunicar para Grupo WhatsApp (Facilitador Manual)  
 UC51 — Enviar Vídeo ou Conteúdo via WhatsApp  
 UC52 — Orquestrar Alertas / Nurturing (fila de alertas — Backend)  
-UC53 — Disparar mensagens direcionadas (edição online)  
+UC53 — Enviar recado a partir do Ranking (edição online)  
 UC54 — Enviar Link Mágico Personalizado  
 UC55 — Classificar Beneficiamento e Emitir Certificado Automaticamente  
 UC56 — Consultar Ranking e Engajamento  
@@ -580,7 +397,8 @@ UC83 — Visão Multi-Unidade no Aplicativo Gestor (Terceiro Nível)
 UC84 — Entrevista de Seleção (Etapa 2 — P/H)  
 UC85 — Selecionar Elegíveis à Doação (Filtros auxiliares A–D + Lote)  
 UC86 — Coletar Dados, Comprovação, Recibo e Aceites da Doação (por tipo — comum)  
-UC87 — Configurar e Orquestrar Alertas Automáticos  
+UC87 — Orquestrar alerta automático de ficha incompleta  
+ 
 UC88 — Gerenciar relação evento × mensagem (Gupshup = repo; tabela default)  
 UC89 — Login Voluntário (Link Mágico)  
 UC90 — Ações de Voluntariado  
@@ -615,7 +433,8 @@ UC75 — Associar Gestor a Unidade ou Turma na Edição
 UC76 — Anonimizar Dados e Revalidar Consentimento (LGPD)  
 UC81 — Encerrar Edição (Freeze Operacional)  
 UC82 — Criar / configurar Pesquisa Pós-Programa *(dias no CMS; disparo = Backend; visualização = BI)*  
-UC87 — Configurar Alertas Automáticos *(aba Alertas em UC88; orquestra Backend)*  
+UC87 — Alerta automático de ficha incompleta *(aba Alertas em UC88)*  
+ 
 UC88 — Gerenciar relação evento × mensagem *(Gupshup = repo; tabela default)*  
 UC90 — Catálogo de tipos de Ação *(ações de voluntariado; sem doação de sangue)*
 
@@ -631,7 +450,7 @@ UC25 — Comunicar Resultado da Seleção *(libera jornada das aptas; avisa não
 UC26 — Gerenciar Leads com Inscrição Incompleta *(Mini CRM; alerta auto + disparo manual)*  
 UC28 — Consultar Histórico de Participação  
 UC50 — Comunicar para Grupo WhatsApp *(facilitador manual — UC16/UC66)*  
-UC56 — Consultar Ranking e Engajamento *(online: maratona / represamento / risco)*  
+UC56 — Consultar Ranking e Engajamento *(Unidade dispara; Turma consulta)*  
 UC57 — Aprovar Doação (Contemplação) *(também pode sugerir; pós lote UC85; N doações por tipo; cadastra a NF por item)*  
 UC58 — Analisar Elegibilidade para Capital Semente  
 UC70 — Gestão de Mentorias *(online: lote + pool; P/H: agenda gestor **ou** pool; vagas N; card visual)*  
@@ -642,7 +461,7 @@ UC83 — Visão Multi-Unidade no Aplicativo Gestor *(terceiro nível)*
 UC84 — Entrevista de Seleção *(etapa 2 — só P/H)*  
 UC85 — Selecionar Elegíveis à Doação *(filtros A–D + seleção em lote)*  
 UC86 — Coletar Dados, Comprovação e Recibo da Doação *(por tipo; recibo só com valores reais)*  
-UC87 — Instanciar / pausar Alertas da Edição *(EditionAlertBinding)*
+UC87 — Orquestrar alerta automático de ficha incompleta
 
 ### Aplicativo Gestor — Gestor de Voluntariado
 
@@ -662,14 +481,16 @@ UC30 — Registrar Cancelamento ou Desistência
 UC31 — Gerenciar Empreendimento (Negócio) e Associar Empreendedoras  
 UC32 — Mover Empreendedora entre Empreendimentos  
 UC34 — Visão por Módulo e Liberação de Atividades *(gestor escolhe o que liberar; prazo 48h ou definido)*  
-UC35 — Adicionar Conteúdo Extra *(só em edições P/H; não conta %/carga)*  
+UC35 — Adicionar Conteúdo Extra *(P/H: Turma; online: Download extra pela Unidade)*  
+ 
 UC41 — Registrar Presença Manualmente  
 UC42 — Consultar Frequência da Participante  
 UC44 — Avaliar e Aprovar Entrega (Tarefa de Casa / Dados Financeiros)  
 UC46 — Validar Dados Financeiros  
 UC50 — Comunicar para Grupo WhatsApp *(facilitador manual — presencial/híbrido)*  
-UC53 — Mensagens direcionadas online *(não fez atividade / risco de cancelamento)*  
-UC56 — Consultar Ranking e Engajamento *(online: maratona / represamento / risco)*  
+UC53 — Envio a partir do Ranking *(passo da UC56; só Unidade)*  
+ 
+UC56 — Consultar Ranking e Engajamento *(Unidade dispara; Turma consulta)*  
 UC57 — Sugerir e Aprovar Doação (Contemplação) *(Turma sugere; Unidade aprova; Unidade também pode sugerir; N doações por tipo)*  
 UC69 — Inserir Dados em Nome da Empreendedora  
 UC77 — Registrar Observação de Acompanhamento  
@@ -698,7 +519,7 @@ UC45 — Enviar Registro de Saúde Financeira Mensal
 UC64 — Utilizar Chat de Dúvidas *(Agente de IA)*  
 UC68 — Visualizar Calendário de Atividades  
 UC72 — Exibir Alerta de Compatibilidade de Navegador  
-UC91 — Visualizar Home de Programas *(v9 — protótipo v5)*  
+UC91 — Visualizar Home de Programas   
 UC92 — Navegar pelo Menu Global e Perfil *(v9 — Programas · Mentoria · Certificados · Ajuda IA)*  
 UC95 — Falar com a Mentora via WhatsApp a partir da Atividade *(v9 — destinatário [A CONFIRMAR])*
 
@@ -725,10 +546,11 @@ UC29 — Classificar Status da Participante
 UC33 — Orquestrar Jornada Online *(fila jornada; inicia em UC25)*  
 UC49 — Disparar Mensagem Individual via WhatsApp  
 UC51 — Enviar Vídeo ou Conteúdo via WhatsApp  
-UC52 — Orquestrar Alertas / Nurturing *(fila alertas; execução UC87)*  
+UC52 — Fila de alertas *(ficha incompleta automática; Ranking quando a Unidade confirma)*  
+
 UC54 — Enviar Link Mágico Personalizado  
 UC55 — Classificar Beneficiamento e Emitir Certificado Automaticamente  
-UC87 — Avaliar e Enfileirar Alertas Automáticos *(Backend — dono da automação)*  
+UC87 — Avaliar e enfileirar ficha incompleta *(Backend)*  
 UC89 — Login Voluntário (Link Mágico) *(token e-mail)*
 
 ### Painel de Dados (BI)
@@ -774,13 +596,14 @@ Permite que o **Administrador do Sistema** ou **Administrador de Programa** cada
 - Informa nome, e-mail, **tipo** (um só: Administrador de Programa, Gestor de Unidade, Gestor de Turma ou **Gestor de Voluntariado**) e status ativo/inativo (UC74).
 - Para Administrador de Programa, associa os programas do seu escopo. Gestor de Unidade e Gestor de Turma **não** recebem unidade ou turma no cadastro: a associação é feita dentro da edição (UC75).
 - O CMS de Administração envia e-mail de convite para definição de **senha do CMS** (quando o perfil inclui acesso administrativo).
-- O colaborador define senha do **CMS** (UC2/UC6). O acesso ao **Aplicativo Gestor** é por **link mágico** no e-mail cadastrado (UC3) — sem senha no app operacional.
+- O colaborador define senha do **CMS**. A senha **só grava** se cumprir a política da UC6. O acesso ao **Aplicativo Gestor** é por **link mágico** no e-mail cadastrado (UC3) — sem senha no app operacional.
 - Passa a operar CMS e/ou Aplicativo Gestor conforme perfil.
 
 **Fluxos Alternativos**
 
 - **E-mail já cadastrado**: CMS de Administração informa duplicidade.
 - **Convite pendente**: administrador reenvia convite pelo painel CMS de Administração.
+- **Senha fora da política (UC6)**: não grava; o colaborador corrige até cumprir.
 
 **Pós-condições**
 
@@ -813,12 +636,14 @@ Acesso ao backoffice **CMS de Administração** para modelagem de programas, edi
 
 - Usuário acessa URL do CMS de Administração Admin (`/admin`).
 - Informa e-mail e senha na tela nativa de login.
-- CMS de Administração valida credenciais e abre painel administrativo.
+- CMS valida credenciais **e** a política de senha (UC6). Sem senha válida, **não entra**.
+- Abre o painel administrativo.
 
 **Fluxos Alternativos**
 
-- **Credenciais inválidas**: mensagem nativa do CMS de Administração; retry ou recuperação de senha.
-- **Senha expirada**: troca obrigatória (UC6).
+- **Credenciais inválidas**: mensagem nativa do CMS; retry ou recuperação de senha. A nova senha **só grava** se cumprir a UC6.
+- **Senha expirada** (máximo **90 dias** — UC6): troca obrigatória. Sem troca, não entra.
+- **Senha fora da política (UC6)**: recusa; não autentica.
 
 **Pós-condições**
 
@@ -962,7 +787,18 @@ Configura roles nativas do **CMS de Administração** e permissões por entidade
 
 **Descrição**
 
-Configura políticas de autenticação do **CMS de Administração** (e-mail/senha: expiração, complexidade, histórico) e parâmetros de **link mágico** do **Aplicativo Gestor**, do **Aplicativo Cliente** e do **Aplicativo Voluntário** (validade do token, timeout de sessão), além do armazenamento seguro de CPF (**HMAC-SHA256 + pepper**). **2FA** no CMS previsto no Anexo LGPD — implementação conforme exigência contratual. Empreendedora (UC4), gestores no Aplicativo Gestor (UC3) e voluntários (UC89) **não utilizam senha** — apenas link mágico.
+Configura parâmetros de **link mágico** do **Aplicativo Gestor**, do **Aplicativo Cliente** e do **Aplicativo Voluntário** (validade do token, timeout de sessão) e o armazenamento seguro de CPF (**HMAC-SHA256 + pepper**). **2FA** no CMS previsto no Anexo LGPD — implementação conforme exigência contratual. Empreendedora (UC4), gestores no Aplicativo Gestor (UC3) e voluntários (UC89) **não utilizam senha** — apenas link mágico.
+
+A **política de senha do CMS** é **fixa** (não relaxável no admin). Vale na definição (convite — UC1), no login, na recuperação e na troca (UC2). Senha que não cumprir **não grava** e **não autentica**.
+
+**Política de senha do CMS (regra vigente)**
+
+- Comprimento: **mínimo 16** e **máximo 40** caracteres.
+- Histórico: **não** reutilizar as **24** senhas anteriores.
+- Primeiro caractere: **letra** (A–Z ou a–z).
+- Obrigatório pelo menos: **1 número** (0–9); **1 maiúscula** (A–Z); **1 minúscula** (a–z); **1 caractere especial** do conjunto `~ @ $ % ^ & * _ - + = ( ) { } [ ] : ; < > , . / | ' " \``
+- Caractere especial **fora** desse conjunto: **recusar**.
+- Expiração máxima: **90 dias**. Senha expirada exige troca obrigatória (UC2).
 
 **Atores**
 
@@ -974,14 +810,14 @@ Configura políticas de autenticação do **CMS de Administração** (e-mail/sen
 
 **Fluxo Principal**
 
-- Define política de expiração, complexidade e histórico de senhas para acesso ao **CMS**.
+- Aplica a política de senha do CMS na definição e na troca (não altera tamanho, histórico nem composição).
 - Define validade/uso único dos tokens de link mágico (Cliente, Gestor e Voluntário) e timeout de sessão.
 - Configura pepper e política de hash para CPF.
 - Registra configuração de 2FA para fase contratual posterior, se aplicável.
 
 **Pós-condições**
 
-- Políticas de segurança ativas para CMS (senha) e apps Cliente/Gestor/Voluntário (link mágico).
+- Políticas de segurança ativas para CMS (senha fixa) e apps Cliente/Gestor/Voluntário (link mágico).
 
 ---
 
@@ -1038,9 +874,9 @@ Cria **edição** do programa: instância operacional com cronograma completo. P
 - Seleciona **programa** vinculado.
 - Seleciona **unidades participantes** (UC66).
 - Informa **ano de competência**, **nome da edição** (ex.: 1º semestre 2027), **meta de beneficiados**.
-- Quando a edição concede doação: informa **meta numérica** de contempladas (auxiliar — se conta **pessoas** ou **doações**: **[A CONFIRMAR]**, v10) e o **orçamento (R$) por unidade** participante da edição — valores definidos **somente no CMS**; fonte da faixa disponível / consumido / em análise / saldo consultada no Gestor (UC57). O consumo do orçamento **soma o valor real e o valor estimado** das doações (decisão de 25/09/2026, parte 2); à medida que as notas fiscais dos itens são cadastradas, o estimado é substituído pelo valor da nota e o consumo é recalculado. Valor unitário de referência (ou faixa) permanece opcional para apoio operacional.
+- Quando a edição concede doação: informa **meta numérica** de contempladas (auxiliar — se conta **pessoas** ou **doações**: **[A CONFIRMAR]**, v10) e o **orçamento (R$) por unidade** participante da edição — valores definidos **somente no CMS**; fonte da faixa disponível / consumido / em análise / saldo consultada no Gestor (UC57). O consumo do orçamento **soma o valor real e o valor estimado** das doações; à medida que as notas fiscais dos itens são cadastradas, o estimado é substituído pelo valor da nota e o consumo é recalculado. Valor unitário de referência (ou faixa) permanece opcional para apoio operacional.
 - Define datas/horas de início e fim: **inscrição**, **seleção** e **aplicação** da edição.
-- Associa um ou mais **módulos** e define **sequência de conteúdos/atividades** (com temporizadores no online).
+- Associa um ou mais **módulos** (cada módulo lista **N atividades**, agrupadas em aulas — UC15) e define a sequência das **atividades** (com temporizadores no online).
 - Informa **% de beneficiamento** e **% de certificação** (padrão **50 / 75**; editáveis — UC13).
 - Seleciona **pacote de comunicação** (UC88) — templates Meta/Gupshup da jornada (inscrição, seleção UC25, tipos de atividade, momentos UC33). **Não** configura textos inline neste fluxo.
 - Garante **número WhatsApp da organização** cadastrado no CMS (Strapi) — global ou herdado pela edição — para o CTA do Cliente.
@@ -1212,7 +1048,7 @@ O cálculo incide sobre o **empreendimento**. **Todas as atividades** da ediçã
 
 **Descrição**
 
-Define **filtros auxiliares** de elegibilidade à **doação** por edição (ex. destaque de já contempladas, desempate, cortes operacionais). O termo **"premiação" foi substituído por "doação"** por conformidade tributária. Pela **decisão de 25/09/2026, parte 3**, a carência deixa de ser bloqueio e passa a ser **destaque**, com **duas regras distintas**:
+Define **filtros auxiliares** de elegibilidade à **doação** por edição (ex. destaque de já contempladas, desempate, cortes operacionais). O termo em uso é **"doação"** (não "premiação"). A carência é **destaque**, não bloqueio, com **duas regras distintas**:
 
 1. **Dentro da edição — N doações, sem carência.** A empreendedora participante pode receber **N doações** (de qualquer tipo — UC57), **ao mesmo tempo** ou **ao longo da edição**. Nenhum critério desta UC bloqueia uma nova doação na mesma edição.
 2. **Entre edições — carência como destaque.** Depois que a edição **encerra** (UC81), quem já foi **contemplada** com doação continua **elegível** nas próximas edições. Nos processos de seleção à doação seguintes (UC57, UC85), ela aparece **em destaque** — indicador visível só para a **equipe**, ex.: **"Já contemplada na edição X"**, com o **histórico de doações** — para que a equipe dê oportunidade a quem ainda não recebeu. **Sai a regra da v9 "já recebeu doação nos últimos 3 anos → inelegível"** (bloqueio automático).
@@ -1226,7 +1062,7 @@ Define **filtros auxiliares** de elegibilidade à **doação** por edição (ex.
 | **P/H** | Análise **manual** do gestor a qualquer momento (UC57) | Filtros opcionais de apoio (ex. destaque de já contemplada — D) |
 | **Online** | Funil **100% atividades (ou exceção registrada) → live → presença/KW → questionário 100% certo** (UC38) | Filtros **após** o funil (ex. destaque D, lote operacional UC85); **não** substituem o funil. Liberada no funil da edição, pode receber N doações na mesma edição sem refazer o funil |
 
-A **concessão** da doação permanece nos passos sugerir/aprovar (UC57). Não há doação automática. O **orçamento da unidade** (UC9) continua somando **valor real e valor estimado** (decisão de 25/09/2026, parte 2); a carência **não usa valores**.
+A **concessão** da doação permanece nos passos sugerir/aprovar (UC57). Não há doação automática. O **orçamento da unidade** (UC9) continua somando **valor real e valor estimado**; a carência **não usa valores**.
 
 **Parâmetros típicos (por edição) — auxiliares:**
 
@@ -1272,13 +1108,13 @@ A **concessão** da doação permanece nos passos sugerir/aprovar (UC57). Não h
 
 **Descrição**
 
-Cria **módulo** como conjunto ordenado de **atividades educacionais**, com **tema** (referência: Encontros de Chegada, Planejamento Estratégico, Finanças, Marketing, Pessoas, Formalização, Sustentabilidade — lista parametrizável no CMS). Herda a modalidade do programa (online/presencial/híbrido) quando associado à edição. Uma **edição** associa **vários módulos** (UC9).
+Cria **módulo** como conjunto ordenado de **N atividades**, com **tema** (referência: Encontros de Chegada, Planejamento Estratégico, Finanças, Marketing, Pessoas, Formalização, Sustentabilidade — lista parametrizável no CMS). O módulo **lista atividades**, não aulas. **Aula (agrupador)** só organiza (título + quais atividades; ordem = CMS). Sem regra própria de liberação. Distinto de **Aula (tipo)** na tabela abaixo. Herda a modalidade do programa quando associado à edição. Uma **edição** associa **vários módulos** (UC9). Módulos antigos: atividades numa aula só, **"Aula 1"**.
 
-**Catálogo canônico — 11 tipos** (`TipoAtividade`, alinhado a `Tipos_de_Atividade.md` e à UI do Aplicativo Gestor). **Não** são tipos de atividade do módulo: **Temporizador** e **Texto aberto** (mecânica da jornada online — UC33); **Certificado** (emissão UC55/UC63); **conteúdo extra** (UC35 — fora da matriz; não conta %/carga).
+**Catálogo canônico — 11 tipos** (`TipoAtividade`, alinhado a `Tipos_de_Atividade.md` e à UI do Aplicativo Gestor). **Certificado** (UC55/UC63) e **conteúdo extra** (UC35) ficam fora da enum. No online, **gatilho** (temporizador) e **mensagem** (WhatsApp) podem entrar **dentro do agrupador**, em geral **escondidos** — montar **à mão**, aula por aula (UC33). **Encerramento** é **marcador** invisível à empreendedora (não é questionário); o que vem depois é pós-curso (UC82).
 
 | Tipo (UI / CMS)             | Descrição                                                                                                                                                  | Progresso medido por                                                                                                                                                                                                                                                                                                                               |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Aula**                    | Encontro síncrono **presencial ou ao vivo**. **CMS (UC15):** **natureza original** (`presencial` ou `ao_vivo`), título e descrição — **sem** data/hora/local/link. **Gestor (UC34):** data, hora e **local** (presencial) ou **canal** (Google Meet ou YouTube + StreamYard, escolhido pelo Gestor de Unidade ou de Turma — decisão de 25/09/2026) e **link** (ao vivo); natureza **pré-preenchida** do CMS, **editável** até ministrar. **Presencial:** QR + presença manual; relato (UC80). **Ao vivo:** comparecimento; replay opcional **não** conta nova presença. Só P/H | Presentes ou compareceram / total |
+| **Aula (tipo)**             | Encontro síncrono **presencial** ou **online**. Distinto da **Aula (agrupador)**. **CMS:** natureza (`presencial` ou `online`), título e descrição — **sem** data/hora/local/link. **Gestor (UC34):** data, hora e **local** (presencial) ou **canal** (Google Meet ou YouTube + StreamYard) e **link** (online). **Presencial:** QR + presença manual; relato (UC80). **Online:** comparecimento; replay opcional **não** conta nova presença. Só P/H | Presentes ou compareceram / total |
 | **Vídeo Aula**              | Conteúdo gravado; data-prazo (padrão D+2); conclusão com **80%** assistido; YouTube e/ou arquivo WhatsApp online (UC37/UC51)                               | Assistiram / não assistiram                                                                                                                                                                                                                                                                                                                        |
 | **Questionário**            | Questionário **genérico** configurável no Admin (simples, múltipla e/ou aberta); distinto de Inicial/Final/NPS; consolidado + abertas no Gestor            | Fizeram / não fizeram                                                                                                                                                                                                                                                                                                                              |
 | **Tarefa de Casa**          | Conteúdo pré-carregado do CMS; gestor define **só** data-prazo + comunicação; entrega do empreendimento; aprovar ou **revisar** — sem reprovar (UC43/UC44) | Aprovadas ou em revisão / total                                                                                                                                                                                                                                                                                                                    |
@@ -1297,18 +1133,18 @@ Cria **módulo** como conjunto ordenado de **atividades educacionais**, com **te
 
 | Tipo                                                                                                                                   | Presencial / híbrido                  | Online                        |
 | -------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- | ----------------------------- |
-| Aula, Visita Técnica                                                                                                                   | Permitidos                            | **Não** exibir / não associar |
+| Aula (tipo), Visita Técnica                                                                                                            | Permitidos                            | **Não** exibir / não associar |
 | Vídeo Aula, Atividade, Tarefa de Casa, Saúde financeira, Download, Plano de Ação, Questionário Inicial, Questionário Final, NPS | Permitidos                            | Permitidos                    |
-| Conteúdo extra (UC35)                                                                                                                  | Permitido (fora da enum; não conta %) | **Não**                       |
+| Conteúdo extra (UC35)                                                                                                                  | Permitido (fora da enum; não conta %) | **Download extra** (Unidade; opcional; não conta %) |
 
 
-**Nota:** intervalo entre liberações e mensagem WhatsApp da jornada (**Temporizador** / **Texto aberto**) = **UC33** (CMS), **não** entram na enum `TipoAtividade`. **Eventos oficiais da jornada** vêm da tabela default / pacote UC88. **No módulo (UC15)** a atividade pode: (a) texto direto (apoio ao vídeo, mensagem customizada); (b) apontar um modelo da Gupshup. Encerramento **não** volta como 12º tipo.
+**Nota:** no online, **gatilho** e **mensagem** WhatsApp entram como atividades do agrupador (em geral escondidas; montar à mão). **Eventos oficiais da jornada** vêm da tabela default / pacote UC88. A atividade pode: (a) texto direto; (b) apontar um modelo da Gupshup. **Encerramento** = marcador de pós-curso (UC82), não 12º tipo de questionário.
 
 A matriz da edição no Gestor é filtrada por `modalidade` (UC34). Em online: config sem data/hora/local de encontro; sem facilitador de grupo WhatsApp (UC50); gestor **não** libera manualmente (UC33).
 
-**Rótulos de tipo no Aplicativo Cliente (protótipo v5 — v9):** os cards exibem o tipo como badge — Aula Presencial, Aula ao Vivo Online, Videoaula, Teste de Conhecimento, Plano de Ação, Tarefa de Casa, Saúde Financeira, Download de Conteúdo, Visita Técnica, Pesquisa NPS — e o estado da atividade ("Liberado • 15 min", "Bloqueado • Requer progresso", "Indisponível").
+**Rótulos de tipo no Aplicativo Cliente:** os cards exibem o tipo como badge — Aula Presencial, Aula ao Vivo Online, Videoaula, Teste de Conhecimento, Plano de Ação, Tarefa de Casa, Saúde Financeira, Download de Conteúdo, Visita Técnica, Pesquisa NPS — e o estado da atividade ("Liberado • 15 min", "Bloqueado • Requer progresso", "Indisponível").
 
-- **Saúde financeira única (decisão 24/09/2026):** as atividades "Fluxo de Caixa Mensal" e "Fechamento Financeiro do Mês" (badge "Registro de Dados Financeiros") do protótipo **não existem separadas**: ficam unificadas no tipo **Saúde financeira**, na tela do protótipo v5 (UC45). Não há tipo "Registro de Dados Financeiros" no catálogo.
+- **Saúde financeira única:** não existem "Fluxo de Caixa Mensal" nem "Fechamento Financeiro do Mês" separados (nem o badge "Registro de Dados Financeiros"): o tipo é **Saúde financeira** (UC45).
 - **[A CONFIRMAR]** "Teste de Conhecimento" (UC39) corresponde ao tipo **Questionário** genérico ou é tipo novo.
 
 **Atores**
@@ -1323,8 +1159,10 @@ A matriz da edição no Gestor é filtrada por `modalidade` (UC34). Em online: c
 
 - Acessa **Módulos → Criar**.
 - Informa nome, **tema** e descrição.
-- Adiciona atividades na sequência desejada (tipos da tabela). Para tipo **Aula**: informa **título**, **descrição** e **natureza original** (`presencial` ou `ao_vivo`) — **sem** data, hora, local ou link (operacionalização fica no Gestor — UC34).
-- Em cada atividade, pode escrever **texto próprio** (apoio ao vídeo, recado customizado) **ou** apontar um modelo da **Gupshup**.
+- Adiciona **atividades** na sequência desejada (o módulo lista N atividades). Agrupa-as em **Aula (agrupador)** (só título; ordem = CMS). No online, o agrupador do exemplo começa com duas atividades **escondidas** — gatilho de X dias e mensagem WhatsApp — montadas **à mão**.
+- Para **Aula (tipo)**: informa **título**, **descrição** e natureza (`presencial` ou `online`) — **sem** data, hora, local ou link (UC34).
+- Em cada atividade, pode escrever **texto próprio** **ou** apontar um modelo da **Gupshup**.
+- Se houver **Encerramento** (marcador), o que vier depois é pós-curso (UC82).
 - Salva módulo reutilizável em edições (UC9).
 
 **Pós-condições**
@@ -1339,7 +1177,7 @@ A matriz da edição no Gestor é filtrada por `modalidade` (UC34). Em online: c
 
 **Descrição**
 
-Cria turmas vinculadas a **edição** e **unidade** (UC66). Cada unidade possui **ao menos uma turma**. Vincula **gestores de turma** responsáveis pela operacionalização. Permite registrar o **link de convite do grupo WhatsApp** da turma (propriedade institucional) para uso no facilitador manual de comunicação (UC50). O link e os demais dados da turma alimentam **dinamicamente** a mensagem do facilitador (decisão G2, 24/09/2026).
+Cria turmas vinculadas a **edição** e **unidade** (UC66). Cada unidade possui **ao menos uma turma**. Vincula **gestores de turma** responsáveis pela operacionalização. Permite registrar o **link de convite do grupo WhatsApp** da turma (propriedade institucional) para uso no facilitador manual de comunicação (UC50). O link e os demais dados da turma alimentam **dinamicamente** a mensagem do facilitador.
 
 **Atores**
 
@@ -1354,7 +1192,7 @@ Cria turmas vinculadas a **edição** e **unidade** (UC66). Cada unidade possui 
 - Cria turma com nome, região, gestor, vagas (capacidade **orientativa** — soft alert se desbalanceada; **sem** hard lock), datas.
 - Informa **link do grupo WhatsApp** da turma (URL de convite). Em presencial/híbrido o link é **obrigatório** para efetivar participação (convite no aceite — UC25). O grupo é criado **somente após a aprovação** das participantes (não antes).
 - A gestora cria o grupo no WhatsApp, adiciona o **número corporativo/sistema como administrador** e cadastra o link na turma. O sistema **não** cria grupos via API.
-- Opcionalmente registra **link de convite do grupo WhatsApp** da turma (UC16). Textos de comunicação vêm do **pacote UC88** da edição — **não** há “modelo de mensagem” local na turma (substitui configuração legada). A mensagem padrão do template é preenchida **dinamicamente** com os dados dos cadastros de **edição, unidade e turma** (link do grupo, nome da turma, local etc.), quando necessário; **Gestor de Unidade** e **Gestor de Turma** podem alterar o texto na prévia antes de enviar (UC50 — decisão G2).
+- Opcionalmente registra **link de convite do grupo WhatsApp** da turma (UC16). Textos de comunicação vêm do **pacote UC88** da edição — **não** há “modelo de mensagem” local na turma. A mensagem padrão do template é preenchida **dinamicamente** com os dados dos cadastros de **edição, unidade e turma** (link do grupo, nome da turma, local etc.), quando necessário; **Gestor de Unidade** e **Gestor de Turma** podem alterar o texto na prévia antes de enviar (UC50).
 - Associa participantes após seleção (UC17).
 - Na listagem de participantes da turma, a localização é **Cidade/UF** e **Bairro** da empreendedora (não a unidade).
 
@@ -1536,7 +1374,7 @@ Conclui inscrição **via Aplicativo Cliente** com indicador visual de progresso
 
 1. **Instruções** — bloco inicial de texto **editável no CMS** por edição. Em edições **presenciais/híbridas**, inclui **no início** (antes dos dados pessoais extensos) a pergunta obrigatória de **disponibilidade** para encontros (**bloqueio de cadastro** — UC12; não pontua): se a pessoa indicar que **não** tem disponibilidade, o sistema exibe aviso de obrigatoriedade e pede confirmação; se não confirmar, **encerra o cadastro** . Também coleta **preferência de período** (**manhã** ou **tarde** — sem noturno neste escopo) com aviso de que a preferência é **informativa** e a alocação prioriza geografia/vagas. **Internet** e **WhatsApp** **não** encerram o cadastro: quando os critérios 5 e 6 da régua estiverem ativos, as perguntas aparecem nos blocos 3–4 e **pontuam** depois (UC23).
 2. **Dados pessoais** — **nome de registro** (para documentos) e **nome social** (para comunicação), CPF, nascimento (**bloqueio ≥ 18 anos** — UC12; não pontua), sexo, escolaridade, **raça/cor** e demais dados sensíveis, endereço com **busca automática por CEP**. Campos de **dados sensíveis** (raça/cor, religião, deficiência, orientação sexual) ficam **no meio** da ficha e trazem obrigatoriamente a opção **"Prefiro não responder"** (nomenclatura única); sem consentimento (UC20), o dado é gravado assim e **não** aparece em perfis nem no BI.
-3. **Dados do empreendimento** (preenchidos pela **empreendedora**; o gestor não cadastra empreendimento — decisão de 25/09/2026) — **nome do empreendimento**, ramo/segmento de atividade, **tempo de negócio** (critério 1 da régua, se ativo; inclui opção **menos de 6 meses**), formalização (**informal / MEI / ME** — **não pontua**; filtro UC12), faturamento médio (categorias editáveis no CMS); **CNPJ obrigatório** quando formalização = MEI ou ME; **acesso à internet** e **WhatsApp** (critérios 5 e 6, se ativos — respostas **não** bloqueiam inscrição); redes sociais (Instagram/Facebook/TikTok) para uso futuro em catálogo/marketplace. Demais campos da régua B visíveis **somente se o critério estiver ativo** na edição.
+3. **Dados do empreendimento** (preenchidos pela **empreendedora**; o gestor não cadastra empreendimento) — **nome do empreendimento**, ramo/segmento de atividade, **tempo de negócio** (critério 1 da régua, se ativo; inclui opção **menos de 6 meses**), formalização (**informal / MEI / ME** — **não pontua**; filtro UC12), faturamento médio (categorias editáveis no CMS); **CNPJ obrigatório** quando formalização = MEI ou ME; **acesso à internet** e **WhatsApp** (critérios 5 e 6, se ativos — respostas **não** bloqueiam inscrição); redes sociais (Instagram/Facebook/TikTok) para uso futuro em catálogo/marketplace. Demais campos da régua B visíveis **somente se o critério estiver ativo** na edição.
 4. **Dados econômicos/socioeconômicos** — **renda familiar por faixas de salário mínimo** + **valor exato da renda** (para desempate e análise; valor real visível aos coordenadores), número de **dependentes** para **renda per capita** (critério 2, se ativo); **CLT** e **cargo público** (critérios 3 e 4, se ativos); **disclaimers** de apoio ao preenchimento de renda/faturamento.
 
 Ao final, apresenta os **aceites** (regulamento por link/PDF, uso de imagem/divulgação, comunicados gerais — UC20). Pode existir um **formulário variável** e um **"Guia do Participante"** por edição, com perguntas específicas que aparecem apenas quando configuradas — **não** contabilizadas no BI (para não afetar a comparabilidade). Valida **CEP** para elegibilidade geográfica; aceita **CPF** ou **RNE/outro documento** para estrangeiras. O sistema **gera um ID automático** para a empreendedora.
@@ -1778,7 +1616,7 @@ Exibe **histórico de envios** e **contador de jornadas liberadas**. Envios API 
 
 **Mini CRM** no **Aplicativo Gestor** (Unidade e Turma): **visualiza pré-inscrições abandonadas**, **exporta listas de contatos** e permite o **reengajamento** de leads que **autorizaram comunicação** (WhatsApp obrigatório na pré-inscrição — UC19).
 
-O lembrete de inscrição incompleta é, preferencialmente, uma **instância do alerta** `inscription_incomplete` (UC87): atraso e reforço configuráveis no CMS; **para automaticamente** ao concluir a inscrição (UC21). O gestor mantém **disparo manual** (botão) como fallback / controle de custo. Prioriza-se **e-mail** (SendGrid); **WhatsApp** opcional (template Meta, custo maior). Envios efetivos via Backend.
+O lembrete de inscrição incompleta é o alerta automático `inscription_incomplete` (UC87): atraso e reforço no CMS; **para** ao concluir a inscrição (UC21). O gestor mantém **disparo manual** (botão) como fallback. Prioriza-se **e-mail** (SendGrid); **WhatsApp** opcional. Envios via Backend. Os cinco critérios do Ranking **não** passam por este Mini CRM (UC56).
 
 **Atores**
 
@@ -1807,9 +1645,9 @@ O lembrete de inscrição incompleta é, preferencialmente, uma **instância do 
 
 **Descrição**
 
-Autoatualização pela empreendedora **via Aplicativo Cliente** ou edição pelo **Gestor de Turma** no Aplicativo Gestor. O **CPF** (hash), uma vez validado, **não pode ser alterado** pela empreendedora. O **gestor de turma** pode alterar **e-mail** e **DDD + telefone**. O gestor também pode alterar os dados **acessando a conta da empreendedora com acesso de gestor** (UC69); **toda alteração** feita pelo gestor fica registrada para **auditoria** (quem, quando, o quê — decisão G4). A **mudança de unidade/turma** é **exclusiva do Gestor de Unidade** (UC18). Todo registro vincula-se a **programa**, **edição**, **unidade** e **turma**.
+Autoatualização pela empreendedora **via Aplicativo Cliente** ou edição pelo **Gestor de Turma** no Aplicativo Gestor. O **CPF** (hash), uma vez validado, **não pode ser alterado** pela empreendedora. O **gestor de turma** pode alterar **e-mail** e **DDD + telefone**. O gestor também pode alterar os dados **acessando a conta da empreendedora com acesso de gestor** (UC69); **toda alteração** feita pelo gestor fica registrada para **auditoria** (quem, quando, o quê). A **mudança de unidade/turma** é **exclusiva do Gestor de Unidade** (UC18). Todo registro vincula-se a **programa**, **edição**, **unidade** e **turma**.
 
-**Tela "Meus dados" no Cliente (protótipo v5 — v9):** acesso pelo Perfil (UC92). **Identificação:** nome completo* (certificado, recibo e documentos); **nome social** (é assim que **chamamos** a pessoa em recados e no app; se vazio, o sistema preenche o **mesmo** campo com o tratamento do cadastro — ainda é nome social, não “primeiro nome”), e-mail*, telefone*. **Endereço:** CEP*, rua*, número*, complemento, bairro*, cidade*, UF* (2 letras, maiúsculas). O **CPF não aparece** na tela (coerente com a regra acima). (* obrigatório)
+**Tela "Meus dados" no Cliente:** acesso pelo Perfil (UC92). **Identificação:** nome completo* (certificado, recibo e documentos); **nome social** (é assim que **chamamos** a pessoa em recados e no app; se vazio, o sistema preenche o **mesmo** campo com o tratamento do cadastro — ainda é nome social, não “primeiro nome”), e-mail*, telefone*. **Endereço:** CEP*, rua*, número*, complemento, bairro*, cidade*, UF* (2 letras, maiúsculas). O **CPF não aparece** na tela (coerente com a regra acima). (* obrigatório)
 
 - **[A CONFIRMAR]** a alteração de telefone/e-mail pela empreendedora exige verificação? (são os canais do link mágico — UC4); o protótipo salva sem verificação.
 - **[A CONFIRMAR]** o autopreenchimento do endereço pelo CEP (UC21) não aparece nesta tela do protótipo; confirmar se vale também na atualização.
@@ -1874,11 +1712,11 @@ Linha do tempo de programas, edições, status, certificações e indicadores.
 
 **Descrição**
 
-Status operacionais (backend/gestor): pré-inscrita, inscrita, selecionada/qualificada, **aprovada sem participação efetivada** (presencial/híbrido — ainda não entrou no grupo da turma), **em assessoria** / **ativa** (participação efetivada), beneficiada, certificada, **recebeu doação** (ao menos uma; tipo e quantidade ficam no histórico de doações — UC28, v10), emancipada, **concluída**, **cancelada** (ação do **gestor** — no fim do programa, quando a participante não atingiu nenhum mínimo e não pode mais cumprir as atividades, ou ao processar um pedido de desligamento; com motivo; **desistente** quando o término de uma inscrição aceita na edição é classificado como **desistência** — UC30, decisão G7 e confirmação C7). Beneficiada/certificada usam os **% da edição** (UC13).
+Status operacionais (backend/gestor): pré-inscrita, inscrita, selecionada/qualificada, **aprovada sem participação efetivada** (presencial/híbrido — ainda não entrou no grupo da turma), **em assessoria** / **ativa** (participação efetivada), beneficiada, certificada, **recebeu doação** (ao menos uma; tipo e quantidade ficam no histórico de doações — UC28, v10), emancipada, **concluída**, **cancelada** (ação do **gestor** — no fim do programa, quando a participante não atingiu nenhum mínimo e não pode mais cumprir as atividades, ou ao processar um pedido de desligamento; com motivo; **desistente** quando o término de uma inscrição aceita na edição é classificado como **desistência** — UC30). Beneficiada/certificada usam os **% da edição** (UC13).
 
 **UX no Aplicativo Cliente:** preferir rótulos humanizados — **inscrita**, **aguardando seleção** / **aguardando entrevista de seleção** (P/H), **aprovada**, **ativa**, **concluída**, **desistente**. Evitar "matriculada". Frases curtas por programa; sem seção "Saiba Mais" excessiva. WhatsApp = canal principal de notificação.
 
-**Rótulos no Cliente (decisão 24/09/2026):** vale a orientação acima. O selo "Matriculada" que o protótipo v5 exibia **não é usado**; a home (UC91) mostra a situação com os rótulos humanizados e os contadores "em curso" / "aguardando seleção".
+**Rótulos no Cliente:** vale a orientação acima. O selo "Matriculada" **não é usado**; a home (UC91) mostra a situação com os rótulos humanizados e os contadores "em curso" / "aguardando seleção".
 
 **Atores**
 
@@ -1908,10 +1746,10 @@ Status operacionais (backend/gestor): pré-inscrita, inscrita, selecionada/quali
 
 **Descrição**
 
-Registra o **cancelamento** da inscrição com **motivo** para indicadores qualitativos. **Quem cancela é sempre o gestor** (Unidade ou Turma). **Critério (confirmação C7, 25/09/2026):** no **fim do programa**, o gestor cancela a inscrição da participante que **deixou muitas atividades sem realizar**, **não pode mais cumpri-las** e **não atingiu nenhum dos mínimos** de **beneficiamento** e **certificação** da edição (UC13). O sistema já calcula quem atingiu os mínimos (UC55) e pode mostrar essa informação como apoio, mas **não cancela automaticamente**: quem executa é o gestor. O gestor também registra o cancelamento ao processar um **pedido de desligamento** da participante (UC79). **O cancelamento pode ter a desistência como motivo** (decisão G7, 24/09/2026). **Desistência** é uma **classificação**, dada pelo **gestor** ou pela **automação**, do **término de uma inscrição aceita na edição**, para **registro do resultado final** (UC29/UC61). Captura um **campo fechado/padronizado** (para o BI) **e** um **campo aberto** de descrição. A **UI operacional** registra **mês/ano** do término para cálculo de frequência; o **log** preserva data completa (aceita retroativa). **Assim que a inscrição é cancelada**, a pessoa **entra na automação de cancelada** e **sai das automações relacionadas ao programa** (jornada UC33, liberações, lembretes e alertas UC87).
+Registra o **cancelamento** da inscrição com **motivo** para indicadores qualitativos. **Quem cancela é sempre o gestor** (Unidade ou Turma). **Critério:** no **fim do programa**, o gestor cancela a inscrição da participante que **deixou muitas atividades sem realizar**, **não pode mais cumpri-las** e **não atingiu nenhum dos mínimos** de **beneficiamento** e **certificação** da edição (UC13). O sistema já calcula quem atingiu os mínimos (UC55) e pode mostrar essa informação como apoio, mas **não cancela automaticamente**: quem executa é o gestor. O gestor também registra o cancelamento ao processar um **pedido de desligamento** da participante (UC79). **O cancelamento pode ter a desistência como motivo**. **Desistência** é uma **classificação**, dada pelo **gestor** ou pela **automação**, do **término de uma inscrição aceita na edição**, para **registro do resultado final** (UC29/UC61). Captura um **campo fechado/padronizado** (para o BI) **e** um **campo aberto** de descrição. A **UI operacional** registra **mês/ano** do término para cálculo de frequência; o **log** preserva data completa (aceita retroativa). **Assim que a inscrição é cancelada**, a pessoa **entra na automação de cancelada** e **sai das automações relacionadas ao programa** (jornada UC33, liberações, lembretes e alertas UC87).
 
 - A automação classifica como desistência o término que vem do pedido de desligamento (UC79); nos demais casos, quem classifica é o gestor. Não há regra automática de cancelamento.
-- **[A CONFIRMAR] (AC-30, continua pendente na v10)** se a automação de cancelada é **configurável no CMS** (slot no catálogo UC88 e regra UC87) ou **fixa no backend**, e qual é o conteúdo (textos, canais e cadência).
+- **[A CONFIRMAR] (AC-30)** se a automação de cancelada é **configurável no CMS** (slot no catálogo UC88 e regra UC87) ou **fixa no backend**, e qual é o conteúdo (textos, canais e cadência).
 
 **Atores**
 
@@ -1941,7 +1779,7 @@ Registra o **cancelamento** da inscrição com **motivo** para indicadores quali
 
 **Descrição**
 
-Gerencia os **empreendimentos** (negócio individual ou coletivo) **cadastrados pelas empreendedoras** — no cadastro inicial (UC21) ou na área dela no Aplicativo Cliente — e os **vínculos** com as empreendedoras. **O gestor não cadastra empreendimentos** (decisão de 25/09/2026). Modelo de dados: tabelas distintas (**empreendedora** × **empreendimento**) com vínculo **N:1** quando coletivo.
+Gerencia os **empreendimentos** (negócio individual ou coletivo) **cadastrados pelas empreendedoras** — no cadastro inicial (UC21) ou na área dela no Aplicativo Cliente — e os **vínculos** com as empreendedoras. **O gestor não cadastra empreendimentos**. Modelo de dados: tabelas distintas (**empreendedora** × **empreendimento**) com vínculo **N:1** quando coletivo.
 
 Cada inscrição (UC21) gera **um** registro de empreendimento. Informal **sem CNPJ** não tem chave única: duas sócias que informam o mesmo nome fantasia **não** são mescladas automaticamente. O gestor **agrupa** de forma explícita.
 
@@ -1962,7 +1800,7 @@ Após o agrupamento, a listagem trata **1 linha de empreendimento** com **N empr
 
 - **Presença:** um sócio presente no evento = presença do empreendimento naquele evento.
 - **Atividades compartilhadas** (tarefa, plano de marketing, **plano de ação/metas**, saúde financeira etc.): **uma execução/registro por empreendimento**; sócios podem alternar quem realiza; **plano de ação** é único do negócio e **ambos os sócios veem e editam**.
-- **Metas do plano de ação:** o gestor e a empreendedora podem **Revisar** (com observação); **histórico de edições preservado**; **não** há exclusão destrutiva de metas: a empreendedora pode **Excluir meta** na interface, mas é **exclusão lógica** — a meta fica oculta para ela, permanece no sistema e a gestora continua vendo (decisão 24/09/2026). Status da meta pode ir para análise das gestoras.
+- **Metas do plano de ação:** o gestor e a empreendedora podem **Revisar** (com observação); **histórico de edições preservado**; **não** há exclusão destrutiva de metas: a empreendedora pode **Excluir meta** na interface, mas é **exclusão lógica** — a meta fica oculta para ela, permanece no sistema e a gestora continua vendo. Status da meta pode ir para análise das gestoras.
 - **Saúde financeira:** **um registro por competência e empreendimento**, mesmo com N sócios (UC45).
 - **Questionários:** exceção — **por empreendedora** (respostas individuais).
 - **Beneficiamento / certificação:** % **da edição** (em geral 50% / 75%); ao atingir no **empreendimento**, **todos os sócios** recebem certificado.
@@ -1970,12 +1808,12 @@ Após o agrupamento, a listagem trata **1 linha de empreendimento** com **N empr
 
 Perfil BI (gênero, raça, idade) e observações de acompanhamento permanecem **individuais**.
 
-**Plano de Ação no Cliente (protótipo v5 — v9):** atividade "Definição de Metas" (tipo Plano de Ação) com prazo de entrega. A empreendedora cadastra as metas do mês no formato **5W2H** — Data, O que?, Por quê?, Como?, Onde?, Quem?, Quando? — com **Salvar meta** e **Incluir meta**; cada meta vira item recolhível "Meta N · data · o que", com status **Pendente** → botão **Concluir** → **Concluída**.
+**Plano de Ação no Cliente:** atividade "Definição de Metas" (tipo Plano de Ação) com prazo de entrega. A empreendedora cadastra as metas do mês no formato **5W2H** — Data, O que?, Por quê?, Como?, Onde?, Quem?, Quando? — com **Salvar meta** e **Incluir meta**; cada meta vira item recolhível "Meta N · data · o que", com status **Pendente** → botão **Concluir** → **Concluída**.
 
-- **Excluir meta (decisão 24/09/2026):** a empreendedora pode excluir uma meta na interface; é **exclusão lógica** — a meta fica **oculta para ela**, **permanece no sistema** e a **gestora continua vendo** (histórico mantido).
+- **Excluir meta:** a empreendedora pode excluir uma meta na interface; é **exclusão lógica** — a meta fica **oculta para ela**, **permanece no sistema** e a **gestora continua vendo** (histórico mantido).
 - **[A CONFIRMAR]** as ações **Revisar** (com observação) e o histórico de edições não aparecem na tela do protótipo; se o plano de ação/metas vai para análise do gestor e como.
 
-**Meu empreendimento no Cliente (decisão de 25/09/2026):** na área dela no Aplicativo Cliente, a empreendedora **vê e edita** o empreendimento que cadastrou na inscrição (UC21), com os campos do bloco 3 (nome do empreendimento, ramo/segmento, tempo de negócio, formalização, CNPJ quando MEI/ME, faturamento médio, redes sociais), e o **cria** ali se não houver um ligado a ela (ex.: cadastro antigo), com as mesmas validações da UC21. As alterações ficam registradas (quem, quando, valor anterior e novo) e a gestora vê os dados atualizados.
+**Meu empreendimento no Cliente:** na área dela no Aplicativo Cliente, a empreendedora **vê e edita** o empreendimento que cadastrou na inscrição (UC21), com os campos do bloco 3 (nome do empreendimento, ramo/segmento, tempo de negócio, formalização, CNPJ quando MEI/ME, faturamento médio, redes sociais), e o **cria** ali se não houver um ligado a ela (ex.: cadastro antigo), com as mesmas validações da UC21. As alterações ficam registradas (quem, quando, valor anterior e novo) e a gestora vê os dados atualizados.
 
 - **[A CONFIRMAR] (viii)** onde fica a tela (ex.: Perfil → "Meu empreendimento", ao lado de Meus dados — UC92/UC27; não existe no protótipo v5); se as duas sócias de um negócio coletivo editam; se a empreendedora pode ter mais de um empreendimento na mesma edição e o que acontece com o vínculo atual ao cadastrar outro (proposta: os registros ficam no antigo, como na UC32); quais campos continuam editáveis depois da seleção (tempo, faturamento e formalização entram na régua e nos filtros — UC12/UC24).
 - **[A CONFIRMAR] (vii)** se o gestor pode cadastrar o empreendimento **em nome** da empreendedora pela UC69 (inserir em nome ou acesso de gestor, com auditoria) quando ela não consegue operar o app. Padrão até decisão: **não**; o gestor só corrige dados.
@@ -1983,7 +1821,7 @@ Perfil BI (gênero, raça, idade) e observações de acompanhamento permanecem *
 **Atores**
 
 - **Empreendedora** (Aplicativo Cliente): cadastra o empreendimento na inscrição (UC21) e o vê e edita na área dela; cria-o ali se ainda não houver um.
-- **Gestor de Unidade** (seleção + lista de negócios); **Gestor de Turma** (lista de negócios da própria turma). Os dois **só gerenciam**: não cadastram empreendimento (decisão de 25/09/2026).
+- **Gestor de Unidade** (seleção + lista de negócios); **Gestor de Turma** (lista de negócios da própria turma). Os dois **só gerenciam**: não cadastram empreendimento.
 
 **Pré-condições**
 
@@ -1993,7 +1831,7 @@ Perfil BI (gênero, raça, idade) e observações de acompanhamento permanecem *
 **Fluxo Principal**
 
 - Empreendedora cadastra o empreendimento (nome, ramo/segmento, tempo de negócio, formalização; CNPJ quando MEI/ME) na inscrição (UC21) ou na área dela no Aplicativo Cliente, onde também edita.
-- Gestor **localiza** o empreendimento na lista de negócios ou na seleção (UC24). O gestor **não cria** empreendimento (decisão de 25/09/2026).
+- Gestor **localiza** o empreendimento na lista de negócios ou na seleção (UC24). O gestor **não cria** empreendimento.
 - **Agrupar:** seleciona N pessoas (seleção) ou ≥ 2 negócios (lista) → modal → escolhe o sobrevivente → reassocia vínculos → **apaga** os demais empreendimentos (se sem operação).
 - Visualiza o negócio de forma integrada independentemente do número de sócias.
 - Gestor **corrige dados** do empreendimento com justificativa e auditoria (UC27/UC69). **[A CONFIRMAR] (ix)** se a correção fica também na lista de negócios ou só pela UC69.
@@ -2029,7 +1867,7 @@ Permite ao gestor transferir **uma** empreendedora de um empreendimento para out
 **Fluxo Principal**
 
 - Localiza participante → **Mover empreendimento**.
-- Seleciona o empreendimento destino **entre os já cadastrados** (o gestor não cria empreendimento — decisão de 25/09/2026). Se a empreendedora vai tocar um negócio novo, ela o cadastra na área dela no Aplicativo Cliente (UC31).
+- Seleciona o empreendimento destino **entre os já cadastrados** (o gestor não cria empreendimento). Se a empreendedora vai tocar um negócio novo, ela o cadastra na área dela no Aplicativo Cliente (UC31).
 - Registra motivo e data.
 
 **Pós-condições**
@@ -2047,7 +1885,7 @@ Permite ao gestor transferir **uma** empreendedora de um empreendimento para out
 Em programas **online**, o **backend** orquestra a sequência WhatsApp **depois que o gestor aciona Comunicar resultado (UC25)** para inscritas **qualificadas** (já vinculadas à unidade/turma — tipicamente únicas). **Não** inicia na classificação (UC24), na alocação (UC17) nem na mera existência de turma.
 
 **Quem inicia:** gestor (UC25) → 1º gatilho do módulo da edição.  
-**Quem libera atividades depois:** **automação** (temporizadores da sequência no CMS). O gestor **não** libera atividade a atividade no online.  
+**Quem libera atividades depois:** **automação** (temporizadores / gatilhos das **atividades** no CMS). O gestor **não** libera atividade a atividade no online. **Aula (agrupador)** não libera sozinha. No curso de exemplo, o agrupador começa com duas atividades **escondidas** — gatilho de X dias e mensagem WhatsApp (“aula disponível”) — montadas **à mão**.  
 **Quem envia o lote:** resposta **"OK"** da empreendedora.  
 **Orquestrador técnico:** **fila de jornada no backend** (BullMQ / SQS + workers) + webhooks Gupshup. **Distinta** da **fila de alertas** (UC87). Sem motor externo de marketing.
 
@@ -2077,7 +1915,7 @@ Há dois níveis de “OK”, distintos da classificação:
 
 **Pré-condições**
 
-- Edição online com módulos/temporizadores (UC9); inscrição **qualificada** (UC24); UC25 acionado para aquela inscrição; unidade/turma vinculadas.
+- Edição online com módulos e **atividades** (gatilhos no agrupador — UC9/UC15); inscrição **qualificada** (UC24); UC25 acionado para aquela inscrição; unidade/turma vinculadas.
 
 **Fluxo Principal**
 
@@ -2109,7 +1947,7 @@ Envios respeitam a **janela comercial** (seg–sex 8h–20h; sáb 8h–16h; dom/
 No **Aplicativo Gestor**, a visão por módulo em accordion serve a dois modos:
 
 - **Presencial / híbrido:** o gestor **libera** atividade a atividade (configura data/local/prazo) e usa **"Comunicar aula pelo grupo WhatsApp"** (UC50) — sem API paga após UC25.
-- **Online:** o gestor **não libera** manualmente (já rodou via UC25 + UC33). A tela serve para **acompanhar** quem fez/não fez, aprovar entregas, badges de maratona/risco e atalho UC53. A **matriz de tipos** exclui **Aula** e Visita Técnica (UC15); sem “+ conteúdo extra” (UC35); config sem data/hora/local de encontro; sem facilitador de grupo.
+- **Online:** o gestor **não libera** manualmente (já rodou via UC25 + UC33). A tela lista as **atividades** do módulo (agrupador só organiza a tela). Acompanha quem fez/não fez, aprova entregas e badges de maratona/risco. A lista “quem não fez” aponta ao Ranking (UC56). A **matriz de tipos** exclui **Aula (tipo)** e Visita Técnica (UC15); config sem data/hora/local de encontro; sem facilitador de grupo. O **Gestor de Unidade** pode cadastrar **Download extra** (UC35) neste accordion. Atividades **depois** do marcador Encerramento aparecem no bloco **pós-curso** (UC82).
 
 **Atividades da matriz** entram no cálculo de **beneficiamento** (UC13); **conteúdo extra** (UC35) **não** conta %/carga.
 
@@ -2125,14 +1963,14 @@ No **Aplicativo Gestor**, a visão por módulo em accordion serve a dois modos:
 | Com registros          | Botão desabilitado + mensagem explicativa                                                                                                        |
 
 
-**Comunicação na liberação (P/H):** mensagem padrão do **pacote UC88** conforme **tipo** (+ variante Aula `presencial`/`ao_vivo`), com o link do grupo e os demais dados preenchidos **dinamicamente** dos cadastros de edição, unidade e turma; **Gestor de Unidade** e **Gestor de Turma** podem **alterar** a mensagem antes de UC50 (decisão G2, 24/09/2026). Online: templates do pacote via API (UC33) — sem edição ad hoc na liberação.
+**Comunicação na liberação (P/H):** mensagem padrão do **pacote UC88** conforme **tipo** (+ variante Aula `presencial`/`ao_vivo`), com o link do grupo e os demais dados preenchidos **dinamicamente** dos cadastros de edição, unidade e turma; **Gestor de Unidade** e **Gestor de Turma** podem **alterar** a mensagem antes de UC50. Online: templates do pacote via API (UC33) — sem edição ad hoc na liberação.
 
 **Configuração obrigatória por tipo (na liberação):**
 
 
 | Tipo                        | Configuração na liberação                                                                                                                                                                                                                                                   | Após liberar (acompanhamento **no mesmo lugar**)                                                                                                                                                                     |
 | --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Aula**                    | Natureza **default** = `natureza_original` do CMS (editável até ministrar). **Presencial:** data, hora e **endereço** obrigatórios; anexos CMS (leitura); template `Aula_presencial` + UC50. **Ao vivo:** data e hora; **canal** escolhido pelo Gestor de Unidade ou de Turma — **Google Meet** (encontros pequenos) ou **YouTube + StreamYard** (lives grandes) — e link (decisão de 25/09/2026); template `Aula_ao_vivo` + UC50 | **Presencial:** relato (UC80); QR (UC40); presença manual (UC41); presentes/total; liberação **não** cancelável após presença. **Ao vivo:** compareceram / não; sem QR; replay opcional (**não** gera nova presença) |
+| **Aula (tipo)**             | Natureza **default** do CMS (editável até ministrar). **Presencial:** data, hora e **endereço** obrigatórios; anexos CMS (leitura); template `Aula_presencial` + UC50. **Online:** data e hora; **canal** (Google Meet ou YouTube + StreamYard) e link; template `Aula_ao_vivo` + UC50 | **Presencial:** relato (UC80); QR (UC40); presença manual (UC41); presentes/total; liberação **não** cancelável após presença. **Online:** compareceram / não; sem QR; replay opcional (**não** gera nova presença) |
 | **Vídeo Aula**              | Data-prazo (padrão **D+2**, não passada); mensagem do template **Vídeo Aula** (UC88) + link plataforma                                                                                                                                                                      | Listas **assistiram / não assistiram**; conclusão com **80%** assistido (UC37)                                                                                                                                       |
 | **Atividade**               | Data-prazo; comunicação com link do questionário genérico (Admin)                                                                                                                                                                                                           | Fizeram / não fizeram; pizza (simples/múltipla) + respostas abertas por empreendedora                                                                                                                                |
 | **Tarefa de Casa**          | Conteúdo do **CMS** (somente leitura); gestor define **data-prazo** + comunicação                                                                                                                                                                                           | Não fez / em análise / aprovada; **aprovar** ou **revisar** com comentário (UC44) — **nunca** reprovar; WhatsApp ao responsável                                                                                      |
@@ -2147,7 +1985,7 @@ No **Aplicativo Gestor**, a visão por módulo em accordion serve a dois modos:
 
 
 
-**Regras transversais (liberação):** data obrigatória e não retroativa; Aula presencial exige endereço; Aula (ambas) exige horário. **Cancelar liberação** só se não houver presença nem entrega; cancelada some para participantes e **não** conta no beneficiamento; pode **reativar**. Atividade da matriz liberada conta para beneficiamento (UC13); conteúdo extra não.
+**Regras transversais (liberação):** data obrigatória e não retroativa; Aula (tipo) presencial exige endereço; Aula (tipo) (ambas) exige horário. **Cancelar liberação** só se não houver presença nem entrega; cancelada some para participantes e **não** conta no beneficiamento; pode **reativar**. Atividade da matriz liberada conta para beneficiamento (UC13); conteúdo extra não. **Aula (agrupador)** não tem regra de liberação própria.
 
 **Acompanhamento pós-liberação:** permanece na **mesma tela/detalhe da atividade** no accordion do módulo — o gestor não precisa ir a outra área para ver quem realizou, aprovar entregas ou abrir WhatsApp individual (atalho `wa.me` / mensagem pré-montada ao telefone do responsável pelo empreendimento). Em **edição online**, a lista “não fez” exibe **badge de estado** (em dia / represada ativa / risco / inativa sem lote) e, na ficha, uma **timeline** liberações × conclusões (picos = maratona). CTA de UC53 **só** no estado risco; represada ativa mostra orientação (“padrão de maratona — acompanhar silêncio”).
 
@@ -2161,8 +1999,8 @@ No **Aplicativo Gestor**, a visão por módulo em accordion serve a dois modos:
 
 **Fluxo Principal**
 
-1. Abre a turma e a lista de módulos em accordion.
-2. Expande o módulo e seleciona a atividade a liberar.
+1. Abre a turma e a lista de módulos em accordion (atividades do módulo; agrupador só organiza).
+2. Expande o módulo e seleciona a **atividade** a liberar.
 3. Preenche a **configuração do tipo** (tabela acima).
 4. Opcionalmente (presencial/híbrido): **Comunicar aula pelo grupo WhatsApp** — copia e abre o grupo (UC50). Sem API paga.
 5. Confirma liberação — acesso disponível no Aplicativo Cliente.
@@ -2180,7 +2018,7 @@ No **Aplicativo Gestor**, a visão por módulo em accordion serve a dois modos:
 - **Entrega de tarefa após o prazo (P/H)**: aceita submissão; aplica **penalidade de engajamento** (pontuação menor), sem impedir conclusão para beneficiamento se a entrega for aprovada. **Online:** realizado/não realizado, sem penalidade de prazo da jornada.
 - **Link do grupo ausente**: permite liberar; bloqueia apenas o facilitador UC50 até cadastrar o link (UC16).
 - **Cancelar liberação**: se sem chamada/entregas → marca cancelada; senão, bloqueia.
-- **Reagendar encontro**: altera data e/ou local/link de **Aula** já liberada e dispara aviso no grupo (UC50).
+- **Reagendar encontro**: altera data e/ou local/link de **Aula (tipo)** já liberada e dispara aviso no grupo (UC50).
 
 **Pós-condições**
 
@@ -2194,30 +2032,29 @@ No **Aplicativo Gestor**, a visão por módulo em accordion serve a dois modos:
 
 **Descrição**
 
-Permite ao **Gestor de Turma** adicionar **conteúdo extra** (encontro, material ou sessão pontual) **além da matriz** da edição — **único** tipo de item extra que o gestor pode incluir. **Não** altera a estrutura central do módulo/edição nem adiciona outros tipos da enum (videoaula, tarefa etc.).
+Conteúdo **além da matriz** da edição. **Não conta** para percentual de conclusão, carga horária nem beneficiamento (UC13). **Não é mentoria (UC70).**
 
-**Regra canônica:** conteúdo extra **não conta** para percentual de conclusão, carga horária nem beneficiamento (UC13). Substitui a nomenclatura anterior “aula presencial extra”. **Não é mentoria (UC70):** encontro coletivo pontual da turma continua extra; mentoria é sessão individual sobre o negócio (registrada de 30 min a 2h por encontro, em intervalos de 30 min, duração fixa sem configuração no CMS — UC70, decisão G3 revista em 25/09/2026).
+**Presencial / híbrido:** o **Gestor de Turma** adiciona encontro, material ou sessão pontual (título, descrição, data/hora, local ou link). Canal ao vivo: Google Meet ou YouTube + StreamYard. Avisa a turma pelo grupo (UC50). Pode reagendar.
 
-Em P/H, o gestor pode marcar a sessão como **presencial** (local) ou **ao vivo** (canal escolhido pelo gestor — Google Meet ou YouTube + StreamYard — e link), alinhado ao tipo **Aula** (UC15/UC34).
+**Online — Download extra (opcional, check-point):** o **Gestor de Unidade** cadastra, no accordion do módulo (UC34), um **Download de Conteúdo** extra: título, descrição e arquivo da **biblioteca de mídias do CMS** (S3). O card fica visível à **turma/edição**. **Não** entra no lote WhatsApp da jornada (UC33/UC51). O Ranking (UC56) pode avisar quem a Unidade selecionar, com link mágico; o check-point pode ser disparado **sem** este Download.
 
 **Atores**
 
-- **Gestor de Turma (Aplicativo Gestor)**.
+- **Gestor de Turma** (P/H).
+- **Gestor de Unidade** (Download extra no online).
 
 **Pré-condições**
 
-- Turma ativa; edição **presencial ou híbrida** (UC35 **não** se aplica a online).
+- Turma ativa. P/H: edição presencial ou híbrida. Online: edição online, Unidade autenticada.
 
 **Fluxo Principal**
 
-- Adiciona conteúdo extra com título, descrição, data/hora e, conforme a natureza, local ou link.
-- Oferece **"Comunicar para Grupo"** (UC50) para avisar a turma.
-- Permite **reagendar** (nova data/local/link + aviso no grupo).
-- Notifica participantes; **não** impacta % de conclusão, certificação obrigatória nem ranking de carga.
+- **P/H:** adiciona extra; comunica no grupo (UC50); reagenda se preciso.
+- **Online:** Unidade escolhe “+ Download extra”, associa o arquivo da biblioteca CMS e publica. Não conta %/carga.
 
 **Pós-condições**
 
-- Conteúdo extra disponível à turma; **excluído** dos indicadores de %/carga/beneficiamento.
+- Extra disponível à turma; **excluído** dos indicadores de %/carga/beneficiamento.
 
 ---
 
@@ -2229,9 +2066,9 @@ Em P/H, o gestor pode marcar a sessão como **presencial** (local) ou **ao vivo*
 
 Acesso a videoaulas (YouTube), PDFs e guias **via Aplicativo Cliente** — link WhatsApp ou login e-mail (UC4). Na **online**, o tipo **Download** também **envia os arquivos no WhatsApp** da empreendedora após o OK (UC33/UC51); os **mesmos documentos** permanecem nesta tela do Cliente. O **engajamento** é medido pela **conclusão da atividade** no Cliente (baixou / marcou), não apenas pelo recebimento no WhatsApp nem pela visualização do vídeo.
 
-**Home do programa (protótipo v5 — v9):** cabeçalho (programa, edição, unidade, turma); card **"Sua jornada até agora"** ("Você completou N das M atividades… O certificado libera automaticamente ao cumprir [percentual da edição]", Progresso Geral %); módulos em **acordeão** com contagem concluídas/total; cards com badge do tipo (UC15), título, estado ("Liberado • 15 min", "Bloqueado • Requer progresso", "Indisponível") e CTA (Ver detalhes, Assistir agora, Acessar gravação, Fazer teste, Preencher agora); no fim da página, **Solicitar mentoria** (UC70) e **Desistir do programa** (UC79). Pode exibir banner de certificado (UC55) e os avisos/faixas de **cada doação aprovada** (UC94/UC86 — um por doação, qualquer tipo; v10). Cada detalhe de atividade repete "Seu progresso no programa — N de M atividades (%)" e o card **Dúvidas? / Iniciar WhatsApp** (UC95).
+**Home do programa:** cabeçalho (programa, edição, unidade, turma); card **"Sua jornada até agora"** ("Você completou N das M **atividades**… O certificado libera automaticamente ao cumprir [percentual da edição]", Progresso Geral % — **por atividade**); módulos em **acordeão** com as atividades (Aula agrupador só organiza a tela); cards com badge do tipo (UC15), título, estado ("Liberado • 15 min", "Bloqueado • Requer progresso", "Indisponível") e CTA. **Pós-curso** (depois do marcador Encerramento) aparece em **bloco separado**. No fim da página, **Solicitar mentoria** (UC70) e **Desistir do programa** (UC79). Pode exibir banner de certificado (UC55) e os avisos/faixas de **cada doação aprovada** (UC94/UC86). Cada detalhe de atividade repete "Seu progresso no programa — N de M atividades (%)" e o card **Dúvidas? / Iniciar WhatsApp** (UC95).
 
-**Aula presencial — detalhe (protótipo v5 — v9):** situação de presença registrada (UC40/UC41; no protótipo, badge "Presente" como dado de demonstração), data e horário, **Localização** com endereço e botão **Abrir no Maps** (abre o Google Maps com o endereço) e **Observações** do encontro.
+**Aula presencial — detalhe:** situação de presença registrada (UC40/UC41; no protótipo, badge "Presente" como dado de demonstração), data e horário, **Localização** com endereço e botão **Abrir no Maps** (abre o Google Maps com o endereço) e **Observações** do encontro.
 
 - **[A CONFIRMAR]** origem das observações da aula presencial (campo da liberação — UC34?).
 
@@ -2291,15 +2128,15 @@ Registra progresso e **presença na atividade** ao **acessar/consumir** a **Víd
 
 **Descrição**
 
-Participação em transmissão ao vivo por **Google Meet** (encontros pequenos, com perfil de reunião) ou **YouTube + StreamYard** (lives maiores); quem escolhe o canal é o **Gestor de Unidade ou de Turma**, ao aplicar a atividade (UC34) ou ao configurar o workshop de encerramento do online (confirmação C6 e decisão de 25/09/2026 — item 2). Há dois usos distintos:
+Participação em transmissão ao vivo por **Google Meet** (encontros pequenos, com perfil de reunião) ou **YouTube + StreamYard** (lives maiores); quem escolhe o canal é o **Gestor de Unidade ou de Turma**, ao aplicar a atividade (UC34) ou ao configurar o workshop de encerramento do online. Há dois usos distintos:
 
 1. **Aula (modo ao vivo)** (durante a formação — **só P/H**): atividade **síncrona** do tipo **Aula** com natureza ao vivo (data e **hora** obrigatórias — UC34); listas **compareceram / não compareceram**; **sem** QR de local físico. Ao acessar no horário, registra presença. Após o evento, o gestor pode registrar **link de replay**; assistir o replay **não** gera nova presença. Conta para beneficiamento (UC13). **Não** libera doação.
 2. **Live / Workshop de Encerramento** (**funil online**): etapa **obrigatória** do caminho de doação em programas **online**. **Não** se aplica como gatilho de doação em P/H (lá a doação é análise manual a qualquer momento — UC57).
 
 **Live de Encerramento (online) — funil de liberação para doação**
 
-1. **Pré-requisito:** empreendedora/empreendimento com **100% das atividades** da edição concluídas. **Exceção permitida e registrada (decisão G6, 24/09/2026):** quem não cumpriu 100% **também pode seguir no funil** (live → palavra-chave → questionário final) quando o **gestor** (Unidade ou Turma, no seu escopo) libera a exceção no Aplicativo Gestor, **sem precisar informar motivo** — a ideia é flexibilidade sem burocracia, porque às vezes é preciso gente para completar o programa (confirmação C5, 25/09/2026). O sistema registra na auditoria **quem liberou, quando e para quem**, e os relatórios distinguem quem seguiu por exceção. As etapas seguintes (KW válida e questionário 100% certo) continuam obrigatórias.
-2. **Transmissão (confirmação C6, 25/09/2026):** usam-se as **duas ferramentas** — **Google Meet** para encontros pequenos, com perfil de reunião, e **YouTube + StreamYard** para lives maiores (volume típico ~400). Quem escolhe a ferramenta é o **Gestor de Unidade ou de Turma** (no seu escopo), **ao aplicar a atividade** (aula ao vivo — UC34) e **ao configurar o workshop de encerramento** do online, informando ferramenta + link (decisão de 25/09/2026). A transmissão **não** é integrada na plataforma (estabilidade/acesso); a **presença continua registrada pela palavra-chave na plataforma** (itens 4 e 5).
+1. **Pré-requisito:** empreendedora/empreendimento com **100% das atividades** da edição concluídas. **Exceção permitida e registrada:** quem não cumpriu 100% **também pode seguir no funil** (live → palavra-chave → questionário final) quando o **gestor** (Unidade ou Turma, no seu escopo) libera a exceção no Aplicativo Gestor, **sem precisar informar motivo** — a ideia é flexibilidade sem burocracia, porque às vezes é preciso gente para completar o programa. O sistema registra na auditoria **quem liberou, quando e para quem**, e os relatórios distinguem quem seguiu por exceção. As etapas seguintes (KW válida e questionário 100% certo) continuam obrigatórias.
+2. **Transmissão:** usam-se as **duas ferramentas** — **Google Meet** para encontros pequenos, com perfil de reunião, e **YouTube + StreamYard** para lives maiores (volume típico ~400). Quem escolhe a ferramenta é o **Gestor de Unidade ou de Turma** (no seu escopo), **ao aplicar a atividade** (aula ao vivo — UC34) e **ao configurar o workshop de encerramento** do online, informando ferramenta + link. A transmissão **não** é integrada na plataforma (estabilidade/acesso); a **presença continua registrada pela palavra-chave na plataforma** (itens 4 e 5).
 3. **Convite:** preferencialmente por **e-mail** (reduz custo de WhatsApp); link da live só para quem fez 100% ou tem exceção registrada (item 1).
 4. **Após o término da live:** o sistema libera a **atividade de presença** no Aplicativo Cliente para a empreendedora informar a **palavra-chave** revelada no fim da live.
 5. **Palavra-chave:** validação **flexível a caixa e acentuação**; registrar **data e horário exatos** do envio (hierarquia de engajamento / ranking pós-elegibilidade). **Prazo rígido** configurável na edição (ex.: live até 15h → até 16h). **Regra canônica = 1 KW** no fim da live; múltiplas KW ao longo do evento = **em discussão**, não obrigatório.
@@ -2313,7 +2150,7 @@ Participação em transmissão ao vivo por **Google Meet** (encontros pequenos, 
 - **Palavra-chave:** a validação ignora maiúsculas/minúsculas, acentos e espaços (compatível com o item 5); erro permite **tentar de novo dentro do prazo**; fora do prazo a atividade encerra sem acesso ao questionário.
 - **Copy de resultado — elegível ≠ ganhou:** ao acertar 100% no questionário final, "você está **elegível**… não quer dizer que ganhou — agora é torcer para ganhar"; banner "Você está elegível!… Se uma doação for aprovada pela Unidade, aí sim o fluxo de dados/recibo aparece no app". **Liberada para doação ≠ doação concedida.** O próximo passo é a **seleção** (UC57), nunca um pedido dela.
 - **Doação (qualquer tipo — v10):** o aviso de benefício só aparece após a aprovação no Gestor (UC57), **um aviso por doação aprovada** (UC94), não pela elegibilidade.
-- *Nota (decisões de 24/09/2026):* o protótipo tinha o botão "Já terminei o workshop — liberar palavra-chave" (a própria empreendedora abria a presença) e janela fixa de 2 horas; são **artefatos de demonstração** — vale a v8: o **sistema** libera a presença após o término da live e o prazo é **configurável na edição**. As 5 perguntas do questionário final do protótipo (sobre as regras do funil) e a palavra-chave "Empreende2026" são **conteúdo de demonstração**; o questionário final segue o item 6.
+- *Nota:* o protótipo tinha o botão "Já terminei o workshop — liberar palavra-chave" (a própria empreendedora abria a presença) e janela fixa de 2 horas; são **artefatos de demonstração** — vale a v8: o **sistema** libera a presença após o término da live e o prazo é **configurável na edição**. As 5 perguntas do questionário final do protótipo (sobre as regras do funil) e a palavra-chave "Empreende2026" são **conteúdo de demonstração**; o questionário final segue o item 6.
 
 **Atores**
 
@@ -2334,7 +2171,7 @@ Participação em transmissão ao vivo por **Google Meet** (encontros pequenos, 
 **Fluxos Alternativos**
 
 - **Menos de 100% das atividades (online — v9):** card da live bloqueado ("só libera com 100%"), salvo **exceção liberada** pelo gestor (item 1).
-- **Exceção liberada pelo gestor (decisão G6 e confirmação C5):** sem pedir motivo; a empreendedora segue o funil normalmente (live → KW → questionário final 100% certo); quem liberou e quando ficam na auditoria, e a exceção aparece nos relatórios.
+- **Exceção liberada pelo gestor:** sem pedir motivo; a empreendedora segue o funil normalmente (live → KW → questionário final 100% certo); quem liberou e quando ficam na auditoria, e a exceção aparece nos relatórios.
 - **KW incorreta dentro do prazo (v9):** mensagem de erro; pode tentar novamente.
 - **Prazo da KW expirado (v9):** encerra sem acesso ao questionário final; não fica liberada para doação.
 - **Questionário final com erro (v9):** não libera; pode retentar conforme regra da edição, dentro do prazo (item 6).
@@ -2354,7 +2191,7 @@ Participação em transmissão ao vivo por **Google Meet** (encontros pequenos, 
 
 Atividade do tipo **questionário** no catálogo UC15. Há **três tipos instrumentais** (Inicial / Final / NPS) e, em separado, o tipo **Atividade** (questionário **genérico** configurável no Admin — também com simples/múltipla/aberta e consolidado no Gestor).
 
-Padrão único **online e P/H** (17/set): três etapas de feedback do **programa** — **chegada** (Questionário Inicial), **NPS final** (tipo NPS no encerramento) e a **pesquisa após a formação** (UC82 — dias programáveis no CMS; Backend dispara). Edições com parceiro **Multiplica por Elas** podem acrescentar perguntas de organização no CMS da edição; não é tela nova. Formulário de satisfação de **mentoria/ação** (voluntariado) permanece pendência Heitor/Sandra — não inventar perguntas aqui.
+Padrão único **online e P/H**: três etapas de feedback do **programa** — **chegada** (Questionário Inicial), **NPS final** (tipo NPS no encerramento) e a **pesquisa após a formação** (UC82 — dias programáveis no CMS; Backend dispara). Edições com parceiro **Multiplica por Elas** podem acrescentar perguntas de organização no CMS da edição; não é tela nova. Formulário de satisfação de **mentoria/ação** (voluntariado) permanece pendência Heitor/Sandra — não inventar perguntas aqui.
 
 
 | Tipo (UC15)              | Uso                                                                                                                                            |
@@ -2369,10 +2206,9 @@ Questões de **múltipla escolha**, **escolha simples** e/ou **resposta aberta**
 
 No **Aplicativo Gestor**, no **mesmo detalhe da atividade** liberada (UC34), o gestor acompanha: lista de quem **fez** e quem **não fez**; e um **consolidado** das respostas objetivas em **gráfico de pizza por opção** (por pergunta); respostas abertas associadas a cada empreendedora.
 
-**Protótipo cliente v5 (v9):**
+**NPS de conclusão da jornada:** máscara **0–10** (“recomendaria… para uma amiga empreendedora?”) no fim da formação. Também pode aparecer **depois** do marcador Encerramento (bloco pós-curso — UC82). **[A CONFIRMAR]** o **modelo de perguntas** além dessa escala — não inventar itens.
 
-- **Teste de Conhecimento** ("Quiz de Revisão Módulo 1"): questões com navegação Anterior/Próxima e prazo de entrega. *Nota:* a nota mínima de 70%, o tempo limite de 15 min e as 10 questões exibidos no protótipo são **dados de demonstração** e não são requisito (a v8 não prevê nota mínima nem tempo limite).
-- **Pesquisa NPS:** escala **0–10** ("recomendaria… para uma amiga empreendedora?"), campo "O que podemos melhorar?" e **Enviar feedback** (coerente com a máscara NPS).
+- **Teste de Conhecimento:** questões com navegação Anterior/Próxima e prazo de entrega. Nota mínima, tempo limite e quantidade de questões de demonstração **não** são requisito.
 - **Questionário final do funil online:** ver UC38.
 
 **Atores**
@@ -2548,7 +2384,7 @@ O gestor **aprova** ou **solicita revisão** (botão **Revisar** — substitui �
 **Fluxo Principal**
 
 - No detalhe da atividade (ou Pendências), vê as listagens (não fez / em aprovação / aprovada).
-- Abre o empreendimento em “em aprovação”; analisa material/dados; na saúde financeira, consulta **dificuldade** e o **resumo da turma**.
+- Abre o empreendimento em “em aprovação”; analisa material/dados; na saúde financeira, consulta **dificuldade**, o **resumo da turma** e os **desvios de variação da renda/retirada** (UC45), que ficam aparentes no registro para consulta, conferência e confirmação. O desvio não impede aprovar.
 - **Aprova**: atualiza status; bloqueia edição posterior; registra progresso/beneficiamento.
 - **Revisar**: escreve comentário; empreendedor é notificado (WhatsApp/e-mail e indicador no Cliente) para retificar e reenviar; **sem penalidade automática**.
 - Opcionalmente usa o **link WhatsApp** individual ao responsável (lembrete ou cobrança).
@@ -2568,15 +2404,15 @@ O gestor **aprova** ou **solicita revisão** (botão **Revisar** — substitui �
 
 Registro **mensal** vinculado ao **empreendimento** (UC31), preenchido **pela empreendedora** no **Aplicativo Cliente**. A plataforma **não** é fluxo de caixa em tempo real: é **reporte póstumo** do mês que já passou (prazo típico: **10º dia útil** do mês seguinte).
 
-Título da atividade: **Saúde financeira**. Tela conforme o **protótipo v5**, que é a referência (decisão G5, 24/09/2026): **layout em colunas**, com os campos e parâmetros descritos abaixo. Análise pela **margem do mês** e pela **média dos meses anteriores**, conforme os **Critérios de alerta**.
+Título da atividade: **Saúde financeira**. Tela em **layout em colunas**, com os campos e parâmetros descritos abaixo. Análise pela **margem do mês** e pela **média dos meses anteriores**, conforme os **Critérios de alerta**.
 
 **Anexo obrigatório** (planilha, foto ou print). **Dificuldade** obrigatória (escala de **5 níveis** com rostos). Liberação pelo gestor (UC34) com data limite e WhatsApp com **link**. **Um único registro por competência e empreendimento**, mesmo com N sócios. Requer **aprovação** (UC44); gestor pode marcar **revisão** (UC46). Conta para beneficiamento (UC13). Dívida pessoal vs profissional e estoque de dívida **não** entram neste incremento.
 
 **Dificuldade (obrigatória):** muito difícil 😣, difícil 🙁, tranquilo 😐, fácil 🙂, muito fácil 😄 (botões lado a lado). No Gestor: modal de aprovação, histórico por competência e resumo da turma. O gestor pode registrar via UC69 (inserir em nome ou acesso de gestor à conta, com auditoria).
 
-**Tela "Saúde Financeira" (protótipo v5 — decisão G5):**
+**Tela "Saúde Financeira":**
 
-- **Atividade única (decisão 24/09/2026):** as atividades "Fluxo de Caixa Mensal" e "Fechamento Financeiro do Mês" do protótipo deixam de existir separadas e passam a ser esta **Saúde financeira** (um registro por competência e empreendimento).
+- **Atividade única:** não existem "Fluxo de Caixa Mensal" nem "Fechamento Financeiro do Mês" separados — só **Saúde financeira** (um registro por competência e empreendimento).
 - **Cabeçalho:** título "Saúde Financeira" com o seletor **Mês de referência** ao lado; texto "Acompanhe entradas, saídas (incluindo dívidas) e o resultado do mês. Resultado negativo é possível e ajuda a ver a sustentabilidade do negócio."; aviso "Você pode preencher só o **mês vigente**. Meses anteriores são só consulta" (mês anterior abre só para leitura, sem salvar); o rascunho do mês vigente fica guardado.
 - **Layout em colunas:** três colunas lado a lado, de mesma largura — **Entradas · Saídas · Retirada** — e, abaixo delas, o bloco **Resultado**. Sob cada campo aparece, como referência, o valor do **mês anterior** (ex.: "[mês anterior]: R$ …").
 - **Entradas:** **Saldo do período anterior** (R$; vem preenchido com o **Saldo do período** do mês anterior — zero no 1º mês da edição — e é editável, sem trava); **Faturamento** (R$); **Empréstimo** (R$ — financiamentos do negócio no mês); **Nº de clientes**; **Nº de produtos** (vendidos).
@@ -2592,21 +2428,19 @@ Saldo do período = Entradas − Total saídas − Renda/retirada
 
 - **Gráfico** da evolução dos meses da edição (faturamento, total de saídas e saldo do período) e, logo abaixo, o **banner de alerta** (ver Critérios).
 - **Upload de documento** (planilha, PDF ou imagem — .pdf, .xls, .xlsx, .csv, .png, .jpg, .jpeg, .webp); **justificativas de zero** (uma por campo); **Observações** ("Anote insights sobre o mês…"); bloco **Dificuldade de preenchimento** ("Como você avalia preencher esta tela neste mês?"); botão **Salvar registro**.
-- **Justificativa de zero:** por enquanto, obrigatória **só** para **faturamento** e **renda/retirada** zerados (decisão 10, confirmada na G5). O protótipo pede justificativa para qualquer campo zerado; ampliar a lista depende de nova decisão.
-- **[DECISÃO PENDENTE] Rótulos da dificuldade:** protótipo (bloco "Dificuldade de preenchimento — Como você avalia preencher esta tela neste mês?"): Muito fácil 😄 · Fácil 🙂 · Mais ou menos 😐 · Difícil 😕 · Muito difícil 😫; v8: muito difícil 😣, difícil 🙁, tranquilo 😐, fácil 🙂, muito fácil 😄. Mantidos os rótulos da v8 até decisão.
-- *Nota:* no protótipo o salvamento não era bloqueado sem anexo nem sem dificuldade — simplificação de demonstração; continuam **obrigatórios**, como na v8 (**confirmado** pelo Alexandre em 25/09/2026 — C1). Valores e meses exibidos (Jun/26–Set/26, histórico Jun–Ago) são **dados de demonstração**.
-- A antiga leitura pedagógica "sobra" (v8) não faz parte da tela do v5 e sai do requisito.
+- **Justificativa de zero:** obrigatória **só** para **faturamento** e **renda/retirada** zerados. Ampliar a lista depende de nova decisão.
+- **[DECISÃO PENDENTE] Rótulos da dificuldade:** proposta do protótipo: Muito fácil 😄 · Fácil 🙂 · Mais ou menos 😐 · Difícil 😕 · Muito difícil 😫. Até decisão, valem: muito difícil 😣, difícil 🙁, tranquilo 😐, fácil 🙂, muito fácil 😄.
+- Anexo e dificuldade **obrigatórios** para salvar. Valores e meses de demonstração nas telas de referência não são requisito.
 
-**Critérios de alerta (decisão G5 — parâmetros do protótipo v5):** campos fora do limiar ficam destacados no próprio campo; **âmbar = alerta**, **azul = apontamento**.
+**Critérios de alerta:** campos fora do limiar ficam destacados no próprio campo; **âmbar = alerta**, **azul = apontamento**.
 
 1. **Campos monitorados** — alerta: faturamento, despesas / capital de giro, dívidas, total de saídas, resultado (saldo do período), renda/retirada, nº de clientes, nº de produtos. Apenas apontamento: **investimento** e **poupança** (podem variar muito de um mês para outro; só sinalizam e não entram no banner de alerta) e, na comparação com a média, também o **empréstimo** (comportamento do v5).
-2. **Margem do mês vigente** — base = **entradas** (faturamento + empréstimo + saldo do período anterior), como no código do protótipo v5 (confirmação C2, 25/09/2026): **total de saídas > 120% das entradas** → alerta em total de saídas; **saldo do período < −30% das entradas** → alerta em resultado. (O painel lateral de reunião do protótipo citava o faturamento; vale o cálculo do código.)
+2. **Margem do mês vigente** — base = **entradas** (faturamento + empréstimo + saldo do período anterior): **total de saídas > 120% das entradas** → alerta em total de saídas; **saldo do período < −30% das entradas** → alerta em resultado.
 3. **Comparação com a média dos meses anteriores** — valor **> 2×** a média → "Acima de 2× a média histórica"; valor **< 0,4×** a média (e > 0) → "Abaixo de 0,4× a média histórica". Base: média de **todos os meses anteriores** da edição com registro, como no v5 (sem filtrar por aprovação).
 4. **Parâmetros (padrão do v5):** 120% · −30% · 2× · 0,4×; investimento/poupança só como apontamento; limiares proporcionais (não desvio fixo, ex. ±50%).
-5. Só o **mês vigente** dispara os avisos. O alerta **só avisa**: não bloqueia o salvamento (o envio só é bloqueado por anexo, dificuldade ou justificativa de zero faltando). O banner junta as mensagens sem repetir (ex.: "O faturamento deste mês está bem diferente do padrão dos meses anteriores.").
-6. **Não há** alerta "renda/retirada maior que faturamento": foi retirado, e a tela de Saúde Financeira do v5 não tem esse alerta. A renda/retirada é monitorada pela comparação com a média (item 3).
-
-Substitui o critério anterior da v8 (âmbar se divergir mais de 30% da média; alerta se renda/retirada > faturamento).
+5. No preenchimento, só o **mês vigente** dispara os avisos. O alerta **só avisa**: não bloqueia o salvamento (o envio só é bloqueado por anexo, dificuldade ou justificativa de zero faltando). O banner junta as mensagens sem repetir (ex.: "O faturamento deste mês está bem diferente do padrão dos meses anteriores."). Os desvios calculados **acompanham o registro** e reaparecem na apuração do gestor (UC44/UC46).
+6. **Alerta "renda/retirada maior que faturamento"** — se a **renda/retirada** do mês fica **maior que o faturamento**, o campo de renda/retirada é destacado (âmbar) e o aviso entra no banner. A comparação com a média (item 3) continua valendo para a renda/retirada.
+7. **Variação da renda/retirada — aparente e permitida.** Entram aqui a renda/retirada **maior que o faturamento** (item 6), **acima de 2×** a média e **abaixo de 0,4×** a média (item 3). Desvios assim **podem acontecer** e são **permitidos**: não bloqueiam salvamento nem aprovação. Ficam **aparentes** nas duas interfaces, para consulta, conferência e confirmação: no preenchimento do **Aplicativo Cliente** (`cm_frontend`), com o campo destacado e o aviso no banner; na apuração do **Aplicativo Gestor** (`cm_app_gestor`, UC44/UC46), com os mesmos desvios do registro em destaque.
 
 **Atores**
 
@@ -2620,19 +2454,20 @@ Substitui o critério anterior da v8 (âmbar se divergir mais de 30% da média; 
 
 - Acessa a tela no Aplicativo Cliente ou via **link** WhatsApp (UC50/UC54); o mês vigente vem selecionado.
 - Preenche Entradas, Saídas e Retirada do mês vigente (o sistema calcula total de saídas e saldo do período); **anexa documento obrigatório**; **escolhe a dificuldade**.
-- Sistema aplica os **critérios de alerta** (âmbar = alerta; azul = apontamento — ver Descrição), sem bloquear; valida a presença do anexo, da dificuldade e das justificativas de zero (faturamento e renda/retirada).
+- Sistema aplica os **critérios de alerta** (âmbar = alerta; azul = apontamento — ver Descrição), sem bloquear; valida a presença do anexo, da dificuldade e das justificativas de zero (faturamento e renda/retirada). Os desvios de variação da renda/retirada ficam aparentes no preenchimento (`cm_frontend`) para consulta, conferência e confirmação.
 - Status "aguardando aprovação" (UC44).
 
 **Fluxos Alternativos**
 
 - **Sem anexo**: bloqueia envio até anexar.
 - **Valores fora dos critérios**: destaca o campo e mostra o banner; a empreendedora confere e pode salvar mesmo assim.
+- **Variação da renda/retirada** (maior que o faturamento, acima de 2× ou abaixo de 0,4× a média): no preenchimento (`cm_frontend`), destaca o campo (âmbar) e mostra o aviso, para consulta, conferência e confirmação. O desvio é permitido: a empreendedora pode salvar mesmo assim. O mesmo apontamento reaparece na apuração do gestor (`cm_app_gestor`, UC44/UC46).
 - **Mês anterior selecionado**: abre só para consulta (sem salvar).
 - **Zero em faturamento ou renda/retirada**: **observação/justificativa obrigatória**.
 - **Mês sem movimento**: permite registro zerado com justificativa.
 - **Revisão pelo gestor** (UC46): empreendedora reavalia e reenvia.
 
-- **Em revisão — tela do Cliente (v9):** registro devolvido pelo gestor para **revisão** (UC44/UC46) aparece com badge **"Requer ajustes"** e o bloco **"Comentário da revisão"** (texto do gestor); os campos voltam a ser editáveis e o botão passa a **Reenviar registro**; após reenviar, volta a "aguardando aprovação". O termo é sempre **revisão** (decisão 24/09/2026; o protótipo usava "Motivo da reprovação" / "Dados Reprovados").
+- **Em revisão — tela do Cliente:** registro devolvido pelo gestor para **revisão** (UC44/UC46) aparece com badge **"Requer ajustes"** e o bloco **"Comentário da revisão"** (texto do gestor); os campos voltam a ser editáveis e o botão passa a **Reenviar registro**; após reenviar, volta a "aguardando aprovação". O termo é sempre **revisão** (não "reprovação").
 
 **Pós-condições**
 
@@ -2648,7 +2483,7 @@ Substitui o critério anterior da v8 (âmbar se divergir mais de 30% da média; 
 
 *Fluxo unificado com UC44.* O **Gestor de Turma** aprova ou **solicita revisão** de registros financeiros mensais (UC45) com observações; revisão dispara notificação e indicador visual no Aplicativo Cliente.
 
-**No Cliente (protótipo v5 — v9):** a devolução para **revisão** aparece como badge **"Requer ajustes"** com o comentário do gestor e o botão **Reenviar registro** (ver UC45). O termo é **revisão** em todo o fluxo (decisão 24/09/2026); "reprovação" / "Dados Reprovados", usados no protótipo, não são adotados.
+**No Cliente:** a devolução para **revisão** aparece como badge **"Requer ajustes"** com o comentário do gestor e o botão **Reenviar registro** (ver UC45). O termo é **revisão** em todo o fluxo; "reprovação" / "Dados Reprovados", usados no protótipo, não são adotados.
 
 **Atores**
 
@@ -2660,8 +2495,8 @@ Substitui o critério anterior da v8 (âmbar se divergir mais de 30% da média; 
 
 **Fluxo Principal**
 
-- Analisa os valores no mesmo layout do v5 (Entradas · Saídas · Retirada e Saldo do período), os alertas/apontamentos (UC45) e o comparativo com os meses anteriores.
-- Aprova ou devolve com observações.
+- Analisa os valores no mesmo layout do v5 (Entradas · Saídas · Retirada e Saldo do período), os alertas/apontamentos (UC45) e o comparativo com os meses anteriores. No **Aplicativo Gestor** (`cm_app_gestor`), os desvios de variação da renda/retirada ficam aparentes no registro — campo destacado e aviso — para consulta, conferência e confirmação.
+- Aprova ou devolve com observações. Aprovar com desvio de renda é permitido: o apontamento não bloqueia.
 
 - (v9) Ao devolver para revisão, a empreendedora vê o registro com status "Requer ajustes" e o comentário, corrige e reenvia (UC45).
 
@@ -2717,7 +2552,7 @@ Facilita a **comunicação manual** em **grupo WhatsApp** institucional. Dois n�
 
 Em **presencial e híbrido**, canal operacional **depois** do aceite: **não dispara API paga** (exceto UC25). O texto vem do **mesmo template Meta/Gupshup** cadastrado no **pacote UC88** (por `TipoAtividade`; Aula: variante `presencial` ou `ao_vivo`). O sistema **preenche placeholders**, monta a mensagem, **copia no clipboard** e **abre o link do grupo** — envio manual no WhatsApp.
 
-**Mensagem e dados dinâmicos (decisão G2, 24/09/2026):** a mensagem padrão vem do template do pacote UC88; o **link do grupo** e os demais dados (nome da edição, unidade e turma, data, hora, local, links etc.) são preenchidos **dinamicamente** a partir dos cadastros de **edição (UC9), unidade (UC66) e turma (UC16)**, quando necessário. **Gestor de Unidade** e **Gestor de Turma** podem **alterar** a mensagem na prévia antes de copiar (revoga a restrição anterior, que reservava a edição do corpo à Unidade). A alteração vale só para aquele envio e fica no log; o template do pacote só muda no CMS (UC88) — **confirmado** em 25/09/2026 (C4).
+**Mensagem e dados dinâmicos:** a mensagem padrão vem do template do pacote UC88; o **link do grupo** e os demais dados (nome da edição, unidade e turma, data, hora, local, links etc.) são preenchidos **dinamicamente** a partir dos cadastros de **edição (UC9), unidade (UC66) e turma (UC16)**, quando necessário. **Gestor de Unidade** e **Gestor de Turma** podem **alterar** a mensagem na prévia antes de copiar. A alteração vale só para aquele envio e fica no log; o template do pacote só muda no CMS (UC88).
 
 O ingresso no grupo da turma é o que **efetiva a participação** (UC25/UC29).
 
@@ -2778,7 +2613,7 @@ Dois casos de mídia no lote, **distintos**:
 | **Download** | Template **Download** **e os arquivos** do material | **Não** se aplica — documentos **sempre** entram no lote | **Sim** — os mesmos arquivos permanecem no app |
 | **Vídeo Aula** | Template + link; arquivo de vídeo só se a flag estiver ON e houver arquivo compatível com WhatsApp no CMS (além do YouTube) | **Sim** — se OFF, lote sem mídia de vídeo | Consumo oficial no player (UC37) |
 
-Receber o arquivo no WhatsApp **não** conclui a atividade; conclusão de Download e Vídeo Aula é no Aplicativo Cliente.
+Receber o arquivo no WhatsApp **não** conclui a atividade; conclusão de Download e Vídeo Aula é no Aplicativo Cliente. **Download extra** do check-point (UC35) **não** entra neste lote.
 
 **Atores**
 
@@ -2808,80 +2643,69 @@ Receber o arquivo no WhatsApp **não** conclui a atividade; conclusão de Downlo
 
 **Descrição**
 
-Executa no **Backend** a **fila de alertas** definida pelas regras do CMS (UC87): avalia métricas, respeita cadência/`exitWhen`, enfileira e envia via **SendGrid** (e-mail) e/ou **Gupshup** (WhatsApp / templates Meta). Substitui o antigo motor Mautic (**removido do projeto**).
+Executa no **Backend** a **fila de alertas**. Dois disparos:
 
-**Não** orquestra a jornada WhatsApp online (UC33 — fila distinta) e **não** dispara UC50 (grupo WhatsApp é manual).
+- **Ficha incompleta** (`inscription_incomplete`): job e eventos de domínio (UC87) avaliam, respeitam cadência e enviam sozinhos via SendGrid e/ou Gupshup. Param quando a inscrição fecha (UC21).
+- **Ranking (UC56):** enfileira só **depois** que o Gestor de Unidade confirma o envio. Sem anexo.
 
-Inclui, como tipos de regra, check-point / risco / inscrição incompleta / prazo próximo / backlog / fim de edição (ver catálogo em Conceitos de Domínio e UC87). Envios WhatsApp respeitam a **janela comercial** (seg–sex 8h–20h; sáb 8h–16h; domingo e feriados nacionais sem disparo); e-mail pode seguir a mesma janela operacional.
+**Não** orquestra a jornada WhatsApp online (UC33) e **não** dispara UC50. Janela comercial do WhatsApp: seg–sex 8h–20h; sáb 8h–16h; domingo e feriado sem disparo.
 
 **Atores**
 
-- **Sistemas de Retaguarda (Backend)** — avaliador + fila de alertas.
-- **SendGrid**, **Gupshup**.
+- **Sistemas de Retaguarda (Backend)**; **SendGrid**, **Gupshup**.
 
 **Pré-condições**
 
-- `AlertRule` ativa + `EditionAlertBinding` habilitado (quando escopo é por edição); templates aprovados; consentimento/opt-in conforme canal.
+- Templates aprovados na Gupshup; consentimento/opt-in do canal. Ficha incompleta: regra ligada no CMS (UC88). Ranking: confirmação da Unidade.
 
 **Fluxo Principal**
 
-1. Eventos de domínio e/ou job periódico disparam reavaliação (UC87).
-2. Backend resolve audiência, aplica `dedupeKey` e cadência.
-3. Enfileira envio no canal escolhido (UC49/UC54 / SendGrid).
-4. Registra `AlertDispatchLog`; cancela pendentes se `exitWhen` for verdadeiro.
+1. Ficha incompleta: reavaliação periódica ou evento de domínio.
+2. Ranking: Unidade confirma destinatárias, canal e template (UC56).
+3. Enfileira; registra `AlertDispatchLog`.
 
 **Pós-condições**
 
-- Mensagens na **fila de alertas**; logs auditáveis; sem dependência de Mautic.
+- Mensagens na fila; logs auditáveis.
 
 ---
 
 
 
-### UC53 – Disparar mensagens direcionadas (edição online)
+### UC53 – Enviar recado a partir do Ranking (edição online)
 
 **Descrição**
 
-Funcionalidade **exclusiva de programas/edições online**. O gestor da edição envia mensagens WhatsApp **pagas (API / UC49)** a públicos filtrados — **disparo manual** (reforço operacional), complementar às regras automáticas UC87:
+Passo de **envio** da UC56. Só o **Gestor de Unidade**. WhatsApp (API / UC49) e/ou e-mail. **Sem anexo.** O template é escolhido **na hora**, entre todos os modelos aprovados na Gupshup. O CMS **não** liga o critério ao modelo.
 
-1. **Não fizeram uma atividade** — lista operacional de quem ainda não concluiu a atividade escolhida (detalhe do módulo ou tela de mensagens). **Não implica evasão** (pode ser represamento para maratonar). Equivalente automático típico: `activity_deadline_soon` / lembrete de atividade (UC87).
-2. **Risco de evasão / cancelamento (perfil curto — online ~1 mês)** — estado **risco de evasão** conforme limiares da edição (UC9): atividades liberadas **não realizadas há mais de 10 dias** **ou** a **5 dias do término** ainda há pendências. Quem está **represada ativa** (acesso recente + fila grande) **não** entra neste filtro. **Não** usar silêncio ≥ 15 dias aqui — esse limiar é do perfil **longo (P/H)**. Equivalente automático: `risk_short_online` / `edition_ending_pending` (UC87).
-3. **Check-point / reengajamento (~15 dias de curso)** — mini campanha de incentivo (duração típica **3 a 5 dias**) para resgatar alunas desaceleradas no meio do ciclo (formação ~30–40 dias). Distinto do limiar de risco curto (10d / 5d do fim). Equivalente automático: `checkpoint_midcourse` (UC87). Disparos respeitam a **janela comercial** (não há envio em domingo/feriado).
+Públicos (o backend só lista): `activity_deadline_soon`, `backlog_liberated`, `edition_ending_pending`, `risk_short_online`, `checkpoint_midcourse`. Quem está **represada ativa** não entra em risco. Check-point é incentivo (D+15, 3–5 dias), não evasão. Se existir Download extra (UC35), o recado pode levar o link mágico; o extra **não** é obrigatório para enviar.
 
-**Gatilho de recompensa:** ao concluir a pendência alvo do check-point, o sistema **desbloqueia material educativo extra** relacionado à edição (atividade **Download** ou flag de conteúdo bonus no CMS).
-
-Estes disparos **manuais** **não existem** em presencial/híbrido (lá a cobrança é pelo grupo — UC50). Em P/H, o **risco longo** (silêncio ≥ 15 dias + represamento) aparece no acompanhamento/ranking (UC56), **sem** a mesma automação WhatsApp paga do UC53 — alertas P/H usam UC87 com audiência `ph` quando configurados (ex. e-mail).
-
-O lembrete de **inscrição incompleta** (pré-seleção) está em UC26 + alerta `inscription_incomplete` (UC87).
+Inscrição incompleta **não** passa por aqui (UC26 + UC87). Em P/H a cobrança da turma é o grupo (UC50); risco longo só aparece na lista da UC56.
 
 **Atores**
 
-- **Gestor de Unidade**, **Gestor de Turma (Aplicativo Gestor)** — disparo na edição online.
-- **Sistemas de Retaguarda (Backend)**; **Gupshup**.
+- **Gestor de Unidade**; **Backend**; **Gupshup**; **SendGrid**.
 
 **Pré-condições**
 
-- Edição de modalidade **online**; participantes com participação na jornada; templates aprovados; opt-in WhatsApp.
+- Edição **online**; Unidade autenticada; modelos aprovados na Gupshup; opt-in do canal.
 
 **Fluxo Principal**
 
-- Abre **Mensagens direcionadas** (ou o detalhe da atividade → “Quem não fez”).
-- Escolhe o público: atividade X não feita, **risco de evasão**, ou **campanha de check-point**.
-- No card de risco vê o motivo: dias sem realização de liberada · proximidade do fim · qtd represada · data da última maratona (ou “nunca”).
-- Seleciona destinatárias; usa template adequado (risco ≠ lembrete de atividade ≠ check-point).
-- Confirma envio via API; registra disparo, custo e público.
-- Quando a pendência do check-point é concluída, libera o **material extra** configurado.
+- Parte do Ranking (UC56) ou do “quem não fez” no módulo (UC34), que abre o mesmo filtro.
+- Confere a lista do critério escolhido; seleciona destinatárias; escolhe canal e template.
+- Confirma. Backend enfileira (UC52), registra log (quem, quando, canal, template) e custo.
 
 **Fluxos Alternativos**
 
-- **Edição presencial/híbrido:** item de menu oculto / bloqueado (exceto comunicação de grupo).
-- **Limite de reenvio:** evita spam (cooldown configurável).
-- Sem resposta após o disparo de risco, a participante continua sinalizada; o cancelamento por falta de cumprimento é feito pelo gestor só **no fim do programa**, pelo critério da UC30 (confirmação C7, 25/09/2026).
-- **Alertas automáticos** da mesma audiência podem já ter enviado (UC87) — o gestor vê o histórico antes de reforçar.
+- Turma: vê a lista, **sem** enviar.
+- Cooldown: evita spam na mesma pessoa.
+- Fora da janela comercial: WhatsApp espera o próximo horário.
+- Sem resposta: a pessoa continua na lista se ainda estiver na condição. Cancelamento só no fim do programa (UC30).
 
 **Pós-condições**
 
-- Mensagens enviadas e auditadas; listas atualizáveis; material extra desbloqueado quando cabível.
+- Recados enviados e auditados; listas atualizadas.
 
 ---
 
@@ -2891,7 +2715,7 @@ O lembrete de **inscrição incompleta** (pré-seleção) está em UC26 + alerta
 
 **Descrição**
 
-O **backend** gera URLs com **token de login mágico** (UC4) e parâmetros opcionais de destino: **programa**, **edição**, **turma** (`turma_id`), **atividade** (`atividade_id`) e **ação** (`acao` — ex.: `presenca`, `videoaula`, `tarefa`). Consumidas na jornada online (UC33), em **alertas** (UC87/UC52), em disparos do gestor (UC49) ou em e-mails (SendGrid). Com UUID e sessão persistentes (UC67), a abertura do link pode **executar a ação diretamente** (ex.: UC40).
+O **backend** gera URLs com **token de login mágico** (UC4) e parâmetros opcionais de destino: **programa**, **edição**, **turma** (`turma_id`), **atividade** (`atividade_id`) e **ação** (`acao` — ex.: `presenca`, `videoaula`, `tarefa`). Consumidas na jornada online (UC33), no alerta de ficha incompleta (UC87/UC52), no Ranking (UC56/UC53), em disparos do gestor (UC49) ou em e-mails (SendGrid). Com UUID e sessão persistentes (UC67), a abertura do link pode **executar a ação diretamente** (ex.: UC40).
 
 **Atores**
 
@@ -2930,7 +2754,7 @@ Avalia os **percentuais gravados na edição** (UC13 — em geral **50%** benefi
 
 Regras e geração de PDF pelo **backend**; envio via Gupshup (por telefone de cada sócia).
 
-**No Cliente (protótipo v5 — v9):** ao atingir o critério, a home do programa mostra o banner **"Certificado liberado — Você atingiu [percentual da edição] de …"** com **Ver certificado** (UC63); o card "Sua jornada até agora" lembra que o certificado libera automaticamente ao cumprir o percentual. A tela Certificados informa que os certificados são concedidos automaticamente ao cumprir o percentual de atividades e que **não há evento de entrega**, e permite **Baixar certificado** no app (o envio por WhatsApp da v8 permanece). *Nota:* o "75%" fixo das telas do protótipo é valor de demonstração; a copy usa o **percentual da edição** (UC13).
+**No Cliente:** ao atingir o critério, a home do programa mostra o banner **"Certificado liberado — Você atingiu [percentual da edição] de …"** com **Ver certificado** (UC63); o card "Sua jornada até agora" lembra que o certificado libera automaticamente ao cumprir o percentual. A tela Certificados informa que os certificados são concedidos automaticamente ao cumprir o percentual de atividades e que **não há evento de entrega**, e permite **Baixar certificado** no app (o envio por WhatsApp permanece). *Nota:* o "75%" fixo das telas do protótipo é valor de demonstração; a copy usa o **percentual da edição** (UC13).
 
 **Atores**
 
@@ -2960,19 +2784,20 @@ Regras e geração de PDF pelo **backend**; envio via Gupshup (por telefone de c
 
 **Descrição**
 
-Consulta indicadores de engajamento por turma/edição. **Engajamento** = **conclusão de atividades na plataforma** (não apenas visualização de vídeo nem OK no WhatsApp). Inclui **gráfico por segmento** (UC56). Ranking/desempenho histórico apoia critérios C de elegibilidade (UC14/UC85) e a doação manual (UC57); **não** aprova doação automaticamente.
+Consulta indicadores de engajamento por turma/edição. **Engajamento** = **conclusão de atividades na plataforma**. Apoia elegibilidade C (UC14/UC85) e a doação (UC57); **não** aprova doação.
 
-Em **edições online** (curta duração), o painel usa os indicadores de **maratona** (cobertura da edição, aderência ao liberado, represamento, silêncio, burst) e os **estados** (em dia / represada ativa / risco de evasão curto / inativa sem lote). Risco curto = **> 10 dias** sem realização de liberada **ou** **≤ 5 dias do fim** com pendências (UC9). **Não** se usa “entregas no prazo sequencial” como KPI principal — isso é lógica de presencial. Atraso de upload em P/H (UC34/UC43) pode reduzir pontuação de engajamento da tarefa, mas **não** se mistura com risco de evasão.
+Em **online**, o painel usa cobertura, aderência ao liberado, represamento, silêncio, burst e os estados (em dia / represada ativa / risco curto / inativa sem lote). Risco curto = **> 10 dias** sem realização de liberada **ou** **≤ 5 dias do fim** com pendências (UC9). Ordenação padrão: risco primeiro, depois represadas ativas, depois cobertura.
 
-Ordenação padrão no online: **risco de evasão (curto) primeiro**, depois represadas ativas, depois cobertura da edição. Atalho para UC53 só no estado risco.
+A Unidade **filtra pelos critérios** `activity_deadline_soon`, `backlog_liberated`, `edition_ending_pending`, `risk_short_online` e `checkpoint_midcourse` e **envia** o recado (UC53). Turma vê a mesma lista e **não** dispara. O backend só classifica; quem sai da condição some da lista.
 
-Em **presencial/híbrido** (longa duração), permanecem conclusão, frequência de encontros e segmento — sem KPIs de maratona. Quando exibir **risco**, usa limiar **longo**: silêncio ≥ **15 dias** + represamento alto (faltas / atividades liberadas).
+Em **P/H**, permanecem conclusão, frequência e segmento. Risco longo = silêncio ≥ **15 dias** + represamento. Sem o envio pago do Ranking.
 
-**Casos de sucesso** (ex-campo “destaque”): o gestor marca empreendimento/empreendedora como **caso de sucesso** e preenche **formulário** (história, motivo do reconhecimento). Distinto de doação (UC57) e de observação de acompanhamento (UC77).
+**Casos de sucesso:** o gestor marca empreendimento/empreendedora e preenche o formulário. Distinto de doação (UC57) e de observação (UC77).
 
 **Atores**
 
-- **Gestor de Unidade**, **Gestor de Turma**.
+- **Gestor de Unidade** (consulta e envia).
+- **Gestor de Turma** (consulta).
 
 **Pré-condições**
 
@@ -2980,16 +2805,15 @@ Em **presencial/híbrido** (longa duração), permanecem conclusão, frequência
 
 **Fluxo Principal**
 
-- Exibe KPIs agregados da edição/turma e lista por participante/empreendimento.
-- No online: colunas cobertura | aderência ao liberado | represamento | dias sem realização | último burst | estado (risco = limiar curto).
-- No P/H: quando aplicável, flag de risco longo (silêncio ≥ 15 dias + represamento).
-- Filtra por estado; no online abre UC53 para o público em risco.
-- Marca **caso de sucesso** e preenche o formulário quando aplicável.
-- Disponibiliza visão durante UC57.
+- Exibe KPIs e lista por participante/empreendimento.
+- Online: colunas cobertura | aderência | represamento | dias sem realização | burst | estado; filtros pelos cinco critérios.
+- Unidade seleciona destinatárias, canal e template (qualquer modelo aprovado na Gupshup) e confirma (UC53). Sem anexo.
+- P/H: flag de risco longo quando couber.
+- Marca caso de sucesso quando aplicável.
 
 **Pós-condições**
 
-- Indicadores disponíveis para decisão manual e reengajamento.
+- Indicadores e histórico de disparos disponíveis para conferência e reengajamento.
 
 ---
 
@@ -2999,15 +2823,15 @@ Em **presencial/híbrido** (longa duração), permanecem conclusão, frequência
 
 **Descrição**
 
-Registra **manualmente** no **Aplicativo Gestor** a **doação**. A empreendedora **nunca** solicita doação no Aplicativo Cliente — sem botão, banner ou formulário de pedido. No **online**, só entra nesta UC quem ficou **liberada para doação** pelo funil (UC38); no **P/H**, o **Gestor de Turma sugere** e o **Gestor de Unidade aprova** (o Unidade pode fazer os dois passos). Cada doação tem um **tipo** — **dinheiro (capital semente)**, **insumo** (insumos de produção, ex.: farinha, açúcar) ou **equipamento** (máquinas e equipamentos, ex.: fornos, geladeiras) — e **um ou mais itens** (linhas produto/descrição + quantidade + valor empilhadas — 1 doação → N itens; no dinheiro, normalmente um item com o valor). **Valor (decisão de 25/09/2026):** cada item/doação tem campo de valor informado pelo gestor — no **dinheiro**, o **valor real**; em **insumo** e **equipamento**, um **valor estimado**, exibido com o rótulo **"valor estimado"** nas telas, no painel e nos totalizadores. Quando a **nota fiscal** do item é cadastrada, o valor do item passa de estimado a **real** (decisão de 25/09/2026, parte 2 — ver **Nota fiscal por item**, abaixo). Uma empreendedora pode receber **N doações**: de tipos diferentes, **no mesmo programa** e **em programas diferentes** (decisão de 24/09/2026). **Não vale mais a regra "1 doação por empreendimento".** **[A CONFIRMAR] (iii)** se a doação pertence à **pessoa** (empreendedora) ou ao **empreendimento**; até a decisão, o processo continua **iniciando no empreendimento** e registra a(s) **empreendedora(s) donatária(s)**.
+Registra **manualmente** no **Aplicativo Gestor** a **doação**. A empreendedora **nunca** solicita doação no Aplicativo Cliente — sem botão, banner ou formulário de pedido. No **online**, só entra nesta UC quem ficou **liberada para doação** pelo funil (UC38); no **P/H**, o **Gestor de Turma sugere** e o **Gestor de Unidade aprova** (o Unidade pode fazer os dois passos). Cada doação tem um **tipo** — **dinheiro (capital semente)**, **insumo** (insumos de produção, ex.: farinha, açúcar) ou **equipamento** (máquinas e equipamentos, ex.: fornos, geladeiras). Os três tipos são **fixos** no sistema: o **CMS não cadastra** tipos de doação nem um catálogo de itens. Cada doação tem **um ou mais itens** (linhas **digitadas** — produto/descrição + quantidade + valor empilhadas — 1 doação → N itens; no dinheiro, normalmente um item com o valor). **Valor:** cada item/doação tem campo de valor informado pelo gestor — no **dinheiro**, o **valor real**; em **insumo** e **equipamento**, um **valor estimado**, exibido com o rótulo **"valor estimado"** nas telas, no painel e nos totalizadores. Quando a **nota fiscal** do item é cadastrada, o valor do item passa de estimado a **real** (ver **Nota fiscal por item**, abaixo). Uma empreendedora pode receber **N doações**: de tipos diferentes, **no mesmo programa** e **em programas diferentes**. **[A CONFIRMAR] (iii)** se a doação pertence à **pessoa** (empreendedora) ou ao **empreendimento**; até a decisão, o processo continua **iniciando no empreendimento** e registra a(s) **empreendedora(s) donatária(s)**.
 
 **Fluxo de dois passos, em telas distintas:** **sugerir** na tela de **empreendimentos** (Turma e Unidade); **aprovar** **somente** na tela **Doação** (`/gestor/e/[edicaoId]/doacao`), **visível só ao Gestor de Unidade**. Não há Aprovar no card/detalhe do negócio. Quando o mesmo Unidade sugere, a aprovação permanece passo distinto (auditoria: `sugerido_por` / `aprovado_por`). Cada doação sugerida/aprovada é um **registro próprio**, com estado próprio; sugerir uma nova doação **não** substitui nem bloqueia doações anteriores da mesma pessoa.
 
-**Rito de aprovação (digitação):** um único pop-up com resumo (empreendimento, empreendedora(s), **tipo**, itens, valor — real no dinheiro, **valor estimado** em insumo/equipamento —, quem sugeriu), copy de que a aprovação **não é garantia** de pagamento/entrega imediata e de que a empreendedora verá **aguarde** (sem datas). O botão Confirmar só habilita ao digitar **APROVAR** (exato, maiúsculas). Recusar: pop-up separado, motivo obrigatório, sem digitação. Substitui o rito anterior de dois cliques em dois modais.
+**Rito de aprovação (digitação):** um único pop-up com resumo (empreendimento, empreendedora(s), **tipo**, itens, valor — real no dinheiro, **valor estimado** em insumo/equipamento —, quem sugeriu), copy de que a aprovação **não é garantia** de pagamento/entrega imediata e de que a empreendedora verá **aguarde** (sem datas). O botão Confirmar só habilita ao digitar **APROVAR** (exato, maiúsculas). Recusar: pop-up separado, motivo obrigatório, sem digitação.
 
-Suporta **doação em massa**: selecionar múltiplos **empreendimentos** na tela Doação (Unidade) e aplicar tipo/itens/valor em lote (valor real no dinheiro; valor estimado em insumo/equipamento); aprovar o lote exige **APROVAR** uma vez. Listas separam os **tipos** (**dinheiro**, **insumo**, **equipamento**). O processo **inicia no empreendimento**; a tela Doação é o **painel** Unidade (sugeridas/aprovadas por tipo, com totais de **valor real** (dinheiro e itens de insumo/equipamento com nota fiscal cadastrada) e de **valor estimado** (itens ainda sem nota) identificados separadamente + consumido vs **orçamento da unidade** na edição — UC9). Sugeridas **não** consomem o orçamento; aprovadas (após digitação) entram mesmo sem recibo. O orçamento da unidade conta o **valor real e o valor estimado somados** (decisão de 25/09/2026, parte 2); quando a nota de um item é cadastrada, o consumo passa a usar o valor da nota. Sem orçamento cadastrado: aviso, operação segue. Remanejamento de saldo entre unidades só sobre valores ainda não integralmente distribuídos. Canônico de telas: `prototipo/doacao-processo-unificado.md`. **[A CONFIRMAR]** se os itens de insumo/equipamento vêm de um **catálogo cadastrado no CMS** (proposta derivada desta decisão) ou são digitados livremente.
+Suporta **doação em massa**: selecionar múltiplos **empreendimentos** na tela Doação (Unidade) e aplicar tipo/itens/valor em lote (valor real no dinheiro; valor estimado em insumo/equipamento); aprovar o lote exige **APROVAR** uma vez. Listas separam os **tipos** (**dinheiro**, **insumo**, **equipamento**). O processo **inicia no empreendimento**; a tela Doação é o **painel** Unidade (sugeridas/aprovadas por tipo, com totais de **valor real** (dinheiro e itens de insumo/equipamento com nota fiscal cadastrada) e de **valor estimado** (itens ainda sem nota) identificados separadamente + consumido vs **orçamento da unidade** na edição — UC9). Sugeridas **não** consomem o orçamento; aprovadas (após digitação) entram mesmo sem recibo. O orçamento da unidade conta o **valor real e o valor estimado somados**; quando a nota de um item é cadastrada, o consumo passa a usar o valor da nota. Sem orçamento cadastrado: aviso, operação segue. Remanejamento de saldo entre unidades só sobre valores ainda não integralmente distribuídos. Canônico de telas: `prototipo/doacao-processo-unificado.md`. Os itens de insumo e equipamento são **digitados livremente** na doação (descrição, quantidade e valor). **Não há** catálogo no CMS nem valor de referência sugerido por lista (decisão de 06/10/2026; fecha o [A CONFIRMAR] anterior).
 
-**Nota fiscal por item (insumo / equipamento — decisão de 25/09/2026, parte 2):** na tela **Doação** (App Gestor), cada item de uma doação aprovada de insumo ou equipamento tem a ação **Cadastrar nota fiscal**, com: **número**, **data de emissão**, **valor** do item na nota e **anexo** (foto/PDF — pode ser a foto enviada pela empreendedora na UC86). Ao salvar:
+**Nota fiscal por item (insumo / equipamento):** na tela **Doação** (App Gestor), cada item de uma doação aprovada de insumo ou equipamento tem a ação **Cadastrar nota fiscal**, com: **número**, **data de emissão**, **valor** do item na nota e **anexo** (foto/PDF — pode ser a foto enviada pela empreendedora na UC86). Ao salvar:
 
 - o valor do item passa a ser o **valor da nota** e o indicador muda de **estimado** para **real** (o rótulo "valor estimado" deixa de aparecer naquele item);
 - o **valor estimado original** fica guardado no histórico do item (com quem cadastrou a nota e quando);
@@ -3024,15 +2848,15 @@ A atualização é **item a item**: a doação pode ter itens reais e itens esti
 | **Online** | Somente se a empreendedora/empreendimento estiver **liberada para doação** pelo funil UC38 (100% atividades ou exceção registrada → live → presença/KW → questionário **100% certo**)                                                                                                     |
 
 
-O portão vale para **qualquer tipo** de doação. No online, a empreendedora liberada pelo funil da edição pode receber **N doações na mesma edição sem refazer o funil** (decisão de 25/09/2026, parte 3 — resolve o [A CONFIRMAR] anterior).
+O portão vale para **qualquer tipo** de doação. No online, a empreendedora liberada pelo funil da edição pode receber **N doações na mesma edição sem refazer o funil**.
 
 **Ranking / desempate** (quando o orçamento não cobre todas as liberadas): nº de dependentes, qualidade das respostas, análise subjetiva excepcional — **após** elegibilidade; **≠** régua UC12. O **destaque de já contemplada** em edições anteriores (UC14 D) apoia a decisão da equipe, para dar oportunidade a quem ainda não recebeu.
 
-Filtros auxiliares (UC14/UC85) apoiam a decisão; **não** substituem os gatilhos acima. **Carência (UC14 D — decisão de 25/09/2026, parte 3):** dentro da mesma edição, **nunca** barra nova doação (N doações, ao mesmo tempo ou ao longo da edição); entre edições, quem foi contemplada em edição encerrada continua elegível e aparece **em destaque** ("Já contemplada na edição X", com histórico) nas telas de empreendimentos e Doação. Sai o bloqueio "já recebeu doação nos últimos 3 anos → inelegível". **Não há doação automática.** Após aprovação, a coleta de dados (bancários/PIX ou endereço), a comprovação (NFs, confirmação de recebimento), o **recibo** e os **aceites** seguem UC86 (comum às duas jornadas), **por doação**, com **os mesmos passos em presencial, híbrido e online** (decisão G1, 24/09/2026). No **online**, a mentoria de encerramento (UC70) abre em lote a partir das finalistas / doação aprovada; a empreendedora preenche o diagnóstico no Cliente e a demanda vai ao **pool** do Aplicativo Voluntário. No **P/H**, a mentoria **não** depende deste portão — opera no programa regular (Abertas / alocação em lote **ou** Atendido pelo gestor).
+Filtros auxiliares (UC14/UC85) apoiam a decisão; **não** substituem os gatilhos acima. **Carência (UC14 D):** dentro da mesma edição, **nunca** barra nova doação (N doações, ao mesmo tempo ou ao longo da edição); entre edições, quem foi contemplada em edição encerrada continua elegível e aparece **em destaque** ("Já contemplada na edição X", com histórico) nas telas de empreendimentos e Doação. Sai o bloqueio "já recebeu doação nos últimos 3 anos → inelegível". **Não há doação automática.** Após aprovação, a coleta de dados (bancários/PIX ou endereço), a comprovação (NFs, confirmação de recebimento), o **recibo** e os **aceites** seguem UC86 (comum às duas jornadas), **por doação**, com **os mesmos passos em presencial, híbrido e online**. No **online**, a mentoria de encerramento (UC70) abre em lote a partir das finalistas / doação aprovada; a empreendedora preenche o diagnóstico no Cliente e a demanda vai ao **pool** do Aplicativo Voluntário. No **P/H**, a mentoria **não** depende deste portão — opera no programa regular (Abertas / alocação em lote **ou** Atendido pelo gestor).
 
-**O que a empreendedora vê (protótipo v5 — v10):** enquanto a doação está só **sugerida**, foi recusada ou não existe, o Cliente **não mostra nada** para aquela doação (a faixa "só aparece depois que a Unidade aprova"). Após a aprovação, a home do programa mostra **um aviso por doação aprovada** (UC94) — vários avisos podem aparecer ao mesmo tempo (ex.: capital semente + geladeira + insumo). A copy inicial é **"Doação aprovada — aguarde orientações… Não há data prevista"** (sem datas); as etapas seguintes estão na UC86 e na UC94.
+**O que a empreendedora vê:** enquanto a doação está só **sugerida**, foi recusada ou não existe, o Cliente **não mostra nada** para aquela doação (a faixa "só aparece depois que a Unidade aprova"). Após a aprovação, a home do programa mostra **um aviso por doação aprovada** (UC94) — vários avisos podem aparecer ao mesmo tempo (ex.: capital semente + geladeira + insumo). A copy inicial é **"Doação aprovada — aguarde orientações… Não há data prevista"** (sem datas); as etapas seguintes estão na UC86 e na UC94.
 
-**Geladeira:** deixa de ser premiação própria. É uma **doação do tipo equipamento**, com o mesmo rito sugerir → aprovar desta UC (decisão de 24/09/2026 que substitui a decisão 4 registrada na v9). A UC93 foi absorvida por esta UC, pela UC86 e pela UC94 na v10.
+**Geladeira:** é uma **doação do tipo equipamento**, com o mesmo rito sugerir → aprovar desta UC. O número UC93 fica reservado; o rito está nesta UC, na UC86 e na UC94.
 
 **Atores**
 
@@ -3047,10 +2871,10 @@ Filtros auxiliares (UC14/UC85) apoiam a decisão; **não** substituem os gatilho
 
 **Fluxo Principal**
 
-- Gestor **sugere** no empreendimento: escolhe o **tipo** (dinheiro / insumo / equipamento) e informa **uma ou mais linhas** de item (descrição, quantidade, valor — **valor real** no dinheiro; **valor estimado** em insumo/equipamento); P/H sempre; online só *liberada*. Pode sugerir mais de uma doação para a mesma pessoa.
+- Gestor **sugere** no empreendimento: escolhe o **tipo** (dinheiro / insumo / equipamento — lista **fixa**) e **digita** **uma ou mais linhas** de item (descrição em texto livre, quantidade, valor — **valor real** no dinheiro; **valor estimado** em insumo/equipamento); P/H sempre; online só *liberada*. Pode sugerir mais de uma doação para a mesma pessoa.
 - Consulta o **histórico de doações** da empreendedora (este e outros programas) e os filtros auxiliares / o **destaque de já contemplada** em edições anteriores (UC14 D — informativo, não bloqueia); aplica ranking/desempate quando necessário.
 - Gestor de Unidade, **na tela Doação**, analisa e ao aprovar passa pelo **pop-up com digitação de APROVAR** (pode ser quem sugeriu, em passo e tela separados); vê saldos do **orçamento da unidade**.
-- Ao aprovar, sistema registra a doação (tipo e itens), vinculada à(s) empreendedora(s) e ao empreendimento, notifica no app com copy de **aguarde** (sem datas de pagamento/entrega), cria o **aviso** daquela doação na home do programa (UC94), pode refletir status "recebeu doação" (UC29) e encaminha para UC86 (mesmos passos em P/H e online — decisão G1).
+- Ao aprovar, sistema registra a doação (tipo e itens), vinculada à(s) empreendedora(s) e ao empreendimento, notifica no app com copy de **aguarde** (sem datas de pagamento/entrega), cria o **aviso** daquela doação na home do programa (UC94), pode refletir status "recebeu doação" (UC29) e encaminha para UC86 (mesmos passos em P/H e online).
 - Em insumo/equipamento, depois da entrega, o gestor **cadastra a nota fiscal de cada item** na tela Doação; o valor do item passa de estimado a real e painel, orçamento e totais são atualizados. Com as notas de todos os itens cadastradas, o recibo fica liberado (UC86).
 
 **Fluxos Alternativos**
@@ -3060,9 +2884,9 @@ Filtros auxiliares (UC14/UC85) apoiam a decisão; **não** substituem os gatilho
 - **Online sem liberação UC38:** sistema bloqueia sugerir/aprovar até o funil ser concluído com sucesso.
 - **Lote UC85 (auxiliar):** pode restringir a lista operacional; não altera o gatilho P/H (qualquer momento) nem o funil online.
 - **Nota fiscal com valor diferente do estimado:** vale o valor da nota; o estimado original fica no histórico do item; painel, orçamento e totais são recalculados.
-- **Nova doação para quem já recebeu:** permitida (decisão de 24/09/2026); a tela mostra as doações anteriores para apoiar a decisão. A carência nunca bloqueia: na mesma edição, N doações são permitidas; se ela já foi contemplada em edição encerrada, aparece em destaque (UC14 D) e a equipe decide.
+- **Nova doação para quem já recebeu:** permitida; a tela mostra as doações anteriores para apoiar a decisão. A carência nunca bloqueia: na mesma edição, N doações são permitidas; se ela já foi contemplada em edição encerrada, aparece em destaque (UC14 D) e a equipe decide.
 
-**Dados da doação (resumo para o modelo):** doação = tipo, empreendedora(s) donatária(s), empreendimento, edição, estado, `sugerido_por` / `aprovado_por` e **itens**; item = descrição, quantidade, valor, indicador **real / estimado**, **nota fiscal** (número, data de emissão, valor, anexo) quando cadastrada e **valor estimado original** no histórico; a doação tem o indicador derivado **"todos os valores reais"**, que libera o recibo (UC86). Titularidade pessoa × empreendimento: **[A CONFIRMAR] (iii)**.
+**Dados da doação (resumo para o modelo):** doação = tipo (fixo: dinheiro / insumo / equipamento), empreendedora(s) donatária(s), empreendimento, edição, estado, `sugerido_por` / `aprovado_por` e **itens**; item = **descrição digitada** (texto livre, sem catálogo), quantidade, valor, indicador **real / estimado**, **nota fiscal** (número, data de emissão, valor, anexo) quando cadastrada e **valor estimado original** no histórico; a doação tem o indicador derivado **"todos os valores reais"**, que libera o recibo (UC86). Titularidade pessoa × empreendimento: **[A CONFIRMAR] (iii)**.
 
 **Pós-condições**
 
@@ -3103,7 +2927,7 @@ Análise estruturada: entregas, saúde financeira (UC45), constância, necessida
 
 **Descrição**
 
-**Painel de Dados (BI)** em **Looker Studio / Data Studio**, ligado ao banco (fora do app operacional); acessos Google geridos pelo Consulado. Entregável contratual. Exibe KPIs de **mulheres beneficiadas** (não “atendidas”), certificadas, **ativas** na jornada (antes de atingir o % de beneficiamento), quem **recebeu doação** — com contagem e valor **por tipo** (dinheiro / insumo / equipamento) e N doações por pessoa; os totais em R$ **somam o valor real e o valor estimado** e podem ser mostrados **aproximados** (ex.: "≈ R$ 210 mi"), sem precisão; indicar a parte ainda estimada é opcional (decisão de 25/09/2026, parte 2) —, **relatos de atividades** e **frequências** (UC80), além da evolução financeira. Totalizadores consolidam dados atuais com **dados pregressos** (UC71).
+**Painel de Dados (BI)** em **Looker Studio / Data Studio**, ligado ao banco (fora do app operacional); acessos Google geridos pelo Consulado. Entregável contratual. Exibe KPIs de **mulheres beneficiadas** (não “atendidas”), certificadas, **ativas** na jornada (antes de atingir o % de beneficiamento), quem **recebeu doação** — com contagem e valor **por tipo** (dinheiro / insumo / equipamento) e N doações por pessoa; os totais em R$ **somam o valor real e o valor estimado** e podem ser mostrados **aproximados** (ex.: "≈ R$ 210 mi"), sem precisão; indicar a parte ainda estimada é opcional —, **relatos de atividades** e **frequências** (UC80), além da evolução financeira. Totalizadores consolidam dados atuais com **dados pregressos** (UC71).
 
 **Nomenclatura e recortes:** pretas + pardas = **mulheres negras** (IBGE); filtros de região, UF, município, idade, presença de filhos; **orçamento não entra** no dashboard (dado operacional do sistema, sem planilha externa). Funil executivo: inscritas → selecionadas → iniciadas / **ativas** → beneficiadas (50%) → certificadas / recebeu doação. **Mentorias (UC70):** contar **sessões por área** (catálogo CMS: Finanças, Marketing, Vendas, Gestão, Comunicação, Formalização, Saúde e bem-estar, Tecnologia, …). Uma sessão com áreas extras na ficha (pós-encontro) entra em cada série. Também **horas de voluntário** (P/H: minutos do líder, herdados pelos acompanhantes; online: diário por pessoa) e NPS ao encerrar. **Atendido pelo gestor** **não** entra nesta série. Mentoria coletiva entra só em horas/vínculo, **sem** certificado. **Ação (UC90)** concluída: certificado genérico de participação para **todas** as pessoas confirmadas na equipe (data + carga horária). **Voluntariado:** **pessoas voluntárias únicas no ano** (não conta ações; colaborador interno **nunca** entra nesta série). **Horas de voluntário ≠ horas de equipe.** Export **ITG 2002**: planilha pessoa/atividade/horas/data, sem valor de mercado no sistema. Campanhas agrupam por **programa/ação**.
 
@@ -3219,7 +3043,7 @@ Reenvio de certificado já emitido (UC55). Tipos no portal do voluntariado: **Me
 - **Mentoria** (UC70): no portal, um por pessoa × mentoria P/H (acompanhante **herda**) ou × sessão online. Mentorada P/H recebe ao `finalizada`. Mentorada do **online / Zap** **não** recebe certificado de mentoria (benefício de finalista). `atendida_gestor`: sem certificado.
 - **Ação** (UC90): ao concluir a ação, certificado **genérico de participação** (dados, data, carga horária) para **todas** as pessoas `confirmado` na equipe, independentemente de quem registrou as horas. **Não** há certificado de mentoria coletiva. Layout (Canva) é arte; o sistema gera PDF com tipo Mentoria | Ação.
 
-**Tela Certificados no Cliente (protótipo v5 — v9):** acesso pelo menu global e pelo Perfil (UC92). Texto: certificados concedidos automaticamente ao cumprir o percentual de atividades da edição; "Não há evento de entrega". **Lista** com um item por certificado (ex.: *[Programa] — Conclusão*, *Mentoria — Acompanhamento*), com estados: bloqueado ("Libera ao cumprir [percentual] · agora X% (d de t)", botão desabilitado); liberado (**Baixar certificado** → "Baixado"); mentoria ("Aguardando mentoria" / "Liberado • mentoria finalizada"). No Cliente, o autoatendimento passa a ser **consultar e baixar**; o reenvio via WhatsApp continua como na v8. *Nota:* a lista fixa de 3 certificados do protótipo é dado de demonstração; quem recebe certificado de mentoria segue a v8 (mentorada online/Zap não recebe).
+**Tela Certificados no Cliente:** acesso pelo menu global e pelo Perfil (UC92). Texto: certificados concedidos automaticamente ao cumprir o percentual de atividades da edição; "Não há evento de entrega". **Lista** com um item por certificado (ex.: *[Programa] — Conclusão*, *Mentoria — Acompanhamento*), com estados: bloqueado ("Libera ao cumprir [percentual] · agora X% (d de t)", botão desabilitado); liberado (**Baixar certificado** → "Baixado"); mentoria ("Aguardando mentoria" / "Liberado • mentoria finalizada"). No Cliente, o autoatendimento passa a ser **consultar e baixar**; o reenvio via WhatsApp continua como na v8. *Nota:* a lista fixa de 3 certificados do protótipo é dado de demonstração; quem recebe certificado de mentoria segue a v8 (mentorada online/Zap não recebe).
 
 - **[A CONFIRMAR]** o protótipo **não** tem o filtro/abas **Programa · Mentoria** previstos (UC63/UC70); confirmar se o filtro permanece.
 
@@ -3252,7 +3076,7 @@ Reenvio de certificado já emitido (UC55). Tipos no portal do voluntariado: **Me
 
 **Agente de IA** no **Aplicativo Cliente**: chatbot treinado em conteúdos internos; escala casos complexos ao educador. Ownership de UI = Cliente; inferência/integração no Backend quando aplicável.
 
-**Tela do chat no Cliente (protótipo v5 — v9):** abre em modal a partir de **Ajuda IA** (menu inferior) ou **Ajuda e suporte** (Perfil) — UC92. Cabeçalho **"Suporte online"** com avatar; mensagem inicial com o nome e o programa atual (ex.: "Oi, Maria Clara!… como posso te ajudar no Empreende Mulher hoje?"); **chips de sugestão** (Certificado · Dúvidas sobre o Empreende Mulher · Visita técnica · Plano de negócios) que preenchem o campo de pergunta; campo "Escreva uma pergunta..."; botões **Enviar imagem** e **Mensagem de voz**.
+**Tela do chat no Cliente:** abre em modal a partir de **Ajuda IA** (menu inferior) ou **Ajuda e suporte** (Perfil) — UC92. Cabeçalho **"Suporte online"** com avatar; mensagem inicial com o nome e o programa atual (ex.: "Oi, Maria Clara!… como posso te ajudar no Empreende Mulher hoje?"); **chips de sugestão** (Certificado · Dúvidas sobre o Empreende Mulher · Visita técnica · Plano de negócios) que preenchem o campo de pergunta; campo "Escreva uma pergunta..."; botões **Enviar imagem** e **Mensagem de voz**.
 
 - **[A CONFIRMAR]** se imagem e áudio serão aceitos e como o agente os trata (o protótipo só mostra os botões); se os chips são fixos ou variam por programa/contexto; como e quando o caso é escalado ao educador (não simulado); se o nome "Suporte online" e o avatar deixam claro que é um agente de IA.
 
@@ -3324,7 +3148,7 @@ Cadastra **unidade** vinculada a **edição** para agrupar turmas por localidade
 
 - Acessa **Unidades → Criar** no CMS de Administração.
 - Informa nome, região, edição vinculada e, opcionalmente, o(s) Gestor(es) de Unidade responsáveis (associação — UC75).
-- Opcionalmente informa os **links dos grupos WhatsApp** (dois níveis — UC50): grupo de **coordenação** (gestores de unidade ↔ gestores de turma) e grupo **operacional** da unidade (gestores ↔ empreendedoras). Textos de comunicação vêm do **pacote UC88** da edição, com os links e os dados da unidade preenchidos dinamicamente na mensagem (UC50 — decisão G2).
+- Opcionalmente informa os **links dos grupos WhatsApp** (dois níveis — UC50): grupo de **coordenação** (gestores de unidade ↔ gestores de turma) e grupo **operacional** da unidade (gestores ↔ empreendedoras). Textos de comunicação vêm do **pacote UC88** da edição, com os links e os dados da unidade preenchidos dinamicamente na mensagem (UC50).
 - Cria ou associa ao menos **uma turma** (UC16).
 
 **Pós-condições**
@@ -3404,7 +3228,7 @@ Mecanismo de **reconhecimento da empreendedora no dispositivo** via **UUID** per
 
 Exibe calendário **visual** das atividades da turma no **Aplicativo Cliente**: encontros presenciais, lives (YouTube ou Google Meet), prazos de entrega e atividades liberadas.
 
-**Decisão 24/09/2026:** vale a UC68 da v8 — o calendário permanece como funcionalidade do Aplicativo Cliente, sem item próprio no menu global (UC92). *Nota:* o protótipo v5 não tinha tela de calendário.
+O calendário permanece no Aplicativo Cliente, **sem** item próprio no menu global (UC92).
 
 **Atores**
 
@@ -3435,9 +3259,9 @@ Exibe calendário **visual** das atividades da turma no **Aplicativo Cliente**: 
 Dois modos, ambos com **auditoria** (quem, quando, o quê):
 
 1. **Inserir em nome** — o gestor preenche no Aplicativo Gestor (cadastro, entrega UC43, saúde financeira UC45) com **justificativa**. O sistema **não** abre a sessão da empreendedora; o log registra a ação do gestor.
-2. **Acesso de gestor à conta da empreendedora** (decisão G4, 24/09/2026; antes chamado "acesso mocado") — o gestor **acessa a conta** da empreendedora no Aplicativo Cliente **com acesso de gestor** (sessão identificada como do gestor, com faixa visível “você está acessando como [nome]”). **Todas as alterações** feitas pelo gestor ficam registradas para **auditoria**: **quem** (gestor), **quando** (data e hora) e **o quê** (tela/ação, campo, valor anterior e novo); início e fim do acesso também entram no log. Usado quando ela não consegue operar o app ou precisa de apoio.
+2. **Acesso de gestor à conta da empreendedora** — o gestor **acessa a conta** da empreendedora no Aplicativo Cliente **com acesso de gestor** (sessão identificada como do gestor, com faixa visível “você está acessando como [nome]”). **Todas as alterações** feitas pelo gestor ficam registradas para **auditoria**: **quem** (gestor), **quando** (data e hora) e **o quê** (tela/ação, campo, valor anterior e novo); início e fim do acesso também entram no log. Usado quando ela não consegue operar o app ou precisa de apoio.
 
-**Exceção (decisão de 25/09/2026):** nos dois modos, o gestor **não cria empreendimento** — o empreendimento é cadastrado pela empreendedora (UC21 ou área dela no Aplicativo Cliente — UC31). O gestor pode **corrigir** dados do empreendimento, com justificativa e auditoria. Se pode cadastrá-lo em nome dela quando ela não consegue operar o app: **[A CONFIRMAR] (vii)** (padrão até decisão: não).
+**Exceção:** nos dois modos, o gestor **não cria empreendimento** — o empreendimento é cadastrado pela empreendedora (UC21 ou área dela no Aplicativo Cliente — UC31). O gestor pode **corrigir** dados do empreendimento, com justificativa e auditoria. Se pode cadastrá-lo em nome dela quando ela não consegue operar o app: **[A CONFIRMAR] (vii)** (padrão até decisão: não).
 
 **Atores**
 
@@ -3477,14 +3301,14 @@ Apoio ao negócio por mentores da rede (UC73). **Não confundir** com **conteúd
 - **Online:** sessão individual no encerramento (lote → pool com `vagas`).
 - **P/H:** **caso com N consultas** (sem slot fixo). O pedido do app **precisa** de mentor(es) voluntários **ou** fecha com **Atendido pelo gestor** (sem BI).
 
-**Regras do app gestor (decisão G3, 24/09/2026 — P/H e, onde se aplica, online):**
+**Regras do app gestor (P/H e, onde se aplica, online):**
 
 - **Match:** pode ser feito pelo **gestor** (Unidade ou Turma) ou acontecer **automaticamente** pelo **Aplicativo Cliente** (pedido/diagnóstico da empreendedora que vai ao pool) e pelo **portal do voluntariado** (voluntário pega a demanda em Em aberto ou aceita no pool). **[A CONFIRMAR]** se o match automático pelo Aplicativo Cliente inclui sugestão ou escolha de mentor pela empreendedora ou só o envio do pedido ao pool.
 - **Agenda:** em P/H o gestor também pode **agendar** as consultas (além do líder); no online, o gestor pode vincular mentor e agendar a sessão.
 - **Controle completo do gestor:** o gestor pode realizar qualquer atividade do caso (fazer o match, agendar, registrar, remarcar, encerrar, cancelar, abrir nova oportunidade, marcar Atendido pelo gestor, recusar), desde que o sistema grave **registro de auditoria** de **quem fez cada atividade** (autor, data/hora, o quê). Controlar tudo **não inclui editar a equipe**: a equipe de uma mentoria não muda dentro dela (ver *Troca de mentor*).
-- **Duração das sessões:** o mentor registra cada sessão com **mínimo de 30 minutos**, em **intervalos de 30 minutos**, até **2 horas por encontro** (30 min, 1h, 1h30, 2h). A duração é **fixa** (30 / 30 / 120 min) e **não** é configurada no CMS por enquanto (decisão de 25/09/2026, v10 — substitui o "configurável no CMS (desejável)" da G3). Vale para P/H e online e substitui a sessão online com duração fixa e a "duração da sessão P/H cadastrada no CMS" (decisão 17).
+- **Duração das sessões:** o mentor registra cada sessão com **mínimo de 30 minutos**, em **intervalos de 30 minutos**, até **2 horas por encontro** (30 min, 1h, 1h30, 2h). A duração é **fixa** e **não** é configurada no CMS. Vale para P/H e online.
 
-**Troca de mentor (confirmação C3, 25/09/2026 — P/H e online):** trocar de mentor **não é editar a equipe**. Depois do match, a equipe (líder e acompanhantes) fica fixa naquela mentoria. Quando a mentoria não dá certo, o gestor faz o par **encerrar e abrir nova**:
+**Troca de mentor (P/H e online):** trocar de mentor **não é editar a equipe**. Depois do match, a equipe (líder e acompanhantes) fica fixa naquela mentoria. Quando a mentoria não dá certo, o gestor faz o par **encerrar e abrir nova**:
 
 1. **Encerra** a mentoria com o status **`cancelada`** (não chegou a acontecer — por exemplo, o mentor não pôde seguir antes da primeira consulta) ou **`encerrada_sem_resultado`** (houve contato ou consultas, mas sem resultado), com motivo da lista do CMS.
 2. **Abre uma nova oportunidade** de mentoria para a mesma empreendedora, com os dados do pedido original (área e formulário) e **já com o novo mentor** alocado (vai direto para `ativa`, sem passar por Em aberto), vinculada à mentoria encerrada.
@@ -3506,7 +3330,7 @@ Duas áreas no Gestor (menu irmão):
 4. O que gostaria de ter resolvido ou planejado?
 5. Melhor período (Manhã 8–12, Tarde 12–18, Noite 18–21, Finais de semana)
 
-**Sem campo de data/hora** no P/H. O líder (ou o gestor — decisão G3) agenda depois do contato.
+**Sem campo de data/hora** no P/H. O líder (ou o gestor) agenda depois do contato.
 
 **Card em dois estados (P/H)**
 
@@ -3520,21 +3344,21 @@ Duas áreas no Gestor (menu irmão):
 | **Online** | Encerramento (etapa **final**) | Lote finalistas / doação → diagnóstico → pool | Voluntário | `aguardando_diagnostico` · `aberta` (`vagas` > 0) · `pendente`. Match: `aceita` · `em_andamento` · `concluida` · `cancelada` · `encerrada_sem_resultado` |
 | **P/H** | Programa regular | Pedido no Cliente (ou Unidade cria) | Lote de voluntários (1º = **líder**) | `aberta` · `ativa` · `encerrada_nps` · `finalizada` · `atendida_gestor` · `recusada` · `cancelada` · `encerrada_sem_resultado` |
 
-**Online — mentoria de encerramento** *(desenho de `vagas` mantido; duração e auditoria conforme a decisão G3)*
+**Online — mentoria de encerramento** *(desenho de `vagas`; duração e auditoria conforme as regras acima)*
 
 - Copy: etapa **final** da jornada.
 - Lote → diagnóstico no Cliente → demanda `aberta` no pool (edição ativa + datas de aplicação).
 - Voluntário aceita (decrementa `vagas`, revela WhatsApp), **diário próprio**.
-- Timeout CMS (`prazo_match_horas`, padrão 72): o gestor vincula um ou vários (cada um na base UC73). O gestor (Unidade ou Turma) também pode fazer o match **a qualquer momento**, sem esperar o timeout, e agendar a sessão (decisão G3).
+- Timeout CMS (`prazo_match_horas`, padrão 72): o gestor vincula um ou vários (cada um na base UC73). O gestor (Unidade ou Turma) também pode fazer o match **a qualquer momento**, sem esperar o timeout, e agendar a sessão.
 - O mentor registra cada sessão de 30 min a 2h, em intervalos de 30 min (duração fixa, sem CMS).
 
 **P/H — programa regular (canônico novo)**
 
-O gestor (Unidade ou Turma) **pode agendar** as consultas e fazer o match (decisão G3). Não há slot fixo nem “Aprovar e agendar” como etapa obrigatória (o pedido não tem data/hora), e Unidade/Turma não entram como mentores voluntários da sessão (horas de equipe ficam fora do BI de voluntariado). A copy do pedido usa o máximo fixo de **2h** por encontro.
+O gestor (Unidade ou Turma) **pode agendar** as consultas e fazer o match. Não há slot fixo nem “Aprovar e agendar” como etapa obrigatória (o pedido não tem data/hora), e Unidade/Turma não entram como mentores voluntários da sessão (horas de equipe ficam fora do BI de voluntariado). A copy do pedido usa o máximo fixo de **2h** por encontro.
 
-Pedido no hub **Mentoria** do Cliente (`/app/mentorias`, item do menu global — UC92) **ou** pelo botão **Solicitar mentoria** na **home do programa** (modal com o mesmo formulário — decisão 24/09/2026); **não** no perfil nem no hambúrguer. Início = **módulo educacional no CMS** (mesmos tipos de atividade do programa). **Solicitar** bloqueado até concluir. Inclusão pelo Gestor **não** exige treino: o caso aparece em Minhas (ou Em aberto se ainda sem lote). Abas da empreendedora: **Em aberto · Minhas · Encerradas**. O pedido cai em **Em aberto** do **portal do voluntariado** (recorte área de interesse / expertise).
+Pedido no hub **Mentoria** do Cliente (`/app/mentorias`, item do menu global — UC92) **ou** pelo botão **Solicitar mentoria** na **home do programa** (modal com o mesmo formulário); **não** no perfil nem no hambúrguer. Início = **módulo educacional no CMS** (mesmos tipos de atividade do programa). **Solicitar** bloqueado até concluir. Inclusão pelo Gestor **não** exige treino: o caso aparece em Minhas (ou Em aberto se ainda sem lote). Abas da empreendedora: **Em aberto · Minhas · Encerradas**. O pedido cai em **Em aberto** do **portal do voluntariado** (recorte área de interesse / expertise).
 
-Dois caminhos de match (alocação). Depois do match, a equipe **não é alterada** naquela mentoria; a troca de mentor é feita pelo par **encerrar** (`cancelada` ou `encerrada_sem_resultado`) **e abrir nova oportunidade** já com o novo mentor, com auditoria (confirmação C3 — ver *Troca de mentor*):
+Dois caminhos de match (alocação). Depois do match, a equipe **não é alterada** naquela mentoria; a troca de mentor é feita pelo par **encerrar** (`cancelada` ou `encerrada_sem_resultado`) **e abrir nova oportunidade** já com o novo mentor, com auditoria (ver *Troca de mentor*):
 
 1. **Gestor (Unidade ou Turma)** aloca N mentores de uma vez. Select obrigatório **tipo: Mentoria | Ação** (Univille / educador classifica; o voluntário **não** escolhe o enquadramento). O **primeiro da lista é o líder**; os demais são acompanhantes. Pode mandar `wa.me` avisando a alocação **antes ou depois** da consulta (o link não aloca).
 2. **Voluntário** pega a demanda em Abertas (match automático pelo portal) → vira **líder** (lote de 1; tipo permanece **Mentoria**).
@@ -3551,7 +3375,7 @@ No instante da alocação a demanda **sai de Em aberto para todos** e entra só 
 | ----- | ------------- | ------------------------------------ | --------------- | ----------------------------- |
 | **Líder** | sim | sim | sim (plataforma + mentorada) | gera o registro |
 | **Acompanhante** | sim | não | sim (obrigatório) | **herda** o registro do líder |
-| **Gestor (Unidade/Turma)** | sim | sim — controle completo, com auditoria de quem fez cada atividade (decisão G3) | — | registro feito pelo gestor vale para o lote; horas de equipe não entram no BI de voluntariado |
+| **Gestor (Unidade/Turma)** | sim | sim — controle completo, com auditoria de quem fez cada atividade | — | registro feito pelo gestor vale para o lote; horas de equipe não entram no BI de voluntariado |
 | **Atendido pelo gestor** | — | — | — | **não** entra no BI de mentoria |
 
 **Ciclo de consultas (líder ou gestor, com auditoria)**
@@ -3582,13 +3406,13 @@ No instante da alocação a demanda **sai de Em aberto para todos** e entra só 
 | Trocar mentor = encerrar (`cancelada` / `encerrada_sem_resultado`) + abrir nova oportunidade com o novo mentor | sim (auditoria) | sim (própria turma; auditoria) | — | — |
 | NPS ao encerrar | — | — | texto + plataforma + mentor | todos do lote (texto + plataforma + mentorada) |
 
-Toda ação no caso (match, agenda, registro, encerramento, cancelamento e abertura de nova oportunidade) grava **auditoria** com autor, data/hora e o quê (decisão G3).
+Toda ação no caso (match, agenda, registro, encerramento, cancelamento e abertura de nova oportunidade) grava **auditoria** com autor, data/hora e o quê.
 
-**Pedido de mentoria P/H no Cliente (protótipo v5 + decisões de 24/09/2026):**
+**Pedido de mentoria P/H no Cliente:**
 
 - **Dois pontos de entrada:** o pedido pode ser feito pelo **hub Mentoria** (`/app/mentorias`, item Mentoria do menu global — UC92) **ou** pelo botão **"Solicitar mentoria"** na **home do programa**, que abre o mesmo formulário em modal. **[A CONFIRMAR]** se o bloqueio "Solicitar até concluir o módulo CMS" também vale para o botão da home (o protótipo não tem módulo).
 - **Áreas:** vêm do **catálogo do CMS** (v8). *Nota:* o protótipo usava uma lista própria (Operações / produção, Jurídico / MEI, Gestão de pessoas, Outro…), não adotada.
-- **Duração da sessão:** não é fixa; cada encontro é registrado de **30 min a 2h**, em intervalos de 30 min (duração fixa, sem configuração no CMS — decisão G3 revista em 25/09/2026; vale também no online). A copy do pedido usa o **máximo fixo de 2h** — ex.: "Solicitar mentoria · [programa] · [turma] · sessão de até 2h" e "Sabendo que terá até 2h com o mentor, o que gostaria de ter resolvido ou planejado?".
+- **Duração da sessão:** cada encontro é registrado de **30 min a 2h**, em intervalos de 30 min (duração fixa, sem configuração no CMS; vale também no online). A copy do pedido usa o **máximo fixo de 2h** — ex.: "Solicitar mentoria · [programa] · [turma] · sessão de até 2h" e "Sabendo que terá até 2h com o mentor, o que gostaria de ter resolvido ou planejado?".
 - **Formulário:** motivo de empreender, maior dificuldade/dúvida atual, área, o que gostaria de resolver/planejar e **períodos** (Manhã 8–12, Tarde 12–18, Noite 18–21, Finais de semana — **pode marcar mais de um**); todos obrigatórios (ao menos um período), sem data/hora. **[A CONFIRMAR]** ordem das perguntas: o protótipo começa pelo motivo; o formulário canônico começa pela área.
 - **Confirmação:** "Sua demanda de mentoria em [área] foi registrada. Em breve alguém entrará em contato nos períodos [períodos] para combinar o encontro." (coerente com `aberta` e com o contato após a alocação).
 
@@ -3631,7 +3455,7 @@ Toda ação no caso (match, agenda, registro, encerramento, cancelamento e abert
 
 **Descrição**
 
-Consolida nos relatórios e no Painel de Dados (BI) os totalizadores de **participantes (pessoas)**, **empreendimentos**, **beneficiadas**, **certificadas**, **ativas** e quem **recebeu doação**, **somando** base ativa com **dados pregressos** (UC62). Empreendimento coletivo com N sócias que cumpriu critérios: **1 empreendimento** beneficiado/certificado, **N pessoas** (N beneficiadas, N certificadas, N ativas). Doações: contagem **por tipo** (dinheiro / insumo / equipamento) e de **pessoas que receberam**, conforme a titularidade **[A CONFIRMAR] (iii)**; totais em R$ **somam real + estimado** e podem ser mostrados **aproximados** (ex.: "≈ R$ 210 mi"); indicar a parte estimada é opcional (decisão de 25/09/2026, parte 2).
+Consolida nos relatórios e no Painel de Dados (BI) os totalizadores de **participantes (pessoas)**, **empreendimentos**, **beneficiadas**, **certificadas**, **ativas** e quem **recebeu doação**, **somando** base ativa com **dados pregressos** (UC62). Empreendimento coletivo com N sócias que cumpriu critérios: **1 empreendimento** beneficiado/certificado, **N pessoas** (N beneficiadas, N certificadas, N ativas). Doações: contagem **por tipo** (dinheiro / insumo / equipamento) e de **pessoas que receberam**, conforme a titularidade **[A CONFIRMAR] (iii)**; totais em R$ **somam real + estimado** e podem ser mostrados **aproximados** (ex.: "≈ R$ 210 mi"); indicar a parte estimada é opcional.
 
 **Atores**
 
@@ -3692,7 +3516,7 @@ O voluntariado é o **cerne**; mentoria é **uma** ação. Cadastro **único** d
 **Duas origens de autoinscrição**
 
 1. **Geral** — `/voluntario/inscricao`. Três modalidades visíveis (multi; **pelo menos uma** obrigatória). CTA: **Inscreva-se no programa de voluntariado**.
-2. **Via slug da ação** — `/voluntario/a/[slug]` (UC90). A pessoa **já se qualifica naquela ação**; demais frentes ficam **abaixo, opcionais**, com texto explicativo. Não fragmentar em vários cadastros. CTA daquela iniciativa (não o do programa geral). Slug **encerrado ou inválido:** mensagem de encerramento + CTA para `/voluntario/inscricao`. **MVP sem campos extras por tipo de ação** (17/set — fechado).
+2. **Via slug da ação** — `/voluntario/a/[slug]` (UC90). A pessoa **já se qualifica naquela ação**; demais frentes ficam **abaixo, opcionais**, com texto explicativo. Não fragmentar em vários cadastros. CTA daquela iniciativa (não o do programa geral). Slug **encerrado ou inválido:** mensagem de encerramento + CTA para `/voluntario/inscricao`. Sem campos extras por tipo de ação. **[A CONFIRMAR]** o **modelo de campos** além dos blocos abaixo — não inventar. Formulário de satisfação de mentoria/ação: **Heitor / Sandra**.
 
 | Bloco | Geral `/voluntario/inscricao` | Slug `/voluntario/a/[slug]` |
 | ----- | ----------------------------- | --------------------------- |
@@ -3897,7 +3721,7 @@ O Aplicativo Gestor exibe um **calendário** da gestora para agendar **sem confl
 
 Após a visita, o gestor pode registrar **relato** (UC80) e marcar a atividade como realizada para aquela empreendedora/empreendimento (conta para beneficiamento — UC13). Integração com Google Calendar permanece em avaliação.
 
-**Visão no Aplicativo Cliente (protótipo v5 — v9):** a atividade aparece no módulo com estado (antes do agendamento, "Bloqueado • Em breve"; depois, "Agendado • data - hora · Presencial/Online"). No detalhe:
+**Visão no Aplicativo Cliente:** a atividade aparece no módulo com estado (antes do agendamento, "Bloqueado • Em breve"; depois, "Agendado • data - hora · Presencial/Online"). No detalhe:
 
 - badge **Agendado** ou **Realizada**; data e horário; **Modalidade**;
 - **Presencial:** endereço, botão **Abrir no Maps** e mapa embutido (OpenStreetMap);
@@ -3950,9 +3774,9 @@ No protótipo, a troca Agendado ↔ Realizada ao tocar na badge e o "desbloqueio
 
 **Descrição**
 
-Permite à **empreendedora**, **a qualquer momento**, **solicitar o desligamento** do programa **via Aplicativo Cliente**, respondendo um **questionário simples** e um **campo de razão do abandono**. A solicitação registra o término como **desistência** (classificação feita pela automação — UC30, decisão G7) e a participante **sai das automações do programa** na hora. O pedido vai para a fila do gestor, que **executa o cancelamento** (UC30, motivo desistência — confirmação C7); a partir daí ela **entra na automação de cancelada**.
+Permite à **empreendedora**, **a qualquer momento**, **solicitar o desligamento** do programa **via Aplicativo Cliente**, respondendo um **questionário simples** e um **campo de razão do abandono**. A solicitação registra o término como **desistência** (classificação feita pela automação — UC30) e a participante **sai das automações do programa** na hora. O pedido vai para a fila do gestor, que **executa o cancelamento** (UC30, motivo desistência); a partir daí ela **entra na automação de cancelada**.
 
-**Modal de desistência (protótipo v5 — v9):** o botão **Desistir do programa** na home do programa abre o modal: "Ao confirmar, você deixará de participar… Essa ação **não pode ser desfeita** e seu progresso poderá ser perdido." O "questionário simples" é um **select obrigatório de motivo** com 7 opções — Falta de tempo / incompatibilidade de agenda; Dificuldades no negócio ou financeiras; Problemas pessoais ou de saúde; Conteúdo ou formato não atenderam às expectativas; Mudança de cidade, emprego ou rotina; Preferência por outro programa ou formato; Outro — e a razão do abandono é o campo **"Detalhe o motivo"** (texto). **Confirmar** só habilita com motivo **e** detalhe preenchidos; após confirmar, volta à home de programas (UC91).
+**Modal de desistência:** o botão **Desistir do programa** na home do programa abre o modal: "Ao confirmar, você deixará de participar… Essa ação **não pode ser desfeita** e seu progresso poderá ser perdido." O "questionário simples" é um **select obrigatório de motivo** com 7 opções — Falta de tempo / incompatibilidade de agenda; Dificuldades no negócio ou financeiras; Problemas pessoais ou de saúde; Conteúdo ou formato não atenderam às expectativas; Mudança de cidade, emprego ou rotina; Preferência por outro programa ou formato; Outro — e a razão do abandono é o campo **"Detalhe o motivo"** (texto). **Confirmar** só habilita com motivo **e** detalhe preenchidos; após confirmar, volta à home de programas (UC91).
 
 - **[A CONFIRMAR]** lista de motivos fixa ou parametrizável no CMS; se "seu progresso poderá ser perdido" é regra (a v8 preserva histórico para BI — UC30/UC61).
 
@@ -4046,14 +3870,14 @@ Marca a **edição** como **encerrada** no sistema: dados operacionais ficam **b
 
 **Descrição**
 
-Pesquisa de acompanhamento / anamnese para participantes de **edições finalizadas** (relacionamento de longo prazo). Substitui fluxos manuais (ex.: Google Forms). Terceira etapa do trio de feedback do programa (chegada UC39 → NPS final UC39 → **esta pesquisa**), **mesmo padrão online e P/H**. **Disparo:** automático **N dias após o fim** da edição/ciclo de formação — **N é programável no CMS** (padrão cerca de 30). Evento da tabela default (UC88). A gestora **não** tem tela de disparo como caminho principal. Edições **Multiplica por Elas** podem ter perguntas extras de organização no formulário CMS.
+Pesquisa de acompanhamento / anamnese no **bloco pós-curso**. Tudo que vem **depois** do marcador **Encerramento** (invisível à empreendedora) é pós-curso e aparece em bloco separado no **App Gestor** e no **App Cliente**. Exemplo: agrupador “Pesquisa depois do curso”, com gatilho de cerca de **30 dias** e uma atividade **NPS**. **Disparo:** o **gatilho** daquela atividade (não a aula). A gestora **não** tem tela de disparo. Edições **Multiplica por Elas** podem ter perguntas extras de organização. **[A CONFIRMAR]** o **modelo do questionário** (itens e escalas) — não inventar.
 
 **Ownership por camada (canônico):**
 
 
 | Camada                   | Papel                                                                                          |
 | ------------------------ | ---------------------------------------------------------------------------------------------- |
-| **CMS / Admin**          | **Cria e configura** o formulário e informa **quantos dias após o fim** (padrão cerca de 30); liga o evento à mensagem na Gupshup |
+| **CMS / Admin**          | Monta as **atividades** pós-curso (depois do marcador Encerramento), com gatilho (padrão cerca de 30 dias) e recado na Gupshup |
 | **Aplicativo Gestor**    | Acompanha quem respondeu / não respondeu; **não** dispara a pesquisa na mão                    |
 | **Aplicativo Cliente**   | **Empreendedora responde** (link mágico)                                                       |
 | **Backend**              | Envio no dia calculado (WhatsApp/e-mail — mesmo recado), coleta e persistência                 |
@@ -4062,18 +3886,18 @@ Pesquisa de acompanhamento / anamnese para participantes de **edições finaliza
 
 **Atores**
 
-- **Administrador de Programa / Administrador do Sistema** (cria/configura e define os dias); **Empreendedora** (responde); consumidores do **BI**.
+- **Administrador de Programa / Administrador do Sistema** (monta as atividades pós-curso depois do marcador Encerramento); **Empreendedora** (responde); consumidores do **BI**.
 
 **Pré-condições**
 
-- Formulário criado no CMS; dias após o fim informados (ou padrão da tabela default); edição encerrada (UC81) ou data de fim do ciclo conhecida; participantes com consentimento válido; mensagem padrão do evento ligada na Gupshup.
+- Módulo com marcador **Encerramento**; atividades pós-curso no CMS (ex.: agrupador “Pesquisa depois do curso” + gatilho ~30 dias + NPS); mensagem na Gupshup; participantes com consentimento válido.
 
 **Fluxo Principal**
 
-1. **Admin** cria/configura o formulário dinâmico no CMS e informa **quantos dias após o fim** dispara (padrão cerca de 30).
-2. **Backend** envia no dia calculado (evento da tabela default — WhatsApp e/ou e-mail, mesmo recado, link mágico).
-3. **Empreendedora** responde no Aplicativo Cliente.
-4. **BI** exibe consolidação das respostas.
+1. **Admin** monta no CMS as atividades **depois** do Encerramento (gatilho padrão cerca de 30 dias; recado na Gupshup). **Não** inventar o modelo das perguntas.
+2. **Backend** dispara pelo **gatilho** da atividade (WhatsApp e/ou e-mail, mesmo recado, link mágico).
+3. **Empreendedora** vê o bloco **pós-curso** no Aplicativo Cliente e responde.
+4. **Gestor** acompanha no bloco pós-curso do App Gestor; **BI** consolida.
 
 **Pós-condições**
 
@@ -4178,7 +4002,7 @@ No **online**, o lote opera preferencialmente sobre quem já está **liberada pa
 **Entradas**
 
 - Status **liberada para doação** (online — UC38) ou lista operacional P/H
-- Filtros auxiliares UC14 (em especial **D** — destaque "Já contemplada na edição X", **sem bloqueio** — decisão de 25/09/2026, parte 3)
+- Filtros auxiliares UC14 (em especial **D** — destaque "Já contemplada na edição X", **sem bloqueio**)
 - Desempenho histórico / texto de desempate (C / livre)
 
 **Atores**
@@ -4215,19 +4039,19 @@ No **online**, o lote opera preferencialmente sobre quem já está **liberada pa
 
 **Descrição**
 
-Etapa **comum às jornadas P/H e online**, executada **para cada doação aprovada** (UC57). **Não é um pedido de doação:** a empreendedora só preenche dados, comprovação e recibo **depois** que a Unidade aprovou; até lá o Cliente **não mostra nada**. **Depois da aprovação, presencial, híbrido e online seguem os mesmos passos** (decisão G1, 24/09/2026). Uma empreendedora com várias doações passa por esta etapa **uma vez por doação**, com estados independentes. O **rito é o mesmo para todos os tipos** — informar dados → receber → assinar recibo → concluída —; o que muda é a **etapa de dados e de comprovação**:
+Etapa **comum às jornadas P/H e online**, executada **para cada doação aprovada** (UC57). **Não é um pedido de doação:** a empreendedora só preenche dados, comprovação e recibo **depois** que a Unidade aprovou; até lá o Cliente **não mostra nada**. **Depois da aprovação, presencial, híbrido e online seguem os mesmos passos**. Uma empreendedora com várias doações passa por esta etapa **uma vez por doação**, com estados independentes. O **rito é o mesmo para todos os tipos** — informar dados → receber → assinar recibo → concluída —; o que muda é a **etapa de dados e de comprovação**:
 
 | Tipo | Dados que a empreendedora informa | Comprovação | Recibo |
 | --- | --- | --- | --- |
-| **Dinheiro (capital semente)** | **Conta corrente ou PIX**: nome e CPF **readonly** (cadastro); banco (autocomplete Bacen/COMPE), tipo de conta, agência, conta. A chave PIX é **sempre o CPF da participante** — única opção, **imutável** (antifraude); não há chave por telefone, e-mail ou outra (decisão 24/09/2026). | Pagamento registrado pela operação. | Assinado **antes** do pagamento, com o **valor real** aprovado (informado pelo gestor na UC57). Liberado desde o início, porque o valor já é real. |
-| **Insumo** | **Endereço de entrega**: número, complemento e **ponto de referência**. | Gestor registra os **itens e quantidades exatos**; a foto/anexo da NF pode ser enviada pelo **gestor** ou pela **empreendedora** (decisão de 25/09/2026, parte 2, que retoma a decisão 19 só para a foto; o cadastro da nota continua com o gestor, como na G1); o gestor **cadastra a nota fiscal de cada item** no App Gestor (número, data, valor, anexo — UC57), e o valor do item passa de estimado a **real**; empreendedora **confirma o recebimento**. | Liberado só **depois** da confirmação de recebimento **e** do cadastro das notas de **todos os itens** (todos os valores reais — decisão de 25/09/2026, parte 2) → assinatura no app. Mostra itens, quantidades e **valores reais** (das notas); **nunca** valor estimado. |
+| **Dinheiro (capital semente)** | **Conta corrente ou PIX**: nome e CPF **readonly** (cadastro); banco (autocomplete Bacen/COMPE), tipo de conta, agência, conta. A chave PIX é **sempre o CPF da participante** — única opção, **imutável** (antifraude); não há chave por telefone, e-mail ou outra. | Pagamento registrado pela operação. | Assinado **antes** do pagamento, com o **valor real** aprovado (informado pelo gestor na UC57). Liberado desde o início, porque o valor já é real. |
+| **Insumo** | **Endereço de entrega**: número, complemento e **ponto de referência**. | Gestor registra os **itens e quantidades exatos**; a foto/anexo da NF pode ser enviada pelo **gestor** ou pela **empreendedora**; o cadastro da nota continua com o gestor; o gestor **cadastra a nota fiscal de cada item** no App Gestor (número, data, valor, anexo — UC57), e o valor do item passa de estimado a **real**; empreendedora **confirma o recebimento**. | Liberado só **depois** da confirmação de recebimento **e** do cadastro das notas de **todos os itens** (todos os valores reais) → assinatura no app. Mostra itens, quantidades e **valores reais** (das notas); **nunca** valor estimado. |
 | **Equipamento** | Como insumo (endereço com ponto de referência). | Como insumo (itens, nota fiscal por item, confirmação de recebimento), **com diferenças [A CONFIRMAR] (i)** — exemplos possíveis, ainda não decididos: termo de responsabilidade, número de série, registro de patrimônio. | Como insumo (depois da confirmação e com as notas de todos os itens cadastradas — só valores reais), salvo decisão diferente em (i). |
 
-**Valor (decisão de 25/09/2026):** o valor de cada doação vem da UC57 e é informado pelo gestor — **valor real** no dinheiro; **valor estimado** em insumo e equipamento (rótulo "valor estimado" nas telas, no painel e nos totalizadores). Em insumo e equipamento, o valor passa a **real** item a item, conforme as notas fiscais são cadastradas (UC57).
+**Valor:** o valor de cada doação vem da UC57 e é informado pelo gestor — **valor real** no dinheiro; **valor estimado** em insumo e equipamento (rótulo "valor estimado" nas telas, no painel e nos totalizadores). Em insumo e equipamento, o valor passa a **real** item a item, conforme as notas fiscais são cadastradas (UC57).
 
-**Regra do recibo (decisão de 25/09/2026, parte 2):** o recibo só pode ser emitido quando **todos os valores da doação são reais**. **Dinheiro:** vale desde o início. **Insumo / equipamento:** só depois que a nota fiscal de **todos os itens** estiver cadastrada; antes disso o sistema **bloqueia** a emissão e mostra o motivo — no App Gestor, quais itens estão sem nota (ex.: "Faltam as notas fiscais de 2 itens"); na faixa da empreendedora, que o recibo aguarda o cadastro das notas fiscais (sem valores). O recibo **nunca** mostra valor estimado.
+**Regra do recibo:** o recibo só pode ser emitido quando **todos os valores da doação são reais**. **Dinheiro:** vale desde o início. **Insumo / equipamento:** só depois que a nota fiscal de **todos os itens** estiver cadastrada; antes disso o sistema **bloqueia** a emissão e mostra o motivo — no App Gestor, quais itens estão sem nota (ex.: "Faltam as notas fiscais de 2 itens"); na faixa da empreendedora, que o recibo aguarda o cadastro das notas fiscais (sem valores). O recibo **nunca** mostra valor estimado.
 
-**O que a empreendedora vê de valor (decisão de 25/09/2026, parte 2):** só o **valor em dinheiro** da doação que recebeu (valor real aprovado do capital semente) e, no **recibo**, o **valor real**. Ela não vê valores estimados; fora do recibo, não vê valores de material.
+**O que a empreendedora vê de valor:** só o **valor em dinheiro** da doação que recebeu (valor real aprovado do capital semente) e, no **recibo**, o **valor real**. Ela não vê valores estimados; fora do recibo, não vê valores de material.
 
 Em todos os tipos:
 
@@ -4237,19 +4061,19 @@ Em todos os tipos:
 
 Substitui fluxo manual (Canva/Word/DocuSign). Mentoria detalhada = roadmap (UC70).
 
-**Faixa de doação no Cliente (protótipo v5 — v10; uma por doação):** fica na home do programa e só aparece depois da aprovação daquela doação (UC57). Com várias doações, aparecem **várias faixas/avisos**, cada uma com seu estado. **Proposta:** o formulário do aviso de benefício (UC94) passa a ser **a** etapa de dados desta faixa (formulário **unificado**, sem coleta duplicada) — **[A CONFIRMAR]**. Estados:
+**Faixa de doação no Cliente (uma por doação):** fica na home do programa e só aparece depois da aprovação daquela doação (UC57). Com várias doações, aparecem **várias faixas/avisos**, cada uma com seu estado. **Proposta:** o formulário do aviso de benefício (UC94) passa a ser **a** etapa de dados desta faixa (formulário **unificado**, sem coleta duplicada) — **[A CONFIRMAR]**. Estados:
 
 1. **Aguardando** — "Doação aprovada — aguarde orientações… Não há data prevista".
 2. **Dados — dinheiro:** titular (**nome e CPF readonly**); **chave PIX = CPF da participante** (sem opção de telefone, e-mail ou outra chave); conta bancária ligada ao CPF ("Dados de terceiros não são aceitos"); **banco por autocomplete** pelo nome (lista Bacen com código COMPE, que é gravado); tipo de conta (**corrente / poupança**); agência; conta; **Enviar dados**.
 3. **Dados — insumo / equipamento:** endereço de entrega com **ponto de referência** (opcional); **Enviar endereço**. Em equipamento, campos adicionais **[A CONFIRMAR] (i)**.
 4. **Aguardando entrega / pagamento.**
 5. **Recibo — dinheiro:** liberado desde o início (valor já é real); texto do recibo com o **valor aprovado** (valor real informado pelo gestor — UC57) e o prazo da doação; observação de que, para contas vinculadas ao CPF, o pagamento é feito via PIX; aceite "Li e aceito os termos e aceites desta edição"; **assinatura** em tela.
-6. **Recibo — insumo / equipamento** ("Material recebido — NF e recibo"): a empreendedora **confirma o recebimento** e pode enviar a **foto/anexo da nota fiscal** (ou o **gestor** envia no Aplicativo Gestor — decisão de 25/09/2026, parte 2). O recibo só é liberado quando o gestor tiver cadastrado a nota de **todos os itens** (todos os valores reais — decisão de 25/09/2026, parte 2); até lá, a faixa mostra "Recibo em preparação — aguardando o cadastro das notas fiscais", **sem valores**. Liberado: recibo de doação com tabela de itens, quantidades e **valores reais** (nunca estimados); aceite; assinatura. Em equipamento, documento adicional **[A CONFIRMAR] (i)**. *Nota:* no protótipo, confirmação, upload da NF e assinatura ficavam na mesma etapa; na v10 a foto pode vir dela, mas o recibo só abre depois que o gestor cadastra as notas de todos os itens.
+6. **Recibo — insumo / equipamento** ("Material recebido — NF e recibo"): a empreendedora **confirma o recebimento** e pode enviar a **foto/anexo da nota fiscal** (ou o **gestor** envia no Aplicativo Gestor). O recibo só é liberado quando o gestor tiver cadastrado a nota de **todos os itens** (todos os valores reais); até lá, a faixa mostra "Recibo em preparação — aguardando o cadastro das notas fiscais", **sem valores**. Liberado: recibo de doação com tabela de itens, quantidades e **valores reais** (nunca estimados); aceite; assinatura. Em equipamento, documento adicional **[A CONFIRMAR] (i)**. *Nota:* no protótipo, confirmação, upload da NF e assinatura ficavam na mesma etapa; na v10 a foto pode vir dela, mas o recibo só abre depois que o gestor cadastra as notas de todos os itens.
 7. **Concluída** — "Recebeu doação… Recibo, NF e aceites registrados".
 
 *Nota:* no recibo do protótipo, "R$ 1.000,00", "até Setembro de 2026" e a tabela de itens são **dados de demonstração**; valem o valor aprovado e o prazo de **até 60 dias** (v8).
 
-- **[DECISÃO PENDENTE – reunião com Daniele]** Em empreendimento de **duas pessoas**, quem recebe? As duas têm que informar o **mesmo CPF de recebimento**? Com a decisão de 24/09/2026, a regra "1 doação por empreendimento" deixa de valer; falta decidir **[A CONFIRMAR] (iii)** se a doação é da **pessoa** ou do **empreendimento**. A chave PIX continua sendo o CPF da participante.
+- **[DECISÃO PENDENTE – reunião com Daniele]** Em empreendimento de **duas pessoas**, quem recebe? As duas têm que informar o **mesmo CPF de recebimento**? N doações por empreendedora já valem; falta decidir **[A CONFIRMAR] (iii)** se a doação é da **pessoa** ou do **empreendimento**. A chave PIX continua sendo o CPF da participante.
 - **[A CONFIRMAR]** CNPJ emitente do recibo por tipo (o protótipo mostra 07.131.028/0001-07 no dinheiro e 07.131.028/0003-79 no material) e relação com a conta 725; se a confirmação de recebimento de insumo/equipamento é passo separado (o protótipo junta confirmação, NF e assinatura na mesma etapa; pela regra do recibo, a assinatura só abre depois que as notas de todos os itens estiverem cadastradas).
 
 **Atores**
@@ -4276,7 +4100,7 @@ Substitui fluxo manual (Canva/Word/DocuSign). Mentoria detalhada = roadmap (UC70
 - Insumo/equipamento sem confirmação de recebimento: recibo permanece bloqueado.
 - Insumo/equipamento com item ainda sem nota fiscal (valor estimado): emissão do recibo **bloqueada**; o App Gestor mostra o motivo (quais itens estão sem nota) e a faixa da empreendedora mostra que o recibo aguarda o cadastro das notas, sem valores.
 - Assinatura ou aceite recusado: registra pendência; gestor trata operacionalmente (sem assinatura não há fechamento contábil da doação de insumo/equipamento).
-- Várias doações ao mesmo tempo: cada uma segue seus estados; concluir uma não conclui as outras. Várias doações na mesma edição **nunca** são barradas pela carência (UC14 — decisão de 25/09/2026, parte 3). **[A CONFIRMAR]** se dados bancários já informados numa doação em dinheiro podem ser reaproveitados (com confirmação) numa próxima.
+- Várias doações ao mesmo tempo: cada uma segue seus estados; concluir uma não conclui as outras. Várias doações na mesma edição **nunca** são barradas pela carência (UC14). **[A CONFIRMAR]** se dados bancários já informados numa doação em dinheiro podem ser reaproveitados (com confirmação) numa próxima.
 
 **Pós-condições**
 
@@ -4286,68 +4110,45 @@ Substitui fluxo manual (Canva/Word/DocuSign). Mentoria detalhada = roadmap (UC70
 
 
 
-### UC87 – Configurar e Orquestrar Alertas Automáticos
+### UC87 – Orquestrar alerta automático de ficha incompleta
 
 **Descrição**
 
-Produto de **alertas de engajamento / resgate** com configuração na **área Comunicação do CMS (UC88 — aba Alertas)** e execução no **Backend** (sem Mautic). Permite criar **N regras** tipadas (não é workflow builder livre).
+Único alerta que o **backend dispara sozinho**. O CMS (UC88 — aba Alertas) liga o evento `inscription_incomplete` ao modelo na Gupshup e define atraso, reforço e teto de envios. Para ao concluir a inscrição (UC21). Mini CRM (UC26) é fallback.
 
-**Papéis**
+Os critérios `activity_deadline_soon`, `backlog_liberated`, `edition_ending_pending`, `risk_short_online` e `checkpoint_midcourse` **não** são desta UC: o backend só os lista no Ranking (UC56); a Unidade envia (UC53). O CMS **não** liga esses cinco a template.
 
-
-| Quem                  | Pode                                                                                                                                      |
-| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| **Admin (CMS)**       | Em **Comunicação → Alertas**: criar/editar `AlertRule` (gatilho, parâmetros, `exitWhen`, canais, **templates UC88**, cadência, audiência) |
-| **Gestor de Unidade** | `EditionAlertBinding`: ativar/pausar, override de números, preview de audiência, histórico                                                |
-| **Gestor de Turma**   | Consultar audiência/histórico da própria turma                                                                                            |
-| **Backend**           | Avaliar métricas, enfileirar (fila de alertas — UC52), enviar via SendGrid/Gupshup, log idempotente                                       |
-
-
-**Não inclui:** orquestração da jornada OK/lote (UC33); grupo WhatsApp (UC50); doação/encerramento (UC38/UC57).
-
-**Catálogo** `triggerKind` **(canônico):** `inscription_incomplete`, `activity_deadline_soon`, `backlog_liberated`, `edition_ending_pending`, `risk_short_online`, `checkpoint_midcourse` — ver Conceitos de Domínio.
+**Não inclui:** jornada OK/lote (UC33); grupo WhatsApp (UC50); doação (UC38/UC57).
 
 **Atores**
 
-- **Administrador (CMS)**; **Gestor de Unidade**; **Backend**; **SendGrid**; **Gupshup**.
+- **Administrador (CMS)**; **Backend**; **SendGrid**; **Gupshup**.
 
 **Pré-condições**
 
-- Templates e-mail e/ou Meta aprovados; consentimentos; edição publicada quando o binding for por edição.
+- Modelo aprovado na Gupshup; consentimento; edição em captação.
 
 **Fluxo Principal — CMS**
 
-1. Abre **Comunicação / Templates → Alertas** (UC88).
-2. Cria regra: escolhe **tipo** → formulário só com campos daquele tipo.
-3. Define canais (e-mail / WhatsApp / ambos) e aponta o evento da tabela default (variáveis: **nome social**, edição, link de acesso, prazo…). Sem obrigatória o envio não sai.
-4. Define cadência (`delayAfterTrigger`, `repeatEvery`, `maxSends`, `cooldown`) e `exitWhen`.
-5. Opcional: simular audiência em uma edição; enviar teste de homologação.
-6. Ativa a regra (escopo programa / todas edições).
-
-**Fluxo Principal — Gestor (edição)**
-
-1. Menu **Comunicação → Alertas automáticos**.
-2. Liga/desliga regras aplicáveis à modalidade; ajusta parâmetros (ex. 2 → 3 dias).
-3. Vê preview da audiência atual e histórico de disparos.
-4. Pode pausar (`pausedUntil`). Disparo manual complementar = UC53 / UC26.
+1. Comunicação → Alertas: aponta `inscription_incomplete` ao modelo (nome social, programa, link). Sem obrigatória o envio não sai.
+2. Define cadência (`delayDays`, `repeatDays`, `maxSends`).
+3. Ativa.
 
 **Fluxo Principal — Backend**
 
-1. Eventos (inscrição iniciada, atividade liberada/concluída, cancelamento/desistência, etc.) e job periódico (15–30 min) reavaliam bindings ativos.
-2. Calcula métricas canônicas (represamento, silêncio, liberadas − concluídas, proximidade do fim…).
-3. Se elegível e dentro da cadência: enfileira envio (`dedupeKey` = regra + pessoa + step); respeita janela comercial no WhatsApp.
-4. Se `exitWhen`: cancela pendentes e não reenvia.
-5. **Inscrição cancelada pelo gestor** (UC30 — no fim do programa, pelo critério da confirmação C7, ou ao processar um pedido de desligamento da UC79; inclusive por desistência — decisão G7): cancela na hora todos os envios pendentes e bindings do programa para a pessoa (ela **sai das automações relacionadas ao programa**) e a inclui na **automação de cancelada** (templates do catálogo UC88 — se a regra é configurável no CMS ou fixa no backend, e o conteúdo, canais e cadência: **[A CONFIRMAR] (AC-30)**). O pedido de desligamento (UC79) já tira a pessoa das automações do programa no momento do pedido. **A automação não cancela inscrições**: o cancelamento é sempre executado pelo gestor.
+1. Job (15–30 min) e eventos (inscrição iniciada / concluída) reavaliam leads.
+2. Se elegível e na cadência: enfileira (UC52); janela comercial no WhatsApp.
+3. Inscrição completa: cancela pendentes.
+4. **Inscrição cancelada pelo gestor** (UC30/UC79): a pessoa **sai das automações do programa** e entra na **automação de cancelada**. Conteúdo, canais e cadência dessa automação: **[A CONFIRMAR] (AC-30)**. A automação **não** cancela inscrições.
 
 **Fluxos Alternativos**
 
-- Opt-out / inscrição cancelada (inclui desistência) / edição frozen (UC81): corta envio das automações do programa; a inscrição cancelada segue só na automação de cancelada.
-- Anti-spam: no máximo um alerta prioritário por pessoa por janela configurável.
-- WhatsApp fora da janela: permanece na fila até o próximo slot (mesmo padrão UC33).
+- Opt-out / edição frozen (UC81): corta envio.
+- WhatsApp fora da janela: espera o próximo horário.
 
 **Pós-condições**
 
-- Regras versionadas no CMS; bindings por edição; logs de disparo; zero dependência de Mautic.
+- Logs de disparo; leads reengajados ou regra encerrada na conclusão.
 
 ---
 
@@ -4359,7 +4160,7 @@ Produto de **alertas de engajamento / resgate** com configuração na **área Co
 
 Área **separada** no CMS de Administração. A **Gupshup** é o repositório dos textos (modelos aprovados na Meta). O CMS **não** edita copy: só administra a **relação evento → mensagem** e a **tabela default**. O **SendGrid** entrega e-mail com o **mesmo** recado — sem segundo banco de texto.
 
-Inclui na **mesma área** os **alertas automáticos** (UC87 — aba Alertas). Pacote/edição pode **trocar o ponteiro** de um evento (outro modelo na Gupshup). Edição publicada grava snapshot.
+Inclui na **mesma área** a aba **Alertas**, só para **ficha incompleta** (UC87). Os cinco critérios do Ranking **não** são slots evento → mensagem. Pacote/edição pode **trocar o ponteiro** de um evento da jornada. Edição publicada grava snapshot.
 
 **Nome.** Todo recado e o app chamam pelo **nome social**. Certificado, recibo e documentos oficiais usam o **nome completo**. Não existe variável “primeiro nome”. Se o nome social estiver vazio, o sistema preenche o **mesmo** campo (tratamento do cadastro — UC27).
 
@@ -4390,7 +4191,7 @@ Inclui na **mesma área** os **alertas automáticos** (UC87 — aba Alertas). Pa
 
 **Por tipo de atividade** (o lote / o grupo escolhe o tipo — um modelo cada; Aula = presencial e ao vivo): título **obrigatório**; encontro: data e hora **e** local ou link; se houver prazo: data limite; **link de acesso da atividade**. Opcional: o que levar; canal (Meet ou YouTube). Recado chama pelo **nome social**.
 
-**Alertas (UC87)** — referenciam a mesma tabela (não são jornada): ficha incompleta; prazo da atividade; várias aulas paradas; fim do programa perto; risco no curso curto; meio do curso. Obrigatório: nome social, nome do programa, link de acesso; mais título/prazo quando o evento for de atividade. Opcional: quantidade pendente; data de encerramento.
+**Alertas (UC87)** — só **ficha incompleta** tem slot evento → mensagem. Obrigatório: nome social, nome do programa, link de acesso. Os cinco critérios do Ranking **não** entram nesta tabela: a Unidade escolhe o modelo na hora (UC56).
 
 **Tabela default — rede de voluntariado**
 
@@ -4431,7 +4232,7 @@ Leitura operacional: [docs/jornadas/comunicacao.md](docs/jornadas/comunicacao.md
 - Cria ou duplica **pacote** só se quiser **trocar o ponteiro** de algum evento (outro modelo). Informa nome e modalidade (online / presencial ou híbrido / ambos).
 - Para cada **tipo de atividade**: aponta o modelo na Gupshup. **Aula:** presencial e ao vivo em separado.
 - Confere **variáveis obrigatórias e opcionais** de cada evento (sem obrigatória o envio não sai).
-- Aba **Alertas:** liga o tipo de relógio ao evento da tabela (UC87).
+- Aba **Alertas:** liga só `inscription_incomplete` ao modelo na Gupshup (UC87). Sem binding dos cinco critérios do Ranking.
 - Ativa pacote; a edição escolhe o pacote (UC9). Publicação grava **snapshot**.
 
 **Pós-condições**
@@ -4442,8 +4243,8 @@ Leitura operacional: [docs/jornadas/comunicacao.md](docs/jornadas/comunicacao.md
 
 - Eventos oficiais da jornada herdam da tabela default. No módulo (UC15), a atividade pode trazer **texto próprio** (apoio ao vídeo, recado customizado) **ou** um modelo escolhido na Gupshup. Na liberação P/H (UC34/UC50), Unidade e Turma editam o template sugerido na hora.
 - **Download (online):** o pacote define o **template**; o backend **anexa os arquivos** da atividade no lote WhatsApp após o OK (UC51). Os **mesmos documentos** permanecem no Aplicativo Cliente.
-- **P/H — mensagem do grupo (decisão G2):** o texto sugerido vem do modelo da Gupshup (ou do texto/modelo escolhido no módulo); dados (edição, unidade, turma, atividade) preenchem as variáveis. **Gestor de Unidade** e **Gestor de Turma** **editam na hora** do envio. A alteração vale só para aquele disparo. Trocar o modelo oficial é na Gupshup; o CMS (UC88) só troca o ponteiro.
-- **Automação de cancelada (decisão G7):** quando o gestor cancela a inscrição (UC30 — no fim do programa ou ao processar um pedido de desligamento da UC79), a pessoa sai das automações do programa e entra na automação de cancelada, que usa um evento da tabela default; slot e textos **[A CONFIRMAR] (AC-30)** — inclusive se fica configurável no CMS ou fixa no backend.
+- **P/H — mensagem do grupo:** o texto sugerido vem do modelo da Gupshup (ou do texto/modelo escolhido no módulo); dados (edição, unidade, turma, atividade) preenchem as variáveis. **Gestor de Unidade** e **Gestor de Turma** **editam na hora** do envio. A alteração vale só para aquele disparo. Trocar o modelo oficial é na Gupshup; o CMS (UC88) só troca o ponteiro.
+- **Automação de cancelada:** quando o gestor cancela a inscrição (UC30 — no fim do programa ou ao processar um pedido de desligamento da UC79), a pessoa sai das automações do programa e entra na automação de cancelada. Conteúdo, canais, cadência e se a regra é configurável no CMS ou fixa no backend: **[A CONFIRMAR] (AC-30)**.
 - Spec protótipo: [prototipo/cms/03-comunicacao-templates.md](prototipo/cms/03-comunicacao-templates.md). Régua operacional: [docs/jornadas/comunicacao.md](docs/jornadas/comunicacao.md).
 - **Rede de voluntariado:** os eventos da tabela default da rede vivem no **mesmo** CMS (não exigem pacote por edição). Convite de ação usa o texto-modelo da ação + o evento da tabela (UC90).
 
@@ -4537,13 +4338,13 @@ O **Gestor de Voluntariado** **abre uma ação** pontual da rede (palestra, grav
 
 **Descrição**
 
-Tela inicial do **Aplicativo Cliente** após autenticação (UC4): saudação e lista dos **programas/edições** a que a empreendedora está vinculada, com situação, progresso e atalho para a próxima atividade. Origem: protótipo cliente v5 (`index.html`) — itens (a)2, (a)3, (b)1 e (b)2 do gap v8.
+Tela inicial do **Aplicativo Cliente** após autenticação (UC4): saudação e lista dos **programas/edições** a que a empreendedora está vinculada, com situação, progresso e atalho para a próxima atividade.
 
 - **Saudação:** "Bem-vinda de volta, [nome social]!" — sempre o **nome social** (UC27). Sem variável “primeiro nome”.
-- **Contadores ("Programas Ativos:"):** badges com a quantidade de programas **em curso** e **aguardando seleção**, com a **terminologia da v8** (Conceitos de Domínio / UC29 — decisão 24/09/2026).
+- **Contadores ("Programas Ativos:"):** badges com a quantidade de programas **em curso** e **aguardando seleção** (Conceitos de Domínio / UC29).
 - **Card de programa em curso:** nome do programa; **edição**; **unidade** e **turma** (no programa online só a edição); **Situação** com o rótulo humanizado da UC29 (ex.: ativa); **Progresso** "N de M atividades"; bloco **Próxima atividade** (ordem e título) com CTA **Continue Daqui**, que abre direto essa atividade. Tocar no card abre a home do programa (UC36).
 - **Card bloqueado (aguardando seleção):** programa em que ela está inscrita mas ainda **não foi selecionada**: cadeado, edição, unidade e "Situação: Aguardando seleção"; **sem** progresso, **sem** CTA e sem acesso ao conteúdo.
-- *Nota:* o protótipo exibia o selo "Matriculada" e o badge "Aguardando aprovação"; por decisão de 24/09/2026 valem os rótulos da v8. Nomes de programas, contagens ("2 em curso", "4 de 12 aulas") e textos dos cards do protótipo são **dados de demonstração**.
+- *Nota:* o selo "Matriculada" e o badge "Aguardando aprovação" **não** são usados. Nomes de programas, contagens e textos de telas de referência são **dados de demonstração**.
 - **[A CONFIRMAR]** Regra que define a "próxima atividade" do Continue Daqui (primeira liberada não concluída? próxima por data?).
 - **[A CONFIRMAR]** Exibição de programas concluídos ou com desistência na home (o protótipo não mostra esses estados).
 - **Doação:** a home **não** tem CTA de solicitar doação. Avisos/faixas só **depois** da aprovação (UC94/UC86). No online, a elegibilidade do funil (UC38) **não** abre formulário.
@@ -4582,15 +4383,15 @@ Tela inicial do **Aplicativo Cliente** após autenticação (UC4): saudação e 
 
 **Descrição**
 
-Navegação comum do **Aplicativo Cliente** (header, menu global e perfil) — itens (a)4, (a)7 e (a)8 do gap v8. Origem: `perfil.html` e `footer-nav` do protótipo v5, combinados com a área Mentoria da v8 (decisão 24/09/2026).
+Navegação comum do **Aplicativo Cliente** (header, menu global e perfil).
 
 - **Header:** logo → home de programas (UC91); ícone de perfil → **Perfil**.
 - **Menu global (menu inferior, todas as telas):** **Programas** (UC91) · **Mentoria** (hub `/app/mentorias` — UC70) · **Certificados** (UC63) · **Ajuda IA** (abre o chat "Suporte online" — UC64).
-- **Calendário:** permanece como funcionalidade do Cliente conforme a **UC68** (v8), sem item próprio no menu global.
+- **Calendário:** permanece como funcionalidade do Cliente conforme a **UC68**, sem item próprio no menu global.
 - **Perfil:** card **Progresso geral** ("N de M atividades", anel com % e barra) e menu: **Meus dados** (UC27) · **Certificados** (UC63) · **Ajuda e suporte** (abre o mesmo chat — UC64) · **Sair da conta**.
-- *Nota:* o protótipo v5 tinha só Programas · Certificados · Ajuda IA; a v8 previa a área Mentoria no menu inferior. A decisão de 24/09/2026 combina os dois. Os números do perfil no protótipo (4 de 9 atividades, 44%) são **dados de demonstração**.
+- *Nota:* o menu global é **Programas · Mentoria · Certificados · Ajuda IA**. Números de perfil em telas de referência são **dados de demonstração**.
 - **[A CONFIRMAR]** O que o "Progresso geral" do perfil agrega (todos os programas ativos? só o programa atual?).
-- **[A CONFIRMAR]** "Sair da conta" (sem ação no protótipo): a v8 não tem regra para encerrar a sessão (UC4: sessão de até 30 dias no dispositivo; UUID — UC67). Definir se sair invalida só o token de sessão ou também o UUID de dispositivo, e o destino após sair.
+- **[A CONFIRMAR]** "Sair da conta": se invalida só o token de sessão ou também o UUID de dispositivo (UC4: sessão de até 30 dias; UUID — UC67), e o destino após sair.
 
 **Atores**
 
@@ -4618,15 +4419,15 @@ Navegação comum do **Aplicativo Cliente** (header, menu global e perfil) — i
 
 
 
-### UC93 – Receber Doação de Equipamento ou Insumo (absorvido pelo UC57/UC86/UC94 na v10)
+### UC93 – Receber Doação de Equipamento ou Insumo (número reservado)
 
-**Situação na v10:** **absorvido**. O número fica reservado, sem renumerar os demais UCs. Na v9.1 esta UC era a "Solicitar Premiação Geladeira", uma **premiação própria**, fora da doação (decisão 4 de 24/09/2026). Pela decisão de doações de 24/09/2026 (noite), a **geladeira passa a ser uma doação do tipo equipamento**, e a decisão 4 fica revogada. O conteúdo foi distribuído assim:
+**Situação:** **absorvido**. O número fica reservado, sem renumerar os demais UCs. Geladeira e demais equipamentos/insumos são **doação** (tipo equipamento ou insumo):
 
-- **Concessão** (sugerir → aprovar com **APROVAR**, tipo equipamento ou insumo, itens, valor estimado, nota fiscal por item): **UC57**.
-- **Dados de entrega, comprovação** (itens, NF por item, confirmação de recebimento) e **recibo** só com valores reais: **UC86**.
-- **Aviso na home e formulário** da empreendedora para doação de equipamento ou insumo (antigo formulário da geladeira: dados básicos, endereço de entrega, itens sem valores, aceite e assinatura): **UC94**.
+- **Concessão** (sugerir → aprovar, itens, valor estimado, nota fiscal por item): **UC57**.
+- **Dados de entrega, comprovação e recibo** só com valores reais: **UC86**.
+- **Aviso na home e formulário** da empreendedora: **UC94**.
 
-Telas de origem (`empreende-mulher-premio.html`, `atividades/premio-geladeira.html`, `js/premio-geladeira.js` — item (a)1 do gap v8) servem de referência para o formulário de equipamento/insumo da UC94. As pendências que eram desta UC estão na UC94 (formulário) e na UC86 (rito de equipamento — **[A CONFIRMAR] (i)**).
+Pendências restantes: UC94 (formulário) e UC86 (rito de equipamento — **[A CONFIRMAR] (i)**).
 
 **Atores / Pré-condições / Fluxos / Pós-condições:** ver UC57, UC86 e UC94.
 
@@ -4638,32 +4439,30 @@ Telas de origem (`empreende-mulher-premio.html`, `atividades/premio-geladeira.ht
 
 **Descrição**
 
-Quando **qualquer doação** — **dinheiro (capital semente)**, **insumo** ou **equipamento** — é **aprovada pelo Gestor de Unidade no Aplicativo Gestor** (UC57), a home do programa da empreendedora passa a exibir um **aviso de benefício** para **aquela doação**. Isto **não** é solicitar doação: ela só informa dados e assina depois da concessão. **Um aviso por doação aprovada**; vários podem aparecer ao mesmo tempo (ex.: R$ 100 em capital semente + uma geladeira + um saco de trigo). **Antes** da aprovação o aviso **não aparece** (a elegibilidade do funil online — UC38 — sozinha não o exibe). Sem botão de pedido no Cliente. Origem: `js/zap-funnel.js`, `empreende-no-zap-capital.html`, `atividades/capital-semente.html`, `js/capital-semente.js` — item (a)10 do gap v8; para equipamento e insumo, `empreende-mulher-premio.html`, `atividades/premio-geladeira.html`, `js/premio-geladeira.js` — item (a)1 (antiga UC93). Amplia a v9, em que este UC tratava só de capital semente (decisão de 24/09/2026), e absorve o formulário da UC93 na v10.
+Quando **qualquer doação** — **dinheiro (capital semente)**, **insumo** ou **equipamento** — é **aprovada pelo Gestor de Unidade no Aplicativo Gestor** (UC57), a home do programa da empreendedora passa a exibir um **aviso de benefício** para **aquela doação**. Isto **não** é solicitar doação: ela só informa dados e assina depois da concessão. **Um aviso por doação aprovada**; vários podem aparecer ao mesmo tempo (ex.: R$ 100 em capital semente + uma geladeira + um saco de trigo). **Antes** da aprovação o aviso **não aparece** (a elegibilidade do funil online — UC38 — sozinha não o exibe). Sem botão de pedido no Cliente.
 
 **Texto do aviso, por tipo** (copy final **[A CONFIRMAR]**):
 
 - **Dinheiro:** "Benefício desbloqueado — Você conseguiu um capital semente de R$ [valor aprovado] — Clique aqui".
-- **Insumo / equipamento:** "Benefício desbloqueado — Você recebeu a doação de [itens] — Clique aqui" (ex.: "…a doação de uma geladeira…"). O aviso **não mostra valor** (decisão de 25/09/2026, parte 2: a empreendedora não vê valores estimados nem valores de material).
+- **Insumo / equipamento:** "Benefício desbloqueado — Você recebeu a doação de [itens] — Clique aqui" (ex.: "…a doação de uma geladeira…"). O aviso **não mostra valor**: a empreendedora não vê valores estimados nem valores de material.
 
-No dinheiro, o valor do aviso é o **valor real** aprovado pelo gestor (UC57 — decisão de 25/09/2026). Fora do recibo, é o único valor de doação que a empreendedora vê.
+No dinheiro, o valor do aviso é o **valor real** aprovado pelo gestor (UC57). Fora do recibo, é o único valor de doação que a empreendedora vê.
 
 **Formulário (unificado com a etapa de dados da UC86):**
 
 - **Dinheiro:** nome e CPF **readonly** (cadastro), e-mail, telefone; endereço (CEP, rua, número, complemento opcional, bairro, cidade, UF); **banco** (autocomplete com código COMPE — UC86), tipo de conta, **agência**, **conta**; **chave PIX = CPF da participante** (UC86); aceite; assinatura em tela; **Enviar dados** (volta à home do programa). Recibo antes do pagamento, conforme UC86. Preencher e enviar dados **não** é solicitar doação.
-- **Insumo / equipamento** (absorvido da UC93 na v10):
+- **Insumo / equipamento:**
   - **Dados básicos** (do cadastro): nome completo, CPF, e-mail, telefone. **Proposta:** nome e CPF **readonly**, como na UC86 (a UC27 torna o CPF validado imutável) — **[A CONFIRMAR]**.
   - **Endereço de entrega:** CEP, rua/logradouro, número, complemento (opcional), bairro, cidade, UF, **ponto de referência** (opcional — UC86).
-  - **Itens da doação** (somente leitura, definidos pelo gestor na UC57): descrição e quantidade, **sem valores**. A empreendedora não vê valor estimado nem valor de material (decisão de 25/09/2026, parte 2); o único valor de insumo/equipamento que ela vê é o **valor real** no recibo (UC86).
+  - **Itens da doação** (somente leitura, definidos pelo gestor na UC57): descrição e quantidade, **sem valores**. A empreendedora não vê valor estimado nem valor de material; o único valor de insumo/equipamento que ela vê é o **valor real** no recibo (UC86).
   - **Aceite** obrigatório: "Declaro que as informações são verdadeiras e aceito os termos para recebimento da doação" (texto por tipo **[A CONFIRMAR]**).
   - **Assinatura** em tela, com "Limpar assinatura".
   - **Enviar** só habilita com aceite + assinatura; após enviar, volta à home do programa (estado **Aguardando entrega**).
   - Depois da entrega: **confirmação de recebimento**, **NF** (foto enviada pela empreendedora ou pelo gestor; cadastro da nota de cada item pelo gestor) e **recibo** assinado com os valores reais, liberado só depois do cadastro das notas de todos os itens (UC86). Em **equipamento**, possíveis passos adicionais **[A CONFIRMAR] (i)** — exemplos, ainda não decididos: termo de responsabilidade, número de série, patrimônio.
 
-**Proposta:** este formulário **substitui** a etapa "Dados" da faixa de doação (UC86), evitando coleta duplicada — o aviso e a faixa passam a ser o mesmo componente, com os estados da UC86 — **[A CONFIRMAR]** (mantém e responde a pendência da v9 "substitui ou convive").
+**Proposta:** este formulário **substitui** a etapa "Dados" da faixa de doação (UC86), evitando coleta duplicada — o aviso e a faixa passam a ser o mesmo componente, com os estados da UC86 — **[A CONFIRMAR]**.
 
-*Nota:* no protótipo o banner aparecia logo após a elegibilidade no funil, com valor fixo de R$ 1.000 (dado de demonstração), banco em texto livre e chave Pix opcional (CPF, e-mail ou telefone); pelas decisões 5 e 18 de 24/09/2026 valem a aprovação prévia (UC57) e as regras de dados bancários da UC86.
-
-**[A CONFIRMAR]:** formulário unificado com a faixa UC86 (proposta acima); copy final dos avisos; ordem de exibição de vários avisos na home; se o aviso some ou fica como histórico depois da doação concluída; nome e CPF readonly no formulário de insumo/equipamento; texto do aceite por tipo; se o aceite deste formulário é o mesmo do recibo da UC86 ou separado; se o formulário pode ser editado/reenviado antes da entrega. (Da antiga UC93, a pergunta "quem aprova e entrega?" fica respondida: aprova o **Gestor de Unidade** pela UC57; a entrega e a NF seguem a UC86.)
+**[A CONFIRMAR]:** formulário unificado com a faixa UC86 (proposta acima); copy final dos avisos; ordem de exibição de vários avisos na home; se o aviso some ou fica como histórico depois da doação concluída; nome e CPF readonly no formulário de insumo/equipamento; texto do aceite por tipo; se o aceite deste formulário é o mesmo do recibo da UC86 ou separado; se o formulário pode ser editado/reenviado antes da entrega. Quem aprova = **Gestor de Unidade** (UC57); entrega e NF = UC86.
 
 **Atores**
 
@@ -4700,9 +4499,9 @@ No dinheiro, o valor do aviso é o **valor real** aprovado pelo gestor (UC57 —
 
 **Descrição**
 
-Todas as telas de detalhe de atividade do protótipo v5 (aula presencial, videoaula, aula ao vivo, teste de conhecimento, plano de ação, tarefa de casa, e-book, saúde financeira, visita técnica, NPS etc.) exibem o card **"Dúvidas? Fale com sua mentora agora mesmo via WhatsApp."** com o botão **Iniciar WhatsApp**. Origem: `atividades/*.html` — item (a)5 do gap v8. Complementa o Agente de IA (UC64), que responde dúvidas dentro do app.
+Todas as telas de detalhe de atividade (aula presencial, videoaula, aula ao vivo, teste de conhecimento, plano de ação, tarefa de casa, e-book, saúde financeira, visita técnica, NPS etc.) exibem o card **"Dúvidas? Fale com sua mentora agora mesmo via WhatsApp."** com o botão **Iniciar WhatsApp**. Complementa o Agente de IA (UC64), que responde dúvidas dentro do app.
 
-**[A CONFIRMAR]:** quem é a "mentora" desse botão (gestora/educadora da turma? mentor voluntário da UC70? — na v8, mentoria é a UC70 e não se confunde com o acompanhamento do educador); qual número é usado (telefone do gestor, número da unidade, número institucional); se a conversa abre com texto contextual (programa/atividade); se o card aparece também no online, onde não há gestor de turma operando grupo (UC33/UC50). No protótipo o botão não tem destino configurado.
+**[A CONFIRMAR]:** quem é a "mentora" desse botão (gestora/educadora da turma? mentor voluntário da UC70? — mentoria é a UC70 e não se confunde com o acompanhamento do educador); qual número é usado (telefone do gestor, número da unidade, número institucional); se a conversa abre com texto contextual (programa/atividade); se o card aparece também no online, onde não há gestor de turma operando grupo (UC33/UC50). Sem destinatário configurado, o destino fica aberto.
 
 **Atores**
 
@@ -4744,7 +4543,7 @@ Todas as telas de detalhe de atividade do protótipo v5 (aula presencial, videoa
 | UC26 Mini CRM (leads)                                                                      | ○             | ●                 | ●               |            | ○           | Backend/SendGrid       |
 | UC33 Jornada online (OK + temporizador)                                                    | ●             |                   |                 |            | ○           | Backend/WhatsApp       |
 | UC88 Pacotes de comunicação (templates)                                                    | ○             | ○                 | ○               |            | ●           | Gupshup/SendGrid       |
-| UC52 / UC87 Alertas automáticos                                                            | ○             | ● (binding)       | ○ (consulta)    |            | ● (regras)  | Backend/SendGrid/WA    |
+| UC52 / UC87 Ficha incompleta (auto)                                                        | ○             | ○                 | ○               |            | ● (evento→modelo) | Backend/SendGrid/WA    |
 | UC64 Agente de IA (chat)                                                                   | ●             |                   |                 |            |             | Backend                |
 | UC36–39, UC68 Consumo/Questionários                                                        | ●             |                   |                 |            |             | YouTube                |
 | UC40–41 Presença / UC80 Relato+export                                                      | ●             | ●                 | ●               |            |             |                        |
@@ -4757,7 +4556,7 @@ Todas as telas de detalhe de atividade do protótipo v5 (aula presencial, videoa
 | UC73 Rede de Voluntários                                                                   |               | ○ (recorte)       | ○ (recorte)     | ● (cadastro) | ● GV (aprova) |                        |
 | UC90 Ações de voluntariado                                                                 |               | —                 |                 | ● (inscrição) | ● GV / ○ tipos |                        |
 | UC38 Workshop / Aula ao vivo                                                               | ●             | ●                 | ●               | ○ (vínculo coletiva) | ○    | YouTube/StreamYard ou Google Meet; e-mail |
-| UC56 Ranking/Engajamento                                                                   |               | ●                 | ●               |            |             |                        |
+| UC56 Ranking/Engajamento (Unidade envia; Turma consulta)                                   |               | ● (dispara)       | ○ (consulta)    |            |             | Gupshup/SendGrid       |
 | UC59–61, UC71 BI (relatos/frequências)                                                     |               | ●                 | ○               |            | ●           |                        |
 | UC62 Base Legada                                                                           | ○             | ●                 | ●               |            | ●           |                        |
 | UC69 Em nome / acesso de gestor (auditoria) / UC77 Observação                              |               | ●                 | ●               |            |             |                        |
@@ -4779,53 +4578,22 @@ Todas as telas de detalhe de atividade do protótipo v5 (aula presencial, videoa
 
 ## Pendências de especificação
 
-Itens ainda em rascunho ou sujeitos a decisão posterior (sem priorização de escopo neste documento):
+O que ainda precisa de **modelo ou pergunta fechada**. A regra vigente está no UC; não repetir o que já está decidido.
 
-- **Saúde financeira (UC45):** tela, campos e parâmetros do protótipo v5 (decisão G5): **Despesas / Capital de giro** informada e resultado **Saldo do período** calculado (nomenclatura resolvida). **Aberto:** dívida pessoal vs profissional; estoque de dívida.
-- **Encerramento online:** múltiplas palavras-chave pós-live (UC38).
-- **Formulário unificado de encerramento/satisfação** de mentoria e ação: **Heitor / Sandra** (não inventar perguntas). Certificado de **mentoria coletiva** permanece fora; certificado de **ação** e de **mentoria individual** já especificados (UC63/UC70/UC90).
-- **Copy do catálogo (UC88):** inventário de slots fechado; parágrafos ainda *a revisar* em [comunicacao.md](docs/jornadas/comunicacao.md). Bloco opcional do slug (captação de outras frentes): **Sandra / Daniele**.
-- **Metodologia de renda, Tier 1/2, investimento×dívida:** ver [fora_escopo_v2.md](fora_escopo_v2.md) § P10 e reuniões. Categorias oficiais de Ação (CMS) ainda em definição.
-- **Incorporação do protótipo cliente v5 (v9) — decisões ainda abertas:**
-  - **[DECISÃO PENDENTE]** Rótulos da escala de dificuldade da Saúde financeira (UC45): protótipo "Muito fácil · Fácil · Mais ou menos · Difícil · Muito difícil" × v8 "muito difícil · difícil · tranquilo · fácil · muito fácil" (vale a v8 até decisão).
-  - **[DECISÃO PENDENTE – reunião com Daniele]** PIX pelo CPF da participante (UC86): em empreendimento de duas pessoas, quem recebe? As duas têm que informar o mesmo CPF de recebimento? Ligada ao **[A CONFIRMAR] (iii)** da v10: a doação é da **pessoa** ou do **empreendimento**?
-- **Decisões do app gestor (24/09/2026) — [A CONFIRMAR]:**
-  - **UC70:** o que é o match automático pelo Aplicativo Cliente (sugestão/escolha de mentor pela empreendedora ou só envio ao pool).
-  - **UC30 / UC87 / UC88 (AC-30 — continua pendente na v10):** se a automação de cancelada é configurável no CMS ou fixa no backend; conteúdo, canais e cadência.
-- **Dúvidas do relatório do app gestor ainda abertas:** **UC77** (observações de acompanhamento: tela própria ou notas; exclusão definitiva, categorias e visibilidade — LGPD) e as funcionalidades do app que não estão na v9 (**Bloco B** do plano: desagrupar empreendimento, ~~três tipos de doação~~ *(resolvido na v10)*, ajuste da dificuldade pelo gestor, desfechos com reabrir, rascunho/reabrir de ações, portal de voluntariado dentro do gestor e caminho do slug, CPF em claro, duração da visita técnica, mover de turma com extras).
-- **Incorporação do protótipo cliente v5 (v9) — [A CONFIRMAR]:**
-  - **UC91:** regra da "próxima atividade" do Continue Daqui; exibição de programas concluídos ou com desistência na home.
-  - **UC92:** o que o "Progresso geral" do perfil agrega; comportamento de "Sair da conta" (sessão × UUID do dispositivo; destino).
-  - **UC94:** formulário do aviso unificado com a etapa de dados da faixa (UC86) — proposta: sim; copy final dos avisos; ordem de vários avisos na home; se o aviso some ou fica como histórico; nome e CPF readonly no formulário de insumo/equipamento (proposta, UC27); texto do aceite por tipo; aceite do formulário × aceite do recibo; edição/reenvio antes da entrega. (A antiga pendência da UC93 foi absorvida: quem aprova = Gestor de Unidade pela UC57; recibo/NF pela UC86.)
-  - **UC95:** quem é a "mentora" do botão WhatsApp; número usado; texto contextual; exibição no online; sem destinatário; registro.
-  - **UC15:** "Teste de Conhecimento" = Questionário genérico ou tipo novo.
-  - **UC27:** verificação ao alterar telefone/e-mail; autopreenchimento por CEP na atualização.
-  - **UC31:** Revisar, histórico de edições e análise do gestor no Plano de Ação do Cliente.
-  - **UC36:** origem das observações da aula presencial.
-  - **UC63:** permanência do filtro Programa · Mentoria.
-  - **UC64:** envio de imagem e áudio; chips fixos ou contextuais; escalonamento ao educador; identificação como agente de IA.
-  - **UC70:** bloqueio por módulo CMS também no botão da home; ordem das perguntas do pedido.
-  - **UC78:** "impressão da mentora" visível à empreendedora e autoria; origem das instruções da visita.
-  - **UC79:** lista de motivos fixa ou no CMS; "seu progresso poderá ser perdido" é regra?
-  - **UC86:** CNPJ emitente do recibo **por tipo** e relação com a conta 725; confirmação de recebimento do material como passo separado; reaproveitar dados bancários de doação anterior.
-- **Doações múltiplas por tipo (v10 — rascunho de doações) — [A CONFIRMAR]:**
-  - **(i)** o que muda no rito de **equipamento** em relação a insumo (ex. possíveis: termo de responsabilidade, número de série, patrimônio) — UC86/UC94.
-  - **(iii)** doação da **pessoa** × do **empreendimento** — ligada à [DECISÃO PENDENTE – reunião com Daniele]; afeta a contagem no BI (UC31/UC71).
-  - **(iv)** onde a nota fiscal do item é cadastrada: padrão **App Gestor**, tela Doação (UC57); alternativa: **CMS**.
-  - **(v)** destaque de já contemplada (UC14 D / UC85): só informativo (padrão) ou o sistema também reordena/rebaixa.
-  - **(vi)** período do destaque: todas as edições seguintes ou só um período (a v9 falava em 3 anos).
-  - **Catálogo de tipos e itens de doação no CMS** (sem UC hoje); valor de referência no catálogo só como sugestão.
-  - **UC9:** a meta de contempladas conta **pessoas** ou **doações**.
-  - **UC58:** o parecer de elegibilidade cobre os três tipos de doação.
-- **UC31 — o gestor só gerencia empreendimentos (decisão de 25/09/2026) — [A CONFIRMAR]:**
-  - **(vii)** se o gestor pode cadastrar o empreendimento em nome da empreendedora pela UC69 (padrão até decisão: não).
-  - **(viii)** tela "Meu empreendimento" no Aplicativo Cliente: onde fica; se as sócias editam; mais de um empreendimento na mesma edição; campos editáveis depois da seleção.
-  - **(ix)** se a correção de dados pelo gestor fica também na lista de negócios ou só pela UC69.
+- **NPS de conclusão da jornada (UC39)** — a máscara 0–10 e o lugar no encerramento existem; falta o **modelo de perguntas** além de “recomendaria…”. Não inventar.
+- **Pesquisa após a formação (UC82)** — o disparo (dias após o fim no CMS, padrão ~30, backend, sem tela da gestora) já está; falta o **modelo do questionário** (itens e escalas). Não inventar.
+- **Cadastro de voluntariado (UC73)** — rito já está (slug, `inscrito` + `em_analise`, CTA, horas de 30 min); falta o **modelo de campos** além dos blocos fechados. Formulário de satisfação de mentoria/ação: **Heitor / Sandra**. Não inventar perguntas.
+- **PIX / titular da doação** — reunião com Daniele: quem recebe com duas sócias; doação da **pessoa** × do **empreendimento** **[A CONFIRMAR] (iii)**.
+- **AC-30** — automação de cancelada: CMS ou backend; conteúdo, canais, cadência.
+- **Rótulos da dificuldade (UC45)** — proposta do protótipo × rótulos atuais (muito difícil · difícil · tranquilo · fácil · muito fácil, até decisão). Dívida pessoal vs profissional e estoque de dívida.
+- **Match automático (UC70)** — sugestão/escolha de mentor pela empreendedora ou só envio ao pool.
+- **Tela Meu empreendimento (UC31)** — onde fica; se as sócias editam; mais de um empreendimento na mesma edição; campos editáveis depois da seleção **[A CONFIRMAR] (viii)**. Gestor cadastra em nome dela pela UC69? **[A CONFIRMAR] (vii)** (padrão: não).
+- **Rito de equipamento vs insumo [A CONFIRMAR] (i)** — termo, número de série, patrimônio (UC86/UC94).
+- **Meta de contempladas (UC9)** — conta **pessoas** ou **doações**.
+- **Demais [A CONFIRMAR] que ainda mudam tela ou modelo:** UC15 Teste de Conhecimento; UC27 verificação de telefone/e-mail e CEP; UC38 palavras-chave pós-live; UC58 parecer nos três tipos; UC77 observações (LGPD); UC86 CNPJ do recibo, confirmação de recebimento, reaproveitar dados bancários; UC91 Continue Daqui e programas concluídos; UC92 progresso geral e Sair da conta; UC94 aviso unificado / copy / aceite; UC95 mentora do WhatsApp; UC14 D / UC85 destaque de já contemplada (só informativo ou reordena; período); UC64 chat (imagem/áudio, chips, escalonamento); UC79 motivos de desligamento.
 
-**Fechado em 17/set (não reabrir):** cadastro via slug sem campos extras por tipo; `inscrito` imediato na ação + `em_analise` na rede; períodos/experiência **só** no form geral; CTA geral = **Inscreva-se no programa de voluntariado**; educador classifica Mentoria | Ação na alocação; horas em combobox de 30 min; certificado de ação para todo o grupo `confirmado`.
-
-**Notas operacionais (não são spec aberta):** entrega para parametrizar **30/out/2026**; abertura Empreende Mulher 2027 **15/nov/2026**; testes **só em homologação**; módulo educacional completo em **janeiro**. Paleta institucional e rótulos públicos (não expor `consuladeduca.com.br`) ficam para depois.
+**Notas operacionais (não são spec aberta):** parametrizar até **30/out/2026**; abertura Empreende Mulher 2027 **15/nov/2026**; testes **só em homologação**; módulo educacional completo em **janeiro**.
 
 ---
 
-*Documento v10 — 25/set/2026 (incorpora o rascunho de doações v10, as decisões de 25/09/2026 sobre mentoria e canal da live/workshop e as correções da revisão da v9.1). 91 casos de uso ativos (UC1–UC7, UC9–UC46, UC49–UC92, UC94–UC95); **UC93** mantido como número reservado, absorvido pelo UC57/UC86/UC94. Anterior: [v9.1](Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v9.1.md) — 25/set/2026, 92 casos de uso ativos (v9 de 24/set/2026 com as confirmações C1–C7). Antes dela: [v8](Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v8.md) — 23/set/2026, 87 casos de uso ativos; anterior a ela: [v7](Casos%20de%20Uso%20-%20Consulado%20da%20Mulher_v7.md).*
+*Documento v10.2 — especificação vigente. 91 casos de uso ativos (UC1–UC7, UC9–UC46, UC49–UC92, UC94–UC95); **UC93** reservado (absorvido por UC57/UC86/UC94).*

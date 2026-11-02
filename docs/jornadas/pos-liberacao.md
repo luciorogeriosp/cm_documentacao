@@ -31,7 +31,7 @@ sequenceDiagram
 
   Note over Backend,AppCliente: AUTO apos aprovacao UC57 - modalidade dinheiro
   Backend -->> AppCliente: solicita dados bancarios / PIX e aceites
-  AppCliente -->> Empreendedora: nome e CPF readonly; conta/PIX editaveis
+  AppCliente -->> Empreendedora: nome e CPF readonly, conta/PIX editaveis
   AppCliente -->> Empreendedora: status aguarde - sem datas
 
   Note over Empreendedora,AppCliente: MANUAL empreendedora UC86

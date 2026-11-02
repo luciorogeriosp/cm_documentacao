@@ -169,7 +169,7 @@ sequenceDiagram
   Backend -->> Gupshup: itens do lote com login magico UC54
   Gupshup -->> Empreendedora: boas-vindas, comunidade, materiais, links
   Backend -->> Backend: status enviada nas itens do lote
-  Backend -->> Backend: fase jornada ativa; agenda temporizadores
+  Backend -->> Backend: fase jornada ativa, agenda temporizadores
 
   Note over GestorTurma: GESTOR so acompanha. Nao libera atividade. Nao edita temporizador.
 ```
@@ -372,7 +372,7 @@ sequenceDiagram
   Backend -->> AppCliente: atividade presenca / palavra-chave
   Note over Empreendedora,AppCliente: MANUAL empreendedora - prazo rigido
   Empreendedora ->> AppCliente: informa KW
-  AppCliente ->> Backend: valida caixa/acento; grava timestamp
+  AppCliente ->> Backend: valida caixa/acento, grava timestamp
   alt KW invalida ou fora do prazo
     Backend -->> AppCliente: nao libera questionario
   else KW valida
@@ -424,7 +424,7 @@ sequenceDiagram
   alt cancela ou texto invalido
     Backend -->> Backend: nenhum status novo
   else confirma
-    Backend -->> Backend: doacao aprovada; aprovado_por
+    Backend -->> Backend: doacao aprovada, aprovado_por
     Backend -->> AppCliente: status aguarde - sem datas de pagamento
     AppCliente -->> Empreendedora: aguarde orientacoes da educadora
     Note over Backend: segue pos-liberacao UC86
@@ -465,7 +465,7 @@ sequenceDiagram
     AppVoluntario ->> Backend: aceite
     Backend -->> AppVoluntario: revela WhatsApp no card
     AppVoluntario ->> Backend: diario data desc minutos
-    Backend -->> AppCliente: NPS; certificado por sessao
+    Backend -->> AppCliente: NPS, certificado por sessao
   else prazo esgotado
     GestorUnidade ->> Backend: vincula um ou varios (UC73)
   end
